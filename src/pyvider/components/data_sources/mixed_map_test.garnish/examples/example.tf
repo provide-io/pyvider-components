@@ -1,6 +1,6 @@
 # Test mixed type maps with various data types
 data "pyvider_mixed_map_test" "mixed_config" {
-  input_map = {
+  input_data = {
     string_value = "hello"
     number_value = 42
     bool_value   = true
@@ -9,22 +9,20 @@ data "pyvider_mixed_map_test" "mixed_config" {
       inner_key = "inner_value"
       inner_num = 3.14
     }
-    null_value   = null
   }
 }
 
-output "mixed_map_analysis" {
-  value = {
-    type_counts = data.pyvider_mixed_map_test.mixed_config.type_counts
-    has_nulls   = data.pyvider_mixed_map_test.mixed_config.has_null_values
-    depth       = data.pyvider_mixed_map_test.mixed_config.max_depth
-  }
+output "input_data" {
+  description = "The input data provided"
+  value       = data.pyvider_mixed_map_test.mixed_config.input_data
 }
 
-output "extracted_strings" {
-  value = data.pyvider_mixed_map_test.mixed_config.string_values
+output "processed_data" {
+  description = "The processed mixed type data"
+  value       = data.pyvider_mixed_map_test.mixed_config.processed_data
 }
 
-output "extracted_numbers" {
-  value = data.pyvider_mixed_map_test.mixed_config.numeric_values
+output "data_hash" {
+  description = "Hash of the processed data"
+  value       = data.pyvider_mixed_map_test.mixed_config.data_hash
 }
