@@ -8,17 +8,12 @@ data "pyvider_http_api" "get_request" {
   timeout = 10
 }
 
-# POST request with body
-data "pyvider_http_api" "post_request" {
-  url    = "https://httpbin.org/post"
-  method = "POST"
-  body   = jsonencode({
-    message = "Hello from Pyvider"
-    test    = true
-  })
+# GET request with query parameters
+data "pyvider_http_api" "get_with_params" {
+  url    = "https://httpbin.org/get?param1=value1&param2=value2"
+  method = "GET"
   headers = {
-    "Content-Type" = "application/json"
-    "User-Agent"   = "Pyvider/1.0"
+    "User-Agent" = "Pyvider/1.0"
   }
   timeout = 10
 }
@@ -38,10 +33,10 @@ output "get_response_body" {
   value       = jsondecode(data.pyvider_http_api.get_request.response_body)
 }
 
-output "post_response" {
-  description = "POST request response details"
+output "params_response" {
+  description = "GET request with params response"
   value = {
-    status_code = data.pyvider_http_api.post_request.status_code
-    body_echo   = jsondecode(data.pyvider_http_api.post_request.response_body).json
+    status_code = data.pyvider_http_api.get_with_params.status_code
+    args        = jsondecode(data.pyvider_http_api.get_with_params.response_body).args
   }
 }

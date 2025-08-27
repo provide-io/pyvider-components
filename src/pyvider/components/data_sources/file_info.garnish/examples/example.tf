@@ -1,13 +1,13 @@
-# Create a test file to inspect
-resource "local_file" "example" {
-  content  = "Example content for file info testing"
+# Create a test file using pyvider's file_content resource
+resource "pyvider_file_content" "example" {
   filename = "/tmp/pyvider_file_info_example.txt"
+  content  = "Example content for file info testing"
 }
 
 # Get information about the created file
 data "pyvider_file_info" "example_file" {
-  path       = local_file.example.filename
-  depends_on = [local_file.example]
+  path       = pyvider_file_content.example.filename
+  depends_on = [pyvider_file_content.example]
 }
 
 # Check a directory
