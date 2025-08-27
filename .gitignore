@@ -120,6 +120,8 @@ docs/data-sources/
 docs/data_sources/
 docs/functions/
 docs/resources/
+docs/generated*/
+generated/
 
 # Environment files
 env.sh
@@ -129,4 +131,4 @@ env.sh
 # Flavor/PSP
 .psp/
 *.psp
-workenv/
+workenv/*bfiles*
