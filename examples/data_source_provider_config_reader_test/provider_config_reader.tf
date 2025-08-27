@@ -31,5 +31,4 @@ output "provider_insecure_skip_verify" {
 output "has_api_token" {
   description = "Whether an API token is configured"
   value       = data.pyvider_provider_config_reader.config.api_token != null
-  sensitive   = true
 }
