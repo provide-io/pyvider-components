@@ -1,56 +1,132 @@
-# 🐍🏗️ Pyvider Standard Components
+# Pyvider Components
 
-## **Exploring Standard Components for Pyvider Providers**
+This repository provides a standard set of components for the [Pyvider](https://github.com/provide-io/pyvider) framework, a Python-based framework for building Terraform providers.
 
-🔜 **Coming Soon:** The Pyvider Standard Components repository is being considered as a **collection of reusable resources, data sources, and functions** that could enhance Pyvider-based Terraform providers.  
+## Components
 
-These components would aim to extend Terraform’s capabilities by enabling **dynamic behaviors**, **stateful operations**, and **Python-native integrations** that go beyond HCL alone. The following are **potential** components under consideration.
+The following components are available:
 
----
+### Data Sources
 
-## **🌟 What Pyvider Components Might Enable**
+-   `pyvider_env_variables`: Provides access to environment variables.
+-   `pyvider_file_info`: Provides information about a file.
+-   `pyvider_http_api`: Makes an HTTP request and returns the response.
+-   `pyvider_lens_jq`: Transforms data using a JQ expression.
 
-### **1️⃣ File & System Operations** *(Under Consideration)*
+### Resources
 
-🔹 **`file_content`** – Read and write file contents dynamically.  
-🔹 **`directory`** – Manage directories with optional metadata.  
-🔹 **`checksum`** – Compute file hashes with caching optimizations.  
+-   `pyvider_file_content`: Manages the content of a file.
+-   `pyvider_local_directory`: Manages a directory on the local filesystem.
+-   `pyvider_private_state_verifier`: Verifies the private state of a resource.
+-   `pyvider_timed_token`: Manages a timed token.
+-   `pyvider_warning_example`: An example resource that demonstrates how to return warnings.
 
-### **2️⃣ API & Connectivity** *(Potential Additions)*
+### Functions
 
-🔹 **`http_request`** – Perform authenticated API requests with session handling.  
-🔹 **`dns_lookup`** – Resolve domain names with optional caching.  
-🔹 **`ping`** – Verify host availability with configurable retries.  
+-   `add`: Adds two numbers.
+-   `contains`: Checks if a string contains a substring.
+-   `divide`: Divides two numbers.
+-   `format`: Formats a string.
+-   `join`: Joins a list of strings.
+-   `length`: Returns the length of a string or list.
+-   `lens_jq`: Transforms data using a JQ expression.
+-   `lookup`: Looks up a value in a map.
+-   `lower`: Converts a string to lowercase.
+-   `max`: Returns the maximum of a list of numbers.
+-   `min`: Returns the minimum of a list of numbers.
+-   `multiply`: Multiplies two numbers.
+-   `replace`: Replaces a substring in a string.
+-   `round`: Rounds a number.
+-   `split`: Splits a string into a list of strings.
+-   `subtract`: Subtracts two numbers.
+-   `sum`: Sums a list of numbers.
+-   `upper`: Converts a string to uppercase.
 
-### **3️⃣ Security & Cryptography** *(Possible Features)*
+## Getting Started
 
-🔹 **`jwt_encode` / `jwt_decode`** – Securely generate and validate JWT tokens.  
-🔹 **`hash`** – Compute cryptographic hashes beyond Terraform’s built-in functions.  
-🔹 **`encrypt` / `decrypt`** – Symmetric encryption for Terraform-managed secrets.  
+To use the `pyvider-components` provider, you need to configure it in your Terraform project.
 
-### **4️⃣ Dynamic Data Processing** *(Ideas in Discussion)*
+```terraform
+terraform {
+  required_providers {
+    pyvider = {
+      source  = "local/providers/pyvider"
+      version = "0.1.0"
+    }
+  }
+}
 
-🔹 **`json_parse` / `yaml_parse`** – Convert structured data formats into Python objects.  
-🔹 **`string_template`** – Apply templating to strings with runtime context.  
-🔹 **`regex_match`** – Perform regex-based transformations on input data.  
+provider "pyvider" {
+  # Configuration options here
+}
+```
 
-### **5️⃣ Terraform-Specific Enhancements** *(Exploratory Concepts)*
+## Examples
 
-🔹 **`resource_ref`** – Dynamically reference Terraform-managed resources within Pyvider.  
-🔹 **`terraform_version`** – Retrieve Terraform runtime details for conditional execution.  
-🔹 **`dynamic_variable`** – Compute values **at runtime**, bypassing Terraform’s plan-time constraints.  
+Here are a few examples of how to use the components:
 
----
+### `pyvider_env_variables`
 
-## **⚡ Why Consider Pyvider Components?**
+```terraform
+# Filter by a specific list of keys
+data "pyvider_env_variables" "by_keys" {
+  keys = ["TEST_VAR1", "TEST_VAR2", "TEST_SENSITIVE_TOKEN", "NON_EXISTENT_VAR"]
+}
 
-✅ **Enhancing Terraform Workflows** – Investigating ways to add **stateful** and **dynamic** logic.  
-✅ **Expanding Terraform’s Capabilities** – Exploring potential **Python-powered extensions**.  
-✅ **Keeping Python-Native Workflows** – Reducing reliance on **HCL-only workarounds**.  
-✅ **Composable & Reusable** – Considering a structured way to build **modular, provider-agnostic components**.  
+output "by_keys_result" {
+  description = "Result of filtering by specific keys."
+  value       = data.pyvider_env_variables.by_keys.values
+}
+```
 
----
+### `pyvider_file_content`
 
-## **🚀 Follow the Development!**
+```terraform
+# Create file
+resource "pyvider_file_content" "test_create" {
+  filename = "/tmp/pyvider_test_create.txt"
+  content  = "This is a test file created by Pyvider"
+}
 
-🐍🏗️ Pyvider Standard Components is in the early stages of discussion. **Follow and star the repo** to stay informed about decisions and upcoming implementations!  
+output "created_file" {
+  value = {
+    filename = pyvider_file_content.test_create.filename
+    content = pyvider_file_content.test_create.content
+    exists = pyvider_file_content.test_create.exists
+    content_hash = pyvider_file_content.test_create.content_hash
+  }
+}
+```
+
+### `upper` function
+
+```terraform
+output "upper_result" {
+  value = provider::pyvider::upper("hello world")
+}
+```
+
+## Development
+
+To contribute to the development of the `pyvider-components` provider, you need to set up the development environment.
+
+### Environment Setup
+
+```bash
+# Set up the development environment (creates virtual env, installs dependencies)
+source ./env.sh
+```
+
+### Testing
+
+```bash
+# Run all tests
+pytest
+```
+
+### Building
+
+```bash
+# Build the package
+uv build
+```
