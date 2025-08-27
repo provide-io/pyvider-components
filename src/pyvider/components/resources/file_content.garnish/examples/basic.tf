@@ -1,11 +1,13 @@
 # Basic file content resource example
 resource "pyvider_file_content" "config" {
-  filename = "${path.module}/config.json"
-  content = jsonencode({
-    name    = "example-app"
-    version = "1.0.0"
-    created = timestamp()
-  })
+  filename = "/tmp/pyvider_config.json"
+  content  = <<-JSON
+    {
+      "name": "example-app",
+      "version": "1.0.0",
+      "description": "Basic configuration file"
+    }
+  JSON
 }
 
 output "file_path" {

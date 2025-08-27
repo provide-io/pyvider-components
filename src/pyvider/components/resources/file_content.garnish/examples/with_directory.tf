@@ -1,7 +1,7 @@
 # File content with directory dependency
 resource "pyvider_local_directory" "app_dir" {
   path        = "${path.module}/app"
-  create_mode = "0755"
+  permissions = "0o755"
 }
 
 resource "pyvider_file_content" "app_config" {
