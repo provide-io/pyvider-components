@@ -1,0 +1,22 @@
+# wrknv configuration for pyvider-components
+
+[project]
+name = "pyvider-components"
+description = "Standard components library for Pyvider framework"
+
+[tools]
+uv = "latest"
+
+[siblings]
+patterns = [
+    "pyvider",            # Core framework
+    "pyvider-cty",        # CTY type system
+    "pyvider-hcl",        # HCL parsing
+    "pyvider-rpcplugin",  # RPC plugin
+    "pyvider-telemetry",  # Telemetry
+    "garnish",            # Documentation
+    "wrknv",              # Environment manager
+]
+
+[settings]
+python_version = ">=3.11"
