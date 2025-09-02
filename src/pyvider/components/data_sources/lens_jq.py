@@ -13,7 +13,7 @@ from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_dyn, a_str, s_data_source
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 from ..capabilities.lens import LensCapability
 

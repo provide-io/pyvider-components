@@ -15,7 +15,7 @@ from ..capabilities.lens import LensCapability
 @register_function(name="lens_jq", component_of="lens")
 def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
     """Applies a jq query and returns a native Python object."""
-    from pyvider.telemetry import logger
+    from provide.foundation import logger
 
     logger.debug(
         f"🔧 LENS_JQ_FUNCTION called with input_data={type(input_data)}, query={query!r}, lens={type(lens)}"

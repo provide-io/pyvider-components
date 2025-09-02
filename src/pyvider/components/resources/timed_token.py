@@ -7,7 +7,7 @@ import uuid
 from typing import Any
 
 import attrs
-from pyvider.telemetry import logger
+from provide.foundation import logger
 from pyvider.resources.private_state import PrivateState
 from pyvider.resources.decorators import register_resource
 from pyvider.resources.base import BaseResource

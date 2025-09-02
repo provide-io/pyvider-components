@@ -11,7 +11,7 @@ from pyvider.cty import CtyValue
 from pyvider.cty.conversion import infer_cty_type_from_raw
 from pyvider.exceptions import FunctionError
 from pyvider.schema import PvsAttribute, a_bool, a_str
-from pyvider.telemetry import logger
+from provide.foundation import logger
 
 
 @register_capability("lens")
