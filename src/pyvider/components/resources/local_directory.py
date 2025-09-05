@@ -15,8 +15,6 @@ from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
-from provide.foundation.file import ensure_dir
-from provide.foundation.config import ConfigValidationError
 
 
 @attrs.define(frozen=True)
@@ -68,7 +66,11 @@ class LocalDirectoryResource(
                 c in "01234567" for c in config.permissions[2:]
             )
             if not is_valid:
-                logger.debug("Invalid permissions format", permissions=config.permissions, expected_format="0o755")
+                logger.debug(
+                    "Invalid permissions format",
+                    permissions=config.permissions,
+                    expected_format="0o755",
+                )
                 return [
                     f"The value '{config.permissions}' is not a valid octal string. It must be prefixed with '0o', for example: '0o755'."
                 ]
@@ -107,7 +109,11 @@ class LocalDirectoryResource(
         path.mkdir(parents=True, exist_ok=True)
         try:
             path.chmod(int(planned_state.permissions, 8))
-            logger.debug("Set directory permissions", path=str(path), permissions=planned_state.permissions)
+            logger.debug(
+                "Set directory permissions",
+                path=str(path),
+                permissions=planned_state.permissions,
+            )
         except (ValueError, TypeError) as e:
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
@@ -130,7 +136,12 @@ class LocalDirectoryResource(
             return None
         current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
         file_count = len([f for f in path.iterdir() if f.is_file()])
-        logger.debug("Read directory state", path=str(path), permissions=current_permissions, file_count=file_count)
+        logger.debug(
+            "Read directory state",
+            path=str(path),
+            permissions=current_permissions,
+            file_count=file_count,
+        )
         return self.state_class(
             path=str(path),
             permissions=current_permissions,

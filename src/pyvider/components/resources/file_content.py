@@ -15,7 +15,12 @@ from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
-from provide.foundation.file import atomic_write_text, safe_read_text, ensure_dir, safe_delete
+from provide.foundation.file import (
+    atomic_write_text,
+    safe_read_text,
+    ensure_dir,
+    safe_delete,
+)
 
 
 @define(frozen=True)
@@ -70,7 +75,12 @@ class FileContentResource(
 
         content = safe_read_text(path)
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
-        logger.debug("Read file content", filename=filename_to_read, content_length=len(content), content_hash=content_hash[:8])
+        logger.debug(
+            "Read file content",
+            filename=filename_to_read,
+            content_length=len(content),
+            content_hash=content_hash[:8],
+        )
         return self.state_class(
             filename=filename_to_read,
             content=content,
@@ -106,7 +116,11 @@ class FileContentResource(
         logger.debug("Creating file", path=str(path))
         ensure_dir(path.parent)
         atomic_write_text(path, planned_state.content)
-        logger.debug("Successfully wrote file", path=str(path), content_length=len(planned_state.content))
+        logger.debug(
+            "Successfully wrote file",
+            path=str(path),
+            content_length=len(planned_state.content),
+        )
         return planned_state, None
 
     async def _update_apply(

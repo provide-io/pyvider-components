@@ -78,9 +78,12 @@ class FileInfoDataSource(
             }
         )
 
+    @with_error_handling()
     async def _validate_config(self, config: FileInfoConfig) -> list[str]:
+        logger.debug("Validating file info config", path=config.path)
         return []
 
+    @with_error_handling()
     async def read(self, ctx: ResourceContext) -> FileInfoState:
         if not ctx.config:
             raise DataSourceError("Configuration is missing.")
@@ -88,9 +91,16 @@ class FileInfoDataSource(
         path = Path(config.path)
 
         if not path.exists():
+            logger.debug("Path does not exist", path=config.path)
             return FileInfoState(path=config.path, exists=False)
 
         stat_info = path.stat()
+        logger.debug(
+            "Reading file info",
+            path=config.path,
+            size=stat_info.st_size,
+            is_dir=path.is_dir(),
+        )
         owner, group = str(stat_info.st_uid), str(stat_info.st_gid)
         try:
             import pwd
@@ -111,7 +121,11 @@ class FileInfoDataSource(
                 import mimetypes
 
                 mime_type = mimetypes.guess_type(config.path)[0] or ""
+                logger.debug(
+                    "Detected MIME type", path=config.path, mime_type=mime_type
+                )
             except ImportError:
+                logger.debug("mimetypes module not available")
                 pass
 
         return FileInfoState(

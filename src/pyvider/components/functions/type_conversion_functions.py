@@ -5,6 +5,7 @@
 from typing import Any
 
 from pyvider.hub import register_function
+from provide.foundation import logger
 
 
 @register_function(name="tostring", summary="Explicitly converts a value to a string.")
@@ -12,8 +13,16 @@ def tostring(value: Any | None) -> str | None:
     if value is None:
         return None
     if isinstance(value, bool):
-        return "true" if value else "false"
-    return str(value)
+        result = "true" if value else "false"
+        logger.debug("Converted boolean to string", original_value=value, result=result)
+        return result
+    result = str(value)
+    logger.debug(
+        "Converted value to string",
+        value_type=type(value).__name__,
+        result_length=len(result),
+    )
+    return result
 
 
 # 🔄🏷️🎯

@@ -15,7 +15,6 @@ Tests all aspects of Pyvider's private state functionality including:
 """
 
 import os
-import tempfile
 import uuid
 from typing import Any
 from unittest.mock import patch
@@ -28,8 +27,6 @@ from pyvider.common.encryption import encrypt, decrypt
 from pyvider.components.resources.timed_token import (
     TimedTokenResource,
     TimedTokenPrivateState,
-    TimedTokenState,
-    TimedTokenConfig,
 )
 from pyvider.components.resources.private_state_verifier import (
     PrivateStateVerifierResource,
@@ -117,7 +114,7 @@ class TestPrivateStateResource(
     async def read(self, ctx: ResourceContext) -> MockResourceState | None:
         if ctx.has_private_state():
             # Use convenience methods to access private state
-            private_data = ctx.get_private_state(MockPrivateState)
+            ctx.get_private_state(MockPrivateState)
             return MockResourceState(
                 name=ctx.state.name if ctx.state else None,
                 public_id=ctx.state.public_id if ctx.state else None,

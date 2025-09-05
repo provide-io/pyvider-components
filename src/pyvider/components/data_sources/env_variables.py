@@ -65,11 +65,21 @@ class EnvVariablesDataSource(
 
     @with_error_handling()
     async def _validate_config(self, config: EnvVariablesConfig) -> list[str]:
-        filter_count = sum(1 for v in [config.keys, config.prefix, config.regex] if v is not None)
+        filter_count = sum(
+            1 for v in [config.keys, config.prefix, config.regex] if v is not None
+        )
         if filter_count > 1:
-            logger.debug("Multiple filters specified", keys=config.keys is not None, prefix=config.prefix is not None, regex=config.regex is not None)
+            logger.debug(
+                "Multiple filters specified",
+                keys=config.keys is not None,
+                prefix=config.prefix is not None,
+                regex=config.regex is not None,
+            )
             return ["Only one of 'keys', 'prefix', or 'regex' can be specified."]
-        logger.debug("Environment variables configuration validation passed", filter_count=filter_count)
+        logger.debug(
+            "Environment variables configuration validation passed",
+            filter_count=filter_count,
+        )
         return []
 
     @with_error_handling()
@@ -77,7 +87,12 @@ class EnvVariablesDataSource(
         if not ctx.config:
             raise DataSourceError("Configuration is required.")
         config = cast(EnvVariablesConfig, ctx.config)
-        logger.debug("Reading environment variables", keys=config.keys, prefix=config.prefix, regex=config.regex)
+        logger.debug(
+            "Reading environment variables",
+            keys=config.keys,
+            prefix=config.prefix,
+            regex=config.regex,
+        )
         exclude_empty = config.exclude_empty is not False
         case_sensitive = config.case_sensitive is not False
         source_vars = os.environ.copy()

@@ -7,7 +7,6 @@ import os
 from pyvider.providers.base import BaseProvider, ProviderMetadata
 from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
-from pyvider.providers.base import ProviderCapabilities
 from pyvider.components.capabilities.lens import LensCapability
 
 
