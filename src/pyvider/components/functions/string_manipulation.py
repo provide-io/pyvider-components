@@ -36,7 +36,7 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
     try:
         str_values = [tostring(v) for v in value_list]
         result = template.format(*str_values)
-        logger.debug(f"Formatted string with template '{template}' and {len(value_list)} values")
+        logger.debug("Formatted string", template=template, value_count=len(value_list))
         return result
     except IndexError as e:
         raise FunctionError(

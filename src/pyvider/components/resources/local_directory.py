@@ -16,6 +16,7 @@ from pyvider.schema import PvsSchema, a_num, a_str, s_resource
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
 from provide.foundation.file import ensure_dir
+from provide.foundation.config import ConfigValidationError
 
 
 @attrs.define(frozen=True)
@@ -60,15 +61,18 @@ class LocalDirectoryResource(
             }
         )
 
+    @with_error_handling()
     async def _validate_config(self, config: LocalDirectoryConfig) -> list[str]:
         if config.permissions:
             is_valid = config.permissions.startswith("0o") and all(
                 c in "01234567" for c in config.permissions[2:]
             )
             if not is_valid:
+                logger.debug("Invalid permissions format", permissions=config.permissions, expected_format="0o755")
                 return [
                     f"The value '{config.permissions}' is not a valid octal string. It must be prefixed with '0o', for example: '0o755'."
                 ]
+        logger.debug("Configuration validation passed", permissions=config.permissions)
         return []
 
     async def _create(
@@ -99,11 +103,11 @@ class LocalDirectoryResource(
     ) -> tuple[StateType | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
-        logger.debug(f"Creating directory at path: {path}")
+        logger.debug("Creating directory", path=str(path))
         path.mkdir(parents=True, exist_ok=True)
         try:
             path.chmod(int(planned_state.permissions, 8))
-            logger.debug(f"Set permissions {planned_state.permissions} on directory: {path}")
+            logger.debug("Set directory permissions", path=str(path), permissions=planned_state.permissions)
         except (ValueError, TypeError) as e:
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
@@ -122,11 +126,11 @@ class LocalDirectoryResource(
             return None
         path = Path(ctx.state.path)
         if not path.is_dir():
-            logger.debug(f"Path {path} is not a directory or doesn't exist")
+            logger.debug("Path is not a directory or doesn't exist", path=str(path))
             return None
         current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
         file_count = len([f for f in path.iterdir() if f.is_file()])
-        logger.debug(f"Read directory state: {path}, permissions: {current_permissions}, files: {file_count}")
+        logger.debug("Read directory state", path=str(path), permissions=current_permissions, file_count=file_count)
         return self.state_class(
             path=str(path),
             permissions=current_permissions,

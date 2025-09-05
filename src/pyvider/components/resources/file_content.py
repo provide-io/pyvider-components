@@ -65,12 +65,12 @@ class FileContentResource(
             return None
         path = Path(filename_to_read)
         if not path.is_file():
-            logger.debug(f"File {path} does not exist or is not a file")
+            logger.debug("File does not exist or is not a file", path=str(path))
             return None
 
         content = safe_read_text(path)
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
-        logger.debug(f"Read file content: {filename_to_read}, hash: {content_hash[:8]}...")
+        logger.debug("Read file content", filename=filename_to_read, content_length=len(content), content_hash=content_hash[:8])
         return self.state_class(
             filename=filename_to_read,
             content=content,
@@ -103,10 +103,10 @@ class FileContentResource(
     ) -> tuple[StateType | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
-        logger.debug(f"Creating file: {path}")
+        logger.debug("Creating file", path=str(path))
         ensure_dir(path.parent)
         atomic_write_text(path, planned_state.content)
-        logger.debug(f"Successfully wrote {len(planned_state.content)} characters to {path}")
+        logger.debug("Successfully wrote file", path=str(path), content_length=len(planned_state.content))
         return planned_state, None
 
     async def _update_apply(
@@ -122,11 +122,11 @@ class FileContentResource(
             return
         path = Path(state.filename)
         if path.is_file():
-            logger.debug(f"Deleting file: {path}")
+            logger.debug("Deleting file", path=str(path))
             safe_delete(path)
-            logger.debug(f"Successfully deleted file: {path}")
+            logger.debug("Successfully deleted file", path=str(path))
         else:
-            logger.debug(f"File {path} does not exist, nothing to delete")
+            logger.debug("File does not exist, nothing to delete", path=str(path))
 
 
 # 📄💾🔧
