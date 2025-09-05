@@ -14,6 +14,8 @@ from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
 from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
+from provide.foundation.file import ensure_dir
 
 
 @attrs.define(frozen=True)
@@ -91,14 +93,17 @@ class LocalDirectoryResource(
         base_plan["permissions"] = config.permissions or "0o755"
         return base_plan, None
 
+    @with_error_handling()
     async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[StateType | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
+        logger.debug(f"Creating directory at path: {path}")
         path.mkdir(parents=True, exist_ok=True)
         try:
             path.chmod(int(planned_state.permissions, 8))
+            logger.debug(f"Set permissions {planned_state.permissions} on directory: {path}")
         except (ValueError, TypeError) as e:
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
@@ -110,14 +115,18 @@ class LocalDirectoryResource(
     ) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
+    @with_error_handling()
     async def read(self, ctx: ResourceContext) -> LocalDirectoryState | None:
         if not ctx.state or not ctx.state.path:
+            logger.debug("No state or path provided for read operation")
             return None
         path = Path(ctx.state.path)
         if not path.is_dir():
+            logger.debug(f"Path {path} is not a directory or doesn't exist")
             return None
         current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
         file_count = len([f for f in path.iterdir() if f.is_file()])
+        logger.debug(f"Read directory state: {path}, permissions: {current_permissions}, files: {file_count}")
         return self.state_class(
             path=str(path),
             permissions=current_permissions,

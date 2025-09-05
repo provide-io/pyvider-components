@@ -13,6 +13,9 @@ from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
+from provide.foundation.file import atomic_write_text, safe_read_text, ensure_dir, safe_delete
 
 
 @define(frozen=True)
@@ -50,6 +53,7 @@ class FileContentResource(
     async def _validate_config(self, config: FileContentConfig) -> list[str]:
         return []
 
+    @with_error_handling()
     async def read(self, ctx: ResourceContext) -> FileContentState | None:
         filename_to_read = (
             ctx.state.filename
@@ -57,13 +61,16 @@ class FileContentResource(
             else (ctx.config.filename if ctx.config else None)
         )
         if not filename_to_read:
+            logger.debug("No filename provided for read operation")
             return None
         path = Path(filename_to_read)
         if not path.is_file():
+            logger.debug(f"File {path} does not exist or is not a file")
             return None
 
-        content = path.read_text(encoding="utf-8")
+        content = safe_read_text(path)
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        logger.debug(f"Read file content: {filename_to_read}, hash: {content_hash[:8]}...")
         return self.state_class(
             filename=filename_to_read,
             content=content,
@@ -90,13 +97,16 @@ class FileContentResource(
     ) -> tuple[dict[str, Any] | None, None]:
         return await self._create(ctx, base_plan)
 
+    @with_error_handling()
     async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[StateType | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(planned_state.content, encoding="utf-8")
+        logger.debug(f"Creating file: {path}")
+        ensure_dir(path.parent)
+        atomic_write_text(path, planned_state.content)
+        logger.debug(f"Successfully wrote {len(planned_state.content)} characters to {path}")
         return planned_state, None
 
     async def _update_apply(
@@ -104,13 +114,19 @@ class FileContentResource(
     ) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
+    @with_error_handling()
     async def _delete_apply(self, ctx: ResourceContext) -> None:
         state = cast(FileContentState, ctx.state)
         if not state or not state.filename:
+            logger.debug("No state or filename provided for delete operation")
             return
         path = Path(state.filename)
         if path.is_file():
-            path.unlink(missing_ok=True)
+            logger.debug(f"Deleting file: {path}")
+            safe_delete(path)
+            logger.debug(f"Successfully deleted file: {path}")
+        else:
+            logger.debug(f"File {path} does not exist, nothing to delete")
 
 
 # 📄💾🔧

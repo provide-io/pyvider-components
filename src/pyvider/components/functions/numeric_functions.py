@@ -4,6 +4,8 @@
 
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
 
 
 @register_function(name="add", summary="Adds two numbers.")

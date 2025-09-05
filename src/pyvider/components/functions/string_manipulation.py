@@ -6,6 +6,8 @@ from typing import Any
 
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
 from .type_conversion_functions import tostring
 
 
@@ -26,13 +28,16 @@ def lower(input_str: str | None) -> str | None:
 @register_function(
     name="format", summary="Formats a string using positional arguments."
 )
+@with_error_handling()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
     if template is None:
         return None
     value_list = values or []
     try:
         str_values = [tostring(v) for v in value_list]
-        return template.format(*str_values)
+        result = template.format(*str_values)
+        logger.debug(f"Formatted string with template '{template}' and {len(value_list)} values")
+        return result
     except IndexError as e:
         raise FunctionError(
             f"Formatting failed: not enough values for template '{template}'."

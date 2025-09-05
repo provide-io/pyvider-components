@@ -15,6 +15,8 @@ from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_num, a_str, s_data_source
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
 
 
 @attrs.define(frozen=True)
