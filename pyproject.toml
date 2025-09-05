@@ -1,6 +1,6 @@
 [project]
 name = "pyvider-components"
-version = "0.0.0-1"
+dynamic = ["version"]
 description = "Standard Components for the Pyvider Framework"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -24,6 +24,9 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
 
 [tool.setuptools.package-data]
 "*" = ["*.garnish/**/*"]
