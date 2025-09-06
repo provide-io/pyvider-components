@@ -9,7 +9,7 @@ import hashlib
 import json
 from typing import Any, cast
 
-import attrs
+from attrs import define
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -35,12 +35,12 @@ from pyvider.schema import (
 # =============================================================================
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class SimpleMapConfig:
     input_data: dict[str, str] | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class SimpleMapState:
     input_data: dict[str, str]
     processed_data: dict[str, str]
@@ -89,12 +89,12 @@ class SimpleMapDataSource(
 # =============================================================================
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class MixedMapConfig:
     input_data: dict[str, Any] | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class MixedMapState:
     input_data: dict[str, Any]
     processed_data: dict[str, Any]
@@ -156,13 +156,13 @@ class MixedMapDataSource(
 # =============================================================================
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class StructuredObjectConfig:
     config_name: str
     metadata: dict[str, str] | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class StructuredObjectState:
     config_name: str
     metadata: dict[str, str]
@@ -239,14 +239,14 @@ class StructuredObjectDataSource(
 # =============================================================================
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class NestedResourceConfig:
     resource_name: str
     configuration: dict[str, Any] | None = None
     nested_configs: list[dict[str, Any]] | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class NestedResourceState:
     resource_name: str
     configuration: dict[str, Any] | None = None

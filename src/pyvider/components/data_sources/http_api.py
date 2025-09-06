@@ -5,7 +5,7 @@
 from decimal import Decimal
 from typing import cast
 
-import attrs
+from attrs import define
 import httpx
 
 from pyvider.data_sources.base import BaseDataSource
@@ -16,7 +16,7 @@ from pyvider.schema import PvsSchema, a_map, a_num, a_str, s_data_source
 from provide.foundation import logger
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class HTTPAPIConfig:
     url: str
     method: str = "GET"
@@ -24,7 +24,7 @@ class HTTPAPIConfig:
     timeout: int | Decimal = 30
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class HTTPAPIState:
     url: str
     method: str

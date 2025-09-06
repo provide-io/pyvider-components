@@ -5,7 +5,7 @@
 import json
 from typing import Any, cast
 
-import attrs
+from attrs import define
 
 from pyvider.conversion import cty_to_native
 from pyvider.data_sources.base import BaseDataSource
@@ -18,13 +18,13 @@ from provide.foundation import logger
 from ..capabilities.lens import LensCapability
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class LensJqConfig:
     json_input: str
     query: str
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class LensJqState:
     json_input: str
     query: str

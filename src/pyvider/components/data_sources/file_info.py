@@ -8,7 +8,7 @@ from pathlib import Path
 import stat
 from typing import cast
 
-import attrs
+from attrs import define
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -19,12 +19,12 @@ from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class FileInfoConfig:
     path: str = attrs.field()
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class FileInfoState:
     path: str = attrs.field()
     exists: bool = attrs.field(default=False)

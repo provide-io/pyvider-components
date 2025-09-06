@@ -5,7 +5,7 @@
 from pathlib import Path
 from typing import Any, cast
 
-import attrs
+from attrs import define
 
 from pyvider.common.types import StateType
 from pyvider.exceptions import ResourceError
@@ -17,13 +17,13 @@ from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class LocalDirectoryConfig:
     path: str
     permissions: str | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class LocalDirectoryState:
     path: str
     permissions: str | None = None

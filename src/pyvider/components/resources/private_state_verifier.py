@@ -4,7 +4,7 @@
 
 from typing import Any
 
-import attrs
+from attrs import define
 
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
@@ -14,18 +14,18 @@ from pyvider.resources.private_state import PrivateState
 from pyvider.schema import PvsSchema, a_str, a_unknown, s_resource
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class VerifierConfig:
     input_value: str
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class VerifierState:
     input_value: str | None = None
     decrypted_token: str | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class VerifierPrivateState(PrivateState):
     secret_token: str
 

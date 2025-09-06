@@ -6,7 +6,7 @@ import datetime
 import uuid
 from typing import Any
 
-import attrs
+from attrs import define
 from provide.foundation import logger
 from pyvider.resources.private_state import PrivateState
 from pyvider.resources.decorators import register_resource
@@ -16,12 +16,12 @@ from pyvider.schema.types import PvsSchema
 from pyvider.resources.context import ResourceContext
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class TimedTokenConfig:
     name: str
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class TimedTokenState:
     name: str | None = None
     id: str | None = None
@@ -29,7 +29,7 @@ class TimedTokenState:
     expires_at: str | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class TimedTokenPrivateState(PrivateState):
     token: str
     expires_at: str

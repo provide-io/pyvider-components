@@ -6,7 +6,7 @@ import os
 import re
 from typing import cast
 
-import attrs
+from attrs import define
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -17,7 +17,7 @@ from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class EnvVariablesConfig:
     keys: list[str] | None = None
     prefix: str | None = None
@@ -29,7 +29,7 @@ class EnvVariablesConfig:
     sensitive_keys: list[str] | None = None
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class EnvVariablesState:
     values: dict[str, str] = attrs.field(factory=dict)
     sensitive_values: dict[str, str] = attrs.field(factory=dict)

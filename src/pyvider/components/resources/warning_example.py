@@ -4,7 +4,7 @@
 
 from typing import Any
 
-import attrs
+from attrs import define
 
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
@@ -12,7 +12,7 @@ from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_str, a_unknown, s_resource
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class WarningExampleState:
     name: str | None = None
     old_name: str | None = None

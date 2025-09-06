@@ -4,7 +4,7 @@
 
 from typing import Any, cast
 
-import attrs
+from attrs import define
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -15,7 +15,7 @@ from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_map, a_num, a_str, s_data_source
 
 
-@attrs.define(frozen=True)
+@define(frozen=True)
 class ProviderConfigReaderState:
     api_endpoint: str | None = None
     api_token: str | None = None
