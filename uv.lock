@@ -3,6 +3,15 @@ revision = 3
 requires-python = ">=3.11"
 
 [[package]]
+name = "aiofiles"
+version = "24.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/03/a88171e277e8caa88a4c77808c20ebb04ba74cc4681bf1e9416c862de237/aiofiles-24.1.0.tar.gz", hash = "sha256:22a075c9e5a3810f0c2e48f3008c94d68c65d763b9b03857924c99e57355166c", size = 30247, upload-time = "2024-06-24T11:02:03.584Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a5/45/30bb92d442636f570cb5651bc661f52b610e2eec3f891a5dc3a4c3667db0/aiofiles-24.1.0-py3-none-any.whl", hash = "sha256:b4ec55f4195e3eb5d7abd1bf7e061763e864dd4954231fb8539a0ef8bb8260e5", size = 15896, upload-time = "2024-06-24T11:02:01.529Z" },
+]
+
+[[package]]
 name = "anyio"
 version = "4.10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -988,6 +997,21 @@ wheels = [
 ]
 
 [[package]]
+name = "provide-foundation"
+version = "0.0.0.dev0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiofiles" },
+    { name = "attrs" },
+    { name = "structlog" },
+    { name = "tomli-w" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/21/8e/ea92a36960e2d1e7f066216ebc72595938349d260c549196f216f9171d3b/provide_foundation-0.0.0.dev0.tar.gz", hash = "sha256:e8d9485da207c62cc8b01405e2abf71b0e839b6caa3ae6f03b33712499357320", size = 198689, upload-time = "2025-09-06T22:46:40.842Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/51/2a/af1636a0e36d51b71dd4a5d0472de714fb1db3296d4ea1eeb01d2f514cad/provide_foundation-0.0.0.dev0-py3-none-any.whl", hash = "sha256:5e16b74dd49c21cd3c7cfd82a0f52846aa78417e1f0db34404a1f2e80e89011d", size = 242336, upload-time = "2025-09-06T22:46:39.115Z" },
+]
+
+[[package]]
 name = "psutil"
 version = "7.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1143,17 +1167,15 @@ wheels = [
 
 [[package]]
 name = "pyvider-components"
-version = "0.0.0.post1"
 source = { editable = "." }
 dependencies = [
-    { name = "attrs" },
     { name = "httpx" },
     { name = "jinja2" },
     { name = "jq" },
+    { name = "provide-foundation" },
     { name = "pyvider" },
     { name = "pyvider-cty" },
     { name = "pyvider-rpcplugin" },
-    { name = "pyvider-telemetry" },
 ]
 
 [package.dev-dependencies]
@@ -1179,14 +1201,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "attrs", specifier = ">=25.3.0" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jq", specifier = ">=1.9.1" },
+    { name = "provide-foundation" },
     { name = "pyvider", specifier = ">=0.0.0.post0" },
     { name = "pyvider-cty", specifier = ">=0.0.113" },
     { name = "pyvider-rpcplugin" },
-    { name = "pyvider-telemetry" },
 ]
 
 [package.metadata.requires-dev]
