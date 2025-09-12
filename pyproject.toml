@@ -12,6 +12,7 @@ dependencies = [
     "jinja2>=3.1.6",
     "pyvider-cty>=0.0.113",
     "pyvider>=0.0.0.post0",
+    "plating",
 ]
 
 [build-system]
@@ -55,3 +56,4 @@ dev = [
 ]
 
 [tool.uv.sources]
+plating = { path = "../garnish", editable = true }
