@@ -16,7 +16,8 @@ from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_num, a_str, s_data_source
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import with_error_handling, capture_error_context
+from provide.foundation.file import get_size, get_mtime
 
 
 @define(frozen=True)
@@ -94,7 +95,20 @@ class FileInfoDataSource(
             logger.debug("Path does not exist", path=config.path)
             return FileInfoState(path=config.path, exists=False)
 
-        stat_info = path.stat()
+        try:
+            # Use provide-foundation utilities for safer file operations
+            file_size = get_size(config.path)
+            mtime = get_mtime(config.path)
+            stat_info = path.stat()
+        except (OSError, PermissionError) as e:
+            context = capture_error_context(
+                e,
+                category="file_access",
+                operation="stat",
+                file_path=config.path
+            )
+            logger.warning("Failed to access file", path=config.path, error=str(e), context=context)
+            return FileInfoState(path=config.path, exists=True)
         logger.debug(
             "Reading file info",
             path=config.path,

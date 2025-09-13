@@ -14,6 +14,9 @@ from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_map, a_num, a_str, s_data_source
 from provide.foundation import logger
+from provide.foundation.resilience import retry, RetryPolicy, BackoffStrategy
+from provide.foundation.config.validators import validate_choice
+from provide.foundation.utils.parsing import parse_bool
 
 
 @define(frozen=True)
@@ -63,7 +66,44 @@ class HTTPAPIDataSource(
         )
 
     async def _validate_config(self, config: HTTPAPIConfig) -> list[str]:
-        return []
+        """Enhanced config validation using provide-foundation utilities."""
+        errors = []
+
+        # Validate HTTP method
+        valid_methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+        try:
+            validate_choice(config.method.upper(), valid_methods)
+        except ValueError as e:
+            errors.append(f"Invalid HTTP method: {e}")
+
+        # Validate URL format
+        if not config.url.startswith(("http://", "https://")):
+            errors.append("URL must start with http:// or https://")
+
+        # Validate timeout
+        if config.timeout <= 0:
+            errors.append("Timeout must be greater than 0")
+        elif config.timeout > 300:  # 5 minutes max
+            errors.append("Timeout cannot exceed 300 seconds")
+
+        logger.debug("HTTP API config validation", errors=len(errors), method=config.method, url=config.url)
+        return errors
+
+    @retry(
+        policy=RetryPolicy(
+            max_attempts=3,
+            backoff=BackoffStrategy.exponential(initial_delay=1.0, max_delay=10.0)
+        ),
+        retry_on=(httpx.TimeoutException, httpx.ConnectError)
+    )
+    async def _make_http_request(self, config: HTTPAPIConfig) -> httpx.Response:
+        """Make HTTP request with retry logic."""
+        async with httpx.AsyncClient(timeout=float(config.timeout)) as client:
+            return await client.request(
+                method=config.method.upper(),
+                url=config.url,
+                headers=config.headers or {},
+            )
 
     async def read(self, ctx: ResourceContext) -> HTTPAPIState:
         config = cast(HTTPAPIConfig, ctx.config)
@@ -71,14 +111,9 @@ class HTTPAPIDataSource(
             raise DataSourceError("Configuration is missing.")
 
         try:
-            async with httpx.AsyncClient(timeout=float(config.timeout)) as client:
-                response = await client.request(
-                    method=config.method.upper(),
-                    url=config.url,
-                    headers=config.headers or {},
-                )
+            response = await self._make_http_request(config)
 
-                return HTTPAPIState(
+            return HTTPAPIState(
                     url=str(response.url),
                     method=response.request.method,
                     status_code=response.status_code,

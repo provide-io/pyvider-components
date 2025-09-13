@@ -14,7 +14,7 @@ from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_list, a_map, a_str, s_data_source
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import with_error_handling, capture_error_context
 
 
 @define(frozen=True)
@@ -121,7 +121,14 @@ class EnvVariablesDataSource(
                             continue
                         filtered_vars[key] = value
             except re.error as e:
-                raise DataSourceError(f"Invalid regex provided: {e}") from e
+                context = capture_error_context(
+                    e,
+                    category="validation",
+                    operation="regex_compile",
+                    regex_pattern=config.regex,
+                    case_sensitive=case_sensitive
+                )
+                raise DataSourceError(f"Invalid regex provided: {e}. Context: {context}") from e
         else:
             for key, value in source_vars.items():
                 if exclude_empty and not value:
