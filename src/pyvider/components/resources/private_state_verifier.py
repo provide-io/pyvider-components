@@ -4,7 +4,7 @@
 
 from typing import Any
 
-from attrs import define
+from attrs import define, evolve
 
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
@@ -61,7 +61,7 @@ class PrivateStateVerifierResource(BaseResource):
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
-        final_state = attrs.evolve(
+        final_state = evolve(
             ctx.planned_state, decrypted_token=ctx.private_state.secret_token
         )
         return final_state, None

@@ -6,7 +6,7 @@ import datetime
 import uuid
 from typing import Any
 
-from attrs import define
+from attrs import define, evolve
 from provide.foundation import logger
 from pyvider.resources.private_state import PrivateState
 from pyvider.resources.decorators import register_resource
@@ -77,7 +77,7 @@ class TimedTokenResource(
         self, ctx: ResourceContext
     ) -> tuple[TimedTokenState, TimedTokenPrivateState]:
         # Evolve the planned state, filling in the computed value for 'id'.
-        final_state = attrs.evolve(
+        final_state = evolve(
             ctx.planned_state,
             id=f"timed-token-id-{uuid.uuid4()}",
             token=ctx.private_state.token,
@@ -90,7 +90,7 @@ class TimedTokenResource(
         if ctx.private_state and ctx.state:
             # Private state is automatically decrypted by the framework
             # Just use the values directly from the private state
-            return attrs.evolve(
+            return evolve(
                 ctx.state,
                 token=ctx.private_state.token,
                 expires_at=ctx.private_state.expires_at,
