@@ -6,7 +6,7 @@ import os
 import re
 from typing import cast
 
-from attrs import define
+from attrs import define, field
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -31,10 +31,10 @@ class EnvVariablesConfig:
 
 @define(frozen=True)
 class EnvVariablesState:
-    values: dict[str, str] = attrs.field(factory=dict)
-    sensitive_values: dict[str, str] = attrs.field(factory=dict)
-    all_values: dict[str, str] = attrs.field(factory=dict)
-    all_environment: dict[str, str] = attrs.field(factory=dict)
+    values: dict[str, str] = field(factory=dict)
+    sensitive_values: dict[str, str] = field(factory=dict)
+    all_values: dict[str, str] = field(factory=dict)
+    all_environment: dict[str, str] = field(factory=dict)
 
 
 @register_data_source("pyvider_env_variables")
