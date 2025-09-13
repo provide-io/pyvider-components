@@ -6,7 +6,6 @@ from decimal import Decimal
 from typing import cast
 
 from attrs import define
-import httpx
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -14,9 +13,9 @@ from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_map, a_num, a_str, s_data_source
 from provide.foundation import logger
-from provide.foundation.resilience import retry, RetryPolicy, BackoffStrategy
+from provide.foundation.transport import request, HTTPMethod
+from provide.foundation.transport.errors import TransportConnectionError, TransportTimeoutError, HTTPResponseError
 from provide.foundation.config.validators import validate_choice
-from provide.foundation.utils.parsing import parse_bool
 
 
 @define(frozen=True)
@@ -69,12 +68,11 @@ class HTTPAPIDataSource(
         """Enhanced config validation using provide-foundation utilities."""
         errors = []
 
-        # Validate HTTP method
-        valid_methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+        # Validate HTTP method using foundation HTTPMethod
         try:
-            validate_choice(config.method.upper(), valid_methods)
+            HTTPMethod(config.method.upper())
         except ValueError as e:
-            errors.append(f"Invalid HTTP method: {e}")
+            errors.append(f"Invalid HTTP method '{config.method}': {e}")
 
         # Validate URL format
         if not config.url.startswith(("http://", "https://")):
@@ -89,21 +87,19 @@ class HTTPAPIDataSource(
         logger.debug("HTTP API config validation", errors=len(errors), method=config.method, url=config.url)
         return errors
 
-    @retry(
-        policy=RetryPolicy(
-            max_attempts=3,
-            backoff=BackoffStrategy.exponential(initial_delay=1.0, max_delay=10.0)
-        ),
-        retry_on=(httpx.TimeoutException, httpx.ConnectError)
-    )
-    async def _make_http_request(self, config: HTTPAPIConfig) -> httpx.Response:
-        """Make HTTP request with retry logic."""
-        async with httpx.AsyncClient(timeout=float(config.timeout)) as client:
-            return await client.request(
-                method=config.method.upper(),
+    async def _make_http_request(self, config: HTTPAPIConfig):
+        """Make HTTP request using provide-foundation transport."""
+        try:
+            response = await request(
+                method=HTTPMethod(config.method.upper()),
                 url=config.url,
                 headers=config.headers or {},
+                timeout=float(config.timeout)
             )
+            return response
+        except (TransportConnectionError, TransportTimeoutError) as e:
+            # Foundation transport already includes retry logic
+            raise DataSourceError(f"HTTP request failed: {e}") from e
 
     async def read(self, ctx: ResourceContext) -> HTTPAPIState:
         config = cast(HTTPAPIConfig, ctx.config)
@@ -114,16 +110,16 @@ class HTTPAPIDataSource(
             response = await self._make_http_request(config)
 
             return HTTPAPIState(
-                    url=str(response.url),
-                    method=response.request.method,
-                    status_code=response.status_code,
-                    response_body=response.text,
-                    response_time_ms=int(response.elapsed.total_seconds() * 1000),
-                    response_headers=dict(response.headers),
-                    header_count=len(response.headers),
-                    content_type=response.headers.get("content-type"),
-                )
-        except httpx.RequestError as e:
+                url=config.url,  # Use original URL from config
+                method=config.method,  # Use original method from config
+                status_code=response.status,  # Foundation transport uses 'status'
+                response_body=response.text,  # Foundation transport has text property
+                response_time_ms=int(response.elapsed_ms),  # Foundation transport tracks elapsed_ms
+                response_headers=response.headers,  # Foundation transport headers are already dict
+                header_count=len(response.headers),
+                content_type=response.headers.get("content-type"),
+            )
+        except (TransportConnectionError, TransportTimeoutError, HTTPResponseError) as e:
             logger.error(f"HTTP request failed: {e}", exc_info=True)
             return HTTPAPIState(
                 url=config.url, method=config.method, error_message=str(e)
