@@ -8,7 +8,7 @@ from pathlib import Path
 import stat
 from typing import cast
 
-from attrs import define
+from attrs import define, field
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -21,24 +21,24 @@ from provide.foundation.errors import with_error_handling
 
 @define(frozen=True)
 class FileInfoConfig:
-    path: str = attrs.field()
+    path: str = field()
 
 
 @define(frozen=True)
 class FileInfoState:
-    path: str = attrs.field()
-    exists: bool = attrs.field(default=False)
-    size: int = attrs.field(default=0)
-    is_dir: bool = attrs.field(default=False)
-    is_file: bool = attrs.field(default=False)
-    is_symlink: bool = attrs.field(default=False)
-    modified_time: str = attrs.field(default="")
-    access_time: str = attrs.field(default="")
-    creation_time: str = attrs.field(default="")
-    permissions: str = attrs.field(default="")
-    owner: str = attrs.field(default="")
-    group: str = attrs.field(default="")
-    mime_type: str = attrs.field(default="")
+    path: str = field()
+    exists: bool = field(default=False)
+    size: int = field(default=0)
+    is_dir: bool = field(default=False)
+    is_file: bool = field(default=False)
+    is_symlink: bool = field(default=False)
+    modified_time: str = field(default="")
+    access_time: str = field(default="")
+    creation_time: str = field(default="")
+    permissions: str = field(default="")
+    owner: str = field(default="")
+    group: str = field(default="")
+    mime_type: str = field(default="")
 
 
 @register_data_source("pyvider_file_info")

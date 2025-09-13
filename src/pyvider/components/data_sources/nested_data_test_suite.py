@@ -9,7 +9,7 @@ import hashlib
 import json
 from typing import Any, cast
 
-from attrs import define
+from attrs import define, field
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -251,9 +251,9 @@ class NestedResourceState:
     resource_name: str
     configuration: dict[str, Any] | None = None
     nested_configs: list[dict[str, Any]] | None = None
-    processed_data: dict[str, Any] | None = attrs.field(default=None)
-    resource_id: str | None = attrs.field(default=None)
-    exists: bool | None = attrs.field(default=None)
+    processed_data: dict[str, Any] | None = field(default=None)
+    resource_id: str | None = field(default=None)
+    exists: bool | None = field(default=None)
 
 
 @register_resource("pyvider_nested_resource_test")
