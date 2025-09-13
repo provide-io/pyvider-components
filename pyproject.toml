@@ -29,7 +29,7 @@ where = ["src"]
 version = {file = "VERSION"}
 
 [tool.setuptools.package-data]
-"*" = ["*.garnish/**/*"]
+"*" = ["*.plating/**/*"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
@@ -56,4 +56,4 @@ dev = [
 ]
 
 [tool.uv.sources]
-plating = { path = "../garnish", editable = true }
+plating = { path = "../plating", editable = true }
