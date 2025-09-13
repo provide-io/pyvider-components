@@ -8,6 +8,14 @@ from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
+from provide.foundation.utils.formatting import (
+    to_snake_case,
+    to_camel_case,
+    to_kebab_case,
+    format_size,
+    truncate,
+    pluralize,
+)
 from .type_conversion_functions import tostring
 
 
@@ -69,6 +77,54 @@ def replace(
     if string is None:
         return None
     return string.replace(search or "", replacement or "")
+
+
+@register_function(name="to_snake_case", summary="Converts text to snake_case.")
+def snake_case(text: str | None) -> str | None:
+    """Convert text to snake_case using provide-foundation utilities."""
+    if text is None:
+        return None
+    return to_snake_case(text)
+
+
+@register_function(name="to_camel_case", summary="Converts text to camelCase.")
+def camel_case(text: str | None, upper_first: bool = False) -> str | None:
+    """Convert text to camelCase using provide-foundation utilities."""
+    if text is None:
+        return None
+    return to_camel_case(text, upper_first=upper_first)
+
+
+@register_function(name="to_kebab_case", summary="Converts text to kebab-case.")
+def kebab_case(text: str | None) -> str | None:
+    """Convert text to kebab-case using provide-foundation utilities."""
+    if text is None:
+        return None
+    return to_kebab_case(text)
+
+
+@register_function(name="format_size", summary="Formats bytes as human-readable size.")
+def format_file_size(size_bytes: int | None, precision: int = 1) -> str | None:
+    """Format bytes as human-readable size using provide-foundation utilities."""
+    if size_bytes is None:
+        return None
+    return format_size(size_bytes, precision)
+
+
+@register_function(name="truncate", summary="Truncates text to specified length.")
+def truncate_text(text: str | None, max_length: int = 100, suffix: str = "...") -> str | None:
+    """Truncate text to specified length using provide-foundation utilities."""
+    if text is None:
+        return None
+    return truncate(text, max_length, suffix)
+
+
+@register_function(name="pluralize", summary="Pluralizes a word based on count.")
+def pluralize_word(word: str | None, count: int = 1, plural: str | None = None) -> str | None:
+    """Pluralize a word based on count using provide-foundation utilities."""
+    if word is None:
+        return None
+    return pluralize(word, count, plural)
 
 
 # ✂️📝🎯
