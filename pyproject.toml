@@ -40,9 +40,9 @@ dev = [
 ]
 
 [tool.uv.sources]
-provide-foundation = { path = "../provide-foundation", editable = true }
-provide-testkit = { path = "../provide-testkit", editable = true }
-pyvider = { path = "../pyvider", editable = true }
-pyvider-cty = { path = "../pyvider-cty", editable = true }
-pyvider-rpcplugin = { path = "../pyvider-rpcplugin", editable = true }
-plating = { path = "../plating", editable = true }
+provide-foundation = { workspace = true }
+provide-testkit = { workspace = true }
+pyvider = { workspace = true }
+pyvider-cty = { workspace = true }
+pyvider-rpcplugin = { workspace = true }
+plating = { workspace = true }
