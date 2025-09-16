@@ -3,17 +3,18 @@
 #
 
 import datetime
-import uuid
 from typing import Any
+import uuid
 
 from attrs import define, evolve
+
 from provide.foundation import logger
-from pyvider.resources.private_state import PrivateState
-from pyvider.resources.decorators import register_resource
 from pyvider.resources.base import BaseResource
-from pyvider.schema.factory import s_resource, a_str, a_unknown
-from pyvider.schema.types import PvsSchema
 from pyvider.resources.context import ResourceContext
+from pyvider.resources.decorators import register_resource
+from pyvider.resources.private_state import PrivateState
+from pyvider.schema.factory import a_str, a_unknown, s_resource
+from pyvider.schema.types import PvsSchema
 
 
 @define(frozen=True)
@@ -36,9 +37,7 @@ class TimedTokenPrivateState(PrivateState):
 
 
 @register_resource("pyvider_timed_token")
-class TimedTokenResource(
-    BaseResource["pyvider_timed_token", TimedTokenState, TimedTokenConfig]
-):
+class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, TimedTokenConfig]):
     config_class = TimedTokenConfig
     state_class = TimedTokenState
     private_state_class = TimedTokenPrivateState
@@ -66,16 +65,12 @@ class TimedTokenResource(
 
         private_state = self.private_state_class(
             token=f"token-{uuid.uuid4()}",
-            expires_at=(
-                datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)
-            ).isoformat(),
+            expires_at=(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)).isoformat(),
         )
         logger.debug(f"Creating private state: {private_state}")
         return base_plan, private_state
 
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[TimedTokenState, TimedTokenPrivateState]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[TimedTokenState, TimedTokenPrivateState]:
         # Evolve the planned state, filling in the computed value for 'id'.
         final_state = evolve(
             ctx.planned_state,

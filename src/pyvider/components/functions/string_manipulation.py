@@ -4,18 +4,19 @@
 
 from typing import Any
 
-from pyvider.exceptions import FunctionError
-from pyvider.hub import register_function
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
 from provide.foundation.utils.formatting import (
-    to_snake_case,
+    format_size,
+    pluralize,
     to_camel_case,
     to_kebab_case,
-    format_size,
+    to_snake_case,
     truncate,
-    pluralize,
 )
+from pyvider.exceptions import FunctionError
+from pyvider.hub import register_function
+
 from .type_conversion_functions import tostring
 
 
@@ -33,9 +34,7 @@ def lower(input_str: str | None) -> str | None:
     return input_str.lower()
 
 
-@register_function(
-    name="format", summary="Formats a string using positional arguments."
-)
+@register_function(name="format", summary="Formats a string using positional arguments.")
 @with_error_handling()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
     if template is None:
@@ -47,9 +46,7 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
         logger.debug("Formatted string", template=template, value_count=len(value_list))
         return result
     except IndexError as e:
-        raise FunctionError(
-            f"Formatting failed: not enough values for template '{template}'."
-        ) from e
+        raise FunctionError(f"Formatting failed: not enough values for template '{template}'.") from e
 
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
@@ -71,9 +68,7 @@ def split(delimiter: str | None, string: str | None) -> list[str] | None:
 
 
 @register_function(name="replace", summary="Replaces occurrences of a substring.")
-def replace(
-    string: str | None, search: str | None, replacement: str | None
-) -> str | None:
+def replace(string: str | None, search: str | None, replacement: str | None) -> str | None:
     if string is None:
         return None
     return string.replace(search or "", replacement or "")

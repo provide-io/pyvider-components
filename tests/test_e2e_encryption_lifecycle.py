@@ -24,12 +24,8 @@ async def test_private_state_verifier_lifecycle(encryption_key_env, provider_in_
             type_name=resource_name, config=config_dv, proposed_new_state=config_dv
         )
         plan_response = await PlanResourceChangeHandler(plan_request, context=None)
-        assert not plan_response.diagnostics, (
-            f"Plan phase returned diagnostics: {plan_response.diagnostics}"
-        )
-        assert plan_response.planned_private, (
-            "Plan phase did not return a private state"
-        )
+        assert not plan_response.diagnostics, f"Plan phase returned diagnostics: {plan_response.diagnostics}"
+        assert plan_response.planned_private, "Plan phase did not return a private state"
         apply_request = pb.ApplyResourceChange.Request(
             type_name=resource_name,
             config=plan_request.config,

@@ -48,9 +48,7 @@ class SimpleMapState:
 
 
 @register_data_source("pyvider_simple_map_test")
-class SimpleMapDataSource(
-    BaseDataSource["pyvider_simple_map_test", SimpleMapState, SimpleMapConfig]
-):
+class SimpleMapDataSource(BaseDataSource["pyvider_simple_map_test", SimpleMapState, SimpleMapConfig]):
     config_class = SimpleMapConfig
     state_class = SimpleMapState
 
@@ -58,12 +56,8 @@ class SimpleMapDataSource(
     def get_schema(cls) -> PvsSchema:
         return s_data_source(
             attributes={
-                "input_data": a_map(
-                    a_str(), optional=True, description="Simple string map input"
-                ),
-                "processed_data": a_map(
-                    a_str(), computed=True, description="Processed string map"
-                ),
+                "input_data": a_map(a_str(), optional=True, description="Simple string map input"),
+                "processed_data": a_map(a_str(), computed=True, description="Processed string map"),
                 "data_hash": a_str(computed=True, description="Hash of processed data"),
             }
         )
@@ -75,13 +69,9 @@ class SimpleMapDataSource(
         config = cast(SimpleMapConfig, ctx.config)
         input_data = config.input_data or {}
         processed_data = {k: v.upper() for k, v in input_data.items()}
-        data_hash = hashlib.sha256(
-            json.dumps(processed_data, sort_keys=True).encode()
-        ).hexdigest()
+        data_hash = hashlib.sha256(json.dumps(processed_data, sort_keys=True).encode()).hexdigest()
 
-        return SimpleMapState(
-            input_data=input_data, processed_data=processed_data, data_hash=data_hash
-        )
+        return SimpleMapState(input_data=input_data, processed_data=processed_data, data_hash=data_hash)
 
 
 # =============================================================================
@@ -102,9 +92,7 @@ class MixedMapState:
 
 
 @register_data_source("pyvider_mixed_map_test")
-class MixedMapDataSource(
-    BaseDataSource["pyvider_mixed_map_test", MixedMapState, MixedMapConfig]
-):
+class MixedMapDataSource(BaseDataSource["pyvider_mixed_map_test", MixedMapState, MixedMapConfig]):
     config_class = MixedMapConfig
     state_class = MixedMapState
 
@@ -113,9 +101,7 @@ class MixedMapDataSource(
         return s_data_source(
             attributes={
                 "input_data": a_dyn(optional=True, description="Mixed type map input"),
-                "processed_data": a_dyn(
-                    computed=True, description="Processed mixed map"
-                ),
+                "processed_data": a_dyn(computed=True, description="Processed mixed map"),
                 "data_hash": a_str(computed=True, description="Hash of processed data"),
             }
         )
@@ -146,9 +132,7 @@ class MixedMapDataSource(
             json.dumps(processed_data, sort_keys=True, default=str).encode()
         ).hexdigest()
 
-        return MixedMapState(
-            input_data=input_data, processed_data=processed_data, data_hash=data_hash
-        )
+        return MixedMapState(input_data=input_data, processed_data=processed_data, data_hash=data_hash)
 
 
 # =============================================================================
@@ -172,9 +156,7 @@ class StructuredObjectState:
 
 @register_data_source("pyvider_structured_object_test")
 class StructuredObjectDataSource(
-    BaseDataSource[
-        "pyvider_structured_object_test", StructuredObjectState, StructuredObjectConfig
-    ]
+    BaseDataSource["pyvider_structured_object_test", StructuredObjectState, StructuredObjectConfig]
 ):
     config_class = StructuredObjectConfig
     state_class = StructuredObjectState
@@ -258,9 +240,7 @@ class NestedResourceState:
 
 @register_resource("pyvider_nested_resource_test")
 class NestedResourceTest(
-    BaseResource[
-        "pyvider_nested_resource_test", NestedResourceState, NestedResourceConfig
-    ]
+    BaseResource["pyvider_nested_resource_test", NestedResourceState, NestedResourceConfig]
 ):
     config_class = NestedResourceConfig
     state_class = NestedResourceState
@@ -270,12 +250,8 @@ class NestedResourceTest(
         return s_resource(
             attributes={
                 "resource_name": a_str(required=True),
-                "configuration": a_dyn(
-                    optional=True, description="Dynamic configuration map"
-                ),
-                "processed_data": a_dyn(
-                    computed=True, description="Processed configuration data"
-                ),
+                "configuration": a_dyn(optional=True, description="Dynamic configuration map"),
+                "processed_data": a_dyn(computed=True, description="Processed configuration data"),
                 "resource_id": a_str(computed=True),
                 "exists": a_bool(computed=True),
             },

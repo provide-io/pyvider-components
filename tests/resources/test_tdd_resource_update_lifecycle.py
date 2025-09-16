@@ -31,18 +31,14 @@ def temp_dir_with_initial_state(tmp_path: Path) -> Path:
 
 @pytest.mark.asyncio
 class TestResourceUpdateLifecycle:
-    async def test_update_plan(
-        self, resource: LocalDirectoryResource, temp_dir_with_initial_state: Path
-    ):
+    async def test_update_plan(self, resource: LocalDirectoryResource, temp_dir_with_initial_state: Path):
         prior_state = LocalDirectoryState(
             path=str(temp_dir_with_initial_state),
             permissions="0o755",
             id=str(temp_dir_with_initial_state.resolve()),
             file_count=0,
         )
-        new_config = LocalDirectoryConfig(
-            path=str(temp_dir_with_initial_state), permissions="0o777"
-        )
+        new_config = LocalDirectoryConfig(path=str(temp_dir_with_initial_state), permissions="0o777")
         base_plan_from_framework = {
             "path": str(temp_dir_with_initial_state),
             "permissions": "0o777",
@@ -56,9 +52,7 @@ class TestResourceUpdateLifecycle:
         assert refined_plan["id"] == str(temp_dir_with_initial_state.resolve())
 
     @pytest.mark.asyncio
-    async def test_update_apply(
-        self, resource: LocalDirectoryResource, temp_dir_with_initial_state: Path
-    ):
+    async def test_update_apply(self, resource: LocalDirectoryResource, temp_dir_with_initial_state: Path):
         planned_state = LocalDirectoryState(
             path=str(temp_dir_with_initial_state),
             permissions="0o777",

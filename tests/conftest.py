@@ -2,12 +2,14 @@
 # tests/conftest.py
 #
 
-import pytest
 import os
-from pyvider.providers.base import BaseProvider, ProviderMetadata
+
+import pytest
+
+from pyvider.components.capabilities.lens import LensCapability
 from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
-from pyvider.components.capabilities.lens import LensCapability
+from pyvider.providers.base import BaseProvider, ProviderMetadata
 
 
 @pytest.fixture(scope="session")
@@ -22,9 +24,7 @@ def provider_in_hub():
 
 @pytest.fixture
 def encryption_key_env():
-    os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"] = (
-        "test-secret-key-for-pytest-session"
-    )
+    os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"] = "test-secret-key-for-pytest-session"
     yield
     del os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"]
 

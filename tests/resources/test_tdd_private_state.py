@@ -2,10 +2,11 @@
 # tests/resources/test_tdd_private_state.py
 #
 
+from typing import Any
+
 import attrs
 import msgpack
 import pytest
-from typing import Any
 
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext

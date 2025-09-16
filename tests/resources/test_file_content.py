@@ -30,9 +30,7 @@ class TestFileContent:
         return FileContentResource()
 
     @pytest.mark.asyncio
-    async def test_create_and_read(
-        self, resource: FileContentResource, temp_file: Path
-    ):
+    async def test_create_and_read(self, resource: FileContentResource, temp_file: Path):
         config = FileContentConfig(filename=str(temp_file), content="hello world")
         # Plan for a CREATE operation (no prior state)
         plan_ctx = ResourceContext(config=config, state=None)
@@ -59,9 +57,7 @@ class TestFileContent:
     async def test_delete(self, resource: FileContentResource, temp_file: Path):
         content = "to be deleted"
         temp_file.write_text(content)
-        current_state = FileContentState(
-            filename=str(temp_file), content=content, exists=True
-        )
+        current_state = FileContentState(filename=str(temp_file), content=content, exists=True)
 
         # To delete, the context has a prior state but no planned state.
         delete_ctx = ResourceContext(state=current_state, planned_state=None)

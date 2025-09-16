@@ -8,19 +8,19 @@ from typing import Any, cast
 
 from attrs import define, field
 
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
+from provide.foundation.file import (
+    atomic_write_text,
+    ensure_dir,
+    safe_delete,
+    safe_read_text,
+)
 from pyvider.common.types import StateType
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
-from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
-from provide.foundation.file import (
-    atomic_write_text,
-    safe_read_text,
-    ensure_dir,
-    safe_delete,
-)
 
 
 @define(frozen=True)
@@ -38,9 +38,7 @@ class FileContentState:
 
 
 @register_resource("pyvider_file_content")
-class FileContentResource(
-    BaseResource["pyvider_file_content", FileContentState, FileContentConfig]
-):
+class FileContentResource(BaseResource["pyvider_file_content", FileContentState, FileContentConfig]):
     config_class = FileContentConfig
     state_class = FileContentState
 
@@ -60,11 +58,7 @@ class FileContentResource(
 
     @with_error_handling()
     async def read(self, ctx: ResourceContext) -> FileContentState | None:
-        filename_to_read = (
-            ctx.state.filename
-            if ctx.state
-            else (ctx.config.filename if ctx.config else None)
-        )
+        filename_to_read = ctx.state.filename if ctx.state else (ctx.config.filename if ctx.config else None)
         if not filename_to_read:
             logger.debug("No filename provided for read operation")
             return None
@@ -96,9 +90,7 @@ class FileContentResource(
             return None, None
 
         base_plan["exists"] = True
-        base_plan["content_hash"] = hashlib.sha256(
-            config.content.encode("utf-8")
-        ).hexdigest()
+        base_plan["content_hash"] = hashlib.sha256(config.content.encode("utf-8")).hexdigest()
 
         return base_plan, None
 
@@ -108,9 +100,7 @@ class FileContentResource(
         return await self._create(ctx, base_plan)
 
     @with_error_handling()
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
         logger.debug("Creating file", path=str(path))
@@ -123,9 +113,7 @@ class FileContentResource(
         )
         return planned_state, None
 
-    async def _update_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
     @with_error_handling()

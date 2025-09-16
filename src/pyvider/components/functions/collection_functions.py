@@ -4,15 +4,13 @@
 
 from typing import Any
 
-from pyvider.exceptions import FunctionError
-from pyvider.hub import register_function
 from provide.foundation import logger
 from provide.foundation.errors import with_error_handling
+from pyvider.exceptions import FunctionError
+from pyvider.hub import register_function
 
 
-@register_function(
-    name="length", summary="Returns the length of a given list, map, or string."
-)
+@register_function(name="length", summary="Returns the length of a given list, map, or string.")
 def length(collection: list | dict | str | None) -> int | None:
     if collection is None:
         return None
@@ -25,24 +23,18 @@ def length(collection: list | dict | str | None) -> int | None:
     return result
 
 
-@register_function(
-    name="contains", summary="Checks if a list contains a given element."
-)
+@register_function(name="contains", summary="Checks if a list contains a given element.")
 def contains(list_to_check: list[Any] | None, element: Any) -> bool | None:
     if list_to_check is None:
         return None
     result = element in list_to_check
-    logger.debug(
-        "Checked list containment", list_length=len(list_to_check), found=result
-    )
+    logger.debug("Checked list containment", list_length=len(list_to_check), found=result)
     return result
 
 
 @register_function(name="lookup", summary="Performs a dynamic lookup into a map.")
 @with_error_handling()
-def lookup(
-    map_to_search: dict[str, Any] | None, key: str, default: Any | None = None
-) -> Any:
+def lookup(map_to_search: dict[str, Any] | None, key: str, default: Any | None = None) -> Any:
     if map_to_search is None:
         return None
     if key in map_to_search:
@@ -51,12 +43,8 @@ def lookup(
     if default is not None:
         logger.debug("Map lookup using default", key=key, has_default=True)
         return default
-    logger.debug(
-        "Map lookup failed", key=key, available_keys=list(map_to_search.keys())
-    )
-    raise FunctionError(
-        f'Invalid key for map lookup: key "{key}" does not exist in the map.'
-    )
+    logger.debug("Map lookup failed", key=key, available_keys=list(map_to_search.keys()))
+    raise FunctionError(f'Invalid key for map lookup: key "{key}" does not exist in the map.')
 
 
 # 📚🔧🎯

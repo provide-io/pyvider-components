@@ -7,14 +7,14 @@ from typing import Any, cast
 
 from attrs import define
 
+from provide.foundation import logger
+from provide.foundation.errors import with_error_handling
 from pyvider.common.types import StateType
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
-from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
 
 
 @define(frozen=True)
@@ -42,20 +42,14 @@ class LocalDirectoryResource(
     def get_schema(cls) -> PvsSchema:
         return s_resource(
             {
-                "path": a_str(
-                    required=True, description="The path of the directory to manage."
-                ),
+                "path": a_str(required=True, description="The path of the directory to manage."),
                 "permissions": a_str(
                     optional=True,
                     computed=True,
                     description="The permissions for the directory in octal format. Must start with '0o' (e.g., '0o755').",
                 ),
-                "id": a_str(
-                    computed=True, description="The absolute path of the directory."
-                ),
-                "file_count": a_num(
-                    computed=True, description="The number of files in the directory."
-                ),
+                "id": a_str(computed=True, description="The absolute path of the directory."),
+                "file_count": a_num(computed=True, description="The number of files in the directory."),
             }
         )
 
@@ -100,9 +94,7 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @with_error_handling()
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
@@ -120,9 +112,7 @@ class LocalDirectoryResource(
             ) from e
         return ctx.planned_state, None
 
-    async def _update_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
     @with_error_handling()
@@ -158,9 +148,7 @@ class LocalDirectoryResource(
             try:
                 path.rmdir()
             except OSError:
-                logger.warning(
-                    f"Directory {path} is not empty and will not be removed."
-                )
+                logger.warning(f"Directory {path} is not empty and will not be removed.")
 
 
 # 📁🏠📂

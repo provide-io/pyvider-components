@@ -8,13 +8,13 @@ from typing import cast
 
 from attrs import define, field
 
+from provide.foundation import logger
+from provide.foundation.errors import capture_error_context, with_error_handling
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_list, a_map, a_str, s_data_source
-from provide.foundation import logger
-from provide.foundation.errors import with_error_handling, capture_error_context
 
 
 @define(frozen=True)
@@ -38,9 +38,7 @@ class EnvVariablesState:
 
 
 @register_data_source("pyvider_env_variables")
-class EnvVariablesDataSource(
-    BaseDataSource["pyvider_env_variables", EnvVariablesState, EnvVariablesConfig]
-):
+class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariablesState, EnvVariablesConfig]):
     config_class = EnvVariablesConfig
     state_class = EnvVariablesState
 
@@ -65,9 +63,7 @@ class EnvVariablesDataSource(
 
     @with_error_handling()
     async def _validate_config(self, config: EnvVariablesConfig) -> list[str]:
-        filter_count = sum(
-            1 for v in [config.keys, config.prefix, config.regex] if v is not None
-        )
+        filter_count = sum(1 for v in [config.keys, config.prefix, config.regex] if v is not None)
         if filter_count > 1:
             logger.debug(
                 "Multiple filters specified",
@@ -126,7 +122,7 @@ class EnvVariablesDataSource(
                     category="validation",
                     operation="regex_compile",
                     regex_pattern=config.regex,
-                    case_sensitive=case_sensitive
+                    case_sensitive=case_sensitive,
                 )
                 raise DataSourceError(f"Invalid regex provided: {e}. Context: {context}") from e
         else:
@@ -148,12 +144,8 @@ class EnvVariablesDataSource(
             )
             transformed_vars[final_key] = final_value
         sensitive_keys_set = set(config.sensitive_keys or [])
-        sensitive_vals = {
-            k: v for k, v in transformed_vars.items() if k in sensitive_keys_set
-        }
-        non_sensitive_vals = {
-            k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set
-        }
+        sensitive_vals = {k: v for k, v in transformed_vars.items() if k in sensitive_keys_set}
+        non_sensitive_vals = {k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set}
         return EnvVariablesState(
             values=non_sensitive_vals,
             sensitive_values=sensitive_vals,

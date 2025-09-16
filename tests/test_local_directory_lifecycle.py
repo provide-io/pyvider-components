@@ -31,9 +31,7 @@ def resource() -> LocalDirectoryResource:
 
 
 @pytest.mark.asyncio
-async def test_create_lifecycle_contract(
-    resource: LocalDirectoryResource, temp_dir: Path
-):
+async def test_create_lifecycle_contract(resource: LocalDirectoryResource, temp_dir: Path):
     # 1. Define the configuration with the CANONICAL format.
     config = LocalDirectoryConfig(path=str(temp_dir), permissions="0o775")
     create_context = ResourceContext(config=config, state=None)

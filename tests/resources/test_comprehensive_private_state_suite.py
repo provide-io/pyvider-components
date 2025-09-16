@@ -15,21 +15,21 @@ Tests all aspects of Pyvider's private state functionality including:
 """
 
 import os
-import uuid
 from typing import Any
 from unittest.mock import patch
+import uuid
 
 import attrs
 import msgpack
 import pytest
 
-from pyvider.common.encryption import encrypt, decrypt
-from pyvider.components.resources.timed_token import (
-    TimedTokenResource,
-    TimedTokenPrivateState,
-)
+from pyvider.common.encryption import decrypt, encrypt
 from pyvider.components.resources.private_state_verifier import (
     PrivateStateVerifierResource,
+)
+from pyvider.components.resources.timed_token import (
+    TimedTokenPrivateState,
+    TimedTokenResource,
 )
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
@@ -70,9 +70,7 @@ class MockResourceConfig:
     name: str
 
 
-class TestPrivateStateResource(
-    BaseResource["test_private_state", MockResourceState, MockResourceConfig]
-):
+class TestPrivateStateResource(BaseResource["test_private_state", MockResourceState, MockResourceConfig]):
     """Test resource that uses private state"""
 
     config_class = MockResourceConfig
@@ -102,12 +100,8 @@ class TestPrivateStateResource(
         )
         return base_plan, private_state
 
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[MockResourceState, MockPrivateState]:
-        final_state = MockResourceState(
-            name=ctx.config.name, public_id=f"public-{ctx.config.name}"
-        )
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[MockResourceState, MockPrivateState]:
+        final_state = MockResourceState(name=ctx.config.name, public_id=f"public-{ctx.config.name}")
         # Keep the private state for future reads
         return final_state, ctx.private_state
 
@@ -138,21 +132,15 @@ class TestPrivateStateEncryption:
         )
 
     @pytest.mark.asyncio
-    async def test_encryption_decryption_roundtrip(
-        self, encryption_key_env, sample_private_state
-    ):
+    async def test_encryption_decryption_roundtrip(self, encryption_key_env, sample_private_state):
         """Test that private state can be encrypted and decrypted correctly"""
         # Serialize to msgpack
-        serialized = msgpack.packb(
-            attrs.asdict(sample_private_state), use_bin_type=True
-        )
+        serialized = msgpack.packb(attrs.asdict(sample_private_state), use_bin_type=True)
 
         # Encrypt
         encrypted_data = encrypt(serialized)
         assert encrypted_data != serialized
-        assert len(encrypted_data) > len(
-            serialized
-        )  # Should be longer due to nonce + MAC
+        assert len(encrypted_data) > len(serialized)  # Should be longer due to nonce + MAC
 
         # Decrypt
         decrypted_data = decrypt(encrypted_data)
@@ -165,13 +153,9 @@ class TestPrivateStateEncryption:
         assert restored_state == sample_private_state
 
     @pytest.mark.asyncio
-    async def test_encryption_produces_different_ciphertext(
-        self, encryption_key_env, sample_private_state
-    ):
+    async def test_encryption_produces_different_ciphertext(self, encryption_key_env, sample_private_state):
         """Test that encryption produces different ciphertext each time (due to random nonce)"""
-        serialized = msgpack.packb(
-            attrs.asdict(sample_private_state), use_bin_type=True
-        )
+        serialized = msgpack.packb(attrs.asdict(sample_private_state), use_bin_type=True)
 
         encrypted1 = encrypt(serialized)
         encrypted2 = encrypt(serialized)
@@ -208,9 +192,7 @@ class TestResourceContextConvenienceMethods:
     @pytest.fixture
     def sample_context(self):
         """Create a ResourceContext with private state"""
-        private_state = MockPrivateState(
-            secret_token="test-token", internal_id="test-internal-id", version=1
-        )
+        private_state = MockPrivateState(secret_token="test-token", internal_id="test-internal-id", version=1)
         return ResourceContext(private_state=private_state)
 
     @pytest.fixture
@@ -243,9 +225,7 @@ class TestResourceContextConvenienceMethods:
 
     def test_get_private_state_same_type_passthrough(self):
         """Test get_private_state passes through when already correct type"""
-        original_state = MockPrivateState(
-            secret_token="test", internal_id="test-id", version=1
-        )
+        original_state = MockPrivateState(secret_token="test", internal_id="test-id", version=1)
         context = ResourceContext(private_state=original_state)
 
         retrieved = context.get_private_state(MockPrivateState)
@@ -258,9 +238,7 @@ class TestPrivateStateResourceLifecycle:
 
     @pytest.mark.usefixtures("provider_in_hub")
     @pytest.mark.asyncio
-    async def test_complete_resource_lifecycle_with_private_state(
-        self, encryption_key_env
-    ):
+    async def test_complete_resource_lifecycle_with_private_state(self, encryption_key_env):
         """Test full CRUD lifecycle of a resource with private state"""
         resource_name = "test_private_state"
         hub.register("resource", resource_name, TestPrivateStateResource)
@@ -277,9 +255,7 @@ class TestPrivateStateResourceLifecycle:
             )
 
             plan_response = await PlanResourceChangeHandler(plan_request, context=None)
-            assert not plan_response.diagnostics, (
-                f"Plan failed: {plan_response.diagnostics}"
-            )
+            assert not plan_response.diagnostics, f"Plan failed: {plan_response.diagnostics}"
             assert plan_response.planned_private, "No private state returned from plan"
 
             # Apply Phase
@@ -290,12 +266,8 @@ class TestPrivateStateResourceLifecycle:
                 planned_private=plan_response.planned_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
-            assert not apply_response.diagnostics, (
-                f"Apply failed: {apply_response.diagnostics}"
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
+            assert not apply_response.diagnostics, f"Apply failed: {apply_response.diagnostics}"
             assert apply_response.private, "No private state returned from apply"
 
             final_state = unmarshal(apply_response.new_state, schema=schema.block)
@@ -310,9 +282,7 @@ class TestPrivateStateResourceLifecycle:
             )
 
             read_response = await ReadResourceHandler(read_request, context=None)
-            assert not read_response.diagnostics, (
-                f"Read failed: {read_response.diagnostics}"
-            )
+            assert not read_response.diagnostics, f"Read failed: {read_response.diagnostics}"
 
             read_state = unmarshal(read_response.new_state, schema=schema.block)
             assert read_state.value["name"].value == "test-resource"
@@ -348,17 +318,12 @@ class TestPrivateStateResourceLifecycle:
                 planned_private=plan_response.planned_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
             assert not apply_response.diagnostics
 
             final_state = unmarshal(apply_response.new_state, schema=schema.block)
             assert final_state.value["input_value"].value == "test-verification"
-            assert (
-                final_state.value["decrypted_token"].value
-                == "SECRET_FOR_TEST-VERIFICATION"
-            )
+            assert final_state.value["decrypted_token"].value == "SECRET_FOR_TEST-VERIFICATION"
 
         finally:
             hub.unregister("resource", resource_name)
@@ -397,9 +362,7 @@ class TestTimedTokenResource:
                 planned_private=plan_response.planned_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
             assert not apply_response.diagnostics
             assert apply_response.private
 
@@ -430,9 +393,7 @@ class TestTimedTokenResource:
 
     def test_timed_token_private_state_structure(self):
         """Test that TimedTokenPrivateState has the correct structure"""
-        private_state = TimedTokenPrivateState(
-            token="test-token", expires_at="2025-08-06T10:00:00Z"
-        )
+        private_state = TimedTokenPrivateState(token="test-token", expires_at="2025-08-06T10:00:00Z")
 
         assert private_state.token == "test-token"
         assert private_state.expires_at == "2025-08-06T10:00:00Z"
@@ -479,9 +440,7 @@ class TestPrivateStateErrorHandling:
         encrypted = encrypt(test_data)
 
         # Change the key
-        with patch.dict(
-            os.environ, {"PYVIDER_PRIVATE_STATE_SHARED_SECRET": "different-key"}
-        ):
+        with patch.dict(os.environ, {"PYVIDER_PRIVATE_STATE_SHARED_SECRET": "different-key"}):
             # Reset cached key to force reload
             import pyvider.common.encryption
 
@@ -511,17 +470,10 @@ class TestPrivateStateErrorHandling:
                 planned_private=corrupted_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
-            assert apply_response.diagnostics, (
-                "Expected diagnostics for corrupted private state"
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
+            assert apply_response.diagnostics, "Expected diagnostics for corrupted private state"
             assert len(apply_response.diagnostics) > 0
-            assert (
-                "Failed to deserialize private state"
-                in apply_response.diagnostics[0].detail
-            )
+            assert "Failed to deserialize private state" in apply_response.diagnostics[0].detail
 
         finally:
             hub.unregister("resource", resource_name)

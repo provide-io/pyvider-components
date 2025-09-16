@@ -6,12 +6,12 @@ from typing import Any
 
 import jq
 
+from provide.foundation import logger
 from pyvider.capabilities import BaseCapability, register_capability
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import infer_cty_type_from_raw
 from pyvider.exceptions import FunctionError
 from pyvider.schema import PvsAttribute, a_bool, a_str
-from provide.foundation import logger
 
 
 @register_capability("lens")
@@ -34,9 +34,7 @@ class LensCapability(BaseCapability):
         """
         Executes a JQ query and converts the raw Python result to a CtyValue.
         """
-        logger.debug(
-            "⚙️ LENS-JQ ✅ Applying jq query via LensCapability service", query=query
-        )
+        logger.debug("⚙️ LENS-JQ ✅ Applying jq query via LensCapability service", query=query)
         try:
             # THE FIX: Use the correct `compile(...).transform(...)` API.
             compiled_query = jq.compile(query)
