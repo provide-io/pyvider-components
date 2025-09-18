@@ -6,14 +6,14 @@ from typing import Any
 
 from provide.foundation import logger
 from provide.foundation.errors import resilient
-from provide.foundation.utils.formatting import (
+from provide.foundation.formatting import (
     format_size,
+    pluralize,
     to_camel_case,
     to_kebab_case,
     to_snake_case,
     truncate,
 )
-from provide.foundation.utils.text_utils import pluralize
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
