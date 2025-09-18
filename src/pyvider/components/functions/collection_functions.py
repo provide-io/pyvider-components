@@ -5,7 +5,7 @@
 from typing import Any
 
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import resilient
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
@@ -33,7 +33,7 @@ def contains(list_to_check: list[Any] | None, element: Any) -> bool | None:
 
 
 @register_function(name="lookup", summary="Performs a dynamic lookup into a map.")
-@with_error_handling()
+@resilient()
 def lookup(map_to_search: dict[str, Any] | None, key: str, default: Any | None = None) -> Any:
     if map_to_search is None:
         return None

@@ -11,7 +11,7 @@ from typing import cast
 from attrs import define, field
 
 from provide.foundation import logger
-from provide.foundation.errors import capture_error_context, with_error_handling
+from provide.foundation.errors import capture_error_context, resilient
 from provide.foundation.file import get_mtime, get_size
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -73,12 +73,12 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
             }
         )
 
-    @with_error_handling()
+    @resilient()
     async def _validate_config(self, config: FileInfoConfig) -> list[str]:
         logger.debug("Validating file info config", path=config.path)
         return []
 
-    @with_error_handling()
+    @resilient()
     async def read(self, ctx: ResourceContext) -> FileInfoState:
         if not ctx.config:
             raise DataSourceError("Configuration is missing.")

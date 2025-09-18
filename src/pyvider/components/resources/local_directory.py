@@ -8,7 +8,7 @@ from typing import Any, cast
 from attrs import define
 
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import resilient
 from pyvider.common.types import StateType
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
@@ -53,7 +53,7 @@ class LocalDirectoryResource(
             }
         )
 
-    @with_error_handling()
+    @resilient()
     async def _validate_config(self, config: LocalDirectoryConfig) -> list[str]:
         if config.permissions:
             is_valid = config.permissions.startswith("0o") and all(
@@ -93,7 +93,7 @@ class LocalDirectoryResource(
         base_plan["permissions"] = config.permissions or "0o755"
         return base_plan, None
 
-    @with_error_handling()
+    @resilient()
     async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
@@ -115,7 +115,7 @@ class LocalDirectoryResource(
     async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
-    @with_error_handling()
+    @resilient()
     async def read(self, ctx: ResourceContext) -> LocalDirectoryState | None:
         if not ctx.state or not ctx.state.path:
             logger.debug("No state or path provided for read operation")

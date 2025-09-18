@@ -9,7 +9,7 @@ from typing import cast
 from attrs import define, field
 
 from provide.foundation import logger
-from provide.foundation.errors import capture_error_context, with_error_handling
+from provide.foundation.errors import capture_error_context, resilient
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -61,7 +61,7 @@ class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariable
             }
         )
 
-    @with_error_handling()
+    @resilient()
     async def _validate_config(self, config: EnvVariablesConfig) -> list[str]:
         filter_count = sum(1 for v in [config.keys, config.prefix, config.regex] if v is not None)
         if filter_count > 1:
@@ -78,7 +78,7 @@ class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariable
         )
         return []
 
-    @with_error_handling()
+    @resilient()
     async def read(self, ctx: ResourceContext) -> EnvVariablesState:
         if not ctx.config:
             raise DataSourceError("Configuration is required.")

@@ -9,7 +9,7 @@ from typing import Any, cast
 from attrs import define, field
 
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import resilient
 from provide.foundation.file import (
     atomic_write_text,
     ensure_dir,
@@ -56,7 +56,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
     async def _validate_config(self, config: FileContentConfig) -> list[str]:
         return []
 
-    @with_error_handling()
+    @resilient()
     async def read(self, ctx: ResourceContext) -> FileContentState | None:
         filename_to_read = ctx.state.filename if ctx.state else (ctx.config.filename if ctx.config else None)
         if not filename_to_read:
@@ -99,7 +99,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
     ) -> tuple[dict[str, Any] | None, None]:
         return await self._create(ctx, base_plan)
 
-    @with_error_handling()
+    @resilient()
     async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
@@ -116,7 +116,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
     async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
-    @with_error_handling()
+    @resilient()
     async def _delete_apply(self, ctx: ResourceContext) -> None:
         state = cast(FileContentState, ctx.state)
         if not state or not state.filename:

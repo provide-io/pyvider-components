@@ -5,7 +5,7 @@
 from typing import Any
 
 from provide.foundation import logger
-from provide.foundation.errors import with_error_handling
+from provide.foundation.errors import resilient
 from provide.foundation.utils.formatting import (
     format_size,
     pluralize,
@@ -35,7 +35,7 @@ def lower(input_str: str | None) -> str | None:
 
 
 @register_function(name="format", summary="Formats a string using positional arguments.")
-@with_error_handling()
+@resilient()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
     if template is None:
         return None
