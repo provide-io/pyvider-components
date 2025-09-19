@@ -1,8 +1,11 @@
-.PHONY: docs-clean docs-functions docs-resources docs-data-sources docs-all docs-serve docs-check
+.PHONY: docs-clean docs-functions docs-resources docs-data-sources docs-all docs-serve docs-check test test-plating test-docs
 
 # Variables
 DOCS_DIR = docs
-PLATING_CMD = python -c "import sys; sys.path.append('../plating/src'); from plating.api import PlatingAPI; api = PlatingAPI()"
+PLATING_DIR = ../plating
+# Set debug logging for all plating operations
+export PLATING_LOG_LEVEL = DEBUG
+export PROVIDE_LOG_LEVEL = DEBUG
 
 # Clean all documentation
 docs-clean:
@@ -75,11 +78,48 @@ docs-sample:
 		echo "..."; \
 	done
 
+# Test plating functionality
+test-plating:
+	@echo "🧪 Running plating tests..."
+	@cd $(PLATING_DIR) && python -m pytest -v
+	@echo "✅ Plating tests completed"
+
+# Test documentation generation
+test-docs:
+	@echo "🧪 Testing documentation generation..."
+	@make docs-clean >/dev/null 2>&1
+	@make docs-functions >/dev/null 2>&1
+	@echo "📊 Verifying generated documentation:"
+	@if [ $$(find $(DOCS_DIR) -name "*.md" | wc -l) -eq 0 ]; then \
+		echo "❌ No documentation files generated"; \
+		exit 1; \
+	else \
+		echo "✅ Generated $$(find $(DOCS_DIR) -name "*.md" | wc -l) documentation files"; \
+	fi
+	@echo "🔍 Checking content quality:"
+	@if grep -q "signature_markdown" $(DOCS_DIR)/functions/*.md 2>/dev/null; then \
+		echo "❌ Found template variables in generated docs"; \
+		exit 1; \
+	else \
+		echo "✅ No template variables found in generated docs"; \
+	fi
+	@if grep -q "# Returns:" $(DOCS_DIR)/functions/*.md 2>/dev/null; then \
+		echo "✅ Found example usage in generated docs"; \
+	else \
+		echo "❌ No example usage found in generated docs"; \
+		exit 1; \
+	fi
+	@echo "✅ Documentation generation test passed"
+
+# Run all tests
+test: test-plating test-docs
+	@echo "🎉 All tests passed successfully!"
+
 # Help
 help:
-	@echo "📚 Pyvider Components Documentation Commands"
+	@echo "📚 Pyvider Components Documentation & Testing Commands"
 	@echo ""
-	@echo "Available targets:"
+	@echo "Documentation targets:"
 	@echo "  docs-clean       - Clean documentation directory"
 	@echo "  docs-functions   - Generate function documentation"
 	@echo "  docs-resources   - Generate resource documentation"
@@ -87,9 +127,15 @@ help:
 	@echo "  docs-all         - Generate all documentation"
 	@echo "  docs-check       - Check what documentation was generated"
 	@echo "  docs-sample      - Show sample content from generated docs"
+	@echo ""
+	@echo "Testing targets:"
+	@echo "  test             - Run all tests (plating + docs)"
+	@echo "  test-plating     - Run plating unit tests"
+	@echo "  test-docs        - Test documentation generation"
+	@echo ""
 	@echo "  help             - Show this help message"
 	@echo ""
 	@echo "Example usage:"
 	@echo "  make docs-functions  # Generate individual function .md files"
-	@echo "  make docs-all        # Generate everything"
-	@echo "  make docs-check      # See what was generated"
+	@echo "  make test           # Run all tests"
+	@echo "  make test-docs      # Test doc generation works"
