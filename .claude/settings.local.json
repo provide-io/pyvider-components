@@ -5,6 +5,9 @@
       "Bash(plating:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "/Users/tim/code/gh/provide-io"
+    ]
   }
 }
