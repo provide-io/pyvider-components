@@ -130,3 +130,4 @@ All components should:
 - Include proper error handling and diagnostics
 - Follow existing naming conventions (snake_case for Python, appropriate for Terraform)
 - Include example Terraform configurations in `.garnish/examples/`
+- It can use __future__ annotations to use unquoted annotations
