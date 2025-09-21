@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(//Users/tim/code/gh/provide-io/**)",
-      "Bash(plating:*)"
+      "Bash(plating:*)",
+      "Read(//private/tmp/**)"
     ],
     "deny": [],
     "ask": [],
