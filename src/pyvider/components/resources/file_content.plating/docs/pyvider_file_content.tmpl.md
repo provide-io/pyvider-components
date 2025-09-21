@@ -65,13 +65,37 @@ output "config_hash" {
 
 ## Import
 
-You can import existing files into Terraform state:
+Files can be imported into Terraform state using either the CLI or configuration-based import.
+
+### CLI Import
 
 ```bash
 terraform import pyvider_file_content.example /path/to/existing/file.txt
 ```
 
-The import will read the current file content and add it to state with the existing content and computed hash.
+### Configuration Import (Terraform 1.5+)
+
+```terraform
+import {
+  to = pyvider_file_content.example
+  id = "/path/to/existing/file.txt"
+}
+
+resource "pyvider_file_content" "example" {
+  filename = "/path/to/existing/file.txt"
+  content  = "existing content will be read during import"
+}
+```
+
+### Import Process
+
+During import, the provider will:
+1. Read the current file content from the specified path
+2. Calculate the SHA256 hash of the content
+3. Set the `exists` attribute to `true`
+4. Store the content and hash in Terraform state
+
+**Note**: The `content` attribute in your configuration should match the existing file content, or Terraform will detect a drift and attempt to update the file on the next apply.
 
 ## Common Issues & Solutions
 

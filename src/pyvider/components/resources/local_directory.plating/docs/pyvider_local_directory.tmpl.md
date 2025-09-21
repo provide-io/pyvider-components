@@ -69,13 +69,37 @@ output "log_dir_info" {
 
 ## Import
 
-You can import existing directories into Terraform state:
+Directories can be imported into Terraform state using either the CLI or configuration-based import.
+
+### CLI Import
 
 ```bash
 terraform import pyvider_local_directory.example /path/to/existing/directory
 ```
 
-The import will read the current directory state, permissions, and file count.
+### Configuration Import (Terraform 1.5+)
+
+```terraform
+import {
+  to = pyvider_local_directory.example
+  id = "/path/to/existing/directory"
+}
+
+resource "pyvider_local_directory" "example" {
+  path = "/path/to/existing/directory"
+  # permissions will be read during import
+}
+```
+
+### Import Process
+
+During import, the provider will:
+1. Verify the directory exists and is accessible
+2. Read the current directory permissions
+3. Count the number of files in the directory
+4. Store the directory state in Terraform state
+
+**Note**: If you specify `permissions` in your configuration, ensure they match the existing directory permissions, or Terraform will attempt to update them on the next apply.
 
 ## Permission Format
 
