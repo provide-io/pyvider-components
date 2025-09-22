@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     pyvider = {
-      source  = "registry.terraform.io/provide-io/pyvider"
+      source  = "local/providers/pyvider"
       version = ">= 0.0.5"
     }
   }

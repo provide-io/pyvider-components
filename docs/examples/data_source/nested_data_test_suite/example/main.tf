@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     pyvider = {
-      source  = "registry.terraform.io/provide-io/pyvider"
+      source  = "local/providers/pyvider"
       version = ">= 0.0.5"
     }
   }
@@ -20,7 +20,7 @@ locals {
 }
 
 output "function_result" {
-  description = "Result of pyvider_nested_data_processor function"
+  description = "Result of pyvider_nested_data_processor function"  
   value       = local.example_result
 }
 

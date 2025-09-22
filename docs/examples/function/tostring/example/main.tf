@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     pyvider = {
-      source  = "registry.terraform.io/provide-io/pyvider"
+      source  = "local/providers/pyvider"
       version = ">= 0.0.5"
     }
   }
@@ -20,7 +20,7 @@ locals {
 }
 
 output "function_result" {
-  description = "Result of tostring function"
+  description = "Result of tostring function"  
   value       = local.example_result
 }
 
