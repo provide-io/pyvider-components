@@ -1,12 +1,12 @@
 ---
 page_title: "Data Source: nested_data_test_suite"
 description: |-
-  The type of the None singleton.
+  Terraform data_source for nested_data_test_suite
 ---
 
 # nested_data_test_suite (Data Source)
 
-The type of the None singleton.
+Terraform data_source for nested_data_test_suite
 
 ## Example Usage
 
