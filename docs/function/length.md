@@ -1,12 +1,12 @@
 ---
-page_title: "Function: contains"
+page_title: "Function: length"
 description: |-
-  Terraform function for contains
+  Terraform function for length
 ---
 
-# contains (Function)
+# length (Function)
 
-Terraform function for contains
+Terraform function for length
 
 ## Example Usage
 

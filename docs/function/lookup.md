@@ -1,12 +1,12 @@
 ---
-page_title: "Function: contains"
+page_title: "Function: lookup"
 description: |-
-  Terraform function for contains
+  Terraform function for lookup
 ---
 
-# contains (Function)
+# lookup (Function)
 
-Terraform function for contains
+Terraform function for lookup
 
 ## Example Usage
 

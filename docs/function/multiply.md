@@ -1,12 +1,12 @@
 ---
-page_title: "Function: divide"
+page_title: "Function: multiply"
 description: |-
-  Terraform function for divide
+  Terraform function for multiply
 ---
 
-# divide (Function)
+# multiply (Function)
 
-Terraform function for divide
+Terraform function for multiply
 
 ## Example Usage
 

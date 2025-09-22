@@ -1,12 +1,12 @@
 ---
-page_title: "Function: lower"
+page_title: "Function: upper"
 description: |-
-  Terraform function for lower
+  Terraform function for upper
 ---
 
-# lower (Function)
+# upper (Function)
 
-Terraform function for lower
+Terraform function for upper
 
 ## Example Usage
 

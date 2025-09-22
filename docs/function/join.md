@@ -1,12 +1,12 @@
 ---
-page_title: "Function: lower"
+page_title: "Function: join"
 description: |-
-  Terraform function for lower
+  Terraform function for join
 ---
 
-# lower (Function)
+# join (Function)
 
-Terraform function for lower
+Terraform function for join
 
 ## Example Usage
 

@@ -1,12 +1,12 @@
 ---
-page_title: "Function: divide"
+page_title: "Function: min"
 description: |-
-  Terraform function for divide
+  Terraform function for min
 ---
 
-# divide (Function)
+# min (Function)
 
-Terraform function for divide
+Terraform function for min
 
 ## Example Usage
 

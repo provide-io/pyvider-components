@@ -1,12 +1,12 @@
 ---
-page_title: "Function: lower"
+page_title: "Function: replace"
 description: |-
-  Terraform function for lower
+  Terraform function for replace
 ---
 
-# lower (Function)
+# replace (Function)
 
-Terraform function for lower
+Terraform function for replace
 
 ## Example Usage
 

@@ -1,12 +1,12 @@
 ---
-page_title: "Function: divide"
+page_title: "Function: sum"
 description: |-
-  Terraform function for divide
+  Terraform function for sum
 ---
 
-# divide (Function)
+# sum (Function)
 
-Terraform function for divide
+Terraform function for sum
 
 ## Example Usage
 

@@ -1,12 +1,12 @@
 ---
-page_title: "Function: divide"
+page_title: "Function: max"
 description: |-
-  Terraform function for divide
+  Terraform function for max
 ---
 
-# divide (Function)
+# max (Function)
 
-Terraform function for divide
+Terraform function for max
 
 ## Example Usage
 

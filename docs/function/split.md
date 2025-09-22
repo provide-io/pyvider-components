@@ -1,12 +1,12 @@
 ---
-page_title: "Function: lower"
+page_title: "Function: split"
 description: |-
-  Terraform function for lower
+  Terraform function for split
 ---
 
-# lower (Function)
+# split (Function)
 
-Terraform function for lower
+Terraform function for split
 
 ## Example Usage
 
