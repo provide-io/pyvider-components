@@ -3,8 +3,8 @@
 output "showcase_summary" {
   description = "Summary of the complete showcase"
   value = {
-    timestamp = timestamp()
+    timestamp               = timestamp()
     components_demonstrated = 29
-    environment = var.environment
+    environment             = var.environment
   }
 }

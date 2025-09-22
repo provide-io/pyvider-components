@@ -35,25 +35,25 @@ variable "application_name" {
 locals {
   env_config = {
     development = {
-      token_prefix = "dev"
-      monitoring_level = "basic"
+      token_prefix      = "dev"
+      monitoring_level  = "basic"
       rotation_required = false
-      alert_channels = ["email"]
-      backup_tokens = 1
+      alert_channels    = ["email"]
+      backup_tokens     = 1
     }
     staging = {
-      token_prefix = "staging"
-      monitoring_level = "enhanced"
+      token_prefix      = "staging"
+      monitoring_level  = "enhanced"
       rotation_required = true
-      alert_channels = ["email", "slack"]
-      backup_tokens = 2
+      alert_channels    = ["email", "slack"]
+      backup_tokens     = 2
     }
     production = {
-      token_prefix = "prod"
-      monitoring_level = "comprehensive"
+      token_prefix      = "prod"
+      monitoring_level  = "comprehensive"
       rotation_required = true
-      alert_channels = ["email", "slack", "pagerduty"]
-      backup_tokens = 3
+      alert_channels    = ["email", "slack", "pagerduty"]
+      backup_tokens     = 3
     }
   }
 
@@ -109,93 +109,93 @@ resource "pyvider_file_content" "token_registry" {
   content = jsonencode({
     environment = var.environment
     application = var.application_name
-    timestamp = timestamp()
+    timestamp   = timestamp()
 
     configuration = local.current_config
 
     tokens = {
       application = {
         primary = {
-          name = pyvider_timed_token.app_primary.name
-          id = pyvider_timed_token.app_primary.id
+          name       = pyvider_timed_token.app_primary.name
+          id         = pyvider_timed_token.app_primary.id
           expires_at = pyvider_timed_token.app_primary.expires_at
-          type = "primary"
+          type       = "primary"
         }
         backups = [
           for i, token in pyvider_timed_token.app_backup : {
-            name = token.name
-            id = token.id
+            name       = token.name
+            id         = token.id
             expires_at = token.expires_at
-            type = "backup"
-            sequence = i + 1
+            type       = "backup"
+            sequence   = i + 1
           }
         ]
       }
 
       database = {
         readonly = {
-          name = pyvider_timed_token.database_read.name
-          id = pyvider_timed_token.database_read.id
-          expires_at = pyvider_timed_token.database_read.expires_at
+          name        = pyvider_timed_token.database_read.name
+          id          = pyvider_timed_token.database_read.id
+          expires_at  = pyvider_timed_token.database_read.expires_at
           permissions = ["read", "list"]
         }
         readwrite = var.environment == "production" ? {
-          name = pyvider_timed_token.database_write[0].name
-          id = pyvider_timed_token.database_write[0].id
-          expires_at = pyvider_timed_token.database_write[0].expires_at
+          name        = pyvider_timed_token.database_write[0].name
+          id          = pyvider_timed_token.database_write[0].id
+          expires_at  = pyvider_timed_token.database_write[0].expires_at
           permissions = ["read", "write", "list", "delete"]
         } : null
       }
 
       api_services = {
         gateway = {
-          name = pyvider_timed_token.api_gateway.name
-          id = pyvider_timed_token.api_gateway.id
+          name       = pyvider_timed_token.api_gateway.name
+          id         = pyvider_timed_token.api_gateway.id
           expires_at = pyvider_timed_token.api_gateway.expires_at
-          scope = "external"
+          scope      = "external"
         }
         internal = {
-          name = pyvider_timed_token.api_internal.name
-          id = pyvider_timed_token.api_internal.id
+          name       = pyvider_timed_token.api_internal.name
+          id         = pyvider_timed_token.api_internal.id
           expires_at = pyvider_timed_token.api_internal.expires_at
-          scope = "internal"
+          scope      = "internal"
         }
       }
 
       observability = {
         metrics = {
-          name = pyvider_timed_token.metrics_collector.name
-          id = pyvider_timed_token.metrics_collector.id
+          name       = pyvider_timed_token.metrics_collector.name
+          id         = pyvider_timed_token.metrics_collector.id
           expires_at = pyvider_timed_token.metrics_collector.expires_at
-          service = "prometheus"
+          service    = "prometheus"
         }
         logs = {
-          name = pyvider_timed_token.log_aggregator.name
-          id = pyvider_timed_token.log_aggregator.id
+          name       = pyvider_timed_token.log_aggregator.name
+          id         = pyvider_timed_token.log_aggregator.id
           expires_at = pyvider_timed_token.log_aggregator.expires_at
-          service = "elasticsearch"
+          service    = "elasticsearch"
         }
         traces = var.environment != "development" ? {
-          name = pyvider_timed_token.trace_collector[0].name
-          id = pyvider_timed_token.trace_collector[0].id
+          name       = pyvider_timed_token.trace_collector[0].name
+          id         = pyvider_timed_token.trace_collector[0].id
           expires_at = pyvider_timed_token.trace_collector[0].expires_at
-          service = "jaeger"
+          service    = "jaeger"
         } : null
       }
     }
 
     security_policy = {
       rotation_required = local.current_config.rotation_required
-      monitoring_level = local.current_config.monitoring_level
-      backup_strategy = "multiple_tokens"
-      alert_channels = local.current_config.alert_channels
+      monitoring_level  = local.current_config.monitoring_level
+      backup_strategy   = "multiple_tokens"
+      alert_channels    = local.current_config.alert_channels
     }
 
     compliance = {
-      environment_isolation = true
-      token_segregation = true
+      environment_isolation        = true
+      token_segregation            = true
       principle_of_least_privilege = true
-      automatic_expiration = true
+      automatic_expiration         = true
     }
   })
 }
@@ -205,43 +205,43 @@ resource "pyvider_file_content" "app_config" {
   filename = "/tmp/${var.environment}_app_config.yaml"
   content = yamlencode({
     application = {
-      name = var.application_name
+      name        = var.application_name
       environment = var.environment
 
       authentication = {
         primary_token = {
-          id = pyvider_timed_token.app_primary.id
-          name = pyvider_timed_token.app_primary.name
+          id         = pyvider_timed_token.app_primary.id
+          name       = pyvider_timed_token.app_primary.name
           expires_at = pyvider_timed_token.app_primary.expires_at
         }
 
         backup_tokens = [
           for token in pyvider_timed_token.app_backup : {
-            id = token.id
-            name = token.name
+            id         = token.id
+            name       = token.name
             expires_at = token.expires_at
           }
         ]
 
         rotation_policy = {
-          enabled = local.current_config.rotation_required
+          enabled             = local.current_config.rotation_required
           warn_before_minutes = var.environment == "production" ? 10 : 30
-          fallback_enabled = length(pyvider_timed_token.app_backup) > 0
+          fallback_enabled    = length(pyvider_timed_token.app_backup) > 0
         }
       }
 
       database = {
         connections = {
           readonly = {
-            token_id = pyvider_timed_token.database_read.id
-            token_name = pyvider_timed_token.database_read.name
-            expires_at = pyvider_timed_token.database_read.expires_at
+            token_id        = pyvider_timed_token.database_read.id
+            token_name      = pyvider_timed_token.database_read.name
+            expires_at      = pyvider_timed_token.database_read.expires_at
             max_connections = var.environment == "production" ? 20 : 5
           }
           readwrite = var.environment == "production" ? {
-            token_id = pyvider_timed_token.database_write[0].id
-            token_name = pyvider_timed_token.database_write[0].name
-            expires_at = pyvider_timed_token.database_write[0].expires_at
+            token_id        = pyvider_timed_token.database_write[0].id
+            token_name      = pyvider_timed_token.database_write[0].name
+            expires_at      = pyvider_timed_token.database_write[0].expires_at
             max_connections = 10
           } : null
         }
@@ -249,56 +249,56 @@ resource "pyvider_file_content" "app_config" {
 
       apis = {
         gateway = {
-          token_id = pyvider_timed_token.api_gateway.id
-          token_name = pyvider_timed_token.api_gateway.name
-          expires_at = pyvider_timed_token.api_gateway.expires_at
-          base_url = "https://${var.environment == "production" ? "api" : "${var.environment}-api"}.example.com"
+          token_id        = pyvider_timed_token.api_gateway.id
+          token_name      = pyvider_timed_token.api_gateway.name
+          expires_at      = pyvider_timed_token.api_gateway.expires_at
+          base_url        = "https://${var.environment == "production" ? "api" : "${var.environment}-api"}.example.com"
           timeout_seconds = var.environment == "production" ? 10 : 30
         }
         internal = {
-          token_id = pyvider_timed_token.api_internal.id
-          token_name = pyvider_timed_token.api_internal.name
-          expires_at = pyvider_timed_token.api_internal.expires_at
-          base_url = "https://internal-${var.environment}.example.com"
+          token_id        = pyvider_timed_token.api_internal.id
+          token_name      = pyvider_timed_token.api_internal.name
+          expires_at      = pyvider_timed_token.api_internal.expires_at
+          base_url        = "https://internal-${var.environment}.example.com"
           timeout_seconds = 15
         }
       }
 
       observability = {
         metrics = {
-          enabled = true
-          token_id = pyvider_timed_token.metrics_collector.id
-          token_name = pyvider_timed_token.metrics_collector.name
-          expires_at = pyvider_timed_token.metrics_collector.expires_at
-          endpoint = "https://metrics-${var.environment}.example.com"
+          enabled          = true
+          token_id         = pyvider_timed_token.metrics_collector.id
+          token_name       = pyvider_timed_token.metrics_collector.name
+          expires_at       = pyvider_timed_token.metrics_collector.expires_at
+          endpoint         = "https://metrics-${var.environment}.example.com"
           interval_seconds = var.environment == "production" ? 15 : 60
         }
 
         logging = {
-          enabled = true
-          token_id = pyvider_timed_token.log_aggregator.id
+          enabled    = true
+          token_id   = pyvider_timed_token.log_aggregator.id
           token_name = pyvider_timed_token.log_aggregator.name
           expires_at = pyvider_timed_token.log_aggregator.expires_at
-          endpoint = "https://logs-${var.environment}.example.com"
-          level = var.environment == "production" ? "warn" : (var.environment == "staging" ? "info" : "debug")
+          endpoint   = "https://logs-${var.environment}.example.com"
+          level      = var.environment == "production" ? "warn" : (var.environment == "staging" ? "info" : "debug")
         }
 
         tracing = var.environment != "development" ? {
-          enabled = true
-          token_id = pyvider_timed_token.trace_collector[0].id
-          token_name = pyvider_timed_token.trace_collector[0].name
-          expires_at = pyvider_timed_token.trace_collector[0].expires_at
-          endpoint = "https://traces-${var.environment}.example.com"
+          enabled       = true
+          token_id      = pyvider_timed_token.trace_collector[0].id
+          token_name    = pyvider_timed_token.trace_collector[0].name
+          expires_at    = pyvider_timed_token.trace_collector[0].expires_at
+          endpoint      = "https://traces-${var.environment}.example.com"
           sampling_rate = var.environment == "production" ? 0.1 : 1.0
-        } : {
+          } : {
           enabled = false
         }
       }
     }
 
     environment_metadata = {
-      deployment_tier = var.environment
-      monitoring_level = local.current_config.monitoring_level
+      deployment_tier     = var.environment
+      monitoring_level    = local.current_config.monitoring_level
       compliance_required = var.environment == "production"
       backup_tokens_count = local.current_config.backup_tokens
     }
@@ -312,67 +312,67 @@ resource "pyvider_file_content" "monitoring_config" {
     monitoring = {
       environment = var.environment
       application = var.application_name
-      level = local.current_config.monitoring_level
+      level       = local.current_config.monitoring_level
 
       token_monitoring = {
         primary_application = {
-          token_id = pyvider_timed_token.app_primary.id
-          token_name = pyvider_timed_token.app_primary.name
-          expires_at = pyvider_timed_token.app_primary.expires_at
+          token_id    = pyvider_timed_token.app_primary.id
+          token_name  = pyvider_timed_token.app_primary.name
+          expires_at  = pyvider_timed_token.app_primary.expires_at
           criticality = "high"
           alert_thresholds = {
-            expiry_warning_minutes = var.environment == "production" ? 10 : 30
+            expiry_warning_minutes  = var.environment == "production" ? 10 : 30
             usage_anomaly_threshold = 2.0
           }
         }
 
         backup_tokens = [
           for i, token in pyvider_timed_token.app_backup : {
-            token_id = token.id
-            token_name = token.name
-            expires_at = token.expires_at
+            token_id    = token.id
+            token_name  = token.name
+            expires_at  = token.expires_at
             criticality = "medium"
-            sequence = i + 1
+            sequence    = i + 1
           }
         ]
 
         infrastructure_tokens = [
           {
-            service = "database_readonly"
-            token_id = pyvider_timed_token.database_read.id
-            token_name = pyvider_timed_token.database_read.name
-            expires_at = pyvider_timed_token.database_read.expires_at
+            service     = "database_readonly"
+            token_id    = pyvider_timed_token.database_read.id
+            token_name  = pyvider_timed_token.database_read.name
+            expires_at  = pyvider_timed_token.database_read.expires_at
             criticality = "high"
           },
           {
-            service = "api_gateway"
-            token_id = pyvider_timed_token.api_gateway.id
-            token_name = pyvider_timed_token.api_gateway.name
-            expires_at = pyvider_timed_token.api_gateway.expires_at
+            service     = "api_gateway"
+            token_id    = pyvider_timed_token.api_gateway.id
+            token_name  = pyvider_timed_token.api_gateway.name
+            expires_at  = pyvider_timed_token.api_gateway.expires_at
             criticality = "high"
           },
           {
-            service = "internal_apis"
-            token_id = pyvider_timed_token.api_internal.id
-            token_name = pyvider_timed_token.api_internal.name
-            expires_at = pyvider_timed_token.api_internal.expires_at
+            service     = "internal_apis"
+            token_id    = pyvider_timed_token.api_internal.id
+            token_name  = pyvider_timed_token.api_internal.name
+            expires_at  = pyvider_timed_token.api_internal.expires_at
             criticality = "medium"
           }
         ]
 
         observability_tokens = [
           {
-            service = "metrics_collection"
-            token_id = pyvider_timed_token.metrics_collector.id
-            token_name = pyvider_timed_token.metrics_collector.name
-            expires_at = pyvider_timed_token.metrics_collector.expires_at
+            service     = "metrics_collection"
+            token_id    = pyvider_timed_token.metrics_collector.id
+            token_name  = pyvider_timed_token.metrics_collector.name
+            expires_at  = pyvider_timed_token.metrics_collector.expires_at
             criticality = "medium"
           },
           {
-            service = "log_aggregation"
-            token_id = pyvider_timed_token.log_aggregator.id
-            token_name = pyvider_timed_token.log_aggregator.name
-            expires_at = pyvider_timed_token.log_aggregator.expires_at
+            service     = "log_aggregation"
+            token_id    = pyvider_timed_token.log_aggregator.id
+            token_name  = pyvider_timed_token.log_aggregator.name
+            expires_at  = pyvider_timed_token.log_aggregator.expires_at
             criticality = "medium"
           }
         ]
@@ -381,34 +381,34 @@ resource "pyvider_file_content" "monitoring_config" {
       alert_configuration = {
         channels = local.current_config.alert_channels
         escalation_policy = {
-          immediate = var.environment == "production"
+          immediate           = var.environment == "production"
           business_hours_only = var.environment == "development"
-          weekend_alerts = var.environment != "development"
+          weekend_alerts      = var.environment != "development"
         }
         notification_templates = {
-          token_expiry = "Token ${var.token_name} (${var.token_id}) expires at ${var.expires_at}"
+          token_expiry   = "Token ${var.token_name} (${var.token_id}) expires at ${var.expires_at}"
           token_rotation = "Token rotation required for ${var.environment} environment"
-          token_failure = "Token authentication failed for service ${var.service_name}"
+          token_failure  = "Token authentication failed for service ${var.service_name}"
         }
       }
 
       health_checks = {
-        enabled = true
-        interval_seconds = var.environment == "production" ? 30 : 300
-        timeout_seconds = 10
+        enabled           = true
+        interval_seconds  = var.environment == "production" ? 30 : 300
+        timeout_seconds   = 10
         failure_threshold = var.environment == "production" ? 2 : 5
 
         endpoints = [
           {
-            name = "token_validation"
-            url = "https://auth-${var.environment}.example.com/validate"
-            method = "POST"
+            name            = "token_validation"
+            url             = "https://auth-${var.environment}.example.com/validate"
+            method          = "POST"
             expected_status = 200
           },
           {
-            name = "api_gateway_health"
-            url = "https://${var.environment == "production" ? "api" : "${var.environment}-api"}.example.com/health"
-            method = "GET"
+            name            = "api_gateway_health"
+            url             = "https://${var.environment == "production" ? "api" : "${var.environment}-api"}.example.com/health"
+            method          = "GET"
             expected_status = 200
           }
         ]
@@ -416,11 +416,11 @@ resource "pyvider_file_content" "monitoring_config" {
     }
 
     compliance = {
-      audit_logging = var.environment == "production"
+      audit_logging            = var.environment == "production"
       token_lifecycle_tracking = true
-      access_review_required = var.environment == "production"
-      encryption_at_rest = true
-      encryption_in_transit = true
+      access_review_required   = var.environment == "production"
+      encryption_at_rest       = true
+      encryption_in_transit    = true
     }
   })
 }
@@ -490,15 +490,15 @@ resource "pyvider_file_content" "deployment_summary" {
 output "multi_environment_deployment" {
   description = "Multi-environment token deployment summary"
   value = {
-    environment = var.environment
-    application = var.application_name
+    environment   = var.environment
+    application   = var.application_name
     configuration = local.current_config
 
     tokens = {
       application = {
         primary = {
-          name = pyvider_timed_token.app_primary.name
-          id = pyvider_timed_token.app_primary.id
+          name       = pyvider_timed_token.app_primary.name
+          id         = pyvider_timed_token.app_primary.id
           expires_at = pyvider_timed_token.app_primary.expires_at
         }
         backup_count = length(pyvider_timed_token.app_backup)
@@ -507,16 +507,16 @@ output "multi_environment_deployment" {
       infrastructure = {
         database_readonly = {
           name = pyvider_timed_token.database_read.name
-          id = pyvider_timed_token.database_read.id
+          id   = pyvider_timed_token.database_read.id
         }
         database_readwrite_enabled = var.environment == "production"
         api_gateway = {
           name = pyvider_timed_token.api_gateway.name
-          id = pyvider_timed_token.api_gateway.id
+          id   = pyvider_timed_token.api_gateway.id
         }
         internal_apis = {
           name = pyvider_timed_token.api_internal.name
-          id = pyvider_timed_token.api_internal.id
+          id   = pyvider_timed_token.api_internal.id
         }
       }
 
@@ -529,9 +529,9 @@ output "multi_environment_deployment" {
 
     security = {
       rotation_required = local.current_config.rotation_required
-      monitoring_level = local.current_config.monitoring_level
-      backup_strategy = local.current_config.backup_tokens > 0
-      alert_channels = local.current_config.alert_channels
+      monitoring_level  = local.current_config.monitoring_level
+      backup_strategy   = local.current_config.backup_tokens > 0
+      alert_channels    = local.current_config.alert_channels
     }
 
     files_generated = [
@@ -542,13 +542,13 @@ output "multi_environment_deployment" {
     ]
 
     total_tokens = (
-      1 + # primary
-      length(pyvider_timed_token.app_backup) + # backups
-      1 + # database read
+      1 +                                         # primary
+      length(pyvider_timed_token.app_backup) +    # backups
+      1 +                                         # database read
       (var.environment == "production" ? 1 : 0) + # database write
-      2 + # api tokens
-      2 + # observability (metrics + logs)
-      (var.environment != "development" ? 1 : 0) # tracing
+      2 +                                         # api tokens
+      2 +                                         # observability (metrics + logs)
+      (var.environment != "development" ? 1 : 0)  # tracing
     )
   }
 }
