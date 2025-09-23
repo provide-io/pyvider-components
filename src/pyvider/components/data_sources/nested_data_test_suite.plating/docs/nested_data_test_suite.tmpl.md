@@ -1,10 +1,10 @@
 ---
-page_title: "Data Source: pyvider_nested_data_processor"
+page_title: "Data Source: nested_data_test_suite"
 description: |-
   Processes and validates complex nested data structures for Terraform provider testing
 ---
 
-# pyvider_nested_data_processor (Data Source)
+# nested_data_test_suite (Data Source)
 
 > Processes complex nested data structures for testing CTY data handling and validation
 
