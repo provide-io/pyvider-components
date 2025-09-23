@@ -5,7 +5,8 @@
       "Bash(plating:*)",
       "Read(//private/tmp/**)",
       "Bash(while read f)",
-      "Bash(terraform:*)"
+      "Bash(terraform:*)",
+      "Bash(xargs ls:*)"
     ],
     "deny": [],
     "ask": [],
