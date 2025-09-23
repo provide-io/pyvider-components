@@ -38,11 +38,3 @@ asyncio_mode = "auto"
 dev = [
     "provide-testkit[grpc-dev,profiling,build]",
 ]
-
-[tool.uv.sources]
-provide-foundation = { workspace = true }
-provide-testkit = { workspace = true }
-pyvider = { workspace = true }
-pyvider-cty = { workspace = true }
-pyvider-rpcplugin = { workspace = true }
-plating = { workspace = true }
