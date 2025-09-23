@@ -6,7 +6,8 @@
       "Read(//private/tmp/**)",
       "Bash(while read f)",
       "Bash(terraform:*)",
-      "Bash(xargs ls:*)"
+      "Bash(xargs ls:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": [],
