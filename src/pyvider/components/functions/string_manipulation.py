@@ -34,7 +34,9 @@ def lower(input_str: str | None) -> str | None:
     return input_str.lower()
 
 
-@register_function(name="format", summary="Formats a string using positional arguments.")
+@register_function(
+    name="format", summary="Formats a string using positional arguments."
+)
 @resilient()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
     if template is None:
@@ -46,7 +48,9 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
         logger.debug("Formatted string", template=template, value_count=len(value_list))
         return result
     except IndexError as e:
-        raise FunctionError(f"Formatting failed: not enough values for template '{template}'.") from e
+        raise FunctionError(
+            f"Formatting failed: not enough values for template '{template}'."
+        ) from e
 
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
@@ -68,7 +72,9 @@ def split(delimiter: str | None, string: str | None) -> list[str] | None:
 
 
 @register_function(name="replace", summary="Replaces occurrences of a substring.")
-def replace(string: str | None, search: str | None, replacement: str | None) -> str | None:
+def replace(
+    string: str | None, search: str | None, replacement: str | None
+) -> str | None:
     if string is None:
         return None
     return string.replace(search or "", replacement or "")
@@ -107,7 +113,9 @@ def format_file_size(size_bytes: int | None, precision: int = 1) -> str | None:
 
 
 @register_function(name="truncate", summary="Truncates text to specified length.")
-def truncate_text(text: str | None, max_length: int = 100, suffix: str = "...") -> str | None:
+def truncate_text(
+    text: str | None, max_length: int = 100, suffix: str = "..."
+) -> str | None:
     """Truncate text to specified length using provide-foundation utilities."""
     if text is None:
         return None
@@ -115,7 +123,9 @@ def truncate_text(text: str | None, max_length: int = 100, suffix: str = "...") 
 
 
 @register_function(name="pluralize", summary="Pluralizes a word based on count.")
-def pluralize_word(word: str | None, count: int = 1, plural: str | None = None) -> str | None:
+def pluralize_word(
+    word: str | None, count: int = 1, plural: str | None = None
+) -> str | None:
     """Pluralize a word based on count using provide-foundation utilities."""
     if word is None:
         return None

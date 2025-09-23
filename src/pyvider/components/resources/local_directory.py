@@ -42,14 +42,20 @@ class LocalDirectoryResource(
     def get_schema(cls) -> PvsSchema:
         return s_resource(
             {
-                "path": a_str(required=True, description="The path of the directory to manage."),
+                "path": a_str(
+                    required=True, description="The path of the directory to manage."
+                ),
                 "permissions": a_str(
                     optional=True,
                     computed=True,
                     description="The permissions for the directory in octal format. Must start with '0o' (e.g., '0o755').",
                 ),
-                "id": a_str(computed=True, description="The absolute path of the directory."),
-                "file_count": a_num(computed=True, description="The number of files in the directory."),
+                "id": a_str(
+                    computed=True, description="The absolute path of the directory."
+                ),
+                "file_count": a_num(
+                    computed=True, description="The number of files in the directory."
+                ),
             }
         )
 
@@ -94,7 +100,9 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
+    async def _create_apply(
+        self, ctx: ResourceContext
+    ) -> tuple[StateType | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
@@ -112,7 +120,9 @@ class LocalDirectoryResource(
             ) from e
         return ctx.planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
+    async def _update_apply(
+        self, ctx: ResourceContext
+    ) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()
@@ -148,7 +158,9 @@ class LocalDirectoryResource(
             try:
                 path.rmdir()
             except OSError:
-                logger.warning(f"Directory {path} is not empty and will not be removed.")
+                logger.warning(
+                    f"Directory {path} is not empty and will not be removed."
+                )
 
 
 # 📁🏠📂

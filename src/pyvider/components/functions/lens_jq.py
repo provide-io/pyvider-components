@@ -22,7 +22,9 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
     )
 
     if not lens.is_enabled:
-        raise FunctionError("The 'lens' capability is disabled in the provider configuration.")
+        raise FunctionError(
+            "The 'lens' capability is disabled in the provider configuration."
+        )
 
     if not isinstance(query, str) or not query:
         raise FunctionError("The 'query' argument must be a non-empty string.")
@@ -35,20 +37,28 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
         # Assume it's already native Python data
         native_input_data = input_data
 
-    logger.debug(f"🔧 LENS_JQ_FUNCTION calling lens.jq({query!r}, {type(native_input_data)})")
-    logger.debug(f"🔧 LENS_JQ_FUNCTION native_input_data preview: {str(native_input_data)[:200]}...")
+    logger.debug(
+        f"🔧 LENS_JQ_FUNCTION calling lens.jq({query!r}, {type(native_input_data)})"
+    )
+    logger.debug(
+        f"🔧 LENS_JQ_FUNCTION native_input_data preview: {str(native_input_data)[:200]}..."
+    )
     try:
         logger.debug(
             f"🔧 LENS_JQ_FUNCTION about to call lens.jq with args: query={query!r}, input_data={native_input_data}"
         )
         logger.debug(f"🔧 LENS_JQ_FUNCTION lens object: {lens}, type: {type(lens)}")
         result_cty = lens.jq(query, native_input_data)
-        logger.debug(f"🔧 LENS_JQ_FUNCTION lens.jq returned: {type(result_cty)} = {result_cty}")
+        logger.debug(
+            f"🔧 LENS_JQ_FUNCTION lens.jq returned: {type(result_cty)} = {result_cty}"
+        )
         result = cty_to_native(result_cty)
         logger.debug(f"🔧 LENS_JQ_FUNCTION final result: {type(result)} = {result}")
         return result
     except Exception as jq_err:
-        logger.error(f"🔧 LENS_JQ_FUNCTION error in JQ processing: {jq_err}", exc_info=True)
+        logger.error(
+            f"🔧 LENS_JQ_FUNCTION error in JQ processing: {jq_err}", exc_info=True
+        )
         raise
 
 

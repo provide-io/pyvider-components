@@ -51,7 +51,9 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
 
     async def read(self, ctx: ResourceContext, *, lens: LensCapability) -> LensJqState:
         if not lens.is_enabled:
-            raise DataSourceError("The 'lens' capability is disabled in the provider configuration.")
+            raise DataSourceError(
+                "The 'lens' capability is disabled in the provider configuration."
+            )
 
         config = cast(LensJqConfig, ctx.config)
         if not config:
@@ -66,14 +68,20 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
             logger.debug(
                 f"🔧 LENS_JQ_DATA_SOURCE about to call lens.jq with query={config.query!r}, input_data={parsed_json}"
             )
-            logger.debug(f"🔧 LENS_JQ_DATA_SOURCE lens object: {lens}, type: {type(lens)}")
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE lens object: {lens}, type: {type(lens)}"
+            )
             result_cty_value = lens.jq(config.query, parsed_json)
             logger.debug(
                 f"🔧 LENS_JQ_DATA_SOURCE lens.jq returned: {type(result_cty_value)} = {result_cty_value}"
             )
             native_result = cty_to_native(result_cty_value)
-            logger.debug(f"🔧 LENS_JQ_DATA_SOURCE final result: {type(native_result)} = {native_result}")
-            return LensJqState(json_input=config.json_input, query=config.query, result=native_result)
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE final result: {type(native_result)} = {native_result}"
+            )
+            return LensJqState(
+                json_input=config.json_input, query=config.query, result=native_result
+            )
         except Exception as e:
             raise DataSourceError(f"Error processing jq query: {e}") from e
 

@@ -47,7 +47,9 @@ class ProviderConfigReaderDataSource(BaseDataSource):
         return []
 
     async def read(self, ctx: ResourceContext) -> ProviderConfigReaderState:
-        provider_ctx = cast(ProviderContext, hub.get_component("singleton", "provider_context"))
+        provider_ctx = cast(
+            ProviderContext, hub.get_component("singleton", "provider_context")
+        )
         if not provider_ctx or not provider_ctx.config:
             raise DataSourceError("Provider context has not been configured.")
         provider_config = provider_ctx.config
@@ -56,7 +58,9 @@ class ProviderConfigReaderDataSource(BaseDataSource):
             api_token=getattr(provider_config, "api_token", None),
             api_timeout=getattr(provider_config, "api_timeout", None),
             api_retries=getattr(provider_config, "api_retries", None),
-            api_insecure_skip_verify=getattr(provider_config, "api_insecure_skip_verify", None),
+            api_insecure_skip_verify=getattr(
+                provider_config, "api_insecure_skip_verify", None
+            ),
             api_headers=getattr(provider_config, "api_headers", None),
         )
 

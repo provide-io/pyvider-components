@@ -38,7 +38,9 @@ class FileContentState:
 
 
 @register_resource("pyvider_file_content")
-class FileContentResource(BaseResource["pyvider_file_content", FileContentState, FileContentConfig]):
+class FileContentResource(
+    BaseResource["pyvider_file_content", FileContentState, FileContentConfig]
+):
     config_class = FileContentConfig
     state_class = FileContentState
 
@@ -58,7 +60,11 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
 
     @resilient()
     async def read(self, ctx: ResourceContext) -> FileContentState | None:
-        filename_to_read = ctx.state.filename if ctx.state else (ctx.config.filename if ctx.config else None)
+        filename_to_read = (
+            ctx.state.filename
+            if ctx.state
+            else (ctx.config.filename if ctx.config else None)
+        )
         if not filename_to_read:
             logger.debug("No filename provided for read operation")
             return None
@@ -90,7 +96,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
             return None, None
 
         base_plan["exists"] = True
-        base_plan["content_hash"] = hashlib.sha256(config.content.encode("utf-8")).hexdigest()
+        base_plan["content_hash"] = hashlib.sha256(
+            config.content.encode("utf-8")
+        ).hexdigest()
 
         return base_plan, None
 
@@ -100,7 +108,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return await self._create(ctx, base_plan)
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
+    async def _create_apply(
+        self, ctx: ResourceContext
+    ) -> tuple[StateType | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
         logger.debug("Creating file", path=str(path))
@@ -113,7 +123,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         )
         return planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext) -> tuple[StateType | None, None]:
+    async def _update_apply(
+        self, ctx: ResourceContext
+    ) -> tuple[StateType | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()

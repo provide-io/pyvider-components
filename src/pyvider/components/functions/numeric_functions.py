@@ -12,7 +12,9 @@ def add(a: int | float | None, b: int | float | None) -> int | float | None:
         return None
     try:
         result = a + b
-        return int(result) if isinstance(result, float) and result.is_integer() else result
+        return (
+            int(result) if isinstance(result, float) and result.is_integer() else result
+        )
     except TypeError as e:
         raise FunctionError(f"Invalid argument types for addition: {e}") from e
 
@@ -23,7 +25,9 @@ def subtract(a: int | float | None, b: int | float | None) -> int | float | None
         return None
     try:
         result = a - b
-        return int(result) if isinstance(result, float) and result.is_integer() else result
+        return (
+            int(result) if isinstance(result, float) and result.is_integer() else result
+        )
     except TypeError as e:
         raise FunctionError(f"Invalid argument types for subtraction: {e}") from e
 
@@ -34,7 +38,9 @@ def multiply(a: int | float | None, b: int | float | None) -> int | float | None
         return None
     try:
         result = a * b
-        return int(result) if isinstance(result, float) and result.is_integer() else result
+        return (
+            int(result) if isinstance(result, float) and result.is_integer() else result
+        )
     except TypeError as e:
         raise FunctionError(f"Invalid argument types for multiplication: {e}") from e
 
@@ -47,7 +53,9 @@ def divide(a: int | float | None, b: int | float | None) -> int | float | None:
         raise FunctionError("Division by zero.")
     try:
         result = a / b
-        return int(result) if isinstance(result, float) and result.is_integer() else result
+        return (
+            int(result) if isinstance(result, float) and result.is_integer() else result
+        )
     except TypeError as e:
         raise FunctionError(f"Invalid argument types for division: {e}") from e
 
@@ -79,7 +87,9 @@ def sum_list(numbers: list[int | float] | None) -> int | float | None:
 
 
 @register_function(name="round", summary="Rounds a number to a specified precision.")
-def round_number(number: int | float | None, precision: int | None = 0) -> int | float | None:
+def round_number(
+    number: int | float | None, precision: int | None = 0
+) -> int | float | None:
     if number is None or precision is None:
         return None
     try:

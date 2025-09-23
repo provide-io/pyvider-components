@@ -52,14 +52,18 @@ class PrivateStateVerifierResource(BaseResource):
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any], VerifierPrivateState]:
         base_plan["decrypted_token"] = a_unknown(a_str())
-        private_state = self.private_state_class(secret_token=f"SECRET_FOR_{ctx.config.input_value.upper()}")
+        private_state = self.private_state_class(
+            secret_token=f"SECRET_FOR_{ctx.config.input_value.upper()}"
+        )
         return base_plan, private_state
 
     async def _create_apply(self, ctx: ResourceContext) -> tuple[VerifierState, None]:
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
-        final_state = evolve(ctx.planned_state, decrypted_token=ctx.private_state.secret_token)
+        final_state = evolve(
+            ctx.planned_state, decrypted_token=ctx.private_state.secret_token
+        )
         return final_state, None
 
     async def read(self, ctx: ResourceContext) -> VerifierState | None:

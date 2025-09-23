@@ -43,7 +43,9 @@ class FileInfoState:
 
 
 @register_data_source("pyvider_file_info")
-class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, FileInfoConfig]):
+class FileInfoDataSource(
+    BaseDataSource["pyvider_file_info", FileInfoState, FileInfoConfig]
+):
     config_class = FileInfoConfig
     state_class = FileInfoState
 
@@ -56,8 +58,12 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
                 "size": a_num(computed=True, description="Size in bytes."),
                 "is_dir": a_bool(computed=True, description="Is it a directory."),
                 "is_file": a_bool(computed=True, description="Is it a regular file."),
-                "is_symlink": a_bool(computed=True, description="Is it a symbolic link."),
-                "modified_time": a_str(computed=True, description="Last modification time."),
+                "is_symlink": a_bool(
+                    computed=True, description="Is it a symbolic link."
+                ),
+                "modified_time": a_str(
+                    computed=True, description="Last modification time."
+                ),
                 "access_time": a_str(computed=True, description="Last access time."),
                 "creation_time": a_str(computed=True, description="Creation time."),
                 "permissions": a_str(computed=True, description="File permissions."),
@@ -91,12 +97,16 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
 
         try:
             # Use provide-foundation utilities for safer file operations
-            file_size = get_size(config.path)
-            mtime = get_mtime(config.path)
+            get_size(config.path)
+            get_mtime(config.path)
             stat_info = path.stat()
         except (OSError, PermissionError) as e:
-            context = capture_error_context(e, category="file_access", operation="stat", file_path=config.path)
-            logger.warning("Failed to access file", path=config.path, error=str(e), context=context)
+            context = capture_error_context(
+                e, category="file_access", operation="stat", file_path=config.path
+            )
+            logger.warning(
+                "Failed to access file", path=config.path, error=str(e), context=context
+            )
             return FileInfoState(path=config.path, exists=True)
         logger.debug(
             "Reading file info",
@@ -124,7 +134,9 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
                 import mimetypes
 
                 mime_type = mimetypes.guess_type(config.path)[0] or ""
-                logger.debug("Detected MIME type", path=config.path, mime_type=mime_type)
+                logger.debug(
+                    "Detected MIME type", path=config.path, mime_type=mime_type
+                )
             except ImportError:
                 logger.debug("mimetypes module not available")
                 pass
@@ -136,9 +148,15 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
             is_dir=path.is_dir(),
             is_file=path.is_file(),
             is_symlink=path.is_symlink(),
-            modified_time=datetime.datetime.fromtimestamp(stat_info.st_mtime, tz=datetime.UTC).isoformat(),
-            access_time=datetime.datetime.fromtimestamp(stat_info.st_atime, tz=datetime.UTC).isoformat(),
-            creation_time=datetime.datetime.fromtimestamp(stat_info.st_ctime, tz=datetime.UTC).isoformat(),
+            modified_time=datetime.datetime.fromtimestamp(
+                stat_info.st_mtime, tz=datetime.UTC
+            ).isoformat(),
+            access_time=datetime.datetime.fromtimestamp(
+                stat_info.st_atime, tz=datetime.UTC
+            ).isoformat(),
+            creation_time=datetime.datetime.fromtimestamp(
+                stat_info.st_ctime, tz=datetime.UTC
+            ).isoformat(),
             permissions=oct(stat.S_IMODE(stat_info.st_mode)),
             owner=owner,
             group=group,

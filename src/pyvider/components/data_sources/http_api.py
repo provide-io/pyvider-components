@@ -43,7 +43,9 @@ class HTTPAPIState:
 
 
 @register_data_source("pyvider_http_api")
-class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPIConfig]):
+class HTTPAPIDataSource(
+    BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPIConfig]
+):
     config_class = HTTPAPIConfig
     state_class = HTTPAPIState
 
@@ -85,7 +87,12 @@ class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPI
         elif config.timeout > 300:  # 5 minutes max
             errors.append("Timeout cannot exceed 300 seconds")
 
-        logger.debug("HTTP API config validation", errors=len(errors), method=config.method, url=config.url)
+        logger.debug(
+            "HTTP API config validation",
+            errors=len(errors),
+            method=config.method,
+            url=config.url,
+        )
         return errors
 
     async def _make_http_request(self, config: HTTPAPIConfig):
@@ -115,16 +122,26 @@ class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPI
                 method=config.method,  # Use original method from config
                 status_code=response.status,  # Foundation transport uses 'status'
                 response_body=response.text,  # Foundation transport has text property
-                response_time_ms=int(response.elapsed_ms),  # Foundation transport tracks elapsed_ms
+                response_time_ms=int(
+                    response.elapsed_ms
+                ),  # Foundation transport tracks elapsed_ms
                 response_headers=response.headers,  # Foundation transport headers are already dict
                 header_count=len(response.headers),
                 content_type=response.headers.get("content-type"),
             )
-        except (TransportConnectionError, TransportTimeoutError, HTTPResponseError) as e:
+        except (
+            TransportConnectionError,
+            TransportTimeoutError,
+            HTTPResponseError,
+        ) as e:
             logger.error(f"HTTP request failed: {e}", exc_info=True)
-            return HTTPAPIState(url=config.url, method=config.method, error_message=str(e))
+            return HTTPAPIState(
+                url=config.url, method=config.method, error_message=str(e)
+            )
         except Exception as e:
-            logger.error(f"An unexpected error occurred during HTTP request: {e}", exc_info=True)
+            logger.error(
+                f"An unexpected error occurred during HTTP request: {e}", exc_info=True
+            )
             return HTTPAPIState(
                 url=config.url,
                 method=config.method,

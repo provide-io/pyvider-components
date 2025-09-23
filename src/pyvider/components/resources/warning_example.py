@@ -38,11 +38,19 @@ class WarningExampleResource(BaseResource):
         errors = []
         if config.name is not None and config.source_file is not None:
             errors.append("'name' and 'source_file' are mutually exclusive.")
-        if config.name is None and config.old_name is None and config.source_file is None:
-            errors.append("One of 'name', 'old_name', or 'source_file' must be specified.")
+        if (
+            config.name is None
+            and config.old_name is None
+            and config.source_file is None
+        ):
+            errors.append(
+                "One of 'name', 'old_name', or 'source_file' must be specified."
+            )
         return errors
 
-    async def _create(self, ctx: ResourceContext, base_plan: dict[str, Any]) -> tuple[dict[str, Any], None]:
+    async def _create(
+        self, ctx: ResourceContext, base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any], None]:
         config = ctx.config
         if config.old_name is not None:
             ctx.add_attribute_warning(
@@ -62,7 +70,9 @@ class WarningExampleResource(BaseResource):
 
         return base_plan, None
 
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[WarningExampleState, None]:
+    async def _create_apply(
+        self, ctx: ResourceContext
+    ) -> tuple[WarningExampleState, None]:
         final_state = self.state_class(
             name=ctx.planned_state.name,
             old_name=ctx.planned_state.old_name,
