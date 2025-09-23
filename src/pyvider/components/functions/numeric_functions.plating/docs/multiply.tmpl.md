@@ -1,27 +1,127 @@
 ---
 page_title: "Function: multiply"
 description: |-
-  Terraform function for multiply
+  Multiplies two numbers with intelligent integer conversion and null-safe handling
 ---
 
 # multiply (Function)
 
-Terraform function for multiply
+> Performs multiplication of two numeric values with null-safe handling and automatic type optimization
 
-## Example Usage
+The `multiply` function multiplies two numbers (integers or floats) and returns the result. It handles null values gracefully and automatically converts floating-point results to integers when they represent whole numbers.
 
-{{ example("example") }}
+## When to Use This
+
+- **Scaling calculations**: Scale values by multipliers or factors
+- **Resource sizing**: Calculate total capacity based on unit size
+- **Area calculations**: Compute areas, volumes, or dimensions
+- **Cost calculations**: Calculate total costs based on unit prices
+- **Percentage calculations**: Apply percentage multipliers
+
+**Anti-patterns (when NOT to use):**
+- Complex mathematical operations (use multiple function calls)
+- String repetition (use appropriate string functions)
+- List/array operations (use collection functions)
+- Boolean logic (use conditional expressions)
+
+## Quick Start
+
+```terraform
+# Simple multiplication
+locals {
+  total_storage = provider::pyvider::multiply(10, 5)  # Returns: 50
+}
+
+# Scaling with variables
+variable "instances" {
+  default = 4
+}
+
+variable "cpu_per_instance" {
+  default = 2
+}
+
+locals {
+  total_cpu = provider::pyvider::multiply(var.instances, var.cpu_per_instance)  # Returns: 8
+}
+```
+
+## Examples
+
+### Basic Usage
+
+{{ example("basic") }}
+
+### Resource Scaling
+
+{{ example("resource_scaling") }}
+
+### Cost Calculations
+
+{{ example("cost_calculations") }}
+
+### Null Handling
+
+{{ example("null_handling") }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`multiply(a: number, b: number) -> number`
 
 ## Arguments
 
-{{ arguments_markdown }}
+- **`a`** (number, required) - The first number to multiply. Can be an integer or float. Returns `null` if this value is `null`.
+- **`b`** (number, required) - The second number to multiply. Can be an integer or float. Returns `null` if this value is `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Return Value
 
-{{ variadic_argument_markdown }}
-{% endif %}
+Returns the product of `a` and `b` as a number. The return type is automatically optimized:
+- If the result is a whole number (e.g., `6.0`), returns an integer (`6`)
+- If the result has decimal places (e.g., `6.75`), returns a float (`6.75`)
+- Returns `null` if either input is `null`
+
+## Common Patterns
+
+### Resource Capacity
+```terraform
+variable "nodes" {
+  type    = number
+  default = 3
+}
+
+variable "cores_per_node" {
+  type    = number
+  default = 8
+}
+
+locals {
+  total_cores = provider::pyvider::multiply(var.nodes, var.cores_per_node)
+}
+
+resource "pyvider_file_content" "capacity_report" {
+  filename = "/tmp/capacity.txt"
+  content  = "Total CPU cores: ${local.total_cores}"
+}
+```
+
+### Cost Estimation
+```terraform
+variable "unit_price" {
+  type = number
+}
+
+variable "quantity" {
+  type = number
+}
+
+locals {
+  total_cost = provider::pyvider::multiply(var.unit_price, var.quantity)
+}
+```
+
+## Related Functions
+
+- [`add`](./add.md) - Add two numbers
+- [`subtract`](./subtract.md) - Subtract two numbers
+- [`divide`](./divide.md) - Divide two numbers
+- [`round`](./round.md) - Round the result to specific precision
