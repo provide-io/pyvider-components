@@ -4,7 +4,8 @@
       "Read(//Users/tim/code/gh/provide-io/**)",
       "Bash(plating:*)",
       "Read(//private/tmp/**)",
-      "Bash(while read f)"
+      "Bash(while read f)",
+      "Bash(terraform:*)"
     ],
     "deny": [],
     "ask": [],
