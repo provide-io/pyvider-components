@@ -11,24 +11,28 @@ export PROVIDE_LOG_LEVEL = DEBUG
 docs-clean:
 	@echo "🧹 Cleaning documentation directory..."
 	rm -rf $(DOCS_DIR)/*
-	mkdir -p $(DOCS_DIR)/functions $(DOCS_DIR)/resources $(DOCS_DIR)/data_sources
 	@echo "✅ Documentation directory cleaned"
 
-# Generate function documentation (individual files)
-docs-functions: docs-clean
-	@python3 scripts/generate_docs.py function $(DOCS_DIR)
+# Generate function documentation
+docs-functions:
+	@echo "📚 Generating function documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/functions --component-type function
 
 # Generate resource documentation
 docs-resources:
-	@python3 scripts/generate_docs.py resource $(DOCS_DIR)
+	@echo "📦 Generating resource documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/resources --component-type resource
 
 # Generate data source documentation
 docs-data-sources:
-	@python3 scripts/generate_docs.py data_source $(DOCS_DIR)
+	@echo "📊 Generating data source documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/data_sources --component-type data_source
 
 # Generate all documentation
-docs-all: docs-functions docs-resources docs-data-sources
-	@echo "🎉 All documentation generated successfully!"
+docs-all: docs-clean
+	@echo "🎉 Generating all documentation..."
+	@plating plate --output-dir $(DOCS_DIR) --component-type function --component-type resource --component-type data_source
+	@echo "✅ All documentation generated successfully!"
 	@echo "📁 Files generated:"
 	@find $(DOCS_DIR) -name "*.md" | wc -l | xargs echo "   Total files:"
 	@echo "📍 Location: $(PWD)/$(DOCS_DIR)"
