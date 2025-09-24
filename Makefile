@@ -16,44 +16,15 @@ docs-clean:
 
 # Generate function documentation (individual files)
 docs-functions: docs-clean
-	@echo "📚 Generating function documentation..."
-	@python3 -c "\
-import sys; sys.path.append('../plating/src'); \
-from plating.api import PlatingAPI; \
-from pathlib import Path; \
-api = PlatingAPI(); \
-files = api.generate_function_documentation('$(DOCS_DIR)/functions'); \
-written = api.write_generated_files(files); \
-print(f'✅ Generated {len(written)} function documentation files')"
+	@python3 scripts/generate_docs.py function $(DOCS_DIR)
 
 # Generate resource documentation
 docs-resources:
-	@echo "📦 Generating resource documentation..."
-	@python3 -c "\
-import sys; sys.path.append('../plating/src'); \
-from plating.api import PlatingAPI; \
-from pathlib import Path; \
-api = PlatingAPI(); \
-files = api.generate_resource_documentation('$(DOCS_DIR)/resources'); \
-written = api.write_generated_files(files); \
-print(f'✅ Generated {len(written)} resource documentation files')"
+	@python3 scripts/generate_docs.py resource $(DOCS_DIR)
 
 # Generate data source documentation
 docs-data-sources:
-	@echo "📊 Generating data source documentation..."
-	@python3 -c "\
-import sys; sys.path.append('../plating/src'); \
-from plating.api import PlatingAPI; \
-from plating.types import ComponentType; \
-from pathlib import Path; \
-import asyncio; \
-api = PlatingAPI(); \
-output_path = Path('$(DOCS_DIR)/data_sources'); \
-output_path.mkdir(parents=True, exist_ok=True); \
-result = asyncio.run(api._plating.plate(output_path, component_types=[ComponentType.DATA_SOURCE])); \
-files = [(fp, fp.read_text(encoding='utf-8')) for fp in result.output_files]; \
-written = api.write_generated_files(files); \
-print(f'✅ Generated {len(written)} data source documentation files')"
+	@python3 scripts/generate_docs.py data_source $(DOCS_DIR)
 
 # Generate all documentation
 docs-all: docs-functions docs-resources docs-data-sources
