@@ -44,9 +44,14 @@ docs-data-sources:
 	@python3 -c "\
 import sys; sys.path.append('../plating/src'); \
 from plating.api import PlatingAPI; \
+from plating.types import ComponentType; \
 from pathlib import Path; \
+import asyncio; \
 api = PlatingAPI(); \
-files = api.generate_resource_documentation('$(DOCS_DIR)/data_sources'); \
+output_path = Path('$(DOCS_DIR)/data_sources'); \
+output_path.mkdir(parents=True, exist_ok=True); \
+result = asyncio.run(api._plating.plate(output_path, component_types=[ComponentType.DATA_SOURCE])); \
+files = [(fp, fp.read_text(encoding='utf-8')) for fp in result.output_files]; \
 written = api.write_generated_files(files); \
 print(f'✅ Generated {len(written)} data source documentation files')"
 
