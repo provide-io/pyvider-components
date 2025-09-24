@@ -23,24 +23,40 @@ The following components are available:
 
 ### Functions
 
+#### Numeric Functions
 -   `add`: Adds two numbers.
--   `contains`: Checks if a string contains a substring.
--   `divide`: Divides two numbers.
--   `format`: Formats a string.
--   `join`: Joins a list of strings.
--   `length`: Returns the length of a string or list.
--   `lens_jq`: Transforms data using a JQ expression.
--   `lookup`: Looks up a value in a map.
--   `lower`: Converts a string to lowercase.
--   `max`: Returns the maximum of a list of numbers.
--   `min`: Returns the minimum of a list of numbers.
--   `multiply`: Multiplies two numbers.
--   `replace`: Replaces a substring in a string.
--   `round`: Rounds a number.
--   `split`: Splits a string into a list of strings.
 -   `subtract`: Subtracts two numbers.
+-   `multiply`: Multiplies two numbers.
+-   `divide`: Divides two numbers.
 -   `sum`: Sums a list of numbers.
+-   `min`: Returns the minimum of a list of numbers.
+-   `max`: Returns the maximum of a list of numbers.
+-   `round`: Rounds a number to specified precision.
+
+#### String Functions
 -   `upper`: Converts a string to uppercase.
+-   `lower`: Converts a string to lowercase.
+-   `split`: Splits a string into a list of strings.
+-   `join`: Joins a list of strings.
+-   `replace`: Replaces a substring in a string.
+-   `format`: Formats a string using positional arguments.
+-   `truncate`: Truncates text to specified length.
+-   `format_size`: Formats bytes as human-readable size.
+-   `pluralize`: Pluralizes a word based on count.
+-   `to_snake_case`: Converts a string to snake_case.
+-   `to_kebab_case`: Converts a string to kebab-case.
+-   `to_camel_case`: Converts a string to camelCase.
+
+#### Collection Functions
+-   `length`: Returns the length of a string, list, or map.
+-   `contains`: Checks if a list contains a given element.
+-   `lookup`: Looks up a value in a map.
+
+#### Type Conversion Functions
+-   `tostring`: Converts any value to a string.
+
+#### Transformation Functions
+-   `lens_jq`: Transforms data using a JQ expression.
 
 ## Getting Started
 
