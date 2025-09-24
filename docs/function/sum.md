@@ -132,15 +132,49 @@ output "numeric_examples" {
 
 ### Cost Calculations
 
+```terraform
+# Sum up monthly costs
+variable "monthly_expenses" {
+  type = list(number)
+  default = [1200.50, 800.75, 450.25, 325.00]
+}
 
+locals {
+  total_monthly_budget = provider::pyvider::sum(var.monthly_expenses)  # 2776.50
+
+  # Calculate quarterly total
+  quarterly_costs = [
+    local.total_monthly_budget,
+    2950.25,
+    3150.75
+  ]
+  quarterly_total = provider::pyvider::sum(local.quarterly_costs)
+}
+```
 
 ### Resource Totals
 
+```terraform
+# Aggregate server resources
+variable "server_specs" {
+  type = list(object({
+    cpu_cores = number
+    memory_gb = number
+    storage_gb = number
+  }))
+  default = [
+    { cpu_cores = 4, memory_gb = 16, storage_gb = 100 },
+    { cpu_cores = 8, memory_gb = 32, storage_gb = 200 },
+    { cpu_cores = 16, memory_gb = 64, storage_gb = 500 }
+  ]
+}
 
-
-### Dynamic Lists
-
-
+locals {
+  total_cpu = provider::pyvider::sum([for server in var.server_specs : server.cpu_cores])      # 28
+  total_memory = provider::pyvider::sum([for server in var.server_specs : server.memory_gb])   # 112
+  total_storage = provider::pyvider::sum([for server in var.server_specs : server.storage_gb]) # 800
+}
+```
 
 ## Signature
 

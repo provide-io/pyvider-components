@@ -22,7 +22,6 @@ The `to_snake_case` function converts text to snake_case format, which uses lowe
 - When preserving original case is important
 - For display text that should remain readable
 - When working with external APIs that expect specific casing
-- For content that contains special formatting
 
 ## Quick Start
 
@@ -45,384 +44,144 @@ locals {
 
 ## Examples
 
-### Basic Usage
-
 ```terraform
-# Standard snake_case conversion
-locals {
-  various_formats = [
-    "User Profile Settings",
-    "navigationMenu",
-    "data-source-config",
-    "API_EndPoint_Handler",
-    "Mixed_Format-Text Input"
-  ]
+# Basic string manipulation function examples
 
-  # Convert all to snake_case
-  snake_outputs = [
-    for text in local.various_formats :
-    provider::pyvider::to_snake_case(text)
-  ]
-  # Results: ["user_profile_settings", "navigation_menu", "data_source_config", "api_end_point_handler", "mixed_format_text_input"]
+# Case conversion examples
+locals {
+  original_text = "Hello World"
+
+  uppercase_text = provider::pyvider::upper(local.original_text)    # Returns: "HELLO WORLD"
+  lowercase_text = provider::pyvider::lower(local.original_text)    # Returns: "hello world"
 }
 
-# Different input formats
+# String formatting examples
 locals {
-  format_examples = {
-    camel_case = provider::pyvider::to_snake_case("userProfileData")           # "user_profile_data"
-    pascal_case = provider::pyvider::to_snake_case("UserProfileData")         # "user_profile_data"
-    kebab_case = provider::pyvider::to_snake_case("user-profile-data")         # "user_profile_data"
-    space_separated = provider::pyvider::to_snake_case("user profile data")   # "user_profile_data"
-    mixed_separators = provider::pyvider::to_snake_case("User-Profile_Data")  # "user_profile_data"
-    already_snake = provider::pyvider::to_snake_case("user_profile_data")     # "user_profile_data"
-  }
+  template_string = "Hello, {name}! You have {count} messages."
+
+  formatted_message = provider::pyvider::format(local.template_string, {
+    name = "Alice"
+    count = 5
+  })  # Returns: "Hello, Alice! You have 5 messages."
+
+  # Simple template
+  simple_format = provider::pyvider::format("User: {user}", {
+    user = "admin"
+  })  # Returns: "User: admin"
 }
 
-# Edge cases and special handling
+# String joining examples
 locals {
-  edge_cases = {
-    empty_string = provider::pyvider::to_snake_case("")                    # ""
-    single_word = provider::pyvider::to_snake_case("user")                # "user"
-    uppercase_word = provider::pyvider::to_snake_case("USER")             # "user"
-    with_numbers = provider::pyvider::to_snake_case("user123Profile")     # "user123_profile"
-    special_chars = provider::pyvider::to_snake_case("user@profile.com")  # "user_profile_com"
-    null_input = provider::pyvider::to_snake_case(null)                   # null
-  }
+  word_list = ["apple", "banana", "cherry"]
+
+  comma_separated = provider::pyvider::join(local.word_list, ", ")     # Returns: "apple, banana, cherry"
+  pipe_separated = provider::pyvider::join(local.word_list, " | ")     # Returns: "apple | banana | cherry"
+  no_separator = provider::pyvider::join(local.word_list, "")          # Returns: "applebananacherry"
 }
 
-output "snake_case_examples" {
+# String splitting examples
+locals {
+  csv_data = "apple,banana,cherry,date"
+
+  split_by_comma = provider::pyvider::split(local.csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
+
+  # Split with limit
+  path_string = "/home/user/documents/file.txt"
+  split_path = provider::pyvider::split(local.path_string, "/")        # Returns: ["", "home", "user", "documents", "file.txt"]
+}
+
+# String replacement examples
+locals {
+  original_text = "The quick brown fox jumps over the lazy dog"
+
+  replace_fox = provider::pyvider::replace(local.original_text, "fox", "cat")    # Returns: "The quick brown cat jumps over the lazy dog"
+  replace_spaces = provider::pyvider::replace(local.original_text, " ", "_")     # Returns: "The_quick_brown_fox_jumps_over_the_lazy_dog"
+}
+
+# Combined string operations
+locals {
+  user_input = "  MiXeD cAsE tExT  "
+
+  # Clean and normalize user input
+  cleaned_input = provider::pyvider::lower(
+    provider::pyvider::replace(
+      provider::pyvider::replace(user_input, "  ", " "),  # Remove extra spaces
+      " ", "_"                                            # Replace remaining spaces with underscores
+    )
+  )  # Returns: "mixed_case_text"
+
+  # Create a filename from user input
+  filename = provider::pyvider::format("{base}.{ext}", {
+    base = local.cleaned_input
+    ext = "txt"
+  })  # Returns: "mixed_case_text.txt"
+}
+
+# Output results for verification
+output "string_manipulation_examples" {
   value = {
-    conversions = local.snake_outputs
-    formats = local.format_examples
-    edge_cases = local.edge_cases
+    case_conversion = {
+      original = local.original_text
+      uppercase = local.uppercase_text
+      lowercase = local.lowercase_text
+    }
+
+    formatting = {
+      template = local.template_string
+      formatted = local.formatted_message
+      simple = local.simple_format
+    }
+
+    joining = {
+      words = local.word_list
+      comma_separated = local.comma_separated
+      pipe_separated = local.pipe_separated
+      no_separator = local.no_separator
+    }
+
+    splitting = {
+      csv_original = local.csv_data
+      csv_split = local.split_by_comma
+      path_original = local.path_string
+      path_split = local.split_path
+    }
+
+    replacement = {
+      original = local.original_text
+      fox_to_cat = local.replace_fox
+      spaces_to_underscores = local.replace_spaces
+    }
+
+    combined_operations = {
+      user_input = user_input
+      cleaned = local.cleaned_input
+      filename = local.filename
+    }
   }
 }
 ```
 
-### Database Schema Mapping
+### Common Use Cases
 
 ```terraform
-# Database schema normalization
-variable "user_fields" {
-  type = list(object({
-    display_name = string
-    data_type   = string
-    is_required = bool
-  }))
-  default = [
-    {
-      display_name = "Full Name"
-      data_type   = "varchar"
-      is_required = true
-    },
-    {
-      display_name = "Email Address"
-      data_type   = "varchar"
-      is_required = true
-    },
-    {
-      display_name = "Phone Number"
-      data_type   = "varchar"
-      is_required = false
-    },
-    {
-      display_name = "Date of Birth"
-      data_type   = "date"
-      is_required = false
-    }
-  ]
-}
-
-# Generate database-friendly column names
+# Database column naming
 locals {
-  database_columns = {
-    for field in var.user_fields :
-    provider::pyvider::to_snake_case(field.display_name) => {
-      column_name = provider::pyvider::to_snake_case(field.display_name)
-      data_type   = field.data_type
-      nullable    = !field.is_required
-      original_name = field.display_name
-    }
-  }
-  # Result: {
-  #   "full_name" = { column_name = "full_name", data_type = "varchar", nullable = false, original_name = "Full Name" }
-  #   "email_address" = { column_name = "email_address", data_type = "varchar", nullable = false, original_name = "Email Address" }
-  #   "phone_number" = { column_name = "phone_number", data_type = "varchar", nullable = true, original_name = "Phone Number" }
-  #   "date_of_birth" = { column_name = "date_of_birth", data_type = "date", nullable = true, original_name = "Date of Birth" }
-  # }
+  user_fields = ["First Name", "Email Address", "Phone Number"]
 
-  # Generate CREATE TABLE statement
-  create_table_columns = [
-    for field in var.user_fields :
-    "${provider::pyvider::to_snake_case(field.display_name)} ${field.data_type}${field.is_required ? " NOT NULL" : ""}"
+  db_columns = [
+    for field in local.user_fields :
+    provider::pyvider::to_snake_case(field)
   ]
-
-  create_table_sql = "CREATE TABLE users (\\n  ${join(",\\n  ", local.create_table_columns)}\\n);"
+  # Result: ["first_name", "email_address", "phone_number"]
 }
 
-# Migration mapping from old to new schema
-variable "legacy_columns" {
-  type = list(string)
-  default = ["userName", "emailAddr", "phoneNum", "birthDate"]
+# File naming from titles
+variable "document_title" {
+  default = "Quarterly Sales Report 2024"
 }
 
 locals {
-  column_migration = {
-    for old_col in var.legacy_columns :
-    old_col => {
-      old_column = old_col
-      new_column = provider::pyvider::to_snake_case(old_col)
-      migration_sql = "ALTER TABLE users RENAME COLUMN ${old_col} TO ${provider::pyvider::to_snake_case(old_col)};"
-    }
-  }
-  # Result: {
-  #   "userName" = { old_column = "userName", new_column = "user_name", migration_sql = "ALTER TABLE users RENAME COLUMN userName TO user_name;" }
-  #   "emailAddr" = { old_column = "emailAddr", new_column = "email_addr", migration_sql = "ALTER TABLE users RENAME COLUMN emailAddr TO email_addr;" }
-  #   ...
-  # }
-}
-
-output "database_mapping" {
-  value = {
-    columns = local.database_columns
-    create_table = local.create_table_sql
-    migrations = local.column_migration
-  }
-}
-```
-
-### Python Code Generation
-
-```terraform
-# Generate Python variable names from user input
-variable "form_fields" {
-  type = list(object({
-    label = string
-    type = string
-    required = bool
-    validation = string
-  }))
-  default = [
-    {
-      label = "First Name"
-      type = "text"
-      required = true
-      validation = "required|string|max:50"
-    },
-    {
-      label = "Company Email"
-      type = "email"
-      required = true
-      validation = "required|email"
-    },
-    {
-      label = "Job Title/Position"
-      type = "text"
-      required = false
-      validation = "string|max:100"
-    }
-  ]
-}
-
-# Generate Python class attributes and validation
-locals {
-  python_class = {
-    for field in var.form_fields :
-    provider::pyvider::to_snake_case(field.label) => {
-      attribute_name = provider::pyvider::to_snake_case(field.label)
-      python_type = field.type == "email" ? "str" : field.type == "text" ? "str" : "str"
-      is_optional = !field.required
-      validation_rules = field.validation
-      original_label = field.label
-    }
-  }
-
-  # Generate Python class definition
-  class_attributes = [
-    for field in var.form_fields :
-    "    ${provider::pyvider::to_snake_case(field.label)}: ${field.required ? "str" : "Optional[str]"}${field.required ? "" : " = None"}"
-  ]
-
-  python_class_definition = join("\\n", [
-    "from typing import Optional",
-    "from dataclasses import dataclass",
-    "",
-    "@dataclass",
-    "class UserForm:",
-    join("\\n", local.class_attributes)
-  ])
-
-  # Generate property getters/setters
-  python_properties = [
-    for field in var.form_fields :
-    join("\\n", [
-      "    @property",
-      "    def ${provider::pyvider::to_snake_case(field.label)}(self) -> ${field.required ? "str" : "Optional[str]"}:",
-      "        return self._${provider::pyvider::to_snake_case(field.label)}",
-      "",
-      "    @${provider::pyvider::to_snake_case(field.label)}.setter",
-      "    def ${provider::pyvider::to_snake_case(field.label)}(self, value: ${field.required ? "str" : "Optional[str]"}) -> None:",
-      "        self._${provider::pyvider::to_snake_case(field.label)} = value"
-    ])
-  ]
-}
-
-# Configuration file generation
-variable "config_sections" {
-  type = map(map(string))
-  default = {
-    "Database Settings" = {
-      "Host Name" = "localhost"
-      "Port Number" = "5432"
-      "Database Name" = "myapp"
-    }
-    "Cache Configuration" = {
-      "Redis Host" = "localhost"
-      "Cache TTL Seconds" = "3600"
-      "Max Connections" = "10"
-    }
-  }
-}
-
-locals {
-  config_snake_case = {
-    for section_name, section_config in var.config_sections :
-    provider::pyvider::to_snake_case(section_name) => {
-      for key, value in section_config :
-      provider::pyvider::to_snake_case(key) => value
-    }
-  }
-
-  # Generate Python config constants
-  python_config_constants = flatten([
-    for section_name, section_config in var.config_sections : [
-      for key, value in section_config :
-      "${upper(provider::pyvider::to_snake_case(section_name))}_${upper(provider::pyvider::to_snake_case(key))} = '${value}'"
-    ]
-  ])
-
-  # Generate environment variable names
-  env_var_mapping = flatten([
-    for section_name, section_config in var.config_sections : [
-      for key, value in section_config : {
-        config_key = "${provider::pyvider::to_snake_case(section_name)}.${provider::pyvider::to_snake_case(key)}"
-        env_var = "${upper(provider::pyvider::to_snake_case(section_name))}_${upper(provider::pyvider::to_snake_case(key))}"
-        original_key = "${section_name}.${key}"
-        value = value
-      }
-    ]
-  ])
-}
-
-output "python_generation" {
-  value = {
-    class_definition = local.python_class_definition
-    config_constants = local.python_config_constants
-    env_variables = local.env_var_mapping
-  }
-}
-```
-
-### File System Operations
-
-```terraform
-# File naming from user content
-variable "document_titles" {
-  type = list(string)
-  default = [
-    "User Guide & Documentation",
-    "API Reference Manual",
-    "Installation Instructions (v2.1)",
-    "Troubleshooting FAQ",
-    "System Architecture Overview"
-  ]
-}
-
-# Generate filesystem-safe filenames
-locals {
-  document_files = {
-    for title in var.document_titles :
-    title => {
-      original_title = title
-      filename = "${provider::pyvider::to_snake_case(title)}.md"
-      directory = "docs/${provider::pyvider::to_snake_case(title)}"
-      backup_filename = "${provider::pyvider::to_snake_case(title)}_backup_${formatdate("YYYY_MM_DD", timestamp())}.md"
-    }
-  }
-
-  # Create directory structure
-  doc_directories = [
-    for title in var.document_titles :
-    "docs/${provider::pyvider::to_snake_case(title)}"
-  ]
-}
-
-# Log file naming from service names
-variable "services" {
-  type = list(object({
-    name = string
-    environment = string
-    log_level = string
-  }))
-  default = [
-    {
-      name = "User Authentication Service"
-      environment = "production"
-      log_level = "info"
-    },
-    {
-      name = "Payment Processing API"
-      environment = "staging"
-      log_level = "debug"
-    }
-  ]
-}
-
-locals {
-  service_logging = {
-    for service in var.services :
-    service.name => {
-      service_name = provider::pyvider::to_snake_case(service.name)
-      log_filename = "/var/log/${service.environment}/${provider::pyvider::to_snake_case(service.name)}.log"
-      error_log = "/var/log/${service.environment}/${provider::pyvider::to_snake_case(service.name)}_error.log"
-      access_log = "/var/log/${service.environment}/${provider::pyvider::to_snake_case(service.name)}_access.log"
-      config_file = "/etc/${provider::pyvider::to_snake_case(service.name)}/${service.environment}.conf"
-      pid_file = "/var/run/${provider::pyvider::to_snake_case(service.name)}.pid"
-    }
-  }
-
-  # Generate systemd service names
-  systemd_services = [
-    for service in var.services :
-    "${provider::pyvider::to_snake_case(service.name)}_${service.environment}.service"
-  ]
-}
-
-# Backup and archive naming
-variable "backup_sources" {
-  type = list(string)
-  default = ["User Data Backup", "System Configuration Backup", "Application State Backup"]
-}
-
-locals {
-  backup_files = {
-    for source in var.backup_sources :
-    source => {
-      daily_backup = "/backups/daily/${provider::pyvider::to_snake_case(source)}_${formatdate("YYYY_MM_DD", timestamp())}.tar.gz"
-      weekly_backup = "/backups/weekly/${provider::pyvider::to_snake_case(source)}_week_${formatdate("YYYY_WW", timestamp())}.tar.gz"
-      monthly_backup = "/backups/monthly/${provider::pyvider::to_snake_case(source)}_${formatdate("YYYY_MM", timestamp())}.tar.gz"
-      latest_symlink = "/backups/${provider::pyvider::to_snake_case(source)}_latest.tar.gz"
-    }
-  }
-}
-
-output "filesystem_operations" {
-  value = {
-    document_files = local.document_files
-    service_logging = local.service_logging
-    systemd_services = local.systemd_services
-    backup_files = local.backup_files
-  }
+  filename = "${provider::pyvider::to_snake_case(var.document_title)}.pdf"  # "quarterly_sales_report_2024.pdf"
 }
 ```
 
@@ -455,24 +214,6 @@ The function applies these transformations:
 3. **Word boundaries**: CamelCase and PascalCase word boundaries become underscores
 4. **Clean up**: Multiple consecutive separators become single underscores
 5. **Trim**: Leading and trailing separators are removed
-
-## Common Use Cases
-
-```terraform
-# Python variable naming
-locals {
-  variable_name = provider::pyvider::to_snake_case("User Profile Data")  # "user_profile_data"
-
-  # Database column names
-  column_name = provider::pyvider::to_snake_case("EmailAddress")  # "email_address"
-
-  # Configuration keys
-  config_key = provider::pyvider::to_snake_case("API Secret Key")  # "api_secret_key"
-
-  # File names
-  filename = "${provider::pyvider::to_snake_case("System Backup")}.sql"  # "system_backup.sql"
-}
-```
 
 ## Related Functions
 

@@ -136,15 +136,51 @@ output "numeric_examples" {
 
 ### Rate Calculations
 
+```terraform
+# Performance rate calculations
+variable "total_requests" {
+  type = number
+  default = 50000
+}
 
+variable "time_period_seconds" {
+  type = number
+  default = 3600  # 1 hour
+}
+
+locals {
+  requests_per_second = provider::pyvider::divide(var.total_requests, var.time_period_seconds)  # 13.89
+
+  # Calculate average response time
+  total_response_time_ms = 125000
+  average_response_time = provider::pyvider::divide(local.total_response_time_ms, var.total_requests)  # 2.5ms
+}
+```
 
 ### Resource Distribution
 
+```terraform
+# Distribute resources across environments
+variable "total_cpu_cores" {
+  type = number
+  default = 64
+}
 
+variable "environment_count" {
+  type = number
+  default = 4
+}
 
-### Error Handling
+locals {
+  # Equal distribution
+  cpu_per_environment = provider::pyvider::divide(var.total_cpu_cores, var.environment_count)  # 16
 
-
+  # Safe division with validation
+  safe_cpu_allocation = var.environment_count > 0 ?
+    provider::pyvider::divide(var.total_cpu_cores, var.environment_count) :
+    0
+}
+```
 
 ## Signature
 
