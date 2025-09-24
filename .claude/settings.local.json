@@ -10,7 +10,8 @@
       "Bash(python3:*)",
       "Bash(rm:*)",
       "Bash(xargs:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": [],
