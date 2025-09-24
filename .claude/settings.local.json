@@ -7,7 +7,8 @@
       "Bash(while read f)",
       "Bash(terraform:*)",
       "Bash(xargs ls:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": [],
