@@ -11,7 +11,8 @@
       "Bash(rm:*)",
       "Bash(xargs:*)",
       "Bash(wc:*)",
-      "Bash(/dev/null)"
+      "Bash(/dev/null)",
+      "Bash(make:*)"
     ],
     "deny": [],
     "ask": [],
