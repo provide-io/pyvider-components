@@ -8,7 +8,8 @@
       "Bash(terraform:*)",
       "Bash(xargs ls:*)",
       "Bash(python3:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": [],
