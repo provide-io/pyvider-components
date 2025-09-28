@@ -2,10 +2,13 @@
 # tests/resources/test_file_content.py
 #
 
+from __future__ import annotations
+
 import hashlib
 from pathlib import Path
 
 import pytest
+from provide.testkit import FoundationTestCase
 
 from pyvider.components.resources.file_content import (
     FileContentConfig,
@@ -15,7 +18,7 @@ from pyvider.components.resources.file_content import (
 from pyvider.resources.context import ResourceContext
 
 
-class TestFileContent:
+class TestFileContent(FoundationTestCase):
     @pytest.fixture
     def temp_file(self) -> Path:
         """Create a temporary file path in /tmp."""
@@ -30,7 +33,9 @@ class TestFileContent:
         return FileContentResource()
 
     @pytest.mark.asyncio
-    async def test_create_and_read(self, resource: FileContentResource, temp_file: Path):
+    async def test_create_and_read(
+        self, resource: FileContentResource, temp_file: Path
+    ):
         config = FileContentConfig(filename=str(temp_file), content="hello world")
         # Plan for a CREATE operation (no prior state)
         plan_ctx = ResourceContext(config=config, state=None)
@@ -57,7 +62,9 @@ class TestFileContent:
     async def test_delete(self, resource: FileContentResource, temp_file: Path):
         content = "to be deleted"
         temp_file.write_text(content)
-        current_state = FileContentState(filename=str(temp_file), content=content, exists=True)
+        current_state = FileContentState(
+            filename=str(temp_file), content=content, exists=True
+        )
 
         # To delete, the context has a prior state but no planned state.
         delete_ctx = ResourceContext(state=current_state, planned_state=None)

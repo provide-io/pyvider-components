@@ -2,6 +2,8 @@
 # tests/resources/test_tdd_private_state.py
 #
 
+from __future__ import annotations
+
 from typing import Any
 
 import attrs
