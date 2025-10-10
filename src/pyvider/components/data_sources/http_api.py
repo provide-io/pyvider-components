@@ -34,7 +34,7 @@ class HTTPAPIState:
     url: str
     method: str
     status_code: int | None = None
-    response_body: str | None = None
+    response_body: str = ""  # Always a string, empty on error to avoid null issues
     response_time_ms: int | None = None
     response_headers: dict[str, str] | None = None
     header_count: int | None = None

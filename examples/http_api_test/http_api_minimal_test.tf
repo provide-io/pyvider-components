@@ -46,10 +46,7 @@ output "minimal_test_headers" {
 # Test response body parsing (manual JSON parsing)
 output "minimal_test_json" {
   value = {
-    response_body_length = try(
-      length(data.pyvider_http_api.minimal_test.response_body),
-      0
-    )
+    response_body_length = length(data.pyvider_http_api.minimal_test.response_body)
 
     # Parse JSON manually in Terraform
     parsed_response = try(
