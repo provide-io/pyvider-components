@@ -100,7 +100,7 @@ class HTTPAPIDataSource(
         try:
             response = await request(
                 method=HTTPMethod(config.method.upper()),
-                url=config.url,
+                uri=config.url,  # Fixed: provide.foundation.transport uses 'uri' not 'url'
                 headers=config.headers or {},
                 timeout=float(config.timeout),
             )
