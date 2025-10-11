@@ -9,7 +9,9 @@
       "Bash(.venv/bin/python -m pyright:*)",
       "Bash(find:*)",
       "WebSearch",
-      "WebFetch(domain:developer.hashicorp.com)"
+      "WebFetch(domain:developer.hashicorp.com)",
+      "Bash(soup stir:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []
