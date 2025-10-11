@@ -12,7 +12,8 @@
       "WebFetch(domain:developer.hashicorp.com)",
       "Bash(soup stir:*)",
       "Bash(tee:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
