@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Read(//Users/tim/code/gh/provide-io/pyvider-components/**)",
-      "Read(//Users/tim/code/**)"
+      "Read(//Users/tim/code/**)",
+      "Bash(ruff check:*)",
+      "Bash(pyright:*)"
     ],
     "deny": [],
     "ask": []
