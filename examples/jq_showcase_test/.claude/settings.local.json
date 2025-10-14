@@ -8,7 +8,8 @@
       "Bash(tofu force-unlock:*)",
       "Bash(pkill:*)",
       "Bash(tofu validate:*)",
-      "Bash(python -m py_compile:*)"
+      "Bash(python -m py_compile:*)",
+      "Read(//Users/tim/code/gh/provide-io/pyvider-components/**)"
     ],
     "deny": [],
     "ask": []
