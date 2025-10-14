@@ -3,7 +3,8 @@
     "allow": [
       "Read(//Users/tim/code/gh/provide-io/provide-foundation/src/provide/foundation/**)",
       "Read(//Users/tim/code/gh/provide-io/pyvider/**)",
-      "Read(//Users/tim/code/gh/provide-io/provide-foundation/**)"
+      "Read(//Users/tim/code/gh/provide-io/provide-foundation/**)",
+      "Bash(tofu apply:*)"
     ],
     "deny": [],
     "ask": []
