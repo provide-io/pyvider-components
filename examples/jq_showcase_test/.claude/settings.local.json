@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/tim/code/gh/provide-io/provide-foundation/src/provide/foundation/**)",
+      "Read(//Users/tim/code/gh/provide-io/pyvider/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
