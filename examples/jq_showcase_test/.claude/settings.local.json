@@ -4,7 +4,9 @@
       "Read(//Users/tim/code/gh/provide-io/provide-foundation/src/provide/foundation/**)",
       "Read(//Users/tim/code/gh/provide-io/pyvider/**)",
       "Read(//Users/tim/code/gh/provide-io/provide-foundation/**)",
-      "Bash(tofu apply:*)"
+      "Bash(tofu apply:*)",
+      "Bash(tofu force-unlock:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []
