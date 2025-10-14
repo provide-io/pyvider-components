@@ -6,7 +6,9 @@
       "Read(//Users/tim/code/gh/provide-io/provide-foundation/**)",
       "Bash(tofu apply:*)",
       "Bash(tofu force-unlock:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(tofu validate:*)",
+      "Bash(python -m py_compile:*)"
     ],
     "deny": [],
     "ask": []
