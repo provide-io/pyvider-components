@@ -20,10 +20,18 @@ TF_DATA_PATH = Path("examples/advanced_jq_test")
 def full_system_data() -> dict[str, Any]:
     return {
         "personnel": json.loads((TF_DATA_PATH / "personnel_records.json").read_text()),
-        "schematics": json.loads((TF_DATA_PATH / "project_apollo_schematics.json").read_text()),
-        "supply_chain": json.loads((TF_DATA_PATH / "supply_chain_database.json").read_text()),
-        "materials": json.loads((TF_DATA_PATH / "materials_properties.json").read_text()),
-        "test_logs": json.loads((TF_DATA_PATH / "test_and_validation_logs.json").read_text()),
+        "schematics": json.loads(
+            (TF_DATA_PATH / "project_apollo_schematics.json").read_text()
+        ),
+        "supply_chain": json.loads(
+            (TF_DATA_PATH / "supply_chain_database.json").read_text()
+        ),
+        "materials": json.loads(
+            (TF_DATA_PATH / "materials_properties.json").read_text()
+        ),
+        "test_logs": json.loads(
+            (TF_DATA_PATH / "test_and_validation_logs.json").read_text()
+        ),
     }
 
 
@@ -35,17 +43,23 @@ def master_audit_query() -> str:
 @pytest.mark.usefixtures("provider_in_hub", "discovered_components_session")
 class TestJqLifecycleAndRobustness:
     @pytest.mark.asyncio
-    async def test_data_source_full_lifecycle(self, full_system_data: dict, master_audit_query: str):
+    async def test_data_source_full_lifecycle(
+        self, full_system_data: dict, master_audit_query: str
+    ):
         ds_schema = LensJqDataSource.get_schema()
         raw_config = {
             "json_input": json.dumps(full_system_data),
             "query": master_audit_query,
         }
         marshalled_config = marshal(raw_config, schema=ds_schema.block)
-        request = pb.ReadDataSource.Request(type_name="pyvider_lens_jq", config=marshalled_config)
+        request = pb.ReadDataSource.Request(
+            type_name="pyvider_lens_jq", config=marshalled_config
+        )
         response = await ReadDataSourceHandler(request, context=None)
 
-        assert not response.diagnostics, f"Handler returned diagnostics: {response.diagnostics}"
+        assert not response.diagnostics, (
+            f"Handler returned diagnostics: {response.diagnostics}"
+        )
 
         result_cty = unmarshal(response.state, schema=ds_schema.block)
         from pyvider.conversion import cty_to_native

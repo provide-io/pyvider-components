@@ -24,7 +24,9 @@ def provider_in_hub():
 
 @pytest.fixture
 def encryption_key_env():
-    os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"] = "test-secret-key-for-pytest-session"
+    os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"] = (
+        "test-secret-key-for-pytest-session"
+    )
     yield
     del os.environ["PYVIDER_PRIVATE_STATE_SHARED_SECRET"]
 

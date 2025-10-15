@@ -28,7 +28,9 @@ def personnel_data() -> dict[str, Any]:
 class TestJqWireProtocol:
     def test_lens_jq_function_returns_native_value(self, personnel_data: dict):
         query = "[.records[].name]"
-        result = lens_jq_function(personnel_data, query, lens=LensCapability(config=None))
+        result = lens_jq_function(
+            personnel_data, query, lens=LensCapability(config=None)
+        )
 
         assert isinstance(result, list)
         assert result == ["Dr. Evelyn Reed", "Dr. Jian Chen", "Maria Rosa"]
@@ -38,9 +40,13 @@ class TestJqWireProtocol:
         raw_args = [personnel_data, "[.records[].name]"]
         marshalled_arg1 = marshal(raw_args[0], schema=CtyDynamic())
         marshalled_arg2 = marshal(raw_args[1], schema=CtyString())
-        request = pb.CallFunction.Request(name="lens_jq", arguments=[marshalled_arg1, marshalled_arg2])
+        request = pb.CallFunction.Request(
+            name="lens_jq", arguments=[marshalled_arg1, marshalled_arg2]
+        )
         response = await CallFunctionHandler(request, context=None)
-        assert not response.error.text, f"Handler returned an error: {response.error.text}"
+        assert not response.error.text, (
+            f"Handler returned an error: {response.error.text}"
+        )
         result_cty = unmarshal(response.result, schema=CtyDynamic())
         assert isinstance(result_cty, CtyValue)
         assert isinstance(result_cty.type, CtyDynamic)
