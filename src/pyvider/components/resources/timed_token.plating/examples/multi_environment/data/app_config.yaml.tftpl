@@ -1,0 +1,64 @@
+application:
+  name: ${application_name}
+  environment: ${environment}
+
+  authentication:
+    primary_token:
+      id: ${app_primary_id}
+      name: ${app_primary_name}
+      expires_at: ${app_primary_expires}
+
+    backup_tokens: ${yamlencode(app_backup_tokens)}
+
+    rotation_policy:
+      enabled: ${rotation_required}
+      warn_before_minutes: ${warn_before_minutes}
+      fallback_enabled: ${has_backups}
+
+  database:
+    connections:
+      readonly:
+        token_id: ${database_read_id}
+        token_name: ${database_read_name}
+        expires_at: ${database_read_expires}
+        max_connections: ${db_read_max_connections}
+      readwrite: ${yamlencode(database_write_connection)}
+
+  apis:
+    gateway:
+      token_id: ${api_gateway_id}
+      token_name: ${api_gateway_name}
+      expires_at: ${api_gateway_expires}
+      base_url: ${api_gateway_url}
+      timeout_seconds: ${api_gateway_timeout}
+    internal:
+      token_id: ${api_internal_id}
+      token_name: ${api_internal_name}
+      expires_at: ${api_internal_expires}
+      base_url: ${api_internal_url}
+      timeout_seconds: 15
+
+  observability:
+    metrics:
+      enabled: true
+      token_id: ${metrics_collector_id}
+      token_name: ${metrics_collector_name}
+      expires_at: ${metrics_collector_expires}
+      endpoint: ${metrics_endpoint}
+      interval_seconds: ${metrics_interval}
+
+    logging:
+      enabled: true
+      token_id: ${log_aggregator_id}
+      token_name: ${log_aggregator_name}
+      expires_at: ${log_aggregator_expires}
+      endpoint: ${logs_endpoint}
+      level: ${log_level}
+
+    tracing: ${yamlencode(tracing_config)}
+
+environment_metadata:
+  deployment_tier: ${environment}
+  monitoring_level: ${monitoring_level}
+  compliance_required: ${compliance_required}
+  backup_tokens_count: ${backup_tokens_count}
