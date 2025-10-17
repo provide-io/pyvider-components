@@ -94,6 +94,13 @@ class FileContentResource(
         logger.debug(f"file_content._create() received base_plan keys: {list(base_plan.keys())}")
         logger.debug(f"file_content._create() base_plan: {base_plan}")
 
+        # Ensure base_plan has all required fields from config_cty
+        # base_plan comes from planned_state_cty which may not have all fields yet
+        if ctx.config_cty and hasattr(ctx.config_cty, "value"):
+            for key, value in ctx.config_cty.value.items():
+                if key not in base_plan:
+                    base_plan[key] = value
+
         # Proper handling: Check explicitly if content is unknown during planning
         if ctx.is_field_unknown("content"):
             logger.debug("file_content._create() content is unknown, skipping hash calculation")
