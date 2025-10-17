@@ -104,10 +104,12 @@ class FileContentResource(
 
         # Content is known - use typed config safely
         config = cast(FileContentConfig, ctx.config)
-        if not config:
-            # This shouldn't happen if content isn't unknown, but handle defensively
-            logger.warning("file_content._create() config is None but content not marked unknown")
-            return None, None
+        if not config or config.content is None:
+            # Config instance exists but content field is None (unknown value)
+            # This can happen when field is unknown but not detected by is_field_unknown()
+            logger.debug("file_content._create() content is None, treating as unknown")
+            base_plan["exists"] = True
+            return base_plan, None
 
         logger.debug(f"file_content._create() content is known, computing hash")
         base_plan["exists"] = True
