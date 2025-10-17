@@ -22,6 +22,19 @@ from .type_conversion_functions import tostring
 
 @register_function(name="upper", summary="Converts a string to uppercase.")
 def upper(input_str: str | None) -> str | None:
+    """
+    Convert a string to uppercase.
+
+    Args:
+        input_str: String to convert
+
+    Returns:
+        Uppercase string
+
+    Examples:
+        upper("hello") → "HELLO"
+        upper("Hello World") → "HELLO WORLD"
+    """
     if input_str is None:
         return None
     return input_str.upper()
@@ -29,6 +42,19 @@ def upper(input_str: str | None) -> str | None:
 
 @register_function(name="lower", summary="Converts a string to lowercase.")
 def lower(input_str: str | None) -> str | None:
+    """
+    Convert a string to lowercase.
+
+    Args:
+        input_str: String to convert
+
+    Returns:
+        Lowercase string
+
+    Examples:
+        lower("HELLO") → "hello"
+        lower("Hello World") → "hello world"
+    """
     if input_str is None:
         return None
     return input_str.lower()
@@ -39,6 +65,20 @@ def lower(input_str: str | None) -> str | None:
 )
 @resilient()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
+    """
+    Format a string template with positional arguments.
+
+    Args:
+        template: String template with {} placeholders
+        values: List of values to insert into template
+
+    Returns:
+        Formatted string
+
+    Examples:
+        format("Hello, {}!", ["World"]) → "Hello, World!"
+        format("{} + {} = {}", [1, 2, 3]) → "1 + 2 = 3"
+    """
     if template is None:
         return None
     value_list = values or []
@@ -55,6 +95,20 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
 def join(strings: list[Any] | None, delimiter: str | None) -> str | None:
+    """
+    Join a list of strings with a delimiter.
+
+    Args:
+        strings: List of values to join
+        delimiter: String to use as separator (default: "")
+
+    Returns:
+        Joined string
+
+    Examples:
+        join(["apple", "banana", "cherry"], ", ") → "apple, banana, cherry"
+        join(["a", "b", "c"], "") → "abc"
+    """
     if strings is None:
         return None
     delimiter_str = delimiter or ""
@@ -63,6 +117,20 @@ def join(strings: list[Any] | None, delimiter: str | None) -> str | None:
 
 @register_function(name="split", summary="Splits a string by a delimiter.")
 def split(string: str | None, delimiter: str | None) -> list[str] | None:
+    """
+    Split a string by a delimiter.
+
+    Args:
+        string: String to split
+        delimiter: Delimiter to split on (default: "")
+
+    Returns:
+        List of string parts
+
+    Examples:
+        split("a,b,c", ",") → ["a", "b", "c"]
+        split("hello world", " ") → ["hello", "world"]
+    """
     if string is None:
         return None
     delimiter_str = delimiter or ""
@@ -75,6 +143,21 @@ def split(string: str | None, delimiter: str | None) -> list[str] | None:
 def replace(
     string: str | None, search: str | None, replacement: str | None
 ) -> str | None:
+    """
+    Replace all occurrences of a substring.
+
+    Args:
+        string: String to modify
+        search: Substring to find
+        replacement: String to replace with
+
+    Returns:
+        Modified string
+
+    Examples:
+        replace("hello world", "world", "earth") → "hello earth"
+        replace("foo bar foo", "foo", "baz") → "baz bar baz"
+    """
     if string is None:
         return None
     return string.replace(search or "", replacement or "")
