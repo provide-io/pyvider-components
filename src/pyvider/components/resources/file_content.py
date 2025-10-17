@@ -93,10 +93,14 @@ class FileContentResource(
     ) -> tuple[dict[str, Any] | None, None]:
         config = cast(FileContentConfig, ctx.config)
 
+        logger.debug(f"file_content._create() received base_plan keys: {list(base_plan.keys())}")
+        logger.debug(f"file_content._create() config is None: {config is None}")
+
         # If config is None (due to unknown/computed values), we can't access typed fields
         # but base_plan already has the values from Terraform, so just mark exists=True
         if not config:
             base_plan["exists"] = True
+            logger.debug(f"file_content._create() returning base_plan with keys: {list(base_plan.keys())}")
             return base_plan, None
 
         # If content is None (unknown/computed value during planning),
@@ -104,6 +108,7 @@ class FileContentResource(
         if config.content is None:
             base_plan["exists"] = True
             # Don't set content_hash - it will remain unknown/computed
+            logger.debug(f"file_content._create() content is None, returning base_plan with keys: {list(base_plan.keys())}")
             return base_plan, None
 
         base_plan["exists"] = True
@@ -111,6 +116,7 @@ class FileContentResource(
             config.content.encode("utf-8")
         ).hexdigest()
 
+        logger.debug(f"file_content._create() normal path, returning base_plan with keys: {list(base_plan.keys())}")
         return base_plan, None
 
     async def _update(
