@@ -95,6 +95,12 @@ class FileContentResource(
         if not config:
             return None, None
 
+        # If content is None (unknown/computed), we can't calculate the hash yet
+        # Just return the base_plan with exists=True
+        if config.content is None:
+            base_plan["exists"] = True
+            return base_plan, None
+
         base_plan["exists"] = True
         base_plan["content_hash"] = hashlib.sha256(
             config.content.encode("utf-8")
