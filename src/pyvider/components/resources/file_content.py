@@ -92,8 +92,12 @@ class FileContentResource(
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, None]:
         config = cast(FileContentConfig, ctx.config)
+
+        # If config is None (due to unknown/computed values), we can't access typed fields
+        # but base_plan already has the values from Terraform, so just mark exists=True
         if not config:
-            return None, None
+            base_plan["exists"] = True
+            return base_plan, None
 
         # If content is None (unknown/computed value during planning),
         # skip hash calculation and let the base_plan preserve the unknown marker
