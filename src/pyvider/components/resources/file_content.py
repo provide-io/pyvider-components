@@ -92,6 +92,7 @@ class FileContentResource(
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, None]:
         logger.debug(f"file_content._create() received base_plan keys: {list(base_plan.keys())}")
+        logger.debug(f"file_content._create() base_plan: {base_plan}")
 
         # Proper handling: Check explicitly if content is unknown during planning
         if ctx.is_field_unknown("content"):
