@@ -86,15 +86,37 @@ def sum_list(numbers: list[int | float] | None) -> int | float | None:
     return int(result) if isinstance(result, float) and result.is_integer() else result
 
 
-@register_function(name="round", summary="Rounds a number to a specified precision.")
-def round_number(
-    number: int | float | None, precision: int | None = 0
-) -> int | float | None:
-    if number is None or precision is None:
+@register_function(
+    name="round",
+    summary="Rounds a number to a specified precision.",
+    param_descriptions={
+        "number": "The number to round",
+        "options": "Optional: Precision (decimal places, default: 0)",
+    },
+)
+def round_number(number: int | float | None, *options) -> int | float | None:
+    """
+    Round a number to specified decimal places.
+
+    Args:
+        number: Number to round
+        *options: Optional precision (int, default: 0)
+
+    Returns:
+        Rounded number
+
+    Examples:
+        round_number(3.14159) → 3
+        round_number(3.14159, 2) → 3.14
+    """
+    if number is None:
         return None
+
+    # Extract precision from variadic args (default: 0)
+    precision = int(options[0]) if options and len(options) > 0 else 0
+
     try:
-        int_precision = int(precision)
-        return round(number, int_precision)
+        return round(number, precision)
     except TypeError as e:
         raise FunctionError(f"Invalid argument types for round: {e}") from e
 

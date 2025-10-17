@@ -41,15 +41,25 @@ def contains(list_to_check: list[Any] | None, element: Any) -> bool | None:
 @register_function(name="lookup", summary="Performs a dynamic lookup into a map.")
 @resilient()
 def lookup(
-    map_to_search: dict[str, Any] | None, key: str, default: Any | None = None
+    map_to_search: dict[str, Any] | None, key: str, *defaults
 ) -> Any:
+    """
+    Lookup a key in a map and return its value, or a default if the key doesn't exist.
+
+    Using *defaults allows us to distinguish between:
+    - lookup(map, key) - no default provided, should error if key missing
+    - lookup(map, key, None) - default is None
+    - lookup(map, key, False) - default is False
+    - lookup(map, key, 0) - default is 0
+    """
     if map_to_search is None:
         return None
     if key in map_to_search:
         logger.debug("Map lookup successful", key=key, map_size=len(map_to_search))
         return map_to_search[key]
-    if default is not None:
-        logger.debug("Map lookup using default", key=key, has_default=True)
+    if defaults:  # Default was provided (even if falsy)
+        default = defaults[0]
+        logger.debug("Map lookup using default", key=key, has_default=True, default_value=default)
         return default
     logger.debug(
         "Map lookup failed", key=key, available_keys=list(map_to_search.keys())
