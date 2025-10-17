@@ -91,18 +91,8 @@ class FileContentResource(
     async def _create(
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, None]:
-        logger.debug(f"file_content._create() received base_plan keys: {list(base_plan.keys())}")
-        logger.debug(f"file_content._create() base_plan: {base_plan}")
-
-        # Ensure base_plan has all required fields from config_cty
-        # base_plan comes from planned_state_cty which may not have all fields yet
-        if ctx.config_cty and hasattr(ctx.config_cty, "value"):
-            logger.debug(f"config_cty has {len(ctx.config_cty.value)} fields: {list(ctx.config_cty.value.keys())}")
-            for key, value in ctx.config_cty.value.items():
-                if key not in base_plan:
-                    logger.debug(f"Adding missing field '{key}' to base_plan")
-                    base_plan[key] = value
-            logger.debug(f"base_plan after copying config fields: {list(base_plan.keys())}")
+        # base_plan already contains all config fields (merged by framework)
+        # Resources only need to add/modify computed fields
 
         # Proper handling: Check explicitly if content is unknown during planning
         if ctx.is_field_unknown("content"):
