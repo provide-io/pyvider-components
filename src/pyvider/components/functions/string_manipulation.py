@@ -54,7 +54,7 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
 
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
-def join(delimiter: str | None, strings: list[Any] | None) -> str | None:
+def join(strings: list[Any] | None, delimiter: str | None) -> str | None:
     if strings is None:
         return None
     delimiter_str = delimiter or ""
@@ -62,7 +62,7 @@ def join(delimiter: str | None, strings: list[Any] | None) -> str | None:
 
 
 @register_function(name="split", summary="Splits a string by a delimiter.")
-def split(delimiter: str | None, string: str | None) -> list[str] | None:
+def split(string: str | None, delimiter: str | None) -> list[str] | None:
     if string is None:
         return None
     delimiter_str = delimiter or ""
