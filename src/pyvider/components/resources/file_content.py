@@ -91,14 +91,26 @@ class FileContentResource(
     async def _create(
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, None]:
+        from pyvider.cty import CtyValue, CtyString
+
         config = cast(FileContentConfig, ctx.config)
         if not config:
             return None, None
 
-        # If content is None (unknown/computed), we can't calculate the hash yet
-        # Just return the base_plan with exists=True
-        if config.content is None:
+        # Check if content is unknown by examining the CTY value
+        content_is_unknown = False
+        if ctx.config_cty and not ctx.config_cty.is_null:
+            if "content" in ctx.config_cty.value:
+                content_cty = ctx.config_cty.value["content"]
+                if isinstance(content_cty, CtyValue) and content_cty.is_unknown:
+                    content_is_unknown = True
+
+        # If content is unknown/computed, mark it as unknown in the planned state
+        if config.content is None or content_is_unknown:
             base_plan["exists"] = True
+            # Mark content as unknown so Terraform knows it will be computed
+            base_plan["content"] = CtyValue.unknown(CtyString())
+            base_plan["content_hash"] = CtyValue.unknown(CtyString())
             return base_plan, None
 
         base_plan["exists"] = True
