@@ -88,11 +88,35 @@ def snake_case(text: str | None) -> str | None:
     return to_snake_case(text)
 
 
-@register_function(name="to_camel_case", summary="Converts text to camelCase.")
-def camel_case(text: str | None, upper_first: bool = False) -> str | None:
-    """Convert text to camelCase using provide-foundation utilities."""
+@register_function(
+    name="to_camel_case",
+    summary="Converts text to camelCase or PascalCase.",
+    param_descriptions={
+        "text": "The text to convert",
+        "options": "Optional: Pass true for PascalCase (default: false for camelCase)",
+    },
+)
+def camel_case(text: str | None, *options) -> str | None:
+    """
+    Convert text to camelCase (or PascalCase if upper_first is true).
+
+    Args:
+        text: Text to convert
+        *options: Optional boolean for upper_first (default: False)
+
+    Returns:
+        Converted text in camelCase (default) or PascalCase
+
+    Examples:
+        camel_case("my_var") → "myVar"
+        camel_case("my_var", True) → "MyVar"
+    """
     if text is None:
         return None
+
+    # Extract upper_first from variadic args (default: False)
+    upper_first = bool(options[0]) if options and len(options) > 0 else False
+
     return to_camel_case(text, upper_first=upper_first)
 
 
@@ -104,31 +128,118 @@ def kebab_case(text: str | None) -> str | None:
     return to_kebab_case(text)
 
 
-@register_function(name="format_size", summary="Formats bytes as human-readable size.")
-def format_file_size(size_bytes: int | None, precision: int = 1) -> str | None:
-    """Format bytes as human-readable size using provide-foundation utilities."""
+@register_function(
+    name="format_size",
+    summary="Formats bytes as human-readable size.",
+    param_descriptions={
+        "size_bytes": "Size in bytes to format",
+        "options": "Optional: Precision for decimal places (default: 1)",
+    },
+)
+def format_file_size(size_bytes: int | None, *options) -> str | None:
+    """
+    Format bytes as human-readable size (e.g., "1.5 KB", "2.3 MB").
+
+    Args:
+        size_bytes: Size in bytes
+        *options: Optional integer for precision (default: 1)
+
+    Returns:
+        Formatted size string
+
+    Examples:
+        format_file_size(1024) → "1.0 KB"
+        format_file_size(1024, 2) → "1.00 KB"
+    """
     if size_bytes is None:
         return None
+
+    # Extract precision from variadic args (default: 1)
+    precision = int(options[0]) if options and len(options) > 0 else 1
+
     return format_size(size_bytes, precision)
 
 
-@register_function(name="truncate", summary="Truncates text to specified length.")
-def truncate_text(
-    text: str | None, max_length: int = 100, suffix: str = "..."
-) -> str | None:
-    """Truncate text to specified length using provide-foundation utilities."""
+@register_function(
+    name="truncate",
+    summary="Truncates text to specified length.",
+    param_descriptions={
+        "text": "Text to truncate",
+        "options": "Optional: First arg is max_length (default: 100), second is suffix (default: '...')",
+    },
+)
+def truncate_text(text: str | None, *options) -> str | None:
+    """
+    Truncate text to specified length with optional suffix.
+
+    Args:
+        text: Text to truncate
+        *options: Optional args:
+            - First: max_length (int, default: 100)
+            - Second: suffix (str, default: "...")
+
+    Returns:
+        Truncated text with suffix if needed
+
+    Examples:
+        truncate_text("Hello World") → "Hello World"
+        truncate_text("Very long text...", 10) → "Very lo..."
+        truncate_text("Very long text...", 10, ">>") → "Very long>>"
+    """
     if text is None:
         return None
+
+    # Extract max_length and suffix from variadic args
+    max_length = 100
+    suffix = "..."
+
+    if options and len(options) > 0:
+        max_length = int(options[0])
+    if options and len(options) > 1:
+        suffix = str(options[1])
+
     return truncate(text, max_length, suffix)
 
 
-@register_function(name="pluralize", summary="Pluralizes a word based on count.")
-def pluralize_word(
-    word: str | None, count: int = 1, plural: str | None = None
-) -> str | None:
-    """Pluralize a word based on count using provide-foundation utilities."""
+@register_function(
+    name="pluralize",
+    summary="Pluralizes a word based on count.",
+    param_descriptions={
+        "word": "Word to pluralize",
+        "options": "Optional: First arg is count (default: 1), second is custom plural form",
+    },
+)
+def pluralize_word(word: str | None, *options) -> str | None:
+    """
+    Pluralize a word based on count with optional custom plural form.
+
+    Args:
+        word: Word to pluralize
+        *options: Optional args:
+            - First: count (int, default: 1)
+            - Second: plural (str, default: None for auto-pluralization)
+
+    Returns:
+        Singular or plural form based on count
+
+    Examples:
+        pluralize_word("apple") → "apple"
+        pluralize_word("apple", 1) → "apple"
+        pluralize_word("apple", 2) → "apples"
+        pluralize_word("person", 2, "people") → "people"
+    """
     if word is None:
         return None
+
+    # Extract count and plural from variadic args
+    count = 1
+    plural = None
+
+    if options and len(options) > 0:
+        count = int(options[0])
+    if options and len(options) > 1:
+        plural = str(options[1]) if options[1] is not None else None
+
     return pluralize(word, count, plural)
 
 

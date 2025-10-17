@@ -99,7 +99,7 @@ class FileContentResource(
             # Content is unknown/computed during planning
             # We can't calculate the hash yet, but we know the file will exist
             base_plan["exists"] = True
-            # content and content_hash remain unknown in base_plan (already set by Terraform)
+            # Don't set content_hash - framework will mark it as unknown
             return base_plan, None
 
         # Content is known - use typed config safely
