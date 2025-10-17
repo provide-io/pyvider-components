@@ -94,9 +94,8 @@ class FileContentResource(
         # base_plan already contains all config fields (merged by framework)
         # Resources only need to add/modify computed fields
 
-        # Proper handling: Check explicitly if content is unknown during planning
+        # Check explicitly if content is unknown during planning
         if ctx.is_field_unknown("content"):
-            logger.debug("file_content._create() content is unknown, skipping hash calculation")
             # Content is unknown/computed during planning
             # We can't calculate the hash yet, but we know the file will exist
             base_plan["exists"] = True
@@ -108,17 +107,15 @@ class FileContentResource(
         if not config or config.content is None:
             # Config instance exists but content field is None (unknown value)
             # This can happen when field is unknown but not detected by is_field_unknown()
-            logger.debug("file_content._create() content is None, treating as unknown")
             base_plan["exists"] = True
             return base_plan, None
 
-        logger.debug(f"file_content._create() content is known, computing hash")
+        # Compute content hash for known content
         base_plan["exists"] = True
         base_plan["content_hash"] = hashlib.sha256(
             config.content.encode("utf-8")
         ).hexdigest()
 
-        logger.debug(f"file_content._create() returning base_plan with keys: {list(base_plan.keys())}")
         return base_plan, None
 
     async def _update(
