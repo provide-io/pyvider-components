@@ -118,6 +118,7 @@ class FileContentResource(
             config.content.encode("utf-8")
         ).hexdigest()
 
+        logger.debug(f"file_content._create() returning base_plan with keys: {list(base_plan.keys())}")
         return base_plan, None
 
     async def _update(
