@@ -91,32 +91,30 @@ class FileContentResource(
     async def _create(
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, None]:
-        config = cast(FileContentConfig, ctx.config)
-
         logger.debug(f"file_content._create() received base_plan keys: {list(base_plan.keys())}")
-        logger.debug(f"file_content._create() config is None: {config is None}")
 
-        # If config is None (due to unknown/computed values), we can't access typed fields
-        # but base_plan already has the values from Terraform, so just mark exists=True
+        # Proper handling: Check explicitly if content is unknown during planning
+        if ctx.is_field_unknown("content"):
+            logger.debug("file_content._create() content is unknown, skipping hash calculation")
+            # Content is unknown/computed during planning
+            # We can't calculate the hash yet, but we know the file will exist
+            base_plan["exists"] = True
+            # content and content_hash remain unknown in base_plan (already set by Terraform)
+            return base_plan, None
+
+        # Content is known - use typed config safely
+        config = cast(FileContentConfig, ctx.config)
         if not config:
-            base_plan["exists"] = True
-            logger.debug(f"file_content._create() returning base_plan with keys: {list(base_plan.keys())}")
-            return base_plan, None
+            # This shouldn't happen if content isn't unknown, but handle defensively
+            logger.warning("file_content._create() config is None but content not marked unknown")
+            return None, None
 
-        # If content is None (unknown/computed value during planning),
-        # skip hash calculation and let the base_plan preserve the unknown marker
-        if config.content is None:
-            base_plan["exists"] = True
-            # Don't set content_hash - it will remain unknown/computed
-            logger.debug(f"file_content._create() content is None, returning base_plan with keys: {list(base_plan.keys())}")
-            return base_plan, None
-
+        logger.debug(f"file_content._create() content is known, computing hash")
         base_plan["exists"] = True
         base_plan["content_hash"] = hashlib.sha256(
             config.content.encode("utf-8")
         ).hexdigest()
 
-        logger.debug(f"file_content._create() normal path, returning base_plan with keys: {list(base_plan.keys())}")
         return base_plan, None
 
     async def _update(
