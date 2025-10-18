@@ -56,10 +56,6 @@ resource "pyvider_file_content" "api_config" {
 
 {{ example("api_integration") }}
 
-### Multi-Environment Tokens
-
-{{ example("multi_environment") }}
-
 ## Schema
 
 {{ schema() }}
