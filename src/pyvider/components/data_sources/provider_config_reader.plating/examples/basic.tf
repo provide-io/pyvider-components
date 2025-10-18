@@ -184,6 +184,7 @@ resource "pyvider_file_content" "api_client_config" {
 
 output "provider_config_analysis" {
   description = "Analysis of current provider configuration"
+  sensitive   = true
   value = {
     detected_environment = local.detected_environment
 
