@@ -71,14 +71,12 @@ class HTTPAPIDataSource(
         """Enhanced config validation using provide-foundation utilities."""
         errors = []
 
-        # Validate HTTP method using foundation HTTPMethod
+        # Validate HTTP method using foundation HTTPMethod (optional, defaults to GET)
         if config.method:
             try:
                 HTTPMethod(config.method.upper())
             except ValueError as e:
                 errors.append(f"Invalid HTTP method '{config.method}': {e}")
-        else:
-            errors.append("HTTP method is required")
 
         # Validate URL format
         if config.url and not config.url.startswith(("http://", "https://")):
