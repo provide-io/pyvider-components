@@ -72,20 +72,24 @@ class HTTPAPIDataSource(
         errors = []
 
         # Validate HTTP method using foundation HTTPMethod
-        try:
-            HTTPMethod(config.method.upper())
-        except ValueError as e:
-            errors.append(f"Invalid HTTP method '{config.method}': {e}")
+        if config.method:
+            try:
+                HTTPMethod(config.method.upper())
+            except ValueError as e:
+                errors.append(f"Invalid HTTP method '{config.method}': {e}")
+        else:
+            errors.append("HTTP method is required")
 
         # Validate URL format
-        if not config.url.startswith(("http://", "https://")):
+        if config.url and not config.url.startswith(("http://", "https://")):
             errors.append("URL must start with http:// or https://")
 
         # Validate timeout
-        if config.timeout <= 0:
-            errors.append("Timeout must be greater than 0")
-        elif config.timeout > 300:  # 5 minutes max
-            errors.append("Timeout cannot exceed 300 seconds")
+        if config.timeout is not None:
+            if config.timeout <= 0:
+                errors.append("Timeout must be greater than 0")
+            elif config.timeout > 300:  # 5 minutes max
+                errors.append("Timeout cannot exceed 300 seconds")
 
         logger.debug(
             "HTTP API config validation",
@@ -98,11 +102,15 @@ class HTTPAPIDataSource(
     async def _make_http_request(self, config: HTTPAPIConfig):
         """Make HTTP request using provide-foundation transport."""
         try:
+            # Handle None values from unknown/computed config at plan time
+            method = config.method.upper() if config.method else "GET"
+            timeout_val = float(config.timeout) if config.timeout is not None else 30.0
+
             response = await request(
-                method=HTTPMethod(config.method.upper()),
+                method=HTTPMethod(method),
                 uri=config.url,  # Fixed: provide.foundation.transport uses 'uri' not 'url'
                 headers=config.headers or {},
-                timeout=float(config.timeout),
+                timeout=timeout_val,
             )
             return response
         except (TransportConnectionError, TransportTimeoutError) as e:

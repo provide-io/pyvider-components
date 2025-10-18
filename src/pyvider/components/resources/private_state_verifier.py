@@ -52,8 +52,10 @@ class PrivateStateVerifierResource(BaseResource):
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any], VerifierPrivateState]:
         base_plan["decrypted_token"] = a_unknown(a_str())
+        # Handle None/unknown input_value at plan time (e.g., when using timestamp())
+        input_val = ctx.config.input_value if ctx.config.input_value else ""
         private_state = self.private_state_class(
-            secret_token=f"SECRET_FOR_{ctx.config.input_value.upper()}"
+            secret_token=f"SECRET_FOR_{input_val.upper()}"
         )
         return base_plan, private_state
 
