@@ -52,10 +52,6 @@ output "verification_result" {
 
 {{ example("compliance") }}
 
-### CI/CD Integration
-
-{{ example("cicd_testing") }}
-
 ## Schema
 
 {{ schema() }}
