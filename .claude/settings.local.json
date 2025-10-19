@@ -12,7 +12,8 @@
       "Bash(xargs:*)",
       "Bash(wc:*)",
       "Bash(/dev/null)",
-      "Bash(make:*)"
+      "Bash(make:*)",
+      "Bash(export PROVIDE_LOG_LEVEL=DEBUG)"
     ],
     "deny": [],
     "ask": [],
