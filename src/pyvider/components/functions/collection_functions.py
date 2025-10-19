@@ -1,4 +1,8 @@
+# pyvider/components/functions/collection_functions.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/functions/collection_functions.py
 #
 
@@ -40,9 +44,7 @@ def contains(list_to_check: list[Any] | None, element: Any) -> bool | None:
 
 @register_function(name="lookup", summary="Performs a dynamic lookup into a map.")
 @resilient()
-def lookup(
-    map_to_search: dict[str, Any] | None, key: str, *defaults
-) -> Any:
+def lookup(map_to_search: dict[str, Any] | None, key: str, *defaults) -> Any:
     """
     Lookup a key in a map and return its value, or a default if the key doesn't exist.
 
@@ -59,7 +61,9 @@ def lookup(
         return map_to_search[key]
     if defaults:  # Default was provided (even if falsy)
         default = defaults[0]
-        logger.debug("Map lookup using default", key=key, has_default=True, default_value=default)
+        logger.debug(
+            "Map lookup using default", key=key, has_default=True, default_value=default
+        )
         return default
     logger.debug(
         "Map lookup failed", key=key, available_keys=list(map_to_search.keys())
@@ -70,3 +74,4 @@ def lookup(
 
 
 # 📚🔧🎯
+# 🧩🔧🔣🪄

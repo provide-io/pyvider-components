@@ -1,4 +1,8 @@
+# pyvider/components/functions/numeric_functions.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/functions/numeric_functions.py
 #
 
@@ -122,3 +126,4 @@ def round_number(number: int | float | None, *options) -> int | float | None:
 
 
 # 🔢➕🎯
+# 🧩🔧🔣🪄

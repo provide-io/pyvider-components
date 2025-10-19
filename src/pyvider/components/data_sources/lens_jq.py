@@ -1,4 +1,8 @@
+# pyvider/components/data_sources/lens_jq.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/data_sources/lens_jq.py
 #
 
@@ -87,3 +91,4 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
 
 
 # 🔍🔧📊
+# 🧩🔧📄🪄

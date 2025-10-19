@@ -1,4 +1,8 @@
+# pyvider/components/functions/string_manipulation.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/functions/string_manipulation.py
 #
 
@@ -327,3 +331,4 @@ def pluralize_word(word: str | None, *options) -> str | None:
 
 
 # ✂️📝🎯
+# 🧩🔧🔣🪄

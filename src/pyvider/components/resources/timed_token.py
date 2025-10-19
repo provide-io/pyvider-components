@@ -1,4 +1,8 @@
+# pyvider/components/resources/timed_token.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/resources/timed_token.py
 #
 
@@ -103,3 +107,4 @@ class TimedTokenResource(
 
 
 # ⏰🎟️🔑
+# 🧩🔧📦🪄

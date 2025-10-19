@@ -1,4 +1,8 @@
+# pyvider/components/functions/lens_jq.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/functions/lens_jq.py
 #
 
@@ -63,3 +67,4 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
 
 
 # 🔍🔧📊
+# 🧩🔧🔣🪄

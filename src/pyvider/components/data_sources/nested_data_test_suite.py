@@ -1,4 +1,8 @@
+# pyvider/components/data_sources/nested_data_test_suite.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/data_sources/nested_data_test_suite.py
 #
 
@@ -350,3 +354,4 @@ def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> 
 
 
 # 🧪📦📊
+# 🧩🔧📄🪄

@@ -1,4 +1,8 @@
+# pyvider/components/functions/type_conversion_functions.py
 #
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 # pyvider/components/functions/type_conversion_functions.py
 #
 
@@ -26,3 +30,4 @@ def tostring(value: Any | None) -> str | None:
 
 
 # 🔄🏷️🎯
+# 🧩🔧🔣🪄
