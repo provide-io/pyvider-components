@@ -50,17 +50,9 @@ locals {
 
 {{ example("basic") }}
 
-### Data Transformation
+### Advanced Usage
 
-{{ example("data_transformation") }}
-
-### API Response Processing
-
-{{ example("api_response_processing") }}
-
-### Complex Queries
-
-{{ example("complex_queries") }}
+{{ example("advanced") }}
 
 ## Signature
 

@@ -50,14 +50,6 @@ output "active_users" {
 
 {{ example("basic") }}
 
-### Complex Transformations
-
-{{ example("complex") }}
-
-### API Response Processing
-
-{{ example("api_processing") }}
-
 ## Schema
 
 {{ schema() }}
