@@ -49,6 +49,6 @@ output "jq_results" {
     name         = data.pyvider_lens_jq.extract_name.result
     city         = data.pyvider_lens_jq.extract_city.result
     item_count   = data.pyvider_lens_jq.count_items.result
-    active_users = length(jsondecode(data.pyvider_lens_jq.filter_active.result))
+    active_users = data.pyvider_lens_jq.filter_active.result
   }
 }

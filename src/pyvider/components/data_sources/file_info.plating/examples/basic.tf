@@ -41,21 +41,21 @@ data "pyvider_file_info" "directory" {
 output "file_info_results" {
   value = {
     text_file = {
-      path         = data.pyvider_file_info.sample.path
-      exists       = data.pyvider_file_info.sample.exists
-      size_bytes   = data.pyvider_file_info.sample.size_bytes
-      is_file      = data.pyvider_file_info.sample.is_file
-      is_directory = data.pyvider_file_info.sample.is_directory
+      path    = data.pyvider_file_info.sample.path
+      exists  = data.pyvider_file_info.sample.exists
+      size    = data.pyvider_file_info.sample.size
+      is_file = data.pyvider_file_info.sample.is_file
+      is_dir  = data.pyvider_file_info.sample.is_dir
     }
     json_file = {
-      path       = data.pyvider_file_info.config.path
-      exists     = data.pyvider_file_info.config.exists
-      size_bytes = data.pyvider_file_info.config.size_bytes
+      path   = data.pyvider_file_info.config.path
+      exists = data.pyvider_file_info.config.exists
+      size   = data.pyvider_file_info.config.size
     }
     directory = {
-      path         = data.pyvider_file_info.directory.path
-      exists       = data.pyvider_file_info.directory.exists
-      is_directory = data.pyvider_file_info.directory.is_directory
+      path   = data.pyvider_file_info.directory.path
+      exists = data.pyvider_file_info.directory.exists
+      is_dir = data.pyvider_file_info.directory.is_dir
     }
   }
 }
