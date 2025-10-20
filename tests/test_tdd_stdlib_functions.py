@@ -46,7 +46,7 @@ class TestStdlibFunctions:
 
     def test_lookup_raises_error_without_default(self):
         with pytest.raises(FunctionError, match="Invalid key for map lookup"):
-            lookup({"a": "found"}, "b", None)
+            lookup({"a": "found"}, "b")
 
     def test_lookup_with_null_map_returns_null(self):
         assert lookup(None, "a", "default") is None
@@ -74,7 +74,7 @@ class TestStdlibFunctions:
 
     def test_join_with_boolean_uses_lowercase(self):
         """Verifies that join() converts booleans to lowercase 'true'/'false'."""
-        result = join(", ", ["a", True, 123, False])
+        result = join(["a", True, 123, False], ", ")
         assert result == "a, true, 123, false"
 
 

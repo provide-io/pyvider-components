@@ -468,11 +468,11 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
 
             pyvider.common.encryption._ENCRYPTION_KEY = None
 
-            from pyvider.exceptions import FrameworkConfigurationError
+            from provide.foundation.errors import ConfigurationError
 
             with pytest.raises(
-                FrameworkConfigurationError,
-                match="Private state shared secret not found",
+                ConfigurationError,
+                match="Private state shared secret not configured",
             ):
                 encrypt(b"test-data")
 
@@ -491,8 +491,11 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
             import pyvider.common.encryption
 
             pyvider.common.encryption._ENCRYPTION_KEY = None
+            # Also clear the key cache to force re-derivation with new key
+            pyvider.common.encryption._DERIVED_KEYS.clear()
 
-            with pytest.raises(ValueError, match="Private state decryption failed"):
+            from pyvider.common.encryption import EncryptionError
+            with pytest.raises(EncryptionError, match="Decryption failed"):
                 decrypt(encrypted)
 
     @pytest.mark.usefixtures("provider_in_hub")
