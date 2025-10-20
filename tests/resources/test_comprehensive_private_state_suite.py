@@ -492,7 +492,8 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
 
             pyvider.common.encryption._ENCRYPTION_KEY = None
             # Also clear the key cache to force re-derivation with new key
-            pyvider.common.encryption._DERIVED_KEYS.clear()
+            from pyvider.common.encryption import clear_encryption_cache
+            clear_encryption_cache()
 
             from pyvider.common.encryption import EncryptionError
             with pytest.raises(EncryptionError, match="Decryption failed"):

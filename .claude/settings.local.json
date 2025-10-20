@@ -13,7 +13,8 @@
       "Bash(wc:*)",
       "Bash(/dev/null)",
       "Bash(make:*)",
-      "Bash(export PROVIDE_LOG_LEVEL=DEBUG)"
+      "Bash(export PROVIDE_LOG_LEVEL=DEBUG)",
+      "Bash(pytest tests/resources/test_comprehensive_private_state_suite.py::TestPrivateStateEncryption::test_decryption_invalid_data_fails tests/resources/test_comprehensive_private_state_suite.py::TestPrivateStateEncryption::test_decryption_too_short_fails tests/resources/test_comprehensive_private_state_suite.py::TestPrivateStateErrorHandling::test_missing_encryption_key_fails tests/resources/test_comprehensive_private_state_suite.py::TestPrivateStateErrorHandling::test_changed_encryption_key_fails_decryption tests/test_tdd_stdlib_functions.py::TestStdlibFunctions::test_lookup_raises_error_without_default tests/test_tdd_stdlib_functions.py::TestStdlibFunctions::test_join_with_boolean_uses_lowercase -xvs)"
     ],
     "deny": [],
     "ask": [],
