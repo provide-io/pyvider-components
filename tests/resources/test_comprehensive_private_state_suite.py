@@ -194,13 +194,15 @@ class TestPrivateStateEncryption(FoundationTestCase):
     @pytest.mark.asyncio
     async def test_decryption_invalid_data_fails(self, encryption_key_env):
         """Test that decrypting invalid data raises an error"""
-        with pytest.raises(ValueError, match="Private state decryption failed"):
+        from pyvider.common.encryption import EncryptionError
+        with pytest.raises(EncryptionError, match="Ciphertext too short"):
             decrypt(b"invalid-ciphertext-data")
 
     @pytest.mark.asyncio
     async def test_decryption_too_short_fails(self, encryption_key_env):
         """Test that decrypting data too short to contain a nonce fails"""
-        with pytest.raises(ValueError, match="Invalid ciphertext: too short"):
+        from pyvider.common.encryption import EncryptionError
+        with pytest.raises(EncryptionError, match="Ciphertext too short"):
             decrypt(b"short")
 
 
