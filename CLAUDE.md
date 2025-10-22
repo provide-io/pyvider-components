@@ -46,27 +46,27 @@ source ./env.sh
 pytest
 
 # Run specific test file
-pytest tests/test_tdd_function_semantics.py
+uv run pytest tests/test_tdd_function_semantics.py
 
 # Run with coverage
-pytest --cov=pyvider.components --cov-report=term-missing
+uv run pytest --cov=pyvider.components --cov-report=term-missing
 
 # Run tests in parallel
-pytest -n auto
+uv run pytest -n auto
 
 # Run with verbose output
-pytest -v
+uv run pytest -v
 ```
 
 ### Code Quality
 ```bash
 # Type checking
-pyright
-mypy src/
+uv run pyright
+uv run mypy src/
 
 # Linting and formatting
-ruff check src/ tests/
-ruff format src/ tests/
+uv run ruff check src/ tests/
+uv run ruff format src/ tests/
 
 # Security scanning
 bandit -r src/
