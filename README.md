@@ -130,7 +130,7 @@ To contribute to the development of the `pyvider-components` provider, you need 
 
 ```bash
 # Set up the development environment (creates virtual env, installs dependencies)
-source ./env.sh
+uv sync
 ```
 
 ### Testing
