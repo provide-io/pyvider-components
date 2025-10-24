@@ -15,7 +15,7 @@ from pyvider.cty import CtyDynamic, CtyList, CtyString, CtyValue
 from pyvider.protocols.tfprotov6.handlers import CallFunctionHandler
 import pyvider.protocols.tfprotov6.protobuf as pb
 
-TF_DATA_PATH = Path("examples/advanced_jq_test")
+TF_DATA_PATH = Path("tests/fixtures/advanced_jq_test")
 
 
 @pytest.fixture(scope="module")

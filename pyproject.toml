@@ -46,6 +46,9 @@ markers = [
     "integration: marks integration tests",
     "unit: marks unit tests",
 ]
+filterwarnings = [
+    "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
+]
 
 [dependency-groups]
 dev = [
