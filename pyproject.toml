@@ -50,6 +50,9 @@ filterwarnings = [
     "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
 ]
 
+[project.entry-points.pyvider]
+pyvider-components = "pyvider.components"
+
 [dependency-groups]
 dev = [
     "provide-testkit[standard,build,profiling]",
