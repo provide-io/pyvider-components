@@ -33,7 +33,6 @@ async def test_private_state_verifier_lifecycle(encryption_key_env, provider_in_
         apply_request = pb.ApplyResourceChange.Request(
             type_name=resource_name,
             config=plan_request.config,
-            prior_state=pb.DynamicValue(),  # Empty prior state for CREATE
             planned_state=plan_response.planned_state,
             planned_private=plan_response.planned_private,
         )
