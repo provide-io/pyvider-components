@@ -291,6 +291,7 @@ class TestPrivateStateResourceLifecycle(FoundationTestCase):
             apply_request = pb.ApplyResourceChange.Request(
                 type_name=resource_name,
                 config=config_dv,
+                prior_state=pb.DynamicValue(),  # Empty prior state for CREATE
                 planned_state=plan_response.planned_state,
                 planned_private=plan_response.planned_private,
             )
@@ -349,6 +350,7 @@ class TestPrivateStateResourceLifecycle(FoundationTestCase):
             apply_request = pb.ApplyResourceChange.Request(
                 type_name=resource_name,
                 config=config_dv,
+                prior_state=pb.DynamicValue(),  # Empty prior state for CREATE
                 planned_state=plan_response.planned_state,
                 planned_private=plan_response.planned_private,
             )
@@ -398,6 +400,7 @@ class TestTimedTokenResource(FoundationTestCase):
             apply_request = pb.ApplyResourceChange.Request(
                 type_name=resource_name,
                 config=config_dv,
+                prior_state=pb.DynamicValue(),  # Empty prior state for CREATE
                 planned_state=plan_response.planned_state,
                 planned_private=plan_response.planned_private,
             )
