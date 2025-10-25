@@ -67,10 +67,20 @@ class PrivateStateVerifierResource(BaseResource):
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
+        # Debug: log what we have
+        from structlog import get_logger
+        logger = get_logger()
+        logger.debug(
+            "PrivateStateVerifier _create_apply",
+            has_config=ctx.config is not None,
+            has_planned_state=ctx.planned_state is not None,
+            config_type=type(ctx.config).__name__ if ctx.config else None,
+        )
+
         # Build final state from config (which has known values) and private state
         # Can't rely on planned_state as it may be fully unknown over the wire
         final_state = VerifierState(
-            input_value=ctx.config.input_value,
+            input_value=ctx.config.input_value if ctx.config else None,
             decrypted_token=ctx.private_state.secret_token
         )
         return final_state, None
