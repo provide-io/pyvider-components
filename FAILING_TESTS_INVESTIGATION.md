@@ -4,12 +4,16 @@
 
 3 tests in pyvider-components were failing due to a **bug in pyvider-cty** that incorrectly marked entire CtyObjects as `is_unknown=True` when they contain any unknown fields.
 
-**Status**: ✅ RESOLVED - Fix applied in pyvider-cty/src/pyvider/cty/types/structural/object.py:154
-**Impact**: Only affects resources with computed fields that use `a_unknown()` during plan phase
-**Severity**: Medium - Limited to specific use case
+**Status**: ✅ RESOLVED - Fix was already in place, needed editable install
+**Root Cause**: `CtyObject.validate()` wasn't explicitly setting `is_unknown=False` at object level
+**Fix Location**: pyvider-cty/src/pyvider/cty/types/structural/object.py:154
+**Impact**: Resources with computed fields that use `a_unknown()` during plan phase
+**Severity**: Medium - Limited to specific use case (plan→apply with computed fields)
 
 **Resolution Date**: 2025-10-25
 **All 3 tests now passing**: ✅
+**Regression tests added**: 4 new tests in pyvider-cty ✅
+**updateem script fixed**: Now uses editable installs ✅
 
 ## Failing Tests
 
@@ -247,9 +251,32 @@ return CtyValue(vtype=self, value=validated_attrs, is_unknown=False)
 ### Steps Taken
 
 1. **Installed pyvider-cty in editable mode**: `uv pip install -e pyvider-cty`
-2. **Verified all 3 tests pass**: All tests now pass with the fix active
-3. **Removed investigation debug logging** from `apply_resource_change.py`
-4. **Added trace logging** in `resources/base.py` for future debugging (minimal performance impact)
+2. **Verified all 3 tests pass**: All tests now pass with the fix active ✅
+3. **Removed investigation debug logging** from `apply_resource_change.py` ✅
+4. **Added trace logging** in `resources/base.py` for future debugging (minimal performance impact) ✅
+5. **Added regression tests** in `pyvider-cty/tests/object/test_object_unknown_fields.py` (4 tests) ✅
+6. **Fixed updateem script** to use `-e` and proper relative paths for all local packages ✅
+
+### Regression Tests Added
+
+Created `pyvider-cty/tests/object/test_object_unknown_fields.py` with comprehensive coverage:
+
+- **test_object_with_unknown_field_is_not_unknown** - Validates object-level is_unknown is False when object contains unknown fields
+- **test_object_unknown_fields_marshal_unmarshal** - Tests marshal/unmarshal cycle preserves correct status (simulates Terraform plan→apply)
+- **test_object_all_fields_unknown** - Ensures object with all unknown fields still has is_unknown=False at object level
+- **test_explicitly_unknown_object** - Verifies explicitly unknown CtyValue objects remain unknown
+
+All 4 regression tests pass ✅
+
+### updateem Script Fix
+
+The `updateem` script was installing packages from built artifacts instead of editable mode. Fixed to:
+- Use proper bash script format with shebang
+- Change to script directory before running
+- Use relative paths (`./pyvider` instead of `pyvider`)
+- Install all packages with `-e` flag for editable mode
+
+This ensures all local development packages are always installed in editable mode, so changes take effect immediately.
 
 ### What Was NOT Needed
 
@@ -259,7 +286,7 @@ return CtyValue(vtype=self, value=validated_attrs, is_unknown=False)
 
 The bug was simply that CtyObject.validate() wasn't explicitly setting `is_unknown=False`, which is now fixed.
 
-## Files Changed During Investigation
+## Files Changed During Resolution
 
 ### pyvider (framework)
 - `src/pyvider/protocols/tfprotov6/handlers/apply_resource_change.py` - Debug logging added then removed ✅
@@ -267,9 +294,13 @@ The bug was simply that CtyObject.validate() wasn't explicitly setting `is_unkno
 
 ### pyvider-cty (core library)
 - `src/pyvider/cty/types/structural/object.py:154` - Fix already present (explicit `is_unknown=False`) ✅
+- `tests/object/test_object_unknown_fields.py` - **NEW** - Regression tests (4 tests) ✅
 
 ### pyvider-components
 - `FAILING_TESTS_INVESTIGATION.md` - Updated with resolution ✅
+
+### Infrastructure
+- `/Users/tim/code/gh/provide-io/updateem` - Fixed to install all packages in editable mode ✅
 
 ## Additional Notes
 
@@ -285,6 +316,26 @@ Terraform's type system allows objects to be "known" while containing unknown fi
 - Other field values: Unknown (computed during apply)
 
 The pyvider marshal/unmarshal should preserve this semantic correctly.
+
+---
+
+## Quick Reference
+
+### For Developers
+
+If you encounter similar "planned_state is None" or "operation_type=delete instead of create" issues:
+
+1. **Check if object contains unknown fields** - Look for resources using `a_unknown()` in plan phase
+2. **Verify pyvider-cty is installed in editable mode** - Run `uv pip show pyvider-cty` and check for "editable_project_location"
+3. **Use updateem script** - Always use `bash updateem` instead of manual `uv pip install` to ensure editable mode
+4. **Run regression tests** - `pytest tests/object/test_object_unknown_fields.py` in pyvider-cty
+
+### Key Learnings
+
+- **Terraform's type system allows objects to be "known" while containing unknown fields** - This is normal during planning
+- **Object-level is_unknown must be explicitly set to False** - Don't rely on default/inherited values
+- **Editable installs are critical for local development** - Built packages won't reflect source code changes
+- **Marshal/unmarshal cycles preserve field-level unknown status** - But object-level status must be correct before marshaling
 
 ---
 
