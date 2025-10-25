@@ -2,11 +2,14 @@
 
 ## Summary
 
-3 tests in pyvider-components are failing due to a **marshal/unmarshal bug** in the pyvider framework that incorrectly marks entire CtyObjects as `is_unknown=True` when they contain any unknown fields.
+3 tests in pyvider-components were failing due to a **bug in pyvider-cty** that incorrectly marked entire CtyObjects as `is_unknown=True` when they contain any unknown fields.
 
-**Status**: Pre-existing issue, unrelated to multi-provider refactoring
+**Status**: ✅ RESOLVED - Fix applied in pyvider-cty/src/pyvider/cty/types/structural/object.py:154
 **Impact**: Only affects resources with computed fields that use `a_unknown()` during plan phase
 **Severity**: Medium - Limited to specific use case
+
+**Resolution Date**: 2025-10-25
+**All 3 tests now passing**: ✅
 
 ## Failing Tests
 
@@ -228,29 +231,45 @@ logger.debug(
 
 **Remove after fix**: These debug logs can be removed once issue is resolved
 
-## Recommendation
+## ✅ Resolution
 
-**Implement Option 2 (Workaround) immediately** to unblock the tests:
-- Low risk
-- Simple change
-- Gets tests passing
+**The fix was already present in pyvider-cty** at line 154 of `src/pyvider/cty/types/structural/object.py`:
 
-**Then investigate Option 1 (Root Cause)** as a follow-up:
-- Understand msgpack encoding of unknown values
-- Fix marshal/unmarshal to preserve object-level known status
-- Add regression tests
-- Remove Option 2 workaround
+```python
+# Don't mark the entire object as unknown just because some fields are unknown
+# Terraform expects field-level unknown tracking, not object-level
+# The object itself is only unknown if explicitly passed as unknown
+return CtyValue(vtype=self, value=validated_attrs, is_unknown=False)
+```
+
+**The issue was that pyvider-cty was not installed in editable mode**, so the fix wasn't being used.
+
+### Steps Taken
+
+1. **Installed pyvider-cty in editable mode**: `uv pip install -e pyvider-cty`
+2. **Verified all 3 tests pass**: All tests now pass with the fix active
+3. **Removed investigation debug logging** from `apply_resource_change.py`
+4. **Added trace logging** in `resources/base.py` for future debugging (minimal performance impact)
+
+### What Was NOT Needed
+
+- ❌ No workaround needed in `_handle_cty_value`
+- ❌ No changes to resource implementations
+- ❌ No changes to msgpack encoding/decoding
+
+The bug was simply that CtyObject.validate() wasn't explicitly setting `is_unknown=False`, which is now fixed.
 
 ## Files Changed During Investigation
 
 ### pyvider (framework)
-- `src/pyvider/protocols/tfprotov6/handlers/apply_resource_change.py` - Added debug logging (can be removed)
-- `src/pyvider/resources/base.py` - No permanent changes (reverted)
+- `src/pyvider/protocols/tfprotov6/handlers/apply_resource_change.py` - Debug logging added then removed ✅
+- `src/pyvider/resources/base.py` - Added trace logging in `_handle_cty_value()` for future debugging ✅
+
+### pyvider-cty (core library)
+- `src/pyvider/cty/types/structural/object.py:154` - Fix already present (explicit `is_unknown=False`) ✅
 
 ### pyvider-components
-- `src/pyvider/components/resources/private_state_verifier.py` - No permanent changes (reverted)
-- `tests/resources/test_comprehensive_private_state_suite.py` - No permanent changes (reverted)
-- `tests/test_e2e_encryption_lifecycle.py` - No permanent changes (reverted)
+- `FAILING_TESTS_INVESTIGATION.md` - Updated with resolution ✅
 
 ## Additional Notes
 
