@@ -67,8 +67,11 @@ class PrivateStateVerifierResource(BaseResource):
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
-        final_state = evolve(
-            ctx.planned_state, decrypted_token=ctx.private_state.secret_token
+        # Build final state from config (which has known values) and private state
+        # Can't rely on planned_state as it may be fully unknown over the wire
+        final_state = VerifierState(
+            input_value=ctx.config.input_value,
+            decrypted_token=ctx.private_state.secret_token
         )
         return final_state, None
 
