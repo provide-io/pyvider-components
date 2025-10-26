@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components/resources/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
