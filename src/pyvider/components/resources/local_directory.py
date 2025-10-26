@@ -110,6 +110,14 @@ class LocalDirectoryResource(
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
+
+        # Check if path exists as a file (not a directory)
+        if path.exists() and not path.is_dir():
+            raise ResourceError(
+                f"Cannot create directory at '{path}': path exists as a file. "
+                "Please remove the file or choose a different path."
+            )
+
         path.mkdir(parents=True, exist_ok=True)
         try:
             path.chmod(int(planned_state.permissions, 8))

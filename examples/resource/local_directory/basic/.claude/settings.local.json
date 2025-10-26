@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Read(//Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components/resources/**)"
+      "Read(//Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components/resources/**)",
+      "Read(//private/tmp/**)"
     ],
     "deny": [],
     "ask": []
