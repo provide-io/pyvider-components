@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-CI/CD pipeline token examples
+CI/CD pipeline with temporary tokens
 
 ## How to Run
 

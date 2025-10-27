@@ -8,18 +8,9 @@ description: |-
 
 Fetch a key from a map. Provide a default as the third argument to avoid errors when the key is missing.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  settings = {
-    region = "us-west-2"
-  }
-
-  region = provider::pyvider::lookup(local.settings, "region")              # "us-west-2"
-  zone   = provider::pyvider::lookup(local.settings, "zone", "us-west-2a")  # "us-west-2a"
-}
-```
+{{ example('lookup') }}
 
 ## Signature
 

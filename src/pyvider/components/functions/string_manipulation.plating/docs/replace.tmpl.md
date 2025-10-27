@@ -8,18 +8,9 @@ description: |-
 
 Produce a new string with each match substituted. Empty strings are used when the search or replacement arguments are `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  sanitized = provider::pyvider::replace(
-    "server:REPLACE_HOST",
-    "REPLACE_HOST",
-    "db.internal"
-  )
-  # "server:db.internal"
-}
-```
+{{ example('replace') }}
 
 ## Signature
 

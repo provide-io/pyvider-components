@@ -8,13 +8,9 @@ description: |-
 
 Find the maximum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  highest = provider::pyvider::max([3, 7, 2]) # 7
-}
-```
+{{ example('max') }}
 
 ## Signature
 

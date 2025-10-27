@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic private state verification examples
+Verify encryption of private state
 
 ## How to Run
 

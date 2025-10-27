@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic collection function examples
+Basic collection operations
 
 ## How to Run
 

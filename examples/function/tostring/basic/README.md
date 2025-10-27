@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic type conversion function examples
+Basic type conversion
 
 ## How to Run
 

@@ -8,13 +8,9 @@ description: |-
 
 Return the difference between two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  remaining = provider::pyvider::subtract(10, 4.5) # 5.5
-}
-```
+{{ example('subtract') }}
 
 ## Signature
 

@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic timed token examples
+Generate a timed token
 
 ## How to Run
 

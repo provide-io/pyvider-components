@@ -8,13 +8,9 @@ description: |-
 
 Return `true` when the desired element exists in the list. A `null` list returns `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  enabled = provider::pyvider::contains(["dev", "qa", "prod"], "prod") # true
-}
-```
+{{ example('contains') }}
 
 ## Signature
 

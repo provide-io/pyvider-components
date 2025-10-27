@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic numeric function examples
+Basic numeric operations
 
 ## How to Run
 

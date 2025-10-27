@@ -53,6 +53,9 @@ filterwarnings = [
 [project.entry-points.pyvider]
 pyvider-components = "pyvider.components"
 
+[tool.plating]
+provider_name = "pyvider"
+
 [dependency-groups]
 dev = [
     "provide-testkit[standard,build,profiling]",

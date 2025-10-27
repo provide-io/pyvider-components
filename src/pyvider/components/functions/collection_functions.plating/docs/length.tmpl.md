@@ -8,13 +8,9 @@ description: |-
 
 Count items in collections or characters in strings. A `null` input returns `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  item_count = provider::pyvider::length(["a", "b", "c"]) # 3
-}
-```
+{{ example('length') }}
 
 ## Signature
 

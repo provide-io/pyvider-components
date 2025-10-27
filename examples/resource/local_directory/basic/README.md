@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic directory creation and management
+Create a simple directory with default permissions.
 
 ## How to Run
 

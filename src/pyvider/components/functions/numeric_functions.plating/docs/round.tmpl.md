@@ -8,14 +8,9 @@ description: |-
 
 Round numbers to the nearest integer or decimal place. Provide an optional second argument to control precision (defaults to `0`).
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  integer_round = provider::pyvider::round(3.6)      # 4
-  precise_round = provider::pyvider::round(3.14159, 2) # 3.14
-}
-```
+{{ example('round') }}
 
 ## Signature
 

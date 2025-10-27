@@ -8,14 +8,9 @@ description: |-
 
 Normalize identifiers using camelCase by default. Pass a truthy second argument to produce PascalCase instead.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  variable_name = provider::pyvider::to_camel_case("user_profile")      # "userProfile"
-  class_name    = provider::pyvider::to_camel_case("user_profile", true) # "UserProfile"
-}
-```
+{{ example('to_camel_case') }}
 
 ## Signature
 

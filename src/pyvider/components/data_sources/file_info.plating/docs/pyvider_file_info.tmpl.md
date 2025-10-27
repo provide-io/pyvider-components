@@ -16,6 +16,11 @@ Read filesystem metadata without managing the underlying file. Useful for condit
 
 {{ schema() }}
 
+## Advanced Examples
+
+For more complex use cases, see:
+- `examples/advanced.tf` - File validation patterns, conditional resource creation, and metadata access
+
 ## Notes
 
 - Returns flags such as `exists`, `is_file`, and `is_dir`, plus size and timestamp fields.

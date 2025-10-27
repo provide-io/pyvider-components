@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Permission management examples with different security levels
+Permissions example: Directory creation with various permission modes
 
 ## How to Run
 

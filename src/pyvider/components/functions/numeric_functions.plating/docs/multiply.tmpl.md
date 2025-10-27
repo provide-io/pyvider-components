@@ -8,13 +8,9 @@ description: |-
 
 Return the product of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  area = provider::pyvider::multiply(4, 2.5) # 10
-}
-```
+{{ example('multiply') }}
 
 ## Signature
 

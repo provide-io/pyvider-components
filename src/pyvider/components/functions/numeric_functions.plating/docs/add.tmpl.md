@@ -8,13 +8,9 @@ description: |-
 
 Return the sum of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  total = provider::pyvider::add(2, 3.5) # 5.5
-}
-```
+{{ example('add') }}
 
 ## Signature
 

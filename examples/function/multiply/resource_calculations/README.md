@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Resource calculation examples using numeric functions
+Infrastructure resource calculations
 
 ## How to Run
 

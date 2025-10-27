@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic file creation and management
+Create a simple file with specified content.
 
 ## How to Run
 

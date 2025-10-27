@@ -16,6 +16,12 @@ Create or verify a directory on the local filesystem and optionally manage its p
 
 {{ schema() }}
 
+## Advanced Examples
+
+For more complex use cases, see:
+- `examples/permissions.tf` - Permission management and nested directory structures
+- `examples/project_structure.tf` - Project scaffolding patterns
+
 ## Notes
 
 - Set `path` to the directory to manage. Existing directories are adopted into state.

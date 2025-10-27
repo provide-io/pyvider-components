@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic environment variable access examples
+Read a specific environment variable by key.
 
 ## How to Run
 

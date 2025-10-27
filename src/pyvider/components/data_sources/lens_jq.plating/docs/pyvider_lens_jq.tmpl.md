@@ -16,6 +16,11 @@ Run jq expressions against JSON text or encoded objects, making it easy to resha
 
 {{ schema() }}
 
+## Advanced Examples
+
+For more complex use cases, see:
+- `examples/comprehensive.tf` - Complex jq queries including filtering, projecting, and data transformations
+
 ## Notes
 
 - Provide JSON via `json_input`; use `jsonencode(...)` when starting from Terraform values.

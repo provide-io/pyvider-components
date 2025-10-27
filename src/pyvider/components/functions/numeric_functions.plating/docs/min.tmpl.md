@@ -8,13 +8,9 @@ description: |-
 
 Find the minimum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  lowest = provider::pyvider::min([3, 7, 2]) # 2
-}
-```
+{{ example('min') }}
 
 ## Signature
 

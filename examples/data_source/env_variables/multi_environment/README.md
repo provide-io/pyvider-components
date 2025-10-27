@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Multi-environment configuration management with environment variables
+Multi-environment configuration
 
 ## How to Run
 

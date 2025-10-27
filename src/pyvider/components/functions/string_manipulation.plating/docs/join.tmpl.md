@@ -1,3 +1,4 @@
+---
 page_title: "Function: join"
 description: |-
   Join list elements into a single string.
@@ -7,9 +8,9 @@ description: |-
 
 Combine list values with a delimiter. Non-string items are coerced with `tostring`, and a `null` delimiter behaves like an empty string.
 
-## Example
+## Example Usage
 
-{{ example("basic") }}
+{{ example('join') }}
 
 ## Signature
 

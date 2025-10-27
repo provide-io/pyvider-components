@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Create a complete project directory structure
+Project scaffolding with directory structure
 
 ## How to Run
 

@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic file information examples
+First, create a file to inspect.
 
 ## How to Run
 

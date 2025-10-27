@@ -16,6 +16,13 @@ Write small configuration files with automatic hashing and drift detection. Upda
 
 {{ schema() }}
 
+## Advanced Examples
+
+For more complex use cases, see:
+- `examples/advanced.tf` - Real-world configuration file generation patterns
+- `examples/template.tf` - Template-based file generation
+- `examples/lifecycle.tf` - Create, update, and verification workflows
+
 ## Notes
 
 - Specify `filename` and `content`; the provider computes `content_hash`, `exists`, and other read-only fields.

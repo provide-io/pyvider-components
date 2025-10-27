@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Template-based configuration with dynamic content
+Config file generation with templates
 
 ## How to Run
 

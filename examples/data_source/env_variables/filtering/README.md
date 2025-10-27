@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Advanced filtering and transformation examples
+Environment variable filtering examples
 
 ## How to Run
 

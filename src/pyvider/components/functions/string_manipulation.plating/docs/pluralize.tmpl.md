@@ -8,14 +8,9 @@ description: |-
 
 Return the correct singular or plural form for a word. Optionally pass a count and a custom plural.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  summary = provider::pyvider::pluralize("alert", 3)         # "alerts"
-  custom  = provider::pyvider::pluralize("person", 2, "people") # "people"
-}
-```
+{{ example('pluralize') }}
 
 ## Signature
 

@@ -1,14 +1,14 @@
 ---
 page_title: "Data Source: pyvider_env_variables"
 description: |-
-  Read environment variables for use in Terraform.
+  Reads environment variables for use in Terraform configurations.
 ---
 
 # pyvider_env_variables (Data Source)
 
-Fetch environment variables by explicit key, prefix, or regex. Optional key/value transformations and `sensitive_keys` help control the output.
+Fetches environment variables by key, prefix, or regex. This allows you to inject external configuration into your Terraform plans.
 
-## Example
+## Example Usage
 
 {{ example("basic") }}
 
@@ -16,9 +16,15 @@ Fetch environment variables by explicit key, prefix, or regex. Optional key/valu
 
 {{ schema() }}
 
+## Advanced Examples
+
+For more complex use cases, see:
+- `examples/advanced.tf` - Basic filtering and transformations
+- `examples/filtering.tf` - Regex patterns and credential filtering
+- `examples/multi_environment.tf` - Dev/staging/prod configuration patterns
+- `examples/comprehensive.tf` - Complete feature showcase including sensitive handling and exclusions
+
 ## Notes
 
-- Provide `keys`, `prefix`, or `regex` to decide which variables are returned.
-- Set `case_sensitive = false` to relax matching.
-- `key_transform` / `value_transform` accept `"lower"` or `"upper"`.
-- Use `sensitive_keys` to mark returned entries as sensitive.
+- You must provide one of `keys`, `prefix`, or `regex` to specify which variables to read.
+- Use `sensitive_keys` to mark specific variables as sensitive, preventing them from being displayed in logs or outputs.

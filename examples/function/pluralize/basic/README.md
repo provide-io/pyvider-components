@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic string manipulation function examples
+Basic string manipulation
 
 ## How to Run
 

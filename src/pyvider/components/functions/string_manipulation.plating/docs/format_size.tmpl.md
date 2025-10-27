@@ -8,14 +8,9 @@ description: |-
 
 Scale byte values to the nearest unit (B, KB, MB, GB) with an optional precision argument. Helpful for quick summaries in outputs and dashboards.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  default_display = provider::pyvider::format_size(10240)        # "10.0 KB"
-  precise_display = provider::pyvider::format_size(123456789, 2) # "117.74 MB"
-}
-```
+{{ example('format_size') }}
 
 ## Signature
 

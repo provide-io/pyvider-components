@@ -8,13 +8,9 @@ description: |-
 
 Transform input text to lowercase words separated by underscores.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  identifier = provider::pyvider::to_snake_case("Display Name") # "display_name"
-}
-```
+{{ example('to_snake_case') }}
 
 ## Signature
 

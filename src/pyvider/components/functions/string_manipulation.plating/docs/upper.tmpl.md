@@ -8,13 +8,9 @@ description: |-
 
 Return the uppercase version of the provided text. Passing `null` keeps the value `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  shout = provider::pyvider::upper("hello world") # "HELLO WORLD"
-}
-```
+{{ example('upper') }}
 
 ## Signature
 

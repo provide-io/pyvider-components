@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic HTTP API usage examples
+Make a simple GET request to a public API.
 
 ## How to Run
 

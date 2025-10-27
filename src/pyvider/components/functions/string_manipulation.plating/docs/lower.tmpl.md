@@ -8,13 +8,9 @@ description: |-
 
 Return the lowercase version of the provided text. Passing `null` keeps the value `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  username = provider::pyvider::lower("ADMIN@EXAMPLE.COM") # "admin@example.com"
-}
-```
+{{ example('lower') }}
 
 ## Signature
 

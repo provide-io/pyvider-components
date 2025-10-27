@@ -8,13 +8,9 @@ description: |-
 
 Transform input text to lowercase words separated by hyphens.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  slug = provider::pyvider::to_kebab_case("Release Candidate 1") # "release-candidate-1"
-}
-```
+{{ example('to_kebab_case') }}
 
 ## Signature
 

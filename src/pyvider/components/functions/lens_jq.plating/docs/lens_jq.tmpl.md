@@ -8,9 +8,9 @@ description: |-
 
 Apply jq expressions to maps, lists, or JSON strings when the lens capability is enabled in the provider configuration.
 
-## Example
+## Example Usage
 
-{{ example("basic") }}
+{{ example('lens_jq') }}
 
 ## Signature
 

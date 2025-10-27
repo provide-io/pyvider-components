@@ -4,7 +4,7 @@ This directory contains a complete, executable Terraform example demonstrating t
 
 ## What This Example Does
 
-Basic JQ data source transformation examples
+Use the lens_jq data source to extract a field from a JSON object.
 
 ## How to Run
 

@@ -8,13 +8,9 @@ description: |-
 
 Trim text to a target length. Provide optional arguments for the limit and suffix; defaults are `100` characters and `"..."`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  preview = provider::pyvider::truncate("This is a very long sentence.", 12) # "This is a..."
-}
-```
+{{ example('truncate') }}
 
 ## Signature
 

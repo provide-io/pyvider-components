@@ -8,13 +8,9 @@ description: |-
 
 Return the quotient of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  average = provider::pyvider::divide(21, 4) # 5.25
-}
-```
+{{ example('divide') }}
 
 ## Signature
 

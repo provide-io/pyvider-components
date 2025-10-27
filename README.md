@@ -2,65 +2,9 @@
 
 This repository provides a standard set of components for the [Pyvider](https://github.com/provide-io/pyvider) framework, a Python-based framework for building Terraform providers.
 
-## Components
-
-The following components are available:
-
-### Data Sources
-
--   `pyvider_env_variables`: Provides access to environment variables.
--   `pyvider_file_info`: Provides information about a file.
--   `pyvider_http_api`: Makes an HTTP request and returns the response.
--   `pyvider_lens_jq`: Transforms data using a JQ expression.
-
-### Resources
-
--   `pyvider_file_content`: Manages the content of a file.
--   `pyvider_local_directory`: Manages a directory on the local filesystem.
--   `pyvider_private_state_verifier`: Verifies the private state of a resource.
--   `pyvider_timed_token`: Manages a timed token.
--   `pyvider_warning_example`: An example resource that demonstrates how to return warnings.
-
-### Functions
-
-#### Numeric Functions
--   `add`: Adds two numbers.
--   `subtract`: Subtracts two numbers.
--   `multiply`: Multiplies two numbers.
--   `divide`: Divides two numbers.
--   `sum`: Sums a list of numbers.
--   `min`: Returns the minimum of a list of numbers.
--   `max`: Returns the maximum of a list of numbers.
--   `round`: Rounds a number to specified precision.
-
-#### String Functions
--   `upper`: Converts a string to uppercase.
--   `lower`: Converts a string to lowercase.
--   `split`: Splits a string into a list of strings.
--   `join`: Joins a list of strings.
--   `replace`: Replaces a substring in a string.
--   `format`: Formats a string using positional arguments.
--   `truncate`: Truncates text to specified length.
--   `format_size`: Formats bytes as human-readable size.
--   `pluralize`: Pluralizes a word based on count.
--   `to_snake_case`: Converts a string to snake_case.
--   `to_kebab_case`: Converts a string to kebab-case.
--   `to_camel_case`: Converts a string to camelCase.
-
-#### Collection Functions
--   `length`: Returns the length of a string, list, or map.
--   `contains`: Checks if a list contains a given element.
--   `lookup`: Looks up a value in a map.
-
-#### Type Conversion Functions
--   `tostring`: Converts any value to a string.
-
-#### Transformation Functions
--   `lens_jq`: Transforms data using a JQ expression.
-
 ## Getting Started
 
-To use the `pyvider-components` provider, you need to configure it in your Terraform project.
+To use the `pyvider-components` provider, configure it in your Terraform project:
 
 ```terraform
 terraform {
@@ -73,76 +17,88 @@ terraform {
 }
 
 provider "pyvider" {
-  # Configuration options here
+  # Provider configuration options go here
 }
 ```
+
+## Components
+
+### Data Sources
+
+-   `pyvider_env_variables`: Provides access to environment variables.
+-   `pyvider_file_info`: Provides metadata about a file or directory.
+-   `pyvider_http_api`: Makes an HTTP request and returns the response.
+-   `pyvider_lens_jq`: Transforms data using a JQ expression.
+
+### Resources
+
+-   `pyvider_file_content`: Manages the content of a file.
+-   `pyvider_local_directory`: Manages a directory on the local filesystem.
+-   `pyvider_private_state_verifier`: Verifies the private state of a resource (for testing).
+-   `pyvider_timed_token`: Manages a short-lived token (for testing).
+-   `pyvider_warning_example`: Demonstrates how to return warnings (for testing).
+
+### Functions
+
+A rich set of utility functions are provided for common data manipulations.
+
+-   **Numeric:** `add`, `subtract`, `multiply`, `divide`, `sum`, `min`, `max`, `round`
+-   **String:** `upper`, `lower`, `split`, `join`, `replace`, `format`, `truncate`, `format_size`, `pluralize`, `to_snake_case`, `to_kebab_case`, `to_camel_case`
+-   **Collection:** `length`, `contains`, `lookup`
+-   **Type Conversion:** `tostring`
+-   **Transformation:** `lens_jq`
 
 ## Examples
 
-Here are a few examples of how to use the components:
-
-### `pyvider_env_variables`
+### Read Environment Variables
 
 ```terraform
-# Filter by a specific list of keys
-data "pyvider_env_variables" "by_keys" {
-  keys = ["TEST_VAR1", "TEST_VAR2", "TEST_SENSITIVE_TOKEN", "NON_EXISTENT_VAR"]
+data "pyvider_env_variables" "shell" {
+  keys = ["SHELL"]
 }
 
-output "by_keys_result" {
-  description = "Result of filtering by specific keys."
-  value       = data.pyvider_env_variables.by_keys.values
+output "shell_path" {
+  value = data.pyvider_env_variables.shell.values["SHELL"]
 }
 ```
 
-### `pyvider_file_content`
+### Manage a File
 
 ```terraform
-# Create file
-resource "pyvider_file_content" "test_create" {
-  filename = "/tmp/pyvider_test_create.txt"
-  content  = "This is a test file created by Pyvider"
+resource "pyvider_file_content" "example" {
+  filename = "/tmp/example.txt"
+  content  = "This file is managed by Terraform."
 }
 
-output "created_file" {
-  value = {
-    filename = pyvider_file_content.test_create.filename
-    content = pyvider_file_content.test_create.content
-    exists = pyvider_file_content.test_create.exists
-    content_hash = pyvider_file_content.test_create.content_hash
-  }
+output "file_hash" {
+  value = pyvider_file_content.example.content_hash
 }
 ```
 
-### `upper` function
+### Use a String Function
 
 ```terraform
-output "upper_result" {
+output "uppercase_example" {
   value = provider::pyvider::upper("hello world")
 }
 ```
 
 ## Development
 
-To contribute to the development of the `pyvider-components` provider, you need to set up the development environment.
-
-### Environment Setup
+To contribute, set up the development environment using `uv`.
 
 ```bash
-# Set up the development environment (creates virtual env, installs dependencies)
-uv sync
+# Create a virtual environment and install all dependencies
+uv sync --all-groups
+
+# Activate the environment
+source .venv/bin/activate
 ```
 
 ### Testing
 
+Run the test suite with `pytest`.
+
 ```bash
-# Run all tests
 pytest
-```
-
-### Building
-
-```bash
-# Build the package
-uv build
 ```

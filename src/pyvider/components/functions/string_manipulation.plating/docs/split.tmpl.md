@@ -8,13 +8,9 @@ description: |-
 
 Split text into a list of values. A `null` input returns `null`, an empty string yields an empty list, and a `null` delimiter is treated as `""`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  hosts = provider::pyvider::split("db1,db2,db3", ",") # ["db1", "db2", "db3"]
-}
-```
+{{ example('split') }}
 
 ## Signature
 

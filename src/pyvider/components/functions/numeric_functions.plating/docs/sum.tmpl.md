@@ -8,13 +8,9 @@ description: |-
 
 Add every value in a list. A `null` list returns `null`. Integer totals are returned as whole numbers.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  total_cost = provider::pyvider::sum([10, 20.5, 5]) # 35.5
-}
-```
+{{ example('sum') }}
 
 ## Signature
 

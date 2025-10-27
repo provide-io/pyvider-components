@@ -8,14 +8,9 @@ description: |-
 
 Produce a string representation of any value. Booleans become lowercase `"true"` / `"false"`, and `null` inputs stay `null`.
 
-## Example
+## Example Usage
 
-```terraform
-locals {
-  number_str = provider::pyvider::tostring(42)    # "42"
-  bool_str   = provider::pyvider::tostring(false) # "false"
-}
-```
+{{ example('tostring') }}
 
 ## Signature
 
