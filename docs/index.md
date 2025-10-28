@@ -22,22 +22,17 @@ No provider configuration required.
 
 ## Resources
 
-- [`pyvider_pyvider_file_content`](./resources/pyvider_file_content.md)
-- [`pyvider_pyvider_local_directory`](./resources/pyvider_local_directory.md)
-- [`pyvider_pyvider_private_state_verifier`](./resources/pyvider_private_state_verifier.md)
-- [`pyvider_pyvider_timed_token`](./resources/pyvider_timed_token.md)
-- [`pyvider_pyvider_warning_example`](./resources/pyvider_warning_example.md)
+- [`pyvider_file_content`](./resources/file_content.md)
+- [`pyvider_local_directory`](./resources/local_directory.md)
+- [`pyvider_timed_token`](./resources/timed_token.md)
 
 ## Data Sources
 
-- [`pyvider_pyvider_env_variables`](./data-sources/pyvider_env_variables.md)
-- [`pyvider_pyvider_file_info`](./data-sources/pyvider_file_info.md)
-- [`pyvider_pyvider_http_api`](./data-sources/pyvider_http_api.md)
-- [`pyvider_pyvider_lens_jq`](./data-sources/pyvider_lens_jq.md)
-- [`pyvider_pyvider_mixed_map_test`](./data-sources/pyvider_mixed_map_test.md)
-- [`pyvider_pyvider_provider_config_reader`](./data-sources/pyvider_provider_config_reader.md)
-- [`pyvider_pyvider_simple_map_test`](./data-sources/pyvider_simple_map_test.md)
-- [`pyvider_pyvider_structured_object_test`](./data-sources/pyvider_structured_object_test.md)
+- [`pyvider_env_variables`](./data-sources/env_variables.md)
+- [`pyvider_file_info`](./data-sources/file_info.md)
+- [`pyvider_http_api`](./data-sources/http_api.md)
+- [`pyvider_lens_jq`](./data-sources/lens_jq.md)
+- [`pyvider_provider_config_reader`](./data-sources/provider_config_reader.md)
 
 ## Functions
 
@@ -66,3 +61,18 @@ No provider configuration required.
 - [`tostring`](./functions/tostring.md)
 - [`truncate`](./functions/truncate.md)
 - [`upper`](./functions/upper.md)
+
+## Test Mode
+
+_Test-only components for testing and development purposes._
+
+### Test Resources
+
+- [`pyvider_private_state_verifier`](./resources/private_state_verifier.md)
+- [`pyvider_warning_example`](./resources/warning_example.md)
+
+### Test Data Sources
+
+- [`pyvider_mixed_map_test`](./data-sources/mixed_map_test.md)
+- [`pyvider_simple_map_test`](./data-sources/simple_map_test.md)
+- [`pyvider_structured_object_test`](./data-sources/structured_object_test.md)
