@@ -16,7 +16,6 @@ The codebase follows a component-based architecture with three main component ty
 
 Each component includes:
 - Python implementation file
-- `.garnish/` directory containing Terraform examples and documentation templates
 - Integration with the Pyvider RPC plugin system
 
 Key architectural patterns:
@@ -99,7 +98,6 @@ tofu apply
 ## Important Project Instructions
 
 - **Rebuild flavor helpers before testing/verification** to avoid using inaccurate helpers
-- The project uses `.garnish/` directories for Terraform-related artifacts (examples, docs)
 - Platform-specific virtual environments are created under `workenv/` with naming pattern `pyvider-components_${OS}_${ARCH}`
 - The project requires Python >=3.11
 
@@ -113,7 +111,6 @@ The test suite includes:
 
 When adding new components:
 1. Create the component in the appropriate directory
-2. Add `.garnish/` directory with examples and documentation templates
 3. Write comprehensive tests covering all operations
 4. Ensure the component registers properly with the Pyvider framework
 
@@ -129,5 +126,4 @@ All components should:
 - Use `attrs` classes for schema definition
 - Include proper error handling and diagnostics
 - Follow existing naming conventions (snake_case for Python, appropriate for Terraform)
-- Include example Terraform configurations in `.garnish/examples/`
 - It can use __future__ annotations to use unquoted annotations
