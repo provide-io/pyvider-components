@@ -13,7 +13,7 @@ import pyvider.protocols.tfprotov6.protobuf as pb
 
 
 @pytest.mark.asyncio
-async def test_private_state_verifier_lifecycle(encryption_key_env, provider_in_hub):
+async def test_private_state_verifier_lifecycle(encryption_key_env, provider_with_test_mode):
     resource_name = "pyvider_private_state_verifier"
     hub.register("resource", resource_name, PrivateStateVerifierResource)
     try:

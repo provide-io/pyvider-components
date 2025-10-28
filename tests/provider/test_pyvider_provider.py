@@ -90,12 +90,13 @@ class TestCoreCapability:
         # Should not raise
 
     def test_core_capability_schema_contribution(self):
-        """Test core capability returns empty schema."""
+        """Test core capability returns schema with provider_testmode."""
         schema_contrib = CoreCapability.get_schema_contribution()
 
-        # Core capability currently has no config attributes
+        # Core capability provides provider_testmode config attribute
         assert isinstance(schema_contrib, dict)
-        assert len(schema_contrib) == 0
+        assert len(schema_contrib) == 1
+        assert "provider_testmode" in schema_contrib
 
 
 class TestProviderRegistration:

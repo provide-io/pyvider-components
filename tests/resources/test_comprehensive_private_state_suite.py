@@ -326,7 +326,7 @@ class TestPrivateStateResourceLifecycle(FoundationTestCase):
         finally:
             hub.unregister("resource", resource_name)
 
-    @pytest.mark.usefixtures("provider_in_hub")
+    @pytest.mark.usefixtures("provider_with_test_mode")
     @pytest.mark.asyncio
     async def test_private_state_verifier_resource_works(self, encryption_key_env):
         """Test that the existing private state verifier resource still works"""

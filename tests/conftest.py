@@ -11,6 +11,11 @@ from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
 from pyvider.providers.base import BaseProvider, ProviderMetadata
 
+# Register pytest plugins for test fixtures
+pytest_plugins = [
+    "pyvider.testmode.fixtures",
+]
+
 
 @pytest.fixture(scope="session")
 def provider_in_hub():
