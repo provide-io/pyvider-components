@@ -21,7 +21,9 @@
       "Bash(cp:*)",
       "Bash(pytest:*)",
       "Bash(mv:*)",
-      "Bash(rmdir:*)"
+      "Bash(rmdir:*)",
+      "Bash(find:*)",
+      "Bash(pyvider provide:*)"
     ],
     "deny": [],
     "ask": [],

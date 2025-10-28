@@ -51,7 +51,7 @@ class SimpleMapState:
     data_hash: str
 
 
-@register_data_source("pyvider_simple_map_test")
+@register_data_source("pyvider_simple_map_test", test_only=True)
 class SimpleMapDataSource(
     BaseDataSource["pyvider_simple_map_test", SimpleMapState, SimpleMapConfig]
 ):
@@ -105,7 +105,7 @@ class MixedMapState:
     data_hash: str
 
 
-@register_data_source("pyvider_mixed_map_test")
+@register_data_source("pyvider_mixed_map_test", test_only=True)
 class MixedMapDataSource(
     BaseDataSource["pyvider_mixed_map_test", MixedMapState, MixedMapConfig]
 ):
@@ -174,7 +174,7 @@ class StructuredObjectState:
     summary: dict[str, Any]
 
 
-@register_data_source("pyvider_structured_object_test")
+@register_data_source("pyvider_structured_object_test", test_only=True)
 class StructuredObjectDataSource(
     BaseDataSource[
         "pyvider_structured_object_test", StructuredObjectState, StructuredObjectConfig
@@ -260,7 +260,7 @@ class NestedResourceState:
     exists: bool | None = field(default=None)
 
 
-@register_resource("pyvider_nested_resource_test")
+@register_resource("pyvider_nested_resource_test", test_only=True)
 class NestedResourceTest(
     BaseResource[
         "pyvider_nested_resource_test", NestedResourceState, NestedResourceConfig
@@ -334,7 +334,7 @@ class NestedResourceTest(
 # =============================================================================
 
 
-@register_function(name="pyvider_nested_data_processor")
+@register_function(name="pyvider_nested_data_processor", test_only=True)
 def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> str:
     try:
         input_data = json.loads(input_json) if input_json else {}

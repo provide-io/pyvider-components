@@ -34,7 +34,7 @@ class VerifierPrivateState(PrivateState):
     secret_token: str
 
 
-@register_resource("pyvider_private_state_verifier")
+@register_resource("pyvider_private_state_verifier", test_only=True)
 class PrivateStateVerifierResource(BaseResource):
     config_class = VerifierConfig
     state_class = VerifierState
