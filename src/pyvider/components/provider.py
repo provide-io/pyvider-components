@@ -24,9 +24,4 @@ class PyviderProvider(BaseProvider):
     """
 
     def __init__(self):
-        super().__init__(
-            metadata=ProviderMetadata(
-                name="pyvider",
-                version="0.1.0"
-            )
-        )
+        super().__init__(metadata=ProviderMetadata(name="pyvider", version="0.1.0"))
