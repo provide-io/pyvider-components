@@ -1,26 +1,27 @@
 ---
 page_title: "Function: truncate"
 description: |-
-  Shorten text to a maximum length with an optional suffix.
+  Truncate text to specified length with optional suffix.
 ---
 
 # truncate (Function)
 
-Trim text to a target length. Provide optional arguments for the limit and suffix; defaults are `100` characters and `"..."`.
+Truncate text to specified length with optional suffix.
 
 ## Example Usage
 
-{{ example('truncate') }}
+{{ example("example") }}
 
 ## Signature
 
-`truncate(text: string, options: variadic) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `text` (string, required) — Text to truncate. Returns `null` when this is `null`.
-- `options` (variadic, optional) — First value sets `max_length` (default `100`); second value overrides the suffix (default `"..."`).
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The truncated string. If the text fits within the limit, it is returned unchanged.
+{{ variadic_argument_markdown }}
+{% endif %}

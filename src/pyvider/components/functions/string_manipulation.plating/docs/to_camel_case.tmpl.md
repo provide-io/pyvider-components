@@ -1,26 +1,27 @@
 ---
 page_title: "Function: to_camel_case"
 description: |-
-  Convert text to camelCase or PascalCase.
+  Convert text to camelCase (or PascalCase if upper_first is true).
 ---
 
 # to_camel_case (Function)
 
-Normalize identifiers using camelCase by default. Pass a truthy second argument to produce PascalCase instead.
+Convert text to camelCase (or PascalCase if upper_first is true).
 
 ## Example Usage
 
-{{ example('to_camel_case') }}
+{{ example("example") }}
 
 ## Signature
 
-`to_camel_case(text: string, options: variadic) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `text` (string, required) — Text to transform. Returns `null` when this is `null`.
-- `options` (variadic, optional) — When present, the first value controls `upper_first`; truthy values request PascalCase.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The converted string, or `null` when `text` is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

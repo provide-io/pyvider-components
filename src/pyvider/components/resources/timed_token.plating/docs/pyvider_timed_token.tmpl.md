@@ -1,23 +1,23 @@
 ---
 page_title: "Resource: pyvider_timed_token"
 description: |-
-  Generate short-lived tokens for tests and demos.
+  Terraform resource for pyvider_timed_token
 ---
 
 # pyvider_timed_token (Resource)
 
-Produce a UUID-backed token that expires automatically. Designed for samples and integration tests that need temporary credentials.
+Terraform resource for pyvider_timed_token
 
-## Example
+## Example Usage
 
-{{ example("basic") }}
+{{ example("example") }}
 
-## Schema
+## Argument Reference
 
 {{ schema() }}
 
-## Notes
+## Import
 
-- `token` and `token_id` are marked sensitive; reference them indirectly when possible.
-- `expires_at` reports the ISO timestamp when the token becomes invalid (defaults to one hour after creation).
-- Best suited for mock or ephemeral environments rather than production authentication.
+```bash
+terraform import pyvider_timed_token.example <id>
+```

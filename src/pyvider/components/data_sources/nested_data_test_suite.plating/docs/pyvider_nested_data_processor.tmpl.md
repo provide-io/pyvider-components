@@ -1,12 +1,12 @@
 ---
-page_title: "Function: lens_jq"
+page_title: "Function: pyvider_nested_data_processor"
 description: |-
-  Applies a jq query and returns a native Python object.
+  Terraform function for pyvider_nested_data_processor
 ---
 
-# lens_jq (Function)
+# pyvider_nested_data_processor (Function)
 
-Applies a jq query and returns a native Python object.
+Terraform function for pyvider_nested_data_processor
 
 ## Example Usage
 

@@ -1,26 +1,27 @@
 ---
 page_title: "Function: format_size"
 description: |-
-  Convert byte counts into human-readable strings.
+  Format bytes as human-readable size (e.g., "1.5 KB", "2.3 MB").
 ---
 
 # format_size (Function)
 
-Scale byte values to the nearest unit (B, KB, MB, GB) with an optional precision argument. Helpful for quick summaries in outputs and dashboards.
+Format bytes as human-readable size (e.g., "1.5 KB", "2.3 MB").
 
 ## Example Usage
 
-{{ example('format_size') }}
+{{ example("example") }}
 
 ## Signature
 
-`format_size(size_bytes: number, options: variadic) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `size_bytes` (number, required) — Total bytes to format. Returns `null` when this is `null`.
-- `options` (variadic, optional) — First value controls decimal places (default `1`).
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-A human-readable size string such as `"512.0 B"` or `"3.5 GB"`. A `null` input yields `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

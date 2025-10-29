@@ -1,25 +1,27 @@
 ---
 page_title: "Function: length"
 description: |-
-  Return the number of items in a list, map, or string.
+  Terraform function for length
 ---
 
 # length (Function)
 
-Count items in collections or characters in strings. A `null` input returns `null`.
+Terraform function for length
 
 ## Example Usage
 
-{{ example('length') }}
+{{ example("example") }}
 
 ## Signature
 
-`length(collection: list | map | string) -> number`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `collection` (list | map | string, required) — Value to measure. Returns `null` when this is `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The length as a number, or `null` when no collection is provided.
+{{ variadic_argument_markdown }}
+{% endif %}

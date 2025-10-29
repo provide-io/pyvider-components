@@ -1,25 +1,27 @@
 ---
 page_title: "Function: min"
 description: |-
-  Return the smallest number in a list.
+  Terraform function for min
 ---
 
 # min (Function)
 
-Find the minimum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
+Terraform function for min
 
 ## Example Usage
 
-{{ example('min') }}
+{{ example("example") }}
 
 ## Signature
 
-`min(numbers: list[number]) -> number`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `numbers` (list[number], required) — Values to evaluate. Must contain at least one element. Returns `null` when this is `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The minimum number in the list, or `null` when the list is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

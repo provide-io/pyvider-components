@@ -6,22 +6,22 @@ description: |-
 
 # replace (Function)
 
-Produce a new string with each match substituted. Empty strings are used when the search or replacement arguments are `null`.
+Replace all occurrences of a substring.
 
 ## Example Usage
 
-{{ example('replace') }}
+{{ example("example") }}
 
 ## Signature
 
-`replace(string: string, search: string, replacement: string) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `string` (string, required) — Text to update. Returns `null` when this is `null`.
-- `search` (string, required) — Substring to find. Defaults to `""` when `null`.
-- `replacement` (string, required) — Text that replaces each occurrence. Defaults to `""` when `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The updated string, or `null` when the input string is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

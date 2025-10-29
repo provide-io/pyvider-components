@@ -1,26 +1,27 @@
 ---
 page_title: "Function: join"
 description: |-
-  Join list elements into a single string.
+  Join a list of strings with a delimiter.
 ---
 
 # join (Function)
 
-Combine list values with a delimiter. Non-string items are coerced with `tostring`, and a `null` delimiter behaves like an empty string.
+Join a list of strings with a delimiter.
 
 ## Example Usage
 
-{{ example('join') }}
+{{ example("example") }}
 
 ## Signature
 
-`join(delimiter: string, strings: list[any]) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `delimiter` (string, required) — Separator placed between items; defaults to `""` when `null`.
-- `strings` (list[any], required) — Values to concatenate; each value is converted to a string. Returns `null` when the list itself is `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-A single string containing all items. An empty list produces `""`.
+{{ variadic_argument_markdown }}
+{% endif %}

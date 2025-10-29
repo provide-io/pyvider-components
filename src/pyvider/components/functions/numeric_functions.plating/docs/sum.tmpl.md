@@ -1,25 +1,27 @@
 ---
 page_title: "Function: sum"
 description: |-
-  Sum a list of numbers.
+  Terraform function for sum
 ---
 
 # sum (Function)
 
-Add every value in a list. A `null` list returns `null`. Integer totals are returned as whole numbers.
+Terraform function for sum
 
 ## Example Usage
 
-{{ example('sum') }}
+{{ example("example") }}
 
 ## Signature
 
-`sum(numbers: list[number]) -> number`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `numbers` (list[number], required) — Values to add. Returns `null` when this is `null`. An empty list yields `0`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The sum of the list, or `null` when the list is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

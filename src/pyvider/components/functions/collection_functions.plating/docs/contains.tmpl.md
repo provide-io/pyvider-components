@@ -1,26 +1,27 @@
 ---
 page_title: "Function: contains"
 description: |-
-  Check whether a list includes a value.
+  Terraform function for contains
 ---
 
 # contains (Function)
 
-Return `true` when the desired element exists in the list. A `null` list returns `null`.
+Terraform function for contains
 
 ## Example Usage
 
-{{ example('contains') }}
+{{ example("example") }}
 
 ## Signature
 
-`contains(list_to_check: list[any], element: any) -> bool`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `list_to_check` (list[any], required) — List to search. Returns `null` when this is `null`.
-- `element` (any, required) — Value to look for. Compared using standard equality.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-`true` or `false`, or `null` when the input list is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}

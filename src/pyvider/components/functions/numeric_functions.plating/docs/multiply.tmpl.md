@@ -1,26 +1,27 @@
 ---
 page_title: "Function: multiply"
 description: |-
-  Multiply two numbers with `null` safety.
+  Terraform function for multiply
 ---
 
 # multiply (Function)
 
-Return the product of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
+Terraform function for multiply
 
 ## Example Usage
 
-{{ example('multiply') }}
+{{ example("example") }}
 
 ## Signature
 
-`multiply(a: number, b: number) -> number`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `a` (number, required) — First factor. Returns `null` when this or `b` is `null`.
-- `b` (number, required) — Second factor.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The product, or `null` when either input is `null`. Integer results are cast to whole numbers.
+{{ variadic_argument_markdown }}
+{% endif %}

@@ -1,26 +1,27 @@
 ---
 page_title: "Function: split"
 description: |-
-  Break a string into parts using a delimiter.
+  Split a string by a delimiter.
 ---
 
 # split (Function)
 
-Split text into a list of values. A `null` input returns `null`, an empty string yields an empty list, and a `null` delimiter is treated as `""`.
+Split a string by a delimiter.
 
 ## Example Usage
 
-{{ example('split') }}
+{{ example("example") }}
 
 ## Signature
 
-`split(string: string, delimiter: string) -> list[string]`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `string` (string, required) — Text to split. Returns `null` when this is `null`.
-- `delimiter` (string, required) — Separator used for splitting. Defaults to `""` when `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-A list of strings. Empty input text yields `[]`.
+{{ variadic_argument_markdown }}
+{% endif %}

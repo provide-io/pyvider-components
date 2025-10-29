@@ -1,25 +1,27 @@
 ---
 page_title: "Function: to_snake_case"
 description: |-
-  Convert text to snake_case.
+  Convert text to snake_case using provide-foundation utilities.
 ---
 
 # to_snake_case (Function)
 
-Transform input text to lowercase words separated by underscores.
+Convert text to snake_case using provide-foundation utilities.
 
 ## Example Usage
 
-{{ example('to_snake_case') }}
+{{ example("example") }}
 
 ## Signature
 
-`to_snake_case(text: string) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `text` (string, required) — Text to transform. Returns `null` for `null` input.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The snake_case string.
+{{ variadic_argument_markdown }}
+{% endif %}

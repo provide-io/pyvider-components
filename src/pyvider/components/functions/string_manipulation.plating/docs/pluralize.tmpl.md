@@ -1,26 +1,27 @@
 ---
 page_title: "Function: pluralize"
 description: |-
-  Choose a singular or plural word based on a count.
+  Pluralize a word based on count with optional custom plural form.
 ---
 
 # pluralize (Function)
 
-Return the correct singular or plural form for a word. Optionally pass a count and a custom plural.
+Pluralize a word based on count with optional custom plural form.
 
 ## Example Usage
 
-{{ example('pluralize') }}
+{{ example("example") }}
 
 ## Signature
 
-`pluralize(word: string, options: variadic) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `word` (string, required) — Base word to pluralize. Returns `null` when this is `null`.
-- `options` (variadic, optional) — First value is the count (default `1`); second value overrides the plural form.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The singular form when the count is `1`, otherwise the plural. Returns `null` when `word` is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}
