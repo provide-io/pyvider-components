@@ -26,7 +26,8 @@
       "Bash(pyvider provide:*)",
       "Bash(python -m pytest:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(bash test_examples.sh:*)"
     ],
     "deny": [],
     "ask": [],
