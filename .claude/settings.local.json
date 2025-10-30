@@ -44,7 +44,9 @@
       "Bash(for dir in examples/data_source/file_info examples/data_source/http_api examples/function/lens_jq examples/resource/timed_token)",
       "Bash(do echo \"=== $dir ===\")",
       "Bash(ls:*)",
-      "Bash(tofu plan:*)"
+      "Bash(tofu plan:*)",
+      "Bash(for var in user_name user_email user_id db_host db_port cache_host active_users user_names)",
+      "Bash(do echo \"=== $var ===\")"
     ],
     "deny": [],
     "ask": [],
