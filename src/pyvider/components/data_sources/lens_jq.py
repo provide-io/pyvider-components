@@ -68,16 +68,12 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
             raise DataSourceError(f"Invalid JSON in 'json_input': {e}") from e
 
         try:
-            logger.debug(
-            )
-            logger.debug(
-            )
+            
+            
             result_cty_value = lens.jq(config.query, parsed_json)
-            logger.debug(
-            )
+            
             native_result = cty_to_native(result_cty_value)
-            logger.debug(
-            )
+            
             return LensJqState(
                 json_input=config.json_input, query=config.query, result=native_result
             )

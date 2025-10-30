@@ -37,8 +37,7 @@ class LensCapability(BaseCapability):
         """
         Executes a JQ query and converts the raw Python result to a CtyValue.
         """
-        logger.debug(
-        )
+        
         try:
             # THE FIX: Use the correct `compile(...).transform(...)` API.
             compiled_query = jq.compile(query)
