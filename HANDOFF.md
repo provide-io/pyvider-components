@@ -1,430 +1,268 @@
-# Pyvider Components - Documentation System Handoff
+# Pyvider Components Example Testing - Handoff Document
 
-**Last Updated:** 2025-10-27
-**Status:** ✅ Documentation system refactored and operational
+**Date**: October 29-30, 2025  
+**Status**: Examples Generated, Issues Identified, Fix Script Created
 
----
+## Summary
 
-## 🎯 What Was Accomplished
-
-### Problem
-The documentation examples were **way too complex** (150+ lines with extensive inline code). The original `basic.tf` files contained every possible use case, making documentation cluttered and difficult to scan.
-
-### Solution
-Implemented a **three-tier example system**:
-
-1. **Basic examples** (7-21 lines) → Clean, focused documentation via `{{ example('name') }}`
-2. **Advanced examples** (27-157 lines) → Real-world patterns for developers to explore
-3. **Comprehensive examples** (73-113 lines) → Complete feature showcases (renamed from overly-long basic.tf files)
+Fixed a critical bug in the pyvider framework's function call handler, generated all component examples using plating, tested them, and identified variable naming conflicts that cause most examples to fail initialization.
 
 ---
 
-## 📁 Current File Structure
+## Work Completed
 
+### 1. Fixed Function Call Handler Bug
+
+**Issue**: All provider functions were failing with:
 ```
-pyvider-components/
-├── src/pyvider/components/
-│   ├── functions/
-│   │   ├── string_manipulation.plating/
-│   │   │   ├── docs/
-│   │   │   │   ├── upper.tmpl.md          # Uses {{ example('upper') }}
-│   │   │   │   ├── lower.tmpl.md          # Uses {{ example('lower') }}
-│   │   │   │   └── ...
-│   │   │   └── examples/
-│   │   │       ├── upper.tf               # 7 lines - shown in docs
-│   │   │       ├── lower.tf               # 7 lines - shown in docs
-│   │   │       ├── basic.tf               # 16 lines - multi-function overview
-│   │   │       ├── advanced.tf            # 103 lines - real-world patterns
-│   │   │       └── comprehensive.tf       # 113 lines - complete showcase
-│   │   ├── numeric_functions.plating/
-│   │   │   ├── examples/
-│   │   │   │   ├── add.tf                 # 7 lines
-│   │   │   │   ├── basic.tf               # 16 lines
-│   │   │   │   ├── advanced.tf            # NEW (not created yet, placeholder)
-│   │   │   │   ├── aggregations.tf        # 64 lines - statistics
-│   │   │   │   ├── resource_calculations.tf  # 92 lines - EC2/storage costs
-│   │   │   │   └── comprehensive.tf       # 80 lines
-│   │   ├── collection_functions.plating/
-│   │   ├── lens_jq.plating/
-│   │   └── type_conversion_functions.plating/
-│   ├── data_sources/
-│   │   ├── http_api.plating/
-│   │   │   └── examples/
-│   │   │       ├── basic.tf               # 17 lines - simple GET
-│   │   │       └── advanced.tf            # 311 lines - POST/PUT/DELETE/auth/errors
-│   │   ├── env_variables.plating/
-│   │   │   └── examples/
-│   │   │       ├── basic.tf               # 10 lines
-│   │   │       ├── filtering.tf           # 39 lines - regex patterns
-│   │   │       ├── multi_environment.tf   # 51 lines - dev/staging/prod
-│   │   │       └── advanced.tf            # 27 lines
-│   │   └── ...
-│   └── resources/
-│       ├── file_content.plating/
-│       │   └── examples/
-│       │       ├── basic.tf               # 14 lines
-│       │       ├── template.tf            # 54 lines - config generation
-│       │       └── advanced.tf            # 27 lines
-│       ├── local_directory.plating/
-│       │   └── examples/
-│       │       ├── basic.tf               # 21 lines
-│       │       └── project_structure.tf   # 47 lines - scaffolding
-│       ├── timed_token.plating/
-│       │   └── examples/
-│       │       ├── basic.tf               # 14 lines
-│       │       ├── cicd.tf                # 42 lines - CI/CD tokens
-│       │       └── comprehensive.tf       # 77 lines
-│       └── private_state_verifier.plating/
-│           └── examples/
-│               ├── basic.tf               # 12 lines
-│               └── comprehensive.tf       # 94 lines
-├── docs/                                  # Generated documentation (35+ files)
-│   ├── functions/
-│   ├── data-sources/
-│   └── resources/
-└── pyproject.toml                         # Contains [tool.plating] config
+TypeError: GlobalLoggerProxy.debug() missing 1 required positional argument: 'event'
 ```
 
+**Root Cause**: Incomplete `logger.debug()` calls at lines 102-103 and 155-156 in:
+`/Users/tim/code/gh/provide-io/pyvider/src/pyvider/protocols/tfprotov6/handlers/call_function.py`
+
+**Fix Applied**:
+- Line 102-103: Added log message for capability injection
+- Line 155-156: Added log message for successful function execution
+
+**Result**: All numeric functions (add, subtract, multiply, divide, sum, min, max, round) now work correctly.
+
+### 2. Generated All Component Examples
+
+**Command Used**:
+```bash
+plating plate --generate-examples --examples-dir examples \
+  --component-type function \
+  --component-type data_source \
+  --component-type resource
+```
+
+**Results**:
+- Generated 120 single-component examples
+- 0 grouped/cross-component examples
+- Examples placed in `examples/{type}/{component}/`
+
+**Template Workflow Confirmed**:
+1. **.plating templates** live in `src/pyvider/components/{type}/{component}.plating/examples/`
+2. **plating plate** generates actual `.tf` files in `examples/{type}/{component}/`
+3. **DO NOT** modify files in `examples/` directly - they will be overwritten!
+
+### 3. Tested All Examples
+
+**Test Script**: `test_examples.sh`
+
+**Results**:
+- **Total**: 45 example directories tested
+- **Passed**: 9 (20%)
+- **Failed**: 34 (76%)
+- **Skipped**: 2 (no .tf files)
+
+**Passing Examples**:
+- data_source/lens_jq
+- data_source/provider_config_reader
+- function/add
+- function/format_size
+- function/pluralize
+- function/truncate
+- resource/local_directory
+- resource/warning_example
+- And 1 more
+
+**Common Failure Pattern**: Most failures are at the `tofu init` stage due to duplicate local variable/output definitions.
+
 ---
 
-## 🔑 Key Architectural Decisions
+## Root Cause Analysis
 
-### 1. **Zero Inline Code in Templates**
-**Rule:** Templates MUST use `{{ example('name') }}` - never inline terraform blocks.
+### The Variable Naming Conflict Problem
 
-```markdown
-❌ WRONG - Inline code:
-## Example
-\`\`\`terraform
+**What's Happening**:
+1. Plating generates multiple `.tf` files per example directory:
+   - `basic.tf`
+   - `advanced.tf`
+   - `comprehensive.tf`
+   - `{component}.tf` (e.g., `contains.tf`)
+   - `provider.tf`
+
+2. Terraform loads **ALL** `.tf` files in a directory together
+
+3. Multiple files define the same variable names:
+   - Example: Both `basic.tf` and `contains.tf` in `function/collection_functions` define `has_apple`
+   - This causes: `Error: Duplicate local value definition`
+
+**Example Conflict**:
+```terraform
+# In basic.tf
 locals {
-  result = provider::pyvider::upper("hello")
+  has_apple = provider::pyvider::contains(local.items, "apple")  # Defined here
 }
-\`\`\`
 
-✅ CORRECT - Reference example file:
-## Example Usage
-{{ example('upper') }}
+# In contains.tf
+locals {
+  has_apple = provider::pyvider::contains(local.fruits, "apple")  # DUPLICATE!
+}
 ```
 
-### 2. **Example File Size Limits**
-- **Individual function examples** (upper.tf, lower.tf): 7-15 lines max
-- **Basic.tf** (multi-function overview): 10-21 lines max
-- **Advanced.tf** (real-world patterns): 27-157 lines
-- **Comprehensive.tf** (complete showcase): 73-113 lines
-- **Specialized** (cicd.tf, template.tf): 42-92 lines
-
-### 3. **Plating Template Functions**
-Templates have access to these Jinja2 functions:
-
-```jinja2
-{{ schema() }}              # Renders component schema as markdown table
-{{ example('name') }}       # Includes examples/name.tf as code block
-{{ include('file') }}       # Includes static partial from docs/_file
-{{ render('file') }}        # Renders dynamic template partial
-```
-
-### 4. **Configuration**
-Added to `pyproject.toml`:
-
-```toml
-[tool.plating]
-provider_name = "pyvider"
-```
-
-This enables `plating plate` to auto-detect the provider.
+**Why Some Examples Pass**:
+- Examples with only 1-2 `.tf` files that use unique variable names
+- Examples like `numeric_functions/add` where:
+  - `add.tf` uses `local.result`
+  - `comprehensive.tf` uses `local.simple_add`, `local.float_add`, etc. (all unique)
 
 ---
 
-## 📊 Example Statistics
+## Solution Created
 
-| Category | Count | Line Range | Purpose |
-|----------|-------|------------|---------|
-| **Basic** (individual) | 36 files | 7-21 lines | Used in documentation via `{{ example() }}` |
-| **Advanced** | 7 files | 27-157 lines | Real-world patterns for exploration |
-| **Comprehensive** | 7 files | 73-113 lines | Complete feature showcases |
-| **Specialized** | 13 files | 42-92 lines | Specific use cases (CI/CD, templates) |
-| **Total** | 63 files | 2,209 lines | Entire example ecosystem |
+### Fix Script: `fix_variable_conflicts.py`
 
----
+**What It Does**:
+1. Scans all `.plating/examples/` directories in `src/`
+2. Analyzes variable names across all `.tf` files in each directory
+3. Identifies conflicts (variables defined in multiple files)
+4. Adds filename-based prefixes to conflicting variables:
+   - `basic.tf`: `has_apple` → `basic_has_apple`
+   - `contains.tf`: `has_apple` → `contains_has_apple`
+5. Updates all references (`local.{var}`) throughout the file
+6. Renames conflicting output blocks as well
 
-## 🚀 How to Regenerate Documentation
-
-### Method 1: Python API (Recommended)
+**How to Run**:
 ```bash
-python3 << 'EOF'
-from plating.plating import Plating
-from plating.types import PlatingContext
-import asyncio
-
-context = PlatingContext(provider_name="pyvider")
-api = Plating(context, "pyvider.components")
-asyncio.run(api.plate())
-EOF
+cd /Users/tim/code/gh/provide-io/pyvider-components
+python3 fix_variable_conflicts.py
 ```
 
-### Method 2: CLI (if configured)
-```bash
-plating plate --provider-name pyvider
-```
-
-**Output:** Generates 35+ markdown files in `docs/` directory:
-- `docs/functions/*.md` (25 files)
-- `docs/data-sources/*.md` (5 files)
-- `docs/resources/*.md` (5 files)
-- `docs/index.md` (1 file)
-
 ---
 
-## 📝 Important Concepts
+## Next Steps
 
-### The "{{ example() }}" Flow
+### Immediate Actions Required
 
-1. **Developer creates** `examples/upper.tf` (7 lines)
-2. **Template references** `{{ example('upper') }}` in `docs/upper.tmpl.md`
-3. **Plating renders** the template, loads `upper.tf`, wraps in terraform code block
-4. **Output appears** in `docs/functions/upper.md` with the example
-
-### Discovery System
-
-Plating discovers components by:
-1. Scanning installed Python packages for `.plating` directories
-2. Determining component type from path (`functions/`, `data_sources/`, `resources/`)
-3. Finding templates in `docs/*.tmpl.md`
-4. Loading examples from `examples/*.tf`
-5. Creating bundles for each component
-
-**Key Classes:**
-- `PlatingDiscovery` - Finds .plating directories
-- `PlatingBundle` - Represents a component with templates + examples
-- `FunctionPlatingBundle` - Specialized for individual function templates
-- `PlatingRegistry` - Central registry using foundation patterns
-
----
-
-## 🎯 Example File Naming Convention
-
-| Pattern | Purpose | Line Count | Used In Docs? |
-|---------|---------|------------|---------------|
-| `upper.tf` | Single function example | 7-15 | ✅ Yes - via `{{ example('upper') }}` |
-| `basic.tf` | Multi-function overview | 10-21 | ⚠️ Optional - via `{{ example('basic') }}` |
-| `advanced.tf` | Real-world patterns | 27-157 | ❌ No - referenced in text |
-| `comprehensive.tf` | Complete showcase | 73-113 | ❌ No - for exploration |
-| `resource_calculations.tf` | Specialized use case | 42-92 | ❌ No - for learning |
-
----
-
-## 🔧 Key Files Modified
-
-### Templates Updated (All now use `{{ example() }}`)
-- ✅ All `string_manipulation.plating/docs/*.tmpl.md` (12 files)
-- ✅ All `numeric_functions.plating/docs/*.tmpl.md` (8 files)
-- ✅ All `collection_functions.plating/docs/*.tmpl.md` (3 files)
-- ✅ `type_conversion_functions.plating/docs/tostring.tmpl.md`
-- ✅ `lens_jq.plating/docs/lens_jq.tmpl.md`
-
-### Configuration
-- ✅ `pyproject.toml` - Added `[tool.plating]` section
-
-### Examples Created
-- ✅ 36 individual function examples (upper.tf, lower.tf, etc.)
-- ✅ 7 advanced.tf files with real-world patterns
-- ✅ 7 comprehensive.tf files (renamed from overly-long basic.tf)
-- ✅ 5 new simplified basic.tf files (16-19 lines)
-
----
-
-## 🐛 Known Gotchas
-
-### 1. CLI Discovery Issue
-The `plating plate` CLI command without args doesn't properly discover components.
-
-**Workaround:** Use the Python API or explicitly specify `--provider-name pyvider`
-
-### 2. Package Name vs Import Name
-- Package name: `pyvider-components` (hyphenated)
-- Import name: `pyvider.components` (dotted)
-- Plating needs: **Import name** (`pyvider.components`)
-
-### 3. Example File Must Match Function Name
-For `{{ example('upper') }}` to work, there must be `examples/upper.tf`.
-
-The template function looks for:
-1. `examples/upper.tf` (exact match)
-2. Falls back to `examples/basic.tf` if not found (but logs debug message)
-
-### 4. Git Auto-Commit
-Per the user's CLAUDE.md:
-- **Never roll back in git** - it's auto-committed and will cause problems
-- **Don't mention Claude** in commit messages
-
----
-
-## 📚 Advanced Example Files Created
-
-### High Priority (Real Infrastructure Use Cases)
-1. **`http_api/advanced.tf`** (311 lines) - POST/PUT/DELETE, auth, error handling, metrics
-2. **`lens_jq/advanced.tf`** (157 lines) - Complex jq queries, array operations, nested data
-3. **`numeric_functions/resource_calculations.tf`** (92 lines) - EC2 costs, auto-scaling
-4. **`env_variables/filtering.tf`** (39 lines) - Regex patterns, credential filtering
-
-### Medium Priority (Practical Patterns)
-5. **`string_manipulation/advanced.tf`** (103 lines) - Email normalization, slug generation
-6. **`collection_functions/advanced.tf`** (112 lines) - Cascading defaults, feature flags
-7. **`numeric_functions/aggregations.tf`** (64 lines) - Statistics, averages
-8. **`env_variables/multi_environment.tf`** (51 lines) - Dev/staging/prod configs
-9. **`file_content/template.tf`** (54 lines) - Config file generation
-10. **`local_directory/project_structure.tf`** (47 lines) - Project scaffolding
-11. **`timed_token/cicd.tf`** (42 lines) - Temporary tokens for pipelines
-
----
-
-## 🎬 Next Steps / Future Improvements
-
-### Documentation Enhancements
-1. Add "See also" sections to templates referencing advanced examples:
-   ```markdown
-   ## Advanced Examples
-   For more complex use cases, see:
-   - `examples/advanced.tf` - Real-world chaining patterns
-   - `examples/comprehensive.tf` - Complete feature showcase
+1. **Run the Fix Script**:
+   ```bash
+   cd /Users/tim/code/gh/provide-io/pyvider-components
+   python3 fix_variable_conflicts.py
    ```
 
-2. Create `EXAMPLES.md` in each `.plating/examples/` directory explaining the progression
+2. **Regenerate Examples**:
+   ```bash
+   plating plate --generate-examples --examples-dir examples \
+     --component-type function \
+     --component-type data_source \
+     --component-type resource
+   ```
 
-### Missing Advanced Examples
-Consider creating:
-- `data_sources/file_info.plating/examples/advanced.tf` - File validation patterns
-- `resources/warning_example.plating/examples/advanced.tf` - Conditional warnings
+3. **Test Again**:
+   ```bash
+   bash test_examples.sh
+   ```
 
-### Testing
-- Verify all `{{ example('name') }}` references resolve correctly
-- Test documentation generation with `plating plate`
-- Ensure all individual function examples render in docs
+4. **Fix Any Remaining Issues**:
+   - Review failures
+   - Update templates as needed
+   - Repeat steps 2-3
 
-### CLI Improvement
-- Fix the `plating plate` discovery to work without Python API wrapper
-- Consider adding `package_import_name` to `[tool.plating]` config
+### Long-term Considerations
+
+1. **Plating Enhancement**: Consider modifying plating to:
+   - Automatically add filename prefixes to variables
+   - OR place each example file in its own subdirectory
+   - OR validate for conflicts during generation
+
+2. **CI/CD Integration**: Add example testing to CI pipeline:
+   ```bash
+   make test-examples  # Add this target
+   ```
+
+3. **Documentation**: Update contributor docs to mention:
+   - Variable naming requirements (must be unique across files)
+   - How to test examples locally
+   - The plating workflow
 
 ---
 
-## 🔍 Debugging Documentation Issues
+## Files Created
 
-### Example Not Showing Up
-```bash
-# Check if example file exists
-ls src/pyvider/components/functions/*/examples/upper.tf
+### Scripts
+- `test_examples.sh` - Tests all examples (init, plan, apply)
+- `test_examples_v2.sh` - Updated version that handles subdirectories
+- `fix_variable_conflicts.py` - Fixes variable naming conflicts in templates
+- `reorganize_examples.sh` - Reorganizes generated examples (DON'T USE - modifies generated files)
+- `reorganize_plating_sources.sh` - Reorganizes source templates (ALTERNATIVE APPROACH)
 
-# Check if template references it correctly
-grep -r "example('upper')" src/pyvider/components/functions/*/docs/
+### Documentation
+- `HANDOFF.md` - This document
 
-# Verify bundle discovery
-python3 -c "
-from plating.discovery import PlatingDiscovery
-discovery = PlatingDiscovery('pyvider.components')
-bundles = discovery.discover_bundles()
-print(f'Found {len(bundles)} bundles')
-for b in bundles[:5]:
-    print(f'  {b.name} ({b.component_type})')
-"
+---
+
+## Key Learnings
+
+1. **Never modify `examples/` directly** - always modify `.plating/examples/` templates
+2. **Variable names must be unique** across all `.tf` files in the same directory
+3. **The function handler bug** was blocking all function examples from working
+4. **Test early and often** - having automated tests revealed the naming conflicts immediately
+5. **Plating is powerful** but needs validation rules to prevent common mistakes
+
+---
+
+## Additional Context
+
+### Successful Test Output (for reference)
+```
+Testing: data_source/lens_jq
+  Running tofu init...
+  Running tofu plan...
+  Running tofu apply...
+  ✓ PASSED
 ```
 
-### Template Not Rendering
-```bash
-# Check if template exists and is valid
-cat src/pyvider/components/functions/string_manipulation.plating/docs/upper.tmpl.md
-
-# Manually test rendering
-python3 << 'EOF'
-from plating.templating.functions import TemplateEngine, create_template_context
-from plating.bundles import PlatingBundle
-from pathlib import Path
-
-# Load bundle
-bundle = PlatingBundle(
-    name="upper",
-    plating_dir=Path("src/pyvider/components/functions/string_manipulation.plating"),
-    component_type="function"
-)
-
-# Create context
-context = {
-    "name": "upper",
-    "examples": bundle.load_examples(),
-    "schema": None
-}
-
-# Render template
-engine = TemplateEngine()
-template = bundle.load_main_template()
-if template:
-    result = engine.render_template(template, context)
-    print(result)
-EOF
+### Failed Test Output (for reference)
 ```
+Testing: function/contains
+  Running tofu init...
+  ✗ FAILED: tofu init
 
----
+Error: Duplicate local value definition
+  on comprehensive.tf line 21, in locals:
+  21:   has_apple = provider::pyvider::contains(local.fruits, "apple")  # true
 
-## 📖 References
-
-- **Plating Documentation:** `/Users/tim/code/gh/provide-io/plating/CLAUDE.md`
-- **Project CLAUDE.md:** `/Users/tim/code/gh/provide-io/pyvider-components/CLAUDE.md`
-- **Global CLAUDE.md:** `/Users/tim/.claude/CLAUDE.md`
-
-### Key Plating Concepts
-- **PlatingBundle:** Container for component docs + examples
-- **Template Engine:** Jinja2 with custom functions (schema, example, include, render)
-- **Discovery:** Scans Python paths for `.plating` directories
-- **Registry:** Central component registry using foundation patterns
-
----
-
-## ✅ Validation Checklist
-
-Before considering documentation work complete:
-
-- [ ] All templates use `{{ example('name') }}` (zero inline code blocks)
-- [ ] All basic examples are ≤21 lines
-- [ ] Individual function examples exist for all documented functions
-- [ ] `plating plate` generates docs successfully
-- [ ] Generated docs in `docs/` directory contain rendered examples
-- [ ] No templates reference non-existent example files
-- [ ] Advanced examples demonstrate real-world patterns
-- [ ] Comprehensive examples show complete feature sets
-
----
-
-## 🎯 Quick Commands
-
-```bash
-# Regenerate all documentation
-python3 -c "from plating.plating import Plating; from plating.types import PlatingContext; import asyncio; asyncio.run(Plating(PlatingContext(provider_name='pyvider'), 'pyvider.components').plate())"
-
-# Count example lines
-find src -path "*/examples/*.tf" | xargs wc -l | sort -n
-
-# List all templates
-find src -name "*.tmpl.md"
-
-# Find templates with inline code (should be zero)
-grep -r '```terraform' src --include="*.tmpl.md"
-
-# Check documentation output
-ls -la docs/functions/ docs/data-sources/ docs/resources/
+A local value named "has_apple" was already defined at basic.tf:7,3-64.
 ```
 
 ---
 
-## 🏁 Summary
+## Questions / Decisions Needed
 
-**State:** Documentation system is fully refactored with clean separation between basic, advanced, and comprehensive examples.
+1. **Approach Preference**: Should we:
+   - A) Add prefixes to variables (current approach with `fix_variable_conflicts.py`)
+   - B) Put each example file in its own subdirectory
+   - C) Modify plating to handle this automatically
 
-**Philosophy:** Templates are clean. Examples are external. Documentation is scannable. Advanced patterns are discoverable.
+2. **Testing Scope**: Should we test:
+   - Only basic examples?
+   - All examples including advanced/comprehensive?
+   - Create a "smoke test" subset?
 
-**Next Session:** Ready to add more advanced examples, improve template cross-references, or extend documentation features.
+3. **CI Integration**: When should example tests run?
+   - On every commit?
+   - Only on PR to main?
+   - Nightly?
 
 ---
 
-**Generated:** 2025-10-27
-**Session Duration:** Full refactor completed
-**Files Modified:** 60+ templates and examples
-**Lines Changed:** ~2,200 example lines restructured
+## Summary of Test Results
+
+From the test run, here are the specific failure categories:
+
+**Init Failures (Duplicate Variables)**: 20+ examples
+- Most collection/string manipulation function examples
+- Several data source examples with complex examples
+
+**Plan Failures**: 10+ examples
+- Some resource examples with template issues
+- join() function type mismatch issues
+
+**Apply Failures**: Unknown (most don't reach this stage)
+
+---
+
+**Status**: Ready for next phase - run the fix script and regenerate examples!
