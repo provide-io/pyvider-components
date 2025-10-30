@@ -17,12 +17,12 @@ resource "pyvider_private_state_verifier" "special_chars_test" {
 
 # Verify all tests produce expected results
 locals {
-  verification_results = {
-    simple_test = {
-      input    = pyvider_private_state_verifier.simple_test.input_value
-      output   = pyvider_private_state_verifier.simple_test.decrypted_token
-      expected = "SECRET_FOR_BASIC-TEST"
-      passed   = pyvider_private_state_verifier.simple_test.decrypted_token == "SECRET_FOR_BASIC-TEST"
+  comprehensive_verification_results = {
+    comprehensive_simple_test = {
+      comprehensive_input    = pyvider_private_state_verifier.simple_test.input_value
+      comprehensive_output   = pyvider_private_state_verifier.simple_test.decrypted_token
+      comprehensive_expected = "SECRET_FOR_BASIC-TEST"
+      comprehensive_passed   = pyvider_private_state_verifier.simple_test.decrypted_token == "SECRET_FOR_BASIC-TEST"
     }
 
     alphanumeric_test = {
@@ -41,7 +41,7 @@ locals {
   }
 
   all_tests_passed = alltrue([
-    for test_name, result in local.verification_results : result.passed
+    for test_name, result in local.comprehensive_verification_results : result.passed
   ])
 }
 
@@ -51,12 +51,12 @@ resource "pyvider_file_content" "verification_report" {
   content = jsonencode({
     timestamp = timestamp()
     test_summary = {
-      total_tests      = length(local.verification_results)
-      passed_tests     = length([for result in local.verification_results : result if result.passed])
+      total_tests      = length(local.comprehensive_verification_results)
+      passed_tests     = length([for result in local.comprehensive_verification_results : result if result.passed])
       all_tests_passed = local.all_tests_passed
     }
 
-    test_results = local.verification_results
+    test_results = local.comprehensive_verification_results
 
     security_validation = {
       private_state_encryption    = "verified"
@@ -67,19 +67,19 @@ resource "pyvider_file_content" "verification_report" {
   })
 }
 
-output "basic_verification_results" {
+output "comprehensive_passed" {
   description = "Results of basic private state encryption verification"
   value = {
     test_summary = {
-      total_tests      = length(local.verification_results)
-      passed_tests     = length([for result in local.verification_results : result if result.passed])
+      total_tests      = length(local.comprehensive_verification_results)
+      passed_tests     = length([for result in local.comprehensive_verification_results : result if result.passed])
       all_tests_passed = local.all_tests_passed
     }
 
     individual_results = {
-      simple_test_passed        = local.verification_results.simple_test.passed
-      alphanumeric_test_passed  = local.verification_results.alphanumeric_test.passed
-      special_chars_test_passed = local.verification_results.special_chars_test.passed
+      simple_test_passed        = local.comprehensive_verification_results.simple_test.passed
+      alphanumeric_test_passed  = local.comprehensive_verification_results.alphanumeric_test.passed
+      special_chars_test_passed = local.comprehensive_verification_results.special_chars_test.passed
     }
 
     security_validation = {

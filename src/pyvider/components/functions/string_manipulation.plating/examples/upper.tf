@@ -1,7 +1,7 @@
 locals {
-  shout = provider::pyvider::upper("hello world") # "HELLO WORLD"
+  upper_shout = provider::pyvider::upper("hello world") # "HELLO WORLD"
 }
 
-output "upper_example" {
-  value = local.shout
+output "upper_shout" {
+  value = local.upper_shout
 }

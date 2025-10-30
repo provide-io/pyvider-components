@@ -4,7 +4,7 @@ resource "pyvider_file_content" "readme" {
   content  = "This file was created by Terraform."
 }
 
-output "readme_details" {
+output "basic_readme_details" {
   description = "Details about the created file."
   value = {
     filename     = pyvider_file_content.readme.filename

@@ -1,25 +1,25 @@
 # Statistical aggregations and analysis
 
 locals {
-  response_times_ms = [45, 52, 48, 51, 150, 47, 49, 53, 46, 50]
+  aggregations_response_times_ms = [45, 52, 48, 51, 150, 47, 49, 53, 46, 50]
 
   # Basic statistics
-  total_time = provider::pyvider::sum(local.response_times_ms)
-  count = length(local.response_times_ms)
-  aggregations_average = provider::pyvider::divide(local.total_time, local.count)
+  aggregations_total_time = provider::pyvider::sum(local.aggregations_response_times_ms)
+  aggregations_count = length(local.aggregations_response_times_ms)
+  aggregations_aggregations_average = provider::pyvider::divide(local.aggregations_total_time, local.aggregations_count)
 
   # Find outliers
-  min_time = provider::pyvider::min(local.response_times_ms)
-  max_time = provider::pyvider::max(local.response_times_ms)
-  range = provider::pyvider::subtract(local.max_time, local.min_time)
+  aggregations_min_time = provider::pyvider::min(local.aggregations_response_times_ms)
+  aggregations_max_time = provider::pyvider::max(local.aggregations_response_times_ms)
+  aggregations_range = provider::pyvider::subtract(local.aggregations_max_time, local.aggregations_min_time)
 
   # Performance analysis
-  acceptable_threshold = 100
-  slow_requests = [for t in local.response_times_ms : t if t > local.acceptable_threshold]
-  performance_score = provider::pyvider::multiply(
+  aggregations_acceptable_threshold = 100
+  aggregations_slow_requests = [for t in local.aggregations_response_times_ms : t if t > local.aggregations_acceptable_threshold]
+  aggregations_performance_score = provider::pyvider::multiply(
     provider::pyvider::divide(
-      provider::pyvider::subtract(local.count, length(local.slow_requests)),
-      local.count
+      provider::pyvider::subtract(local.aggregations_count, length(local.aggregations_slow_requests)),
+      local.aggregations_count
     ),
     100
   )
@@ -27,17 +27,17 @@ locals {
 
 # Budget allocation example
 locals {
-  department_budgets = [50000, 75000, 100000, 125000, 80000]
+  aggregations_department_budgets = [50000, 75000, 100000, 125000, 80000]
 
-  total_budget = provider::pyvider::sum(local.department_budgets)
-  average_budget = provider::pyvider::divide(local.total_budget, length(local.department_budgets))
+  aggregations_total_budget = provider::pyvider::sum(local.aggregations_department_budgets)
+  aggregations_average_budget = provider::pyvider::divide(local.aggregations_total_budget, length(local.aggregations_department_budgets))
 
   # Calculate percentages
-  budget_percentages = [
-    for budget in local.department_budgets :
+  aggregations_budget_percentages = [
+    for budget in local.aggregations_department_budgets :
     provider::pyvider::round(
       provider::pyvider::multiply(
-        provider::pyvider::divide(budget, local.total_budget),
+        provider::pyvider::divide(budget, local.aggregations_total_budget),
         100
       ),
       2
@@ -45,20 +45,20 @@ locals {
   ]
 }
 
-output "aggregations_average" {
+output "aggregations_aggregations_average" {
   value = {
     performance_metrics = {
-      average_response = local.aggregations_average
-      min_response = local.min_time
-      max_response = local.max_time
-      range = local.range
-      slow_count = length(local.slow_requests)
-      performance_score = local.performance_score
+      average_response = local.aggregations_aggregations_average
+      min_response = local.aggregations_min_time
+      max_response = local.aggregations_max_time
+      range = local.aggregations_range
+      slow_count = length(local.aggregations_slow_requests)
+      performance_score = local.aggregations_performance_score
     }
     budget_analysis = {
-      total = local.total_budget
-      average = local.average_budget
-      percentages = local.budget_percentages
+      total = local.aggregations_total_budget
+      average = local.aggregations_average_budget
+      percentages = local.aggregations_budget_percentages
     }
   }
 }

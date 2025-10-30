@@ -1,14 +1,14 @@
 locals {
-  to_camel_case_text = "hello_world"
-  camel = provider::pyvider::to_camel_case(local.to_camel_case_text)
+  to_camel_case_to_camel_case_text = "hello_world"
+  to_camel_case_camel = provider::pyvider::to_camel_case(local.to_camel_case_to_camel_case_text)
   # "helloWorld"
-  pascal = provider::pyvider::to_camel_case(local.to_camel_case_text, true)
+  to_camel_case_pascal = provider::pyvider::to_camel_case(local.to_camel_case_to_camel_case_text, true)
   # "HelloWorld"
 }
 
-output "to_camel_case_text" {
+output "to_camel_case_pascal" {
   value = {
-    camel  = local.camel
-    pascal = local.pascal
+    camel  = local.to_camel_case_camel
+    pascal = local.to_camel_case_pascal
   }
 }

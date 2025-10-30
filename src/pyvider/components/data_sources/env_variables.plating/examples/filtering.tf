@@ -16,8 +16,8 @@ data "pyvider_env_variables" "credential_vars" {
 
 # Categorize variables by type
 locals {
-  variable_categories = {
-    urls = {
+  filtering_variable_categories = {
+    filtering_urls = {
       for k, v in data.pyvider_env_variables.url_vars.values : k => v
     }
     credentials = {
@@ -29,7 +29,7 @@ locals {
   }
 }
 
-output "filtering_results" {
+output "filtering_urls" {
   description = "Results of various filtering approaches"
   value = {
     app_config_count = length(data.pyvider_env_variables.app_config.values)

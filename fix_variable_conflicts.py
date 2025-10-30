@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Fix variable name conflicts in .plating template files.
-Adds prefixes to local variables and outputs based on the filename to ensure uniqueness.
+Add file-based prefixes to ALL variables in .plating template files.
+This ensures complete uniqueness across all .tf files in the same directory.
+Each file's variables get prefixed with the filename (e.g., basic.tf → basic_*).
 """
 
 import os
@@ -87,24 +88,15 @@ def fix_example_directory(examples_dir):
         outputs = get_output_names(content)
         all_vars[tf_file] = {"locals": local_vars, "outputs": outputs}
 
-    # Find conflicts
-    local_counts = {}
-    output_counts = {}
+    # Count total variables to process
+    total_locals = sum(len(vars_info["locals"]) for vars_info in all_vars.values())
+    total_outputs = sum(len(vars_info["outputs"]) for vars_info in all_vars.values())
 
-    for tf_file, vars_info in all_vars.items():
-        for var in vars_info["locals"]:
-            local_counts[var] = local_counts.get(var, 0) + 1
-        for out in vars_info["outputs"]:
-            output_counts[out] = output_counts.get(out, 0) + 1
-
-    conflicts = {var for var, count in local_counts.items() if count > 1}
-    output_conflicts = {var for var, count in output_counts.items() if count > 1}
-
-    if not conflicts and not output_conflicts:
-        print("  No conflicts found")
+    if total_locals == 0 and total_outputs == 0:
+        print("  No variables found")
         return
 
-    print(f"  Found {len(conflicts)} local conflicts, {len(output_conflicts)} output conflicts")
+    print(f"  Processing {total_locals} local variables, {total_outputs} outputs")
 
     # Fix each file
     for tf_file in non_provider_files:
@@ -114,26 +106,24 @@ def fix_example_directory(examples_dir):
         # Get prefix from filename (e.g., "basic.tf" -> "basic_")
         prefix = tf_file.stem + "_"
 
-        # Rename conflicting locals
+        # Rename all locals with file prefix
         for var in all_vars[tf_file]["locals"]:
-            if var in conflicts:
-                new_name = prefix + var
-                content = rename_variables_in_content(content, var, new_name)
-                modified = True
-                print(f"    {tf_file.name}: {var} -> {new_name}")
+            new_name = prefix + var
+            content = rename_variables_in_content(content, var, new_name)
+            modified = True
+            print(f"    {tf_file.name}: {var} -> {new_name}")
 
-        # Rename conflicting outputs
+        # Rename all outputs with file prefix
         for out in all_vars[tf_file]["outputs"]:
-            if out in output_conflicts:
-                new_name = prefix + out
-                # Rename output
-                content = re.sub(
-                    r'output\s+"' + re.escape(out) + r'"',
-                    f'output "{new_name}"',
-                    content
-                )
-                modified = True
-                print(f"    {tf_file.name}: output {out} -> {new_name}")
+            new_name = prefix + out
+            # Rename output
+            content = re.sub(
+                r'output\s+"' + re.escape(out) + r'"',
+                f'output "{new_name}"',
+                content
+            )
+            modified = True
+            print(f"    {tf_file.name}: output {out} -> {new_name}")
 
         if modified:
             tf_file.write_text(content)
@@ -146,7 +136,7 @@ def main():
     for examples_dir in plating_dirs:
         fix_example_directory(examples_dir)
 
-    print("\n✅ Variable conflict fixing complete!")
+    print("\n✅ Variable prefixing complete! All variables now have file-based prefixes.")
     print("\nNow regenerate examples with:")
     print("  plating plate --generate-examples --examples-dir examples --component-type function --component-type data_source --component-type resource")
 

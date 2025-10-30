@@ -7,12 +7,12 @@ data "pyvider_mixed_map_test" "mixed" {
   }
 }
 
-output "processed_mixed_data" {
+output "mixed_processed_mixed_data" {
   description = "Map with values processed by type (strings uppercased, numbers incremented)"
   value       = data.pyvider_mixed_map_test.mixed.processed_data
 }
 
-output "mixed_data_hash" {
+output "mixed_mixed_data_hash" {
   description = "SHA256 hash of the processed mixed data"
   value       = data.pyvider_mixed_map_test.mixed.data_hash
 }
