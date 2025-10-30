@@ -51,7 +51,7 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
         )
         result = cty_to_native(result_cty)
         return result
-    except Exception as jq_err:
+    except Exception:
         logger.error(
         )
         raise

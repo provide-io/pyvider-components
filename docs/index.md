@@ -32,6 +32,7 @@ No provider configuration required.
 - [`pyvider_file_info`](./data-sources/file_info.md)
 - [`pyvider_http_api`](./data-sources/http_api.md)
 - [`pyvider_lens_jq`](./data-sources/lens_jq.md)
+- [`pyvider_nested_data_processor`](./data-sources/nested_data_processor.md)
 - [`pyvider_provider_config_reader`](./data-sources/provider_config_reader.md)
 
 ## Functions
@@ -74,5 +75,6 @@ _Test-only components for testing and development purposes._
 ### Test Data Sources
 
 - [`pyvider_mixed_map_test`](./data-sources/mixed_map_test.md)
+- [`pyvider_nested_resource_test`](./data-sources/nested_resource_test.md)
 - [`pyvider_simple_map_test`](./data-sources/simple_map_test.md)
 - [`pyvider_structured_object_test`](./data-sources/structured_object_test.md)
