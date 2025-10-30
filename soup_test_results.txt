@@ -8,3 +8,490 @@ Found 38 test suites in
 '/Users/tim/code/gh/provide-io/pyvider-components/examples'. Running up to 24 in
 parallel...
 
+ Sta…  Pha…  Tes…     Elapsed  Prov    Res   Data   Func   Outs   Last Log      
+  ✅    ❓   add        24.8s    0      0      0     152     2    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   con…       24.8s    0      0      0     270     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   div…       24.8s    0      0      0     496     5    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   env…       16.1s    0      0      0      0      0    vertex        
+                                                                  "output.adva… 
+                                                                  (expand)"     
+                                                                  error:        
+                                                                  Invalid index 
+  ❌    ❌   fil…       36.2s    0      0      0      0      0    vertex        
+                                                                  "local.env_f… 
+                                                                  (expand)"     
+                                                                  error:        
+                                                                  Invalid       
+                                                                  function      
+                                                                  argument      
+  ❌    ❌   fil…        0.1s    0      0      0      0      0                  
+  ✅    ❓   for…       25.7s    0      0      0     416     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   for…       24.8s    0      0      0     16      1    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   htt…        0.1s    0      0      0      0      0                  
+  ✅    ❓   join       25.4s    0      0      0     392     3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   len…       25.6s    0      0      0     262     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   len…        0.1s    0      0      0      0      0                  
+  ❌    ❌   loc…       35.5s    0      0      0      0      0    vertex        
+                                                                  "pyvider_loc… 
+                                                                  error:        
+                                                                  Missing       
+                                                                  required      
+                                                                  argument      
+  ✅    ❓   loo…       25.5s    0      0      0     270     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   low…       25.6s    0      0      0     416     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   max        25.5s    0      0      0     472     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   min        25.5s    0      0      0     472     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   mix…       24.2s    0      0      1      0      2    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   mul…       25.6s    0      0      0     472     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   plu…       24.8s    0      0      0     24      1    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   pri…       35.6s    0      0      0      0      0    vertex        
+                                                                  "output.basi… 
+                                                                  (expand)"     
+                                                                  error:        
+                                                                  Unsupported   
+                                                                  attribute     
+  ❌    ❌   pro…       16.1s    0      0      0      0      0    vertex        
+                                                                  "output.exam… 
+                                                                  (expand)"     
+                                                                  error: Output 
+                                                                  refers to     
+                                                                  sensitive     
+                                                                  values        
+  ✅    ❓   rep…       25.4s    0      0      0     392     3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   rou…       25.4s    0      0      0     504     5    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   sim…       24.2s    0      0      2      0      3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   spl…       25.5s    0      0      0     392     3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   str…       24.2s    0      0      2      0      4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   sub…       25.5s    0      0      0     352     3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   sum        25.6s    0      0      0     496     5    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   tim…       24.8s    0      0      0      0      0                  
+  ✅    ❓   to_…       25.5s    0      0      0     280     2    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   to_…       37.8s    0      0      0     272     2    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   to_…       37.8s    0      0      0     272     2    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  🔄    💥   tos…       50.6s    0      1      0     116     3    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   tru…       45.6s    0      0      0     16      1    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ✅    ❓   upp…       45.6s    0      0      0     416     4    OpenTofu      
+                                                                  version:      
+                                                                  1.10.6        
+  ❌    ❌   war…       35.6s    0      0      0      0      0    vertex        
+                                                                  "pyvider_war… 
+                                                                  error: One of 
+                                                                  'name',       
+                                                                  'old_name',   
+                                                                  or            
+                                                                  'source_file' 
+                                                                  must be       
+📊 Failure Analysis:
+──────────────────────🚨 Failure Report for env_variables 
+───────────────────────
+
+Error Log Events (8 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_username\" error: Invalid index",          
+  "@timestamp": "2025-10-30T01:10:48.656731-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_username (expand)\" error: Invalid index", 
+  "@timestamp": "2025-10-30T01:10:48.656763-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.example_data\" error: Output refers to sensitive 
+values",                                                                        
+  "@timestamp": "2025-10-30T01:10:48.663533-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.example_data (expand)\" error: Output refers to  
+sensitive values",                                                              
+  "@timestamp": "2025-10-30T01:10:48.663571-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.advanced_api_endpoint\" error: Invalid index",   
+  "@timestamp": "2025-10-30T01:10:48.665946-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.advanced_api_endpoint (expand)\" error: Invalid  
+index",                                                                         
+  "@timestamp": "2025-10-30T01:10:48.665994-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.advanced_api_timeout\" error: Invalid index",    
+  "@timestamp": "2025-10-30T01:10:48.666246-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.advanced_api_timeout (expand)\" error: Invalid   
+index",                                                                         
+  "@timestamp": "2025-10-30T01:10:48.666298-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/data_source/env_variab
+les/.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────🚨 Failure Report for file_info 
+─────────────────────────
+No specific error messages found in log. The failure may have been a crash.
+
+────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────────🚨 Failure Report for http_api 
+─────────────────────────
+No specific error messages found in log. The failure may have been a crash.
+
+────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────────🚨 Failure Report for lens_jq 
+──────────────────────────
+No specific error messages found in log. The failure may have been a crash.
+
+────────────────────────────────────────────────────────────────────────────────
+
+──────────────────🚨 Failure Report for provider_config_reader 
+──────────────────
+
+Error Log Events (2 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.example_data\" error: Output refers to sensitive 
+values",                                                                        
+  "@timestamp": "2025-10-30T01:10:48.619111-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.example_data (expand)\" error: Output refers to  
+sensitive values",                                                              
+  "@timestamp": "2025-10-30T01:10:48.619199-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/data_source/provider_c
+onfig_reader/.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────────🚨 Failure Report for lens_jq 
+──────────────────────────
+No specific error messages found in log. The failure may have been a crash.
+
+────────────────────────────────────────────────────────────────────────────────
+
+───────────────────────🚨 Failure Report for file_content 
+───────────────────────
+
+Error Log Events (18 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"pyvider_file_content.example\" error: Missing required  
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.653705-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"pyvider_file_content.example\" error: Missing required  
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.653731-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.nginx_config\" error: Invalid function argument", 
+  "@timestamp": "2025-10-30T01:11:09.657035-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.nginx_config\" error: Invalid function argument", 
+  "@timestamp": "2025-10-30T01:11:09.657042-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Unsupported attribute",         
+  "@timestamp": "2025-10-30T01:11:09.657073-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Unsupported attribute",         
+  "@timestamp": "2025-10-30T01:11:09.657081-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Unsupported attribute",         
+  "@timestamp": "2025-10-30T01:11:09.657085-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Unsupported attribute",         
+  "@timestamp": "2025-10-30T01:11:09.657089-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Invalid function argument",     
+  "@timestamp": "2025-10-30T01:11:09.657093-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file\" error: Invalid function argument",     
+  "@timestamp": "2025-10-30T01:11:09.657096-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Unsupported attribute",
+  "@timestamp": "2025-10-30T01:11:09.657130-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Unsupported attribute",
+  "@timestamp": "2025-10-30T01:11:09.657134-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Unsupported attribute",
+  "@timestamp": "2025-10-30T01:11:09.657138-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Unsupported attribute",
+  "@timestamp": "2025-10-30T01:11:09.657141-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Invalid function       
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.657146-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.env_file (expand)\" error: Invalid function       
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.657149-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.nginx_config (expand)\" error: Invalid function   
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.657153-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.nginx_config (expand)\" error: Invalid function   
+argument",                                                                      
+  "@timestamp": "2025-10-30T01:11:09.657163-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/resource/file_content/
+.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────🚨 Failure Report for local_directory 
+──────────────────────
+
+Error Log Events (1 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"pyvider_local_directory.example\" error: Missing        
+required argument",                                                             
+  "@timestamp": "2025-10-30T01:11:08.949304-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/resource/local_directo
+ry/.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+──────────────────🚨 Failure Report for private_state_verifier 
+──────────────────
+
+Error Log Events (9 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"pyvider_private_state_verifier.example\" error: Missing 
+required argument",                                                             
+  "@timestamp": "2025-10-30T01:11:08.954450-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.all_tests_passed\" error: Unsupported attribute", 
+  "@timestamp": "2025-10-30T01:11:08.958067-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"local.all_tests_passed (expand)\" error: Unsupported    
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958117-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification\" error: Unsupported          
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958423-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification\" error: Unsupported          
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958427-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification\" error: Unsupported          
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958431-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification (expand)\" error: Unsupported 
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958464-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification (expand)\" error: Unsupported 
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958468-07:00"                              
+}                                                                               
+--------------------
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"output.basic_verification (expand)\" error: Unsupported 
+attribute",                                                                     
+  "@timestamp": "2025-10-30T01:11:08.958476-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/resource/private_state
+_verifier/.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+───────────────────────🚨 Failure Report for timed_token 
+────────────────────────
+No specific error messages found in log. The failure may have been a crash.
+
+────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────🚨 Failure Report for warning_example 
+──────────────────────
+
+Error Log Events (1 found):
+{                                                                               
+  "@level": "error",                                                            
+  "@message": "vertex \"pyvider_warning_example.example\" error: One of 'name', 
+'old_name', or 'source_file' must be specified.",                               
+  "@timestamp": "2025-10-30T01:11:08.954275-07:00"                              
+}                                                                               
+--------------------
+
+Full Terraform Log: 
+/Users/tim/code/gh/provide-io/pyvider-components/examples/resource/warning_examp
+le/.soup/logs/terraform.log
+
+────────────────────────────────────────────────────────────────────────────────
+
+╭─ 🔥 Some Tests Failed ─╮
+│                        │
+│  Total tests:      38  │
+│  Passed:           27  │
+│  Failed:           11  │
+│  Skipped:           0  │
+│  Duration:     52.08s  │
+│                        │
+╰────────────────────────╯
