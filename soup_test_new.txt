@@ -1,0 +1,10 @@
+2025-10-30 01:18:33.457882 [info     ] 🔹 Foundation initialized through Hub config_source=environment
+2025-10-30 01:18:33.464686 [debug    ] 🔹 Foundation bootstrap completed with registry components
+2025-10-30 01:18:33.477283 [debug    ] 🔹 systemd features only available on Linux platform=darwin
+2025-10-30 01:18:33.479648 [debug    ] 🔹 prctl features only available on Linux platform=darwin
+2025-10-30 01:18:33.496924 [info     ] 🔹 No TofuSoup configuration file found. Using empty default configuration.
+🚀 Tofusoup Stir
+Found 38 test suites in 
+'/Users/tim/code/gh/provide-io/pyvider-components/examples'. Running up to 24 in
+parallel...
+
