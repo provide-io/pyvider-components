@@ -30,11 +30,11 @@ locals {
 
 # List operations
 locals {
-  comprehensive_comprehensive_numbers = [10, 5, 8, 2, 15]
+  comprehensive_numbers = [10, 5, 8, 2, 15]
 
-  comprehensive_list_sum = provider::pyvider::sum(local.comprehensive_comprehensive_numbers)         # Returns: 40
-  comprehensive_list_min = provider::pyvider::min(local.comprehensive_comprehensive_numbers)         # Returns: 2
-  comprehensive_list_max = provider::pyvider::max(local.comprehensive_comprehensive_numbers)         # Returns: 15
+  comprehensive_list_sum = provider::pyvider::sum(local.comprehensive_numbers)         # Returns: 40
+  comprehensive_list_min = provider::pyvider::min(local.comprehensive_numbers)         # Returns: 2
+  comprehensive_list_max = provider::pyvider::max(local.comprehensive_numbers)         # Returns: 15
 }
 
 # Rounding examples

@@ -3,11 +3,11 @@
 # Cascading defaults with lookup
 locals {
   advanced_user_config = {
-    advanced_theme = "dark"
-    advanced_language = "en"
+    theme = "dark"
+    language = "en"
   }
 
-  default_config = {
+  advanced_default_config = {
     theme = "light"
     language = "en"
     timezone = "UTC"
@@ -15,16 +15,16 @@ locals {
   }
 
   # Lookup with cascading defaults
-  final_theme = provider::pyvider::lookup(
+  advanced_final_theme = provider::pyvider::lookup(
     local.advanced_user_config,
     "theme",
-    provider::pyvider::lookup(local.default_config, "theme", "light")
+    provider::pyvider::lookup(local.advanced_default_config, "theme", "light")
   )
 
-  final_timezone = provider::pyvider::lookup(
+  advanced_final_timezone = provider::pyvider::lookup(
     local.advanced_user_config,
     "timezone",
-    provider::pyvider::lookup(local.default_config, "timezone", "UTC")
+    provider::pyvider::lookup(local.advanced_default_config, "timezone", "UTC")
   )
 }
 
@@ -53,10 +53,10 @@ locals {
 # Nested map lookups
 locals {
   advanced_config_tree = {
-    advanced_database = {
-      advanced_primary = {
-        advanced_host = "db1.example.com"
-        advanced_port = 5432
+    database = {
+      primary = {
+        host = "db1.example.com"
+        port = 5432
       }
       replica = {
         host = "db2.example.com"
@@ -72,9 +72,9 @@ locals {
   }
 
   # Safe nested lookups
-  db_config = provider::pyvider::lookup(local.advanced_config_tree, "database", {})
-  primary_db = provider::pyvider::lookup(local.db_config, "primary", {})
-  db_host = provider::pyvider::lookup(local.primary_db, "host", "localhost")
+  advanced_db_config = provider::pyvider::lookup(local.advanced_config_tree, "database", {})
+  advanced_primary_db = provider::pyvider::lookup(local.advanced_db_config, "primary", {})
+  advanced_db_host = provider::pyvider::lookup(local.advanced_primary_db, "host", "localhost")
 }
 
 # Collection size validation
@@ -88,11 +88,11 @@ locals {
   ])
 }
 
-output "advanced_error_count" {
+output "advanced_results" {
   value = {
     configuration = {
-      theme = local.final_theme
-      timezone = local.final_timezone
+      theme = local.advanced_final_theme
+      timezone = local.advanced_final_timezone
     }
     features = {
       api_v2 = local.advanced_api_v2_enabled
@@ -106,7 +106,7 @@ output "advanced_error_count" {
       all_required = local.advanced_all_required_present
     }
     nested_config = {
-      db_host = local.db_host
+      db_host = local.advanced_db_host
     }
   }
 }

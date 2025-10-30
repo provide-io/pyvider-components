@@ -1,13 +1,13 @@
 # Basic jq operations
 locals {
-  basic_basic_data = {
+  basic_data = {
     basic_user = { name = "Alice", age = 30 }
     items = ["one", "two", "three"]
   }
 
-  user_name = provider::pyvider::lens_jq(local.basic_basic_data, ".user.name")  # "Alice"
-  item_count = provider::pyvider::lens_jq(local.basic_basic_data, ".items | length")  # 3
-  first_item = provider::pyvider::lens_jq(local.basic_basic_data, ".items[0]")  # "one"
+  user_name = provider::pyvider::lens_jq(local.basic_data, ".user.name")  # "Alice"
+  item_count = provider::pyvider::lens_jq(local.basic_data, ".items | length")  # 3
+  first_item = provider::pyvider::lens_jq(local.basic_data, ".items[0]")  # "one"
 }
 
 output "basic_user" {

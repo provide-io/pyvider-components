@@ -2,10 +2,10 @@
 
 # Example 1: Basic JSON data extraction
 locals {
-  advanced_advanced_user_data = {
-    advanced_advanced_name = "John Doe"
+  advanced_user_data = {
+    advanced_name = "John Doe"
     advanced_age  = 30
-    advanced_advanced_email = "john.doe@example.com"
+    advanced_email = "john.doe@example.com"
     advanced_address = {
       advanced_street = "123 Main St"
       advanced_city   = "Anytown"
@@ -16,17 +16,17 @@ locals {
   }
 
   # Extract specific fields
-  user_name = provider::pyvider::lens_jq(local.advanced_advanced_user_data, ".name")
-  user_city = provider::pyvider::lens_jq(local.advanced_advanced_user_data, ".address.city")
-  hobby_count = provider::pyvider::lens_jq(local.advanced_advanced_user_data, ".hobbies | length")
+  user_name = provider::pyvider::lens_jq(local.advanced_user_data, ".name")
+  user_city = provider::pyvider::lens_jq(local.advanced_user_data, ".address.city")
+  hobby_count = provider::pyvider::lens_jq(local.advanced_user_data, ".hobbies | length")
 }
 
 # Example 2: Array manipulation and filtering
 locals {
   advanced_employees = [
     {
-      advanced_advanced_id = 1
-      advanced_advanced_name = "Alice Smith"
+      advanced_id = 1
+      advanced_name = "Alice Smith"
       advanced_department = "Engineering"
       advanced_salary = 95000
       advanced_skills = ["Python", "Go", "Docker"]
@@ -73,10 +73,10 @@ locals {
 locals {
   advanced_api_response = {
     advanced_status = "success"
-    advanced_advanced_data = {
-      advanced_advanced_users = [
+    advanced_data = {
+      advanced_users = [
         {
-          advanced_advanced_id = "user1"
+          advanced_id = "user1"
           advanced_profile = {
             advanced_firstName = "John"
             advanced_lastName = "Doe"
@@ -132,7 +132,7 @@ locals {
   )
 }
 
-output "advanced_advanced_user_data" {
+output "advanced_user_data" {
   description = "Results from various JQ transformation examples"
   value = {
     basic_operations = {

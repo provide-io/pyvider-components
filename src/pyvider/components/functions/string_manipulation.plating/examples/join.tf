@@ -4,6 +4,6 @@ locals {
   # "apple, banana, cherry"
 }
 
-output "join_joined" {
+output "join_results" {
   value = local.join_joined
 }

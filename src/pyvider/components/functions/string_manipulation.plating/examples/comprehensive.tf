@@ -12,13 +12,13 @@ locals {
 locals {
   comprehensive_template_string = "Hello, {}! You have {} messages."
 
-  formatted_message = provider::pyvider::format(local.comprehensive_template_string, [
+  comprehensive_formatted_message = provider::pyvider::format(local.comprehensive_template_string, [
     "Alice",
     5
   ])  # Returns: "Hello, Alice! You have 5 messages."
 
   # Simple template
-  simple_format = provider::pyvider::format("User: {}", [
+  comprehensive_simple_format = provider::pyvider::format("User: {}", [
     "admin"
   ])  # Returns: "User: admin"
 }
@@ -34,9 +34,9 @@ locals {
 
 # String splitting examples
 locals {
-  comprehensive_comprehensive_csv_data = "apple,banana,cherry,date"
+  comprehensive_csv_data = "apple,banana,cherry,date"
 
-  comprehensive_comprehensive_split_by_comma = provider::pyvider::split(local.comprehensive_comprehensive_csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
+  comprehensive_split_by_comma = provider::pyvider::split(local.comprehensive_csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
 
   # Split with limit
   comprehensive_path_string = "/home/user/documents/file.txt"
@@ -71,7 +71,7 @@ locals {
 }
 
 # Output results for verification
-output "comprehensive_no_separator" {
+output "comprehensive_results" {
   value = {
     case_conversion = {
       original = local.comprehensive_case_original_text
@@ -81,8 +81,8 @@ output "comprehensive_no_separator" {
 
     formatting = {
       template = local.comprehensive_template_string
-      formatted = local.formatted_message
-      simple = local.simple_format
+      formatted = local.comprehensive_formatted_message
+      simple = local.comprehensive_simple_format
     }
 
     joining = {
@@ -93,8 +93,8 @@ output "comprehensive_no_separator" {
     }
 
     splitting = {
-      csv_original = local.comprehensive_comprehensive_csv_data
-      csv_split = local.comprehensive_comprehensive_split_by_comma
+      csv_original = local.comprehensive_csv_data
+      csv_split = local.comprehensive_split_by_comma
       path_original = local.comprehensive_path_string
       path_split = local.comprehensive_split_path
     }

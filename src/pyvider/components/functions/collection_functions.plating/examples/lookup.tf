@@ -1,15 +1,15 @@
 locals {
-  lookup_lookup_settings = {
-    lookup_lookup_database_host = "db.example.com"
-    lookup_lookup_database_port = 5432
+  lookup_settings = {
+    database_host = "db.example.com"
+    database_port = 5432
   }
-  db_host = provider::pyvider::lookup(local.lookup_lookup_settings, "database_host", "localhost")
-  missing = provider::pyvider::lookup(local.lookup_lookup_settings, "missing_key", "default")
+  lookup_db_host = provider::pyvider::lookup(local.lookup_settings, "database_host", "localhost")
+  lookup_missing = provider::pyvider::lookup(local.lookup_settings, "missing_key", "default")
 }
 
-output "lookup_lookup_settings" {
+output "lookup_results" {
   value = {
-    found    = local.db_host
-    notfound = local.missing
+    found    = local.lookup_db_host
+    notfound = local.lookup_missing
   }
 }

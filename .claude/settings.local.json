@@ -28,7 +28,17 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(bash test_examples.sh:*)",
-      "Bash(tofu init:*)"
+      "Bash(tofu init:*)",
+      "Bash(while read dir)",
+      "Bash(do if [ -d \"$dir/examples\" ])",
+      "Bash(then echo \"Fixing: $dir/examples\" find \"$dir/examples\" -name \"*.tf\" -exec sed -i '' 's/comprehensive_comprehensive_/comprehensive_/g; s/basic_basic_/basic_/g; s/advanced_advanced_/advanced_/g; s/template_template_/template_/g; s/lifecycle_lifecycle_/lifecycle_/g; s/permissions_permissions_/permissions_/g; s/cicd_cicd_/cicd_/g' {})",
+      "Bash(fi done)",
+      "Bash(for dir in */.plating/examples)",
+      "Bash(do echo \"Processing: $dir\")",
+      "Bash(done)",
+      "Bash(bash -c 'cd /Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components/resources && find . -name \"\"*.plating\"\" -type d | while read dir; do if [ -d \"\"$dir/examples\"\" ]; then echo \"\"Fixing: $dir/examples\"\"; find \"\"$dir/examples\"\" -name \"\"*.tf\"\" -exec sed -i \"\"\"\" \"\"s/comprehensive_comprehensive_/comprehensive_/g; s/basic_basic_/basic_/g; s/advanced_advanced_/advanced_/g; s/template_template_/template_/g; s/lifecycle_lifecycle_/lifecycle_/g; s/permissions_permissions_/permissions_/g; s/cicd_cicd_/cicd_/g\"\" {} \\;; fi; done')",
+      "Bash(bash:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": [],

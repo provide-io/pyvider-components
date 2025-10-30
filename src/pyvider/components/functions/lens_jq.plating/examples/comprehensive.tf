@@ -2,15 +2,15 @@
 
 # Example 1: Simple field extraction
 locals {
-  comprehensive_comprehensive_user_data = {
-    comprehensive_comprehensive_id    = 123
-    comprehensive_comprehensive_name  = "Alice Johnson"
-    comprehensive_comprehensive_email = "alice@example.com"
+  comprehensive_user_data = {
+    comprehensive_id    = 123
+    comprehensive_name  = "Alice Johnson"
+    comprehensive_email = "alice@example.com"
   }
 
-  user_name  = provider::pyvider::lens_jq(local.comprehensive_comprehensive_user_data, ".name")
-  user_email = provider::pyvider::lens_jq(local.comprehensive_comprehensive_user_data, ".email")
-  user_id    = provider::pyvider::lens_jq(local.comprehensive_comprehensive_user_data, ".id")
+  user_name  = provider::pyvider::lens_jq(local.comprehensive_user_data, ".name")
+  user_email = provider::pyvider::lens_jq(local.comprehensive_user_data, ".email")
+  user_id    = provider::pyvider::lens_jq(local.comprehensive_user_data, ".id")
 }
 
 # Example 2: Array operations
@@ -42,14 +42,14 @@ locals {
 
 # Example 4: Simple data transformation
 locals {
-  comprehensive_comprehensive_users = [
-    { comprehensive_comprehensive_name = "Alice", active = true },
+  comprehensive_users = [
+    { comprehensive_name = "Alice", active = true },
     { name = "Bob", active = false },
     { name = "Carol", active = true }
   ]
 
-  active_users = provider::pyvider::lens_jq(local.comprehensive_comprehensive_users, "map(select(.active == true))")
-  user_names   = provider::pyvider::lens_jq(local.comprehensive_comprehensive_users, "map(.name)")
+  active_users = provider::pyvider::lens_jq(local.comprehensive_users, "map(select(.active == true))")
+  user_names   = provider::pyvider::lens_jq(local.comprehensive_users, "map(.name)")
 }
 
 # Output the results

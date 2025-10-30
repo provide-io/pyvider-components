@@ -6,7 +6,7 @@ locals {
   # Basic statistics
   aggregations_total_time = provider::pyvider::sum(local.aggregations_response_times_ms)
   aggregations_count = length(local.aggregations_response_times_ms)
-  aggregations_aggregations_average = provider::pyvider::divide(local.aggregations_total_time, local.aggregations_count)
+  aggregations_average = provider::pyvider::divide(local.aggregations_total_time, local.aggregations_count)
 
   # Find outliers
   aggregations_min_time = provider::pyvider::min(local.aggregations_response_times_ms)
@@ -45,10 +45,10 @@ locals {
   ]
 }
 
-output "aggregations_aggregations_average" {
+output "aggregations_average" {
   value = {
     performance_metrics = {
-      average_response = local.aggregations_aggregations_average
+      average_response = local.aggregations_average
       min_response = local.aggregations_min_time
       max_response = local.aggregations_max_time
       range = local.aggregations_range
