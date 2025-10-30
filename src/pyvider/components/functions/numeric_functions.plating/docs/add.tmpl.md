@@ -1,27 +1,26 @@
 ---
 page_title: "Function: add"
 description: |-
-  Terraform function for add
+  Add two numbers with `null` safety.
 ---
 
 # add (Function)
 
-Terraform function for add
+Return the sum of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('add') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`add(a: number, b: number) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `a` (number, required) — First addend. Returns `null` when this or `b` is `null`.
+- `b` (number, required) — Second addend.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The sum, or `null` when either input is `null`. Integer results are cast to whole numbers.

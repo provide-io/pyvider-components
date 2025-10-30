@@ -2,19 +2,16 @@
 
 # Example 1: Simple encryption verification
 resource "pyvider_private_state_verifier" "simple_test" {
-  provider   = pyvider.test
   input_value = "basic-test"
 }
 
 # Example 2: Alphanumeric input test
 resource "pyvider_private_state_verifier" "alphanumeric_test" {
-  provider   = pyvider.test
   input_value = "test123"
 }
 
 # Example 3: Special characters test
 resource "pyvider_private_state_verifier" "special_chars_test" {
-  provider   = pyvider.test
   input_value = "test-with-dashes_and_underscores"
 }
 

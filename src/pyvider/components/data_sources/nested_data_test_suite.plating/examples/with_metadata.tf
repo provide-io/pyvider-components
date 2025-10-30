@@ -1,5 +1,4 @@
 data "pyvider_structured_object_test" "with_metadata" {
-  provider   = pyvider.test
   config_name = "production-config"
 
   metadata = {

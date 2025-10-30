@@ -1,16 +1,20 @@
 ---
 page_title: "Data Source: pyvider_structured_object_test"
 description: |-
-  Terraform data source for pyvider_structured_object_test
+  Test data source for validating structured object handling with nested attributes
 ---
 
 # pyvider_structured_object_test (Data Source)
 
-Terraform data source for pyvider_structured_object_test
+**Note:** This is a test-only data source. Enable with `provider_testmode = true`.
+
+Test data source for validating structured object handling with well-defined nested attributes. Takes a required config name and optional metadata map, returns generated configuration objects and summary information with nested structures.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example("basic") }}
+
+{{ example("with_metadata") }}
 
 ## Argument Reference
 

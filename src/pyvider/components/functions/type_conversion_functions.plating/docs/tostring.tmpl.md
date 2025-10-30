@@ -1,27 +1,25 @@
 ---
 page_title: "Function: tostring"
 description: |-
-  Terraform function for tostring
+  Convert values to their string representation.
 ---
 
 # tostring (Function)
 
-Terraform function for tostring
+Produce a string representation of any value. Booleans become lowercase `"true"` / `"false"`, and `null` inputs stay `null`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('tostring') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`tostring(value: any) -> string`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `value` (any, required) — Value to convert. Returns `null` when this is `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The string form of the value, or `null` when the input is `null`.

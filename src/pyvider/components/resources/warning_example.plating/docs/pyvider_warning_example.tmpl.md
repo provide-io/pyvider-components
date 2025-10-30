@@ -1,23 +1,23 @@
 ---
 page_title: "Resource: pyvider_warning_example"
 description: |-
-  Terraform resource for pyvider_warning_example
+  Showcase warning and deprecation behavior during provider development.
 ---
 
 # pyvider_warning_example (Resource)
 
-Terraform resource for pyvider_warning_example
+Sample resource that emits Terraform warnings so you can verify messaging, deprecation notices, and config validation in the provider.
 
-## Example Usage
+## Example
 
-{{ example("example") }}
+{{ example("basic") }}
 
-## Argument Reference
+## Schema
 
 {{ schema() }}
 
-## Import
+## Notes
 
-```bash
-terraform import pyvider_warning_example.example <id>
-```
+- Use `name` for the modern attribute. Supplying `old_name` keeps compatibility but triggers a deprecation warning.
+- `name` and `source_file` are mutually exclusive; at least one of the three inputs must be supplied.
+- Provided for education and automated tests, not production workloads.

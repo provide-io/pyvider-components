@@ -1,27 +1,30 @@
 ---
 page_title: "Function: divide"
 description: |-
-  Terraform function for divide
+  Divide one number by another with error handling.
 ---
 
 # divide (Function)
 
-Terraform function for divide
+Return the quotient of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('divide') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`divide(a: number, b: number) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `a` (number, required) — Dividend. Returns `null` when this or `b` is `null`.
+- `b` (number, required) — Divisor. Must not be zero.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The quotient, or `null` when either input is `null`.
+
+## Notes
+
+- Division by zero raises a `FunctionError`.

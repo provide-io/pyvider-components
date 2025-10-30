@@ -1,7 +1,7 @@
 locals {
-  multiply_result = provider::pyvider::multiply(4, 3) # 12
+  result = provider::pyvider::multiply(4, 3) # 12
 }
 
 output "multiply_example" {
-  value = local.multiply_result
+  value = local.result
 }

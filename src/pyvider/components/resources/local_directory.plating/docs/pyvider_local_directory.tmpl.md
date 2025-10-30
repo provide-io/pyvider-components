@@ -1,23 +1,30 @@
 ---
 page_title: "Resource: pyvider_local_directory"
 description: |-
-  Terraform resource for pyvider_local_directory
+  Ensure a directory exists with optional permissions.
 ---
 
 # pyvider_local_directory (Resource)
 
-Terraform resource for pyvider_local_directory
+Create or verify a directory on the local filesystem and optionally manage its permissions.
 
-## Example Usage
+## Example
 
-{{ example("example") }}
+{{ example("basic") }}
 
-## Argument Reference
+## Schema
 
 {{ schema() }}
 
-## Import
+## Advanced Examples
 
-```bash
-terraform import pyvider_local_directory.example <id>
-```
+For more complex use cases, see:
+- `examples/permissions.tf` - Permission management and nested directory structures
+- `examples/project_structure.tf` - Project scaffolding patterns
+
+## Notes
+
+- Set `path` to the directory to manage. Existing directories are adopted into state.
+- Use the optional `permissions` attribute with the `0o###` octal format for mode management.
+- Computed fields expose `exists`, `file_count`, and effective permission data for downstream logic.
+- Import existing directories with `terraform import pyvider_local_directory.example /path/to/dir`.
