@@ -1,27 +1,25 @@
 ---
 page_title: "Function: max"
 description: |-
-  Terraform function for max
+  Return the largest number in a list.
 ---
 
 # max (Function)
 
-Terraform function for max
+Find the maximum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('max') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`max(numbers: list[number]) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `numbers` (list[number], required) — Values to evaluate. Must contain at least one element. Returns `null` when this is `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The maximum number in the list, or `null` when the list is `null`.

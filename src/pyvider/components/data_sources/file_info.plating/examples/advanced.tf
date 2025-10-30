@@ -61,13 +61,13 @@ resource "pyvider_file_content" "conditional_backup" {
 
 # Real-world pattern: Validation and error handling
 locals {
-  adv_file_validation = {
-    adv_is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
-    adv_is_directory   = data.pyvider_file_info.directory.is_dir
-    adv_file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
+  file_validation = {
+    is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
+    is_directory   = data.pyvider_file_info.directory.is_dir
+    file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
   }
 }
 
 output "validation_results" {
-  value = local.adv_file_validation
+  value = local.file_validation
 }

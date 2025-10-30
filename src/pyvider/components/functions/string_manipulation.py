@@ -98,20 +98,20 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
 
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
-def join(strings: list[Any] | None, delimiter: str | None) -> str | None:
+def join(delimiter: str | None, strings: list[Any] | None) -> str | None:
     """
     Join a list of strings with a delimiter.
 
     Args:
-        strings: List of values to join
         delimiter: String to use as separator (default: "")
+        strings: List of values to join
 
     Returns:
         Joined string
 
     Examples:
-        join(["apple", "banana", "cherry"], ", ") → "apple, banana, cherry"
-        join(["a", "b", "c"], "") → "abc"
+        join(", ", ["apple", "banana", "cherry"]) → "apple, banana, cherry"
+        join("", ["a", "b", "c"]) → "abc"
     """
     if strings is None:
         return None
@@ -120,20 +120,20 @@ def join(strings: list[Any] | None, delimiter: str | None) -> str | None:
 
 
 @register_function(name="split", summary="Splits a string by a delimiter.")
-def split(string: str | None, delimiter: str | None) -> list[str] | None:
+def split(delimiter: str | None, string: str | None) -> list[str] | None:
     """
     Split a string by a delimiter.
 
     Args:
-        string: String to split
         delimiter: Delimiter to split on (default: "")
+        string: String to split
 
     Returns:
         List of string parts
 
     Examples:
-        split("a,b,c", ",") → ["a", "b", "c"]
-        split("hello world", " ") → ["hello", "world"]
+        split(",", "a,b,c") → ["a", "b", "c"]
+        split(" ", "hello world") → ["hello", "world"]
     """
     if string is None:
         return None

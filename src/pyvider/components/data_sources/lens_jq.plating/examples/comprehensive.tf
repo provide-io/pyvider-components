@@ -4,8 +4,8 @@
 locals {
   # Sample data for demonstrating the jq function.
   # The function can accept raw Terraform objects directly.
-  comp_sample_data_for_func = {
-    comp_items = [
+  sample_data_for_func = {
+    items = [
       { "name" : "Laptop", "stock" : 15, "tags" : ["electronics", "sale"], "specs" : { "cpu" : "i7", "ram_gb" : 16 } },
       { "name" : "Mouse", "stock" : 150, "tags" : ["electronics", "accessory"], "specs" : { "dpi" : 1200 } },
       { "name" : "Keyboard", "stock" : 75, "tags" : ["electronics", "accessory"], "specs" : { "layout" : "US" } },
@@ -32,7 +32,7 @@ locals {
 # ===================================================================
 output "ex1_store_location" {
   description = "Example 1: Extracts the 'store_location' field."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, ".store_location")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".store_location")
 }
 
 # ===================================================================
@@ -40,7 +40,7 @@ output "ex1_store_location" {
 # ===================================================================
 output "ex2_first_item_name" {
   description = "Example 2: Extracts the name of the first item in the 'items' array."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, ".items[0].name")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[0].name")
 }
 
 # ===================================================================
@@ -48,7 +48,7 @@ output "ex2_first_item_name" {
 # ===================================================================
 output "ex3_all_item_names" {
   description = "Example 3: Creates a new array containing only the names of all items."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, "[.items[].name]")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, "[.items[].name]")
 }
 
 # ===================================================================
@@ -56,7 +56,7 @@ output "ex3_all_item_names" {
 # ===================================================================
 output "ex4_accessory_items" {
   description = "Example 4: Filters for items tagged as 'accessory'."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, ".items[] | select(.tags[] == \"accessory\")")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select(.tags[] == \"accessory\")")
 }
 
 # ===================================================================
@@ -64,7 +64,7 @@ output "ex4_accessory_items" {
 # ===================================================================
 output "ex5_accessory_names" {
   description = "Example 5: Filters for 'accessory' items and returns only their names."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, ".items[] | select(.tags[] == \"accessory\") | .name")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select(.tags[] == \"accessory\") | .name")
 }
 
 # ===================================================================
@@ -73,7 +73,7 @@ output "ex5_accessory_names" {
 output "ex6_stock_report" {
   description = "Example 6: Creates a custom stock report object."
   value = provider::pyvider::lens_jq(
-    local.comp_sample_data_for_func,
+    local.sample_data_for_func,
     "{ report_date: .last_updated, inventory: [ .items[] | { item: .name, quantity: .stock, is_electronic: (.tags[] | contains(\"electronics\")) } ] }"
   )
 }
@@ -83,7 +83,7 @@ output "ex6_stock_report" {
 # ===================================================================
 output "ex7_urgent_restock_items" {
   description = "Example 7: Finds items on sale with stock less than 20."
-  value       = provider::pyvider::lens_jq(local.comp_sample_data_for_func, ".items[] | select((.tags[] == \"sale\") and .stock < 20)")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select((.tags[] == \"sale\") and .stock < 20)")
 }
 
 # ===================================================================

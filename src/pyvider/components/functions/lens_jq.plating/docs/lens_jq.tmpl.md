@@ -1,27 +1,31 @@
 ---
 page_title: "Function: lens_jq"
 description: |-
-  Applies a jq query and returns a native Python object.
+  Run jq queries against Terraform values.
 ---
 
 # lens_jq (Function)
 
-Applies a jq query and returns a native Python object.
+Apply jq expressions to maps, lists, or JSON strings when the lens capability is enabled in the provider configuration.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('lens_jq') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`lens_jq(data: any, query: string) -> any`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `data` (any, required) — Value to inspect. Accepts Terraform collections and primitives.
+- `query` (string, required) — jq expression to evaluate. Must be a non-empty string.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The jq result converted back to native Terraform types.
+
+## Notes
+
+- The provider must enable the `lens` capability; otherwise a `FunctionError` is raised.
+- Unexpected jq errors surface directly from the underlying engine.

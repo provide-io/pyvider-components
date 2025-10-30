@@ -1,27 +1,25 @@
 ---
 page_title: "Function: to_kebab_case"
 description: |-
-  Convert text to kebab-case using provide-foundation utilities.
+  Convert text to kebab-case.
 ---
 
 # to_kebab_case (Function)
 
-Convert text to kebab-case using provide-foundation utilities.
+Transform input text to lowercase words separated by hyphens.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('to_kebab_case') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`to_kebab_case(text: string) -> string`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `text` (string, required) — Text to transform. Returns `null` for `null` input.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The kebab-case string.

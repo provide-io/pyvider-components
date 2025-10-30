@@ -12,12 +12,12 @@ data "pyvider_env_variables" "api_config" {
 
 output "api_endpoint" {
   description = "The API endpoint URL."
-  value       = lookup(data.pyvider_env_variables.api_config.values, "API_URL", null)
+  value       = data.pyvider_env_variables.api_config.values["API_URL"]
 }
 
 output "api_timeout" {
   description = "The configured API timeout."
-  value       = lookup(data.pyvider_env_variables.api_config.values, "API_TIMEOUT", null)
+  value       = data.pyvider_env_variables.api_config.values["API_TIMEOUT"]
 }
 
 output "api_token_is_sensitive" {

@@ -1,10 +1,4 @@
-provider "pyvider" {
-  alias     = "test"
-  test_mode = true
-}
-
 data "pyvider_structured_object_test" "basic" {
-  provider   = pyvider.test
   config_name = "my-config"
 }
 

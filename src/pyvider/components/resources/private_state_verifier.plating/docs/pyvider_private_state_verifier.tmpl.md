@@ -1,23 +1,23 @@
 ---
 page_title: "Resource: pyvider_private_state_verifier"
 description: |-
-  Terraform resource for pyvider_private_state_verifier
+  Demonstrate private state encryption for provider development.
 ---
 
 # pyvider_private_state_verifier (Resource)
 
-Terraform resource for pyvider_private_state_verifier
+Utility resource for testing the provider’s private-state handling. It generates a derived token from `input_value` and stores the sensitive version in Terraform’s encrypted private state.
 
-## Example Usage
+## Example
 
-{{ example("example") }}
+{{ example("basic") }}
 
-## Argument Reference
+## Schema
 
 {{ schema() }}
 
-## Import
+## Notes
 
-```bash
-terraform import pyvider_private_state_verifier.example <id>
-```
+- Intended for validation and demos; do not use in production plans.
+- `decrypted_token` is computed during apply so you can confirm encryption/decryption works end to end.
+- Input and outputs are simple strings—pair with test frameworks or CI jobs when exercising the provider.

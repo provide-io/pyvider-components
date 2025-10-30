@@ -1,5 +1,4 @@
 data "pyvider_simple_map_test" "example" {
-  provider = pyvider.test
   input_data = {
     key1 = "hello"
     key2 = "world"

@@ -2,7 +2,7 @@
 
 # Example 1: Basic JSON data extraction
 locals {
-  adv_user_data = {
+  user_data = {
     name = "John Doe"
     age  = 30
     email = "john.doe@example.com"
@@ -16,14 +16,14 @@ locals {
   }
 
   # Extract specific fields
-  adv_user_name = provider::pyvider::lens_jq(local.adv_user_data, ".name")
-  adv_user_city = provider::pyvider::lens_jq(local.adv_user_data, ".address.city")
-  adv_hobby_count = provider::pyvider::lens_jq(local.adv_user_data, ".hobbies | length")
+  user_name = provider::pyvider::lens_jq(local.user_data, ".name")
+  user_city = provider::pyvider::lens_jq(local.user_data, ".address.city")
+  hobby_count = provider::pyvider::lens_jq(local.user_data, ".hobbies | length")
 }
 
 # Example 2: Array manipulation and filtering
 locals {
-  adv_employees = [
+  employees = [
     {
       id = 1
       name = "Alice Smith"
@@ -48,30 +48,30 @@ locals {
   ]
 
   # Filter and transform arrays
-  adv_engineers = provider::pyvider::lens_jq(
-    local.adv_employees,
-    "[.[] | select(.department == \"Engineering\")]"
+  engineers = provider::pyvider::lens_jq(
+    local.employees,
+    '[.[] | select(.department == "Engineering")]'
   )
 
-  adv_high_earners = provider::pyvider::lens_jq(
-    local.adv_employees,
-    "[.[] | select(.salary > 80000) | {name, salary}]"
+  high_earners = provider::pyvider::lens_jq(
+    local.employees,
+    '[.[] | select(.salary > 80000) | {name, salary}]'
   )
 
-  adv_all_skills = provider::pyvider::lens_jq(
-    local.adv_employees,
-    "[.[].skills[]] | unique"
+  all_skills = provider::pyvider::lens_jq(
+    local.employees,
+    '[.[].skills[]] | unique'
   )
 
-  adv_avg_salary = provider::pyvider::lens_jq(
-    local.adv_employees,
-    "[.[].salary] | add / length"
+  avg_salary = provider::pyvider::lens_jq(
+    local.employees,
+    '[.[].salary] | add / length'
   )
 }
 
 # Example 3: Complex data transformation
 locals {
-  adv_api_response = {
+  api_response = {
     status = "success"
     data = {
       users = [
@@ -110,19 +110,25 @@ locals {
   }
 
   # Complex transformations
-  adv_user_summaries = provider::pyvider::lens_jq(
-    local.adv_api_response,
-    ".data.users | map({id, full_name: (.profile.firstName + \" \" + .profile.lastName), theme: .profile.settings.theme, total_likes: [.posts[].likes] | add, post_count: (.posts | length)})"
+  user_summaries = provider::pyvider::lens_jq(
+    local.api_response,
+    '.data.users | map({
+      id,
+      full_name: (.profile.firstName + " " + .profile.lastName),
+      theme: .profile.settings.theme,
+      total_likes: [.posts[].likes] | add,
+      post_count: (.posts | length)
+    })'
   )
 
-  adv_dark_theme_users = provider::pyvider::lens_jq(
-    local.adv_api_response,
-    ".data.users | map(select(.profile.settings.theme == \"dark\")) | map(.profile.firstName)"
+  dark_theme_users = provider::pyvider::lens_jq(
+    local.api_response,
+    '.data.users | map(select(.profile.settings.theme == "dark")) | map(.profile.firstName)'
   )
 
-  adv_popular_posts = provider::pyvider::lens_jq(
-    local.adv_api_response,
-    ".data.users[].posts[] | select(.likes > 10) | .title"
+  popular_posts = provider::pyvider::lens_jq(
+    local.api_response,
+    '.data.users[].posts[] | select(.likes > 10) | .title'
   )
 }
 
@@ -130,22 +136,22 @@ output "lens_jq_examples_results" {
   description = "Results from various JQ transformation examples"
   value = {
     basic_operations = {
-      user_name = local.adv_user_name
-      user_city = local.adv_user_city
-      hobby_count = local.adv_hobby_count
+      user_name = local.user_name
+      user_city = local.user_city
+      hobby_count = local.hobby_count
     }
 
     array_processing = {
-      engineers_found = length(local.adv_engineers)
-      high_earners_found = length(local.adv_high_earners)
-      unique_skills_count = length(local.adv_all_skills)
-      average_salary = local.adv_avg_salary
+      engineers_found = length(local.engineers)
+      high_earners_found = length(local.high_earners)
+      unique_skills_count = length(local.all_skills)
+      average_salary = local.avg_salary
     }
 
     complex_data = {
-      user_summaries_count = length(local.adv_user_summaries)
-      dark_theme_users = local.adv_dark_theme_users
-      popular_posts_found = length(local.adv_popular_posts)
+      user_summaries_count = length(local.user_summaries)
+      dark_theme_users = local.dark_theme_users
+      popular_posts_found = length(local.popular_posts)
     }
   }
 }
