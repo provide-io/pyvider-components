@@ -27,9 +27,9 @@ locals {
 locals {
   comprehensive_word_list = ["apple", "banana", "cherry"]
 
-  comprehensive_comma_separated = provider::pyvider::join(local.comprehensive_word_list, ", ")     # Returns: "apple, banana, cherry"
-  comprehensive_pipe_separated = provider::pyvider::join(local.comprehensive_word_list, " | ")     # Returns: "apple | banana | cherry"
-  comprehensive_no_separator = provider::pyvider::join(local.comprehensive_word_list, "")          # Returns: "applebananacherry"
+  comprehensive_comma_separated = provider::pyvider::join(", ", local.comprehensive_word_list)     # Returns: "apple, banana, cherry"
+  comprehensive_pipe_separated = provider::pyvider::join(" | ", local.comprehensive_word_list)     # Returns: "apple | banana | cherry"
+  comprehensive_no_separator = provider::pyvider::join("", local.comprehensive_word_list)          # Returns: "applebananacherry"
 }
 
 # String splitting examples

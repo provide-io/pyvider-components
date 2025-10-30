@@ -51,7 +51,7 @@ locals {
   resource_calculations_current_cpu_percent = 85
 
   # Calculate scaling factor
-  resource_calculations_scale_factor = provider::pyvider::divide(current_cpu_percent, target_cpu_percent)
+  resource_calculations_scale_factor = provider::pyvider::divide(local.resource_calculations_current_cpu_percent, local.resource_calculations_target_cpu_percent)
 
   # Round up desired instances
   resource_calculations_desired_instances = provider::pyvider::round(
