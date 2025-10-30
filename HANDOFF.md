@@ -266,3 +266,57 @@ From the test run, here are the specific failure categories:
 ---
 
 **Status**: Ready for next phase - run the fix script and regenerate examples!
+
+---
+
+## Update: October 30, 2025 - Variable Conflict Fixes (Continued)
+
+### Progress Summary
+
+**Test Results: 15/38 passing (39%)**
+- Improved from 9/45 (20%) to 15/38 (39%)
+
+### Fixes Applied
+
+1. **Double Prefix Removal** ✅
+   - Removed `comprehensive_comprehensive_`, `basic_basic_`, etc.
+   - Applied across all function, resource, and data_source templates
+
+2. **join() Function Argument Order** ✅  
+   - Signature: `join(delimiter, strings)`
+   - Fixed templates that were calling `join(strings, delimiter)`
+
+3. **Numeric Functions Invalid Reference** ✅
+   - Fixed `resource_calculations.tf` line 54
+   - Changed `current_cpu_percent` → `local.resource_calculations_current_cpu_percent`
+   - All numeric functions now passing: divide, max, min, multiply, round, sum
+
+### Currently Passing (15/38)
+- add, contains, divide, format_size, length, lookup, max, min
+- multiply, pluralize, round, subtract, sum, truncate, tostring
+
+### Remaining Issues
+
+**String Manipulation Functions** (9 failing)
+- join, split, format, upper, lower, replace
+- to_camel_case, to_kebab_case, to_snake_case
+- Errors: "Invalid function argument", "Unsupported attribute", "Invalid index"
+- Issue: `advanced.tf` templates have logic errors
+
+**Data Sources** (8 failing)
+- env_variables, file_info, http_api, lens_jq
+- mixed_map_test, provider_config_reader, simple_map_test, structured_object_test
+- Various errors including invalid index, unsupported arguments
+
+**Resources** (5 failing)  
+- file_content, local_directory, private_state_verifier
+- timed_token, warning_example
+- Errors: Missing required arguments, template issues
+
+### Next Steps
+
+1. Fix `advanced.tf` templates in string_manipulation
+2. Fix data_source example templates
+3. Fix resource example templates
+4. Aim for >80% test pass rate
+
