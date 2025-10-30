@@ -14,7 +14,7 @@ def find_plating_examples():
     """Find all .plating/examples directories."""
     plating_dirs = []
     for root, dirs, files in os.walk(SRC_DIR):
-        if root.endswith("/.plating/examples") or "/.plating/examples/" in root:
+        if root.endswith(".plating/examples"):
             plating_dirs.append(Path(root))
     return plating_dirs
 

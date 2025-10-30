@@ -2,10 +2,10 @@
 
 # Example 1: Basic JSON data extraction
 locals {
-  user_data = {
-    name = "John Doe"
+  advanced_user_data = {
+    advanced_name = "John Doe"
     age  = 30
-    email = "john.doe@example.com"
+    advanced_email = "john.doe@example.com"
     address = {
       street = "123 Main St"
       city   = "Anytown"
@@ -16,17 +16,17 @@ locals {
   }
 
   # Extract specific fields
-  user_name = provider::pyvider::lens_jq(local.user_data, ".name")
-  user_city = provider::pyvider::lens_jq(local.user_data, ".address.city")
-  hobby_count = provider::pyvider::lens_jq(local.user_data, ".hobbies | length")
+  user_name = provider::pyvider::lens_jq(local.advanced_user_data, ".name")
+  user_city = provider::pyvider::lens_jq(local.advanced_user_data, ".address.city")
+  hobby_count = provider::pyvider::lens_jq(local.advanced_user_data, ".hobbies | length")
 }
 
 # Example 2: Array manipulation and filtering
 locals {
   employees = [
     {
-      id = 1
-      name = "Alice Smith"
+      advanced_id = 1
+      advanced_name = "Alice Smith"
       department = "Engineering"
       salary = 95000
       skills = ["Python", "Go", "Docker"]
@@ -73,10 +73,10 @@ locals {
 locals {
   api_response = {
     status = "success"
-    data = {
-      users = [
+    advanced_data = {
+      advanced_users = [
         {
-          id = "user1"
+          advanced_id = "user1"
           profile = {
             firstName = "John"
             lastName = "Doe"
@@ -132,7 +132,7 @@ locals {
   )
 }
 
-output "lens_jq_examples_results" {
+output "advanced_user_data" {
   description = "Results from various JQ transformation examples"
   value = {
     basic_operations = {

@@ -1,17 +1,17 @@
 locals {
-  integer = 42
-  float   = 3.14159
-  boolean = true
+  tostring_integer = 42
+  tostring_float   = 3.14159
+  tostring_boolean = true
 
-  int_string   = provider::pyvider::tostring(local.integer)  # "42"
-  float_string = provider::pyvider::tostring(local.float)    # "3.14159"
-  bool_string  = provider::pyvider::tostring(local.boolean)  # "true"
+  tostring_int_string   = provider::pyvider::tostring(local.tostring_integer)  # "42"
+  tostring_float_string = provider::pyvider::tostring(local.tostring_float)    # "3.14159"
+  bool_string  = provider::pyvider::tostring(local.tostring_boolean)  # "true"
 }
 
-output "tostring_example" {
+output "tostring_float" {
   value = {
-    integer = local.int_string
-    float   = local.float_string
+    integer = local.tostring_int_string
+    float   = local.tostring_float_string
     boolean = local.bool_string
   }
 }

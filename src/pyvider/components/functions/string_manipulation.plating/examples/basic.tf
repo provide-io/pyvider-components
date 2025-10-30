@@ -1,13 +1,13 @@
 # Basic string manipulation
 locals {
-  text = "Hello World"
+  basic_text = "Hello World"
 
-  uppercase = provider::pyvider::upper(local.text)  # "HELLO WORLD"
-  lowercase = provider::pyvider::lower(local.text)  # "hello world"
+  uppercase = provider::pyvider::upper(local.basic_text)  # "HELLO WORLD"
+  lowercase = provider::pyvider::lower(local.basic_text)  # "hello world"
   formatted = provider::pyvider::format("Name: {}", ["Alice"])  # "Name: Alice"
 }
 
-output "basic_strings" {
+output "basic_text" {
   value = {
     upper = local.uppercase
     lower = local.lowercase

@@ -34,9 +34,9 @@ locals {
 
 # String splitting examples
 locals {
-  csv_data = "apple,banana,cherry,date"
+  comprehensive_csv_data = "apple,banana,cherry,date"
 
-  split_by_comma = provider::pyvider::split(local.csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
+  comprehensive_split_by_comma = provider::pyvider::split(local.comprehensive_csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
 
   # Split with limit
   path_string = "/home/user/documents/file.txt"
@@ -71,7 +71,7 @@ locals {
 }
 
 # Output results for verification
-output "string_manipulation_examples" {
+output "comprehensive_split_by_comma" {
   value = {
     case_conversion = {
       original = local.case_original_text
@@ -93,8 +93,8 @@ output "string_manipulation_examples" {
     }
 
     splitting = {
-      csv_original = local.csv_data
-      csv_split = local.split_by_comma
+      csv_original = local.comprehensive_csv_data
+      csv_split = local.comprehensive_split_by_comma
       path_original = local.path_string
       path_split = local.split_path
     }

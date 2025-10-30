@@ -2,11 +2,11 @@
 
 # Example 1: Number to string conversions
 locals {
-  integer = 42
-  float   = 3.14159
+  comprehensive_integer = 42
+  comprehensive_float   = 3.14159
 
-  int_string   = provider::pyvider::tostring(local.integer) # "42"
-  float_string = provider::pyvider::tostring(local.float)   # "3.14159"
+  comprehensive_int_string   = provider::pyvider::tostring(local.comprehensive_integer) # "42"
+  comprehensive_float_string = provider::pyvider::tostring(local.comprehensive_float)   # "3.14159"
 }
 
 # Example 2: Boolean to string conversions
@@ -53,8 +53,8 @@ resource "pyvider_file_content" "conversion_examples" {
     "Type Conversion Examples",
     "========================",
     "",
-    "Integer: ${local.int_string}",
-    "Float: ${local.float_string}",
+    "Integer: ${local.comprehensive_int_string}",
+    "Float: ${local.comprehensive_float_string}",
     "Boolean: ${local.enabled_str}",
     "List: ${local.numbers_str}",
     "Map: ${local.config_str}",
@@ -63,10 +63,10 @@ resource "pyvider_file_content" "conversion_examples" {
   ])
 }
 
-output "conversion_results" {
+output "comprehensive_float" {
   value = {
-    integer_str = local.int_string
-    float_str   = local.float_string
+    integer_str = local.comprehensive_int_string
+    float_str   = local.comprehensive_float_string
     boolean_str = local.enabled_str
     list_str    = local.numbers_str
     map_str     = local.config_str
