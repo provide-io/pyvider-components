@@ -48,23 +48,23 @@ locals {
   }
 
   # Build formatted strings
-  display_name = provider::pyvider::format("{} {}", [
-    provider::pyvider::to_camel_case(local.advanced_user_data.first_name, true),
-    provider::pyvider::to_camel_case(local.advanced_user_data.last_name, true)
+  advanced_display_name = provider::pyvider::format("{} {}", [
+    provider::pyvider::to_camel_case(local.advanced_user_data.advanced_first_name, true),
+    provider::pyvider::to_camel_case(local.advanced_user_data.advanced_last_name, true)
   ])
 
-  username = provider::pyvider::join([
-    provider::pyvider::lower(local.advanced_user_data.first_name),
-    provider::pyvider::lower(local.advanced_user_data.last_name)
-  ], ".")
+  advanced_username = provider::pyvider::join(".", [
+    provider::pyvider::lower(local.advanced_user_data.advanced_first_name),
+    provider::pyvider::lower(local.advanced_user_data.advanced_last_name)
+  ])
 
-  role_display = provider::pyvider::upper(local.advanced_user_data.role)
+  advanced_role_display = provider::pyvider::upper(local.advanced_user_data.advanced_role)
 }
 
 # CSV parsing and transformation
 locals {
   advanced_csv_line = "name,email,department,active"
-  advanced_parsed_headers = provider::pyvider::split(local.advanced_csv_line, ",")
+  advanced_parsed_headers = provider::pyvider::split(",", local.advanced_csv_line)
 
   # Transform to object keys
   advanced_object_keys = [
@@ -78,26 +78,30 @@ locals {
   advanced_raw_text = "Product Name: Widget-2000  Price: $99.99  Stock: 50 units"
 
   # Extract and normalize
-  advanced_parts = provider::pyvider::split(local.advanced_raw_text, "  ")
+  advanced_parts = provider::pyvider::split("  ", local.advanced_raw_text)
+  advanced_product_info = provider::pyvider::split(": ", local.advanced_parts[0])
   advanced_product_name = provider::pyvider::replace(
-    provider::pyvider::split(local.advanced_parts[0], ": ")[1],
+    local.advanced_product_info[1],
     "-",
     "_"
   )
 }
 
-output "advanced_user_data" {
+output "advanced_results" {
   value = {
     normalized_emails = local.advanced_normalized_emails
     article_slugs = local.advanced_article_slugs
     user_profile = {
-      display_name = local.display_name
-      username = local.username
-      role = local.role_display
+      display_name = local.advanced_display_name
+      username = local.advanced_username
+      role = local.advanced_role_display
     }
     csv_processing = {
       headers = local.advanced_parsed_headers
       transformed_keys = local.advanced_object_keys
+    }
+    product_processing = {
+      product_name = local.advanced_product_name
     }
   }
 }

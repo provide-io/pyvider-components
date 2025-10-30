@@ -36,11 +36,11 @@ locals {
 locals {
   comprehensive_csv_data = "apple,banana,cherry,date"
 
-  comprehensive_split_by_comma = provider::pyvider::split(local.comprehensive_csv_data, ",")       # Returns: ["apple", "banana", "cherry", "date"]
+  comprehensive_split_by_comma = provider::pyvider::split(",", local.comprehensive_csv_data)       # Returns: ["apple", "banana", "cherry", "date"]
 
   # Split with limit
   comprehensive_path_string = "/home/user/documents/file.txt"
-  comprehensive_split_path = provider::pyvider::split(local.comprehensive_path_string, "/")        # Returns: ["", "home", "user", "documents", "file.txt"]
+  comprehensive_split_path = provider::pyvider::split("/", local.comprehensive_path_string)        # Returns: ["", "home", "user", "documents", "file.txt"]
 }
 
 # String replacement examples
