@@ -1,5 +1,5 @@
 data "pyvider_file_info" "example" {
-  # Configuration options here
+  path = "/tmp/example_file.txt"
 }
 
 output "example_data" {
