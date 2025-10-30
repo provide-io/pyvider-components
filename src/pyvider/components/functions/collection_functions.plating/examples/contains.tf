@@ -1,12 +1,12 @@
 locals {
-  contains_fruits = ["apple", "banana", "cherry"]
-  contains_has_apple = provider::pyvider::contains(local.contains_fruits, "apple")   # true
-  contains_has_grape = provider::pyvider::contains(local.contains_fruits, "grape")   # false
+  fruits = ["apple", "banana", "cherry"]
+  has_apple = provider::pyvider::contains(local.fruits, "apple")   # true
+  has_grape = provider::pyvider::contains(local.fruits, "grape")   # false
 }
 
 output "contains_example" {
   value = {
-    has_apple = local.contains_has_apple
-    has_grape = local.contains_has_grape
+    has_apple = local.has_apple
+    has_grape = local.has_grape
   }
 }

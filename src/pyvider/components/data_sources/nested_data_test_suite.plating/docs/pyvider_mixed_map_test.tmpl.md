@@ -1,16 +1,18 @@
 ---
 page_title: "Data Source: pyvider_mixed_map_test"
 description: |-
-  Terraform data source for pyvider_mixed_map_test
+  Test data source for validating mixed-type map handling with dynamic values
 ---
 
 # pyvider_mixed_map_test (Data Source)
 
-Terraform data source for pyvider_mixed_map_test
+**Note:** This is a test-only data source. Enable with `provider_testmode = true`.
+
+Test data source for validating mixed-type map handling with dynamic values. Takes an optional map with mixed types (strings, numbers, etc.) as input, processes each value according to its type (strings to uppercase, numbers +1), and returns the processed map with a hash.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example("mixed") }}
 
 ## Argument Reference
 

@@ -1,27 +1,26 @@
 ---
 page_title: "Function: subtract"
 description: |-
-  Terraform function for subtract
+  Subtract one number from another with `null` safety.
 ---
 
 # subtract (Function)
 
-Terraform function for subtract
+Return the difference between two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('subtract') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`subtract(a: number, b: number) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `a` (number, required) — Minuend. Returns `null` when this or `b` is `null`.
+- `b` (number, required) — Subtrahend.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The difference, or `null` when either input is `null`. Integer results are cast to whole numbers.

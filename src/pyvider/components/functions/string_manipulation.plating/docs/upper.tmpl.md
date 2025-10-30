@@ -1,27 +1,25 @@
 ---
 page_title: "Function: upper"
 description: |-
-  Convert a string to uppercase.
+  Convert a string to uppercase characters.
 ---
 
 # upper (Function)
 
-Convert a string to uppercase.
+Return the uppercase version of the provided text. Passing `null` keeps the value `null`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('upper') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`upper(input_str: string) -> string`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `input_str` (string, required) — Text to convert. `null` values are returned as `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The uppercase string.

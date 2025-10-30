@@ -1,27 +1,26 @@
 ---
 page_title: "Function: round"
 description: |-
-  Round a number to specified decimal places.
+  Round a number to a chosen precision.
 ---
 
 # round (Function)
 
-Round a number to specified decimal places.
+Round numbers to the nearest integer or decimal place. Provide an optional second argument to control precision (defaults to `0`).
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('round') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`round(number: number, options: variadic) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `number` (number, required) — Value to round. Returns `null` when this is `null`.
+- `options` (variadic, optional) — First value specifies decimal places (default `0`).
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The rounded number, or `null` when the input is `null`.

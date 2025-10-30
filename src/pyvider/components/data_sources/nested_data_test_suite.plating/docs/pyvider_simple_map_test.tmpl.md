@@ -1,16 +1,20 @@
 ---
 page_title: "Data Source: pyvider_simple_map_test"
 description: |-
-  Terraform data source for pyvider_simple_map_test
+  Test data source for validating simple string map handling
 ---
 
 # pyvider_simple_map_test (Data Source)
 
-Terraform data source for pyvider_simple_map_test
+**Note:** This is a test-only data source. Enable with `provider_testmode = true`.
+
+Test data source for validating simple string map handling in the CTY type system. Takes an optional map of strings as input, converts all values to uppercase, and returns the processed map along with a SHA256 hash.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example("simple") }}
+
+{{ example("empty") }}
 
 ## Argument Reference
 

@@ -1,5 +1,4 @@
 data "pyvider_mixed_map_test" "mixed" {
-  provider = pyvider.test
   input_data = {
     string_value = "hello"
     number_value = 42

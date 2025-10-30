@@ -74,7 +74,7 @@ class TestStdlibFunctions:
 
     def test_join_with_boolean_uses_lowercase(self):
         """Verifies that join() converts booleans to lowercase 'true'/'false'."""
-        result = join(["a", True, 123, False], ", ")
+        result = join(", ", ["a", True, 123, False])
         assert result == "a, true, 123, false"
 
 

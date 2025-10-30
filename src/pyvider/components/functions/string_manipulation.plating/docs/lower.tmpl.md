@@ -1,27 +1,25 @@
 ---
 page_title: "Function: lower"
 description: |-
-  Convert a string to lowercase.
+  Convert a string to lowercase characters.
 ---
 
 # lower (Function)
 
-Convert a string to lowercase.
+Return the lowercase version of the provided text. Passing `null` keeps the value `null`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('lower') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`lower(input_str: string) -> string`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `input_str` (string, required) — Text to convert. `null` values are returned as `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
+The lowercase string.
