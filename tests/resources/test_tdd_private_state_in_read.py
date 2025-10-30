@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/resources/test_tdd_private_state_in_read.py
-#
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -95,5 +98,4 @@ async def test_read_handler_provides_private_state_to_context(encryption_key_env
     finally:
         hub.unregister("resource", resource_name)
 
-
-# 🧪🔒📖
+# 🧩🔧🔚

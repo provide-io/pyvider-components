@@ -1,18 +1,16 @@
-# pyvider/components/tests/test_test_only_components.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Comprehensive test suite for test_only component functionality.
+"""Comprehensive test suite for test_only component functionality.
 
 This test suite verifies:
 1. All test-only components are properly marked with _is_test_only=True
 2. All production components are NOT marked as test-only
 3. Test-only components are correctly blocked when test mode is disabled
 4. Test-only components are accessible when test mode is enabled
-5. The provider_testmode capability is properly registered
-"""
+5. The provider_testmode capability is properly registered"""
 
 import pytest
 from pyvider.hub import hub
@@ -237,6 +235,4 @@ class TestTestModeScenarios:
         # Note: This test may need adjustment based on actual hub registration
         # It's mainly here to document expected behavior
 
-
-# 🧪📦🔒
-# 🧩🔧📄🪄
+# 🧩🔧🔚

@@ -1,3 +1,10 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
+
 import pytest
 
 from pyvider.components.resources.private_state_verifier import (
@@ -45,3 +52,5 @@ async def test_private_state_verifier_lifecycle(encryption_key_env, provider_wit
         assert final_state.value["decrypted_token"].value == "SECRET_FOR_TEST-RUN"
     finally:
         hub.unregister("resource", resource_name)
+
+# 🧩🔧🔚

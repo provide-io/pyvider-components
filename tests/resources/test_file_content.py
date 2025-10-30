@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/resources/test_file_content.py
-#
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -72,5 +75,4 @@ class TestFileContent(FoundationTestCase):
 
         assert not temp_file.exists()
 
-
-# 🧪📄🔧
+# 🧩🔧🔚

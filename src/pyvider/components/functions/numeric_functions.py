@@ -1,10 +1,9 @@
-# pyvider/components/functions/numeric_functions.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/functions/numeric_functions.py
 #
+
+"""TODO: Add module docstring."""
 
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
@@ -126,4 +125,5 @@ def round_number(number: int | float | None, *options) -> int | float | None:
 
 
 # 🔢➕🎯
-# 🧩🔧🔣🪄
+
+# 🧩🔧🔚

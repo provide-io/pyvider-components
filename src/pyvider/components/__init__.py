@@ -1,10 +1,9 @@
-# pyvider/components/__init__.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-# This file makes pyvider.components a package.
-# Autodiscovery will scan from here.
+"""TODO: Add module docstring."""
 
 from provide.foundation.utils.versioning import get_version
 
@@ -20,5 +19,4 @@ __all__ = [
     "CoreCapability",
 ]
 
-# 🧩📦🔍
-# 🧩🔧📦🪄
+# 🧩🔧🔚

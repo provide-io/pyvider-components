@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/resources/test_tdd_private_state.py
-#
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -70,5 +73,4 @@ async def test_private_state_roundtrip():
     # THEN the rehydrated object is identical to the original
     assert rehydrated_private_state_obj == planned_private_state_obj
 
-
-# 🧪🔒✅
+# 🧩🔧🔚

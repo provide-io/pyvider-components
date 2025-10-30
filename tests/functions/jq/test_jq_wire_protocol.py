@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/functions/jq/test_jq_wire_protocol.py
-#
+
+"""TODO: Add module docstring."""
 
 import json
 from pathlib import Path
@@ -55,5 +58,4 @@ class TestJqWireProtocol:
         native_result = cty_to_native(result_cty)
         assert native_result == ["Dr. Evelyn Reed", "Dr. Jian Chen", "Maria Rosa"]
 
-
-# 🧪🔍🔌
+# 🧩🔧🔚

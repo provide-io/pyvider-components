@@ -1,3 +1,10 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""TODO: Add module docstring."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -113,3 +120,5 @@ class TestResourceUpdateLifecycle(FoundationTestCase):
         final_state_cty = unmarshal(apply_response.new_state, schema=schema.block)
         assert final_state_cty.value["permissions"].value == "0o777"
         assert oct(temp_dir_with_initial_state.stat().st_mode & 0o777) == "0o777"
+
+# 🧩🔧🔚

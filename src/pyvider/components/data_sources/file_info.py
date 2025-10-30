@@ -1,12 +1,10 @@
-# pyvider/components/data_sources/file_info.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/file_info.py
 #
 
-# components/data_sources/file_info.py
+"""TODO: Add module docstring."""
+
 import datetime
 from pathlib import Path
 import stat
@@ -167,6 +165,4 @@ class FileInfoDataSource(
             mime_type=mime_type,
         )
 
-
-# 📄ℹ️📊
-# 🧩🔧📄🪄
+# 🧩🔧🔚

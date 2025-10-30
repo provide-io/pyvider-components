@@ -1,10 +1,9 @@
-# pyvider/components/resources/local_directory.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/resources/local_directory.py
 #
+
+"""TODO: Add module docstring."""
 
 from pathlib import Path
 from typing import Any, cast
@@ -174,6 +173,4 @@ class LocalDirectoryResource(
                     f"Directory {path} is not empty and will not be removed."
                 )
 
-
-# 📁🏠📂
-# 🧩🔧📦🪄
+# 🧩🔧🔚

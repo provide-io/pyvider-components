@@ -1,10 +1,9 @@
-# pyvider/components/data_sources/http_api.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/http_api.py
 #
+
+"""TODO: Add module docstring."""
 
 from decimal import Decimal
 from typing import cast
@@ -160,4 +159,5 @@ class HTTPAPIDataSource(
 
 
 # 🌐📡📊
-# 🧩🔧📄🪄
+
+# 🧩🔧🔚

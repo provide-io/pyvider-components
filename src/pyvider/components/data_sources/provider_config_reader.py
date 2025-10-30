@@ -1,10 +1,9 @@
-# pyvider/components/data_sources/provider_config_reader.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/provider_config_reader.py
 #
+
+"""TODO: Add module docstring."""
 
 from typing import Any, cast
 
@@ -68,6 +67,4 @@ class ProviderConfigReaderDataSource(BaseDataSource):
             api_headers=getattr(provider_config, "api_headers", None),
         )
 
-
-# ⚙️📖📊
-# 🧩🔧⚙️🪄
+# 🧩🔧🔚

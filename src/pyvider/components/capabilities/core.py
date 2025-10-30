@@ -1,13 +1,11 @@
-# pyvider/components/capabilities/core.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Core capability for the pyvider provider.
+"""Core capability for the pyvider provider.
 
-Provides base provider configuration for the pyvider-components package.
-"""
+Provides base provider configuration for the pyvider-components package."""
 
 from typing import Any
 
@@ -40,3 +38,5 @@ class CoreCapability(BaseCapability):
                 description="Enable test-only components for testing and development purposes.",
             )
         }
+
+# 🧩🔧🔚

@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/test_tdd_stdlib_functions.py
-#
+
+"""TODO: Add module docstring."""
 
 import pytest
 
@@ -77,5 +80,4 @@ class TestStdlibFunctions:
         result = join(", ", ["a", True, 123, False])
         assert result == "a, true, 123, false"
 
-
-# 🧪🎯📦
+# 🧩🔧🔚

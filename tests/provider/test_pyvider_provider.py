@@ -1,3 +1,8 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
 """Tests for pyvider-components provider implementation."""
 
 import pytest
@@ -119,3 +124,5 @@ class TestProviderRegistration:
 
         assert hasattr(CoreCapability, "_registered_name")
         assert CoreCapability._registered_name == "core"
+
+# 🧩🔧🔚

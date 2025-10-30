@@ -1,6 +1,9 @@
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
-# tests/conftest.py
-#
+
+"""TODO: Add module docstring."""
 
 import os
 
@@ -43,5 +46,4 @@ def discovered_components_session():
 
     asyncio.run(discovery.discover_all())
 
-
-# 🧪⚙️🔧
+# 🧩🔧🔚

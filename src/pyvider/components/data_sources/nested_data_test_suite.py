@@ -1,13 +1,10 @@
-# pyvider/components/data_sources/nested_data_test_suite.py
-#
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# 
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/nested_data_test_suite.py
 #
 
-# pyvider/components/test_suite/nested_data_test.py
-# Comprehensive test suite to isolate CTY nested data issues
+"""TODO: Add module docstring."""
+
 from decimal import Decimal
 import hashlib
 import json
@@ -352,6 +349,4 @@ def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> 
 
     return json.dumps(result, default=str)
 
-
-# 🧪📦📊
-# 🧩🔧📄🪄
+# 🧩🔧🔚

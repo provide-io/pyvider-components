@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""
-Build documentation and examples, then clean up incorrect duplicates.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Build documentation and examples, then clean up incorrect duplicates.
 
 This script:
 1. Generates documentation using plating
 2. Generates executable examples
-3. Cleans up incorrect example duplicates caused by shared .plating directories
-"""
+3. Cleans up incorrect example duplicates caused by shared .plating directories"""
 
 import asyncio
 from pathlib import Path
@@ -46,7 +48,6 @@ def cleanup_function_examples(examples_dir: Path):
             continue
 
         function_name = function_path.name
-        pout(f"📦 Cleaning {function_name}...")
 
         # Check each example subdirectory
         for example_path in function_path.iterdir():
@@ -69,7 +70,6 @@ def cleanup_function_examples(examples_dir: Path):
                 foundation_file.safe_rmtree(example_path, missing_ok=True)
                 removed_count += 1
 
-    pout(f"\n✅ Cleanup complete: kept {kept_count}, removed {removed_count} duplicate examples")
 
 async def build_docs_and_examples(overwrite: bool = False):
     """Build documentation and clean examples."""
@@ -81,15 +81,12 @@ async def build_docs_and_examples(overwrite: bool = False):
         return
 
     # Generate documentation
-    pout("🍽️  Generating documentation...")
     context = PlatingContext(provider_name="pyvider")
     api = Plating(context, "pyvider.components")
     result = await api.plate()
 
-    pout(f"✅ Generated {result.files_generated} documentation files")
 
     # Generate examples (use CLI for this since it has the flag)
-    pout("\n📁 Generating executable examples...")
     import subprocess
     cmd = ["plating", "plate", "--provider-name", "pyvider",
            "--package-name", "pyvider.components", "--generate-examples"]
@@ -105,3 +102,5 @@ if __name__ == "__main__":
     import sys
     overwrite = "--overwrite" in sys.argv
     asyncio.run(build_docs_and_examples(overwrite=overwrite))
+
+# 🧩🔧🔚
