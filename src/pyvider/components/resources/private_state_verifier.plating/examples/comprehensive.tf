@@ -18,11 +18,11 @@ resource "pyvider_private_state_verifier" "special_chars_test" {
 # Verify all tests produce expected results
 locals {
   comprehensive_verification_results = {
-    comprehensive_simple_test = {
-      comprehensive_input    = pyvider_private_state_verifier.simple_test.input_value
-      comprehensive_output   = pyvider_private_state_verifier.simple_test.decrypted_token
-      comprehensive_expected = "SECRET_FOR_BASIC-TEST"
-      comprehensive_passed   = pyvider_private_state_verifier.simple_test.decrypted_token == "SECRET_FOR_BASIC-TEST"
+    simple_test = {
+      input    = pyvider_private_state_verifier.simple_test.input_value
+      output   = pyvider_private_state_verifier.simple_test.decrypted_token
+      expected = "SECRET_FOR_BASIC-TEST"
+      passed   = pyvider_private_state_verifier.simple_test.decrypted_token == "SECRET_FOR_BASIC-TEST"
     }
 
     alphanumeric_test = {
