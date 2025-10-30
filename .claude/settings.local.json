@@ -46,7 +46,8 @@
       "Bash(ls:*)",
       "Bash(tofu plan:*)",
       "Bash(for var in user_name user_email user_id db_host db_port cache_host active_users user_names)",
-      "Bash(do echo \"=== $var ===\")"
+      "Bash(do echo \"=== $var ===\")",
+      "Bash(export PYVIDER_PRIVATE_STATE_SHARED_SECRET=secret)"
     ],
     "deny": [],
     "ask": [],
