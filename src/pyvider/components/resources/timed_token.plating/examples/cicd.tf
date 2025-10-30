@@ -2,34 +2,22 @@
 
 # Generate short-lived token for CI pipeline
 resource "pyvider_timed_token" "ci_deploy_token" {
-  prefix       = "cicd"
-  length       = 32
-  duration_sec = 1800  # 30 minutes
-  metadata = {
-    purpose = "deployment"
-    pipeline = "github-actions"
-  }
+  name = "cicd-deploy-token"
 }
 
 # Generate token for automated tests
 resource "pyvider_timed_token" "test_runner_token" {
-  prefix       = "test"
-  length       = 24
-  duration_sec = 600  # 10 minutes
-  metadata = {
-    purpose = "testing"
-    environment = "ci"
-  }
+  name = "test-runner-token"
 }
 
 # Create config file with tokens
 resource "pyvider_file_content" "ci_config" {
   filename = "/tmp/ci_config.env"
-  content = provider::pyvider::join([
+  content = provider::pyvider::join("\n", [
     "DEPLOY_TOKEN=${pyvider_timed_token.ci_deploy_token.token}",
     "TEST_TOKEN=${pyvider_timed_token.test_runner_token.token}",
     "EXPIRES_AT=${pyvider_timed_token.ci_deploy_token.expires_at}"
-  ], "\n")
+  ])
 }
 
 output "cicd_ci_tokens" {

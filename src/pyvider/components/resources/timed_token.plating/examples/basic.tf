@@ -1,8 +1,6 @@
 # Generate a timed token
 resource "pyvider_timed_token" "example" {
-  prefix       = "demo"
-  length       = 32
-  duration_sec = 3600  # 1 hour
+  name = "demo-token"
 }
 
 output "basic_token_info" {
