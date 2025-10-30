@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -20,7 +20,9 @@ import pyvider.protocols.tfprotov6.protobuf as pb
 
 
 @pytest.mark.asyncio
-async def test_private_state_verifier_lifecycle(encryption_key_env, provider_with_test_mode):
+async def test_private_state_verifier_lifecycle(
+    encryption_key_env, provider_with_test_mode
+):
     resource_name = "pyvider_private_state_verifier"
     hub.register("resource", resource_name, PrivateStateVerifierResource)
     try:
@@ -52,5 +54,6 @@ async def test_private_state_verifier_lifecycle(encryption_key_env, provider_wit
         assert final_state.value["decrypted_token"].value == "SECRET_FOR_TEST-RUN"
     finally:
         hub.unregister("resource", resource_name)
+
 
 # 🧩🔧🔚

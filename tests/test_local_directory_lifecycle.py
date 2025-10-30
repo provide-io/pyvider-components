@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -69,5 +69,6 @@ async def test_create_lifecycle_contract(
     read_state = await resource.read(read_context)
     assert read_state is not None
     assert read_state.permissions == "0o775"
+
 
 # 🧩🔧🔚

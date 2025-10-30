@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -38,5 +38,6 @@ async def test_file_content_plan_apply_lifecycle():
 
     assert isinstance(unmarshaled_val, CtyValue)
     assert unmarshaled_val["filename"].value == "/tmp/test.txt"
+
 
 # 🧩🔧🔚

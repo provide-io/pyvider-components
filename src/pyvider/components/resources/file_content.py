@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -160,5 +160,6 @@ class FileContentResource(
             logger.debug("Successfully deleted file", path=str(path))
         else:
             logger.debug("File does not exist, nothing to delete", path=str(path))
+
 
 # 🧩🔧🔚

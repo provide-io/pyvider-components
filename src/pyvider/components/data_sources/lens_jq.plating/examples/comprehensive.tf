@@ -6,10 +6,10 @@ locals {
   # The function can accept raw Terraform objects directly.
   comprehensive_sample_data_for_func = {
     comprehensive_items = [
-      { "name" : "Laptop", "stock" : 15, "tags" : ["electronics", "sale"], "specs" : { "cpu" : "i7", "ram_gb" : 16 } },
-      { "name" : "Mouse", "stock" : 150, "tags" : ["electronics", "accessory"], "specs" : { "dpi" : 1200 } },
-      { "name" : "Keyboard", "stock" : 75, "tags" : ["electronics", "accessory"], "specs" : { "layout" : "US" } },
-      { "name" : "Monitor", "stock" : 25, "tags" : ["electronics"], "specs" : { "size_inch" : 27, "resolution" : "4K" } }
+      { "name" : "Laptop", "stock" : 15, "tags" : ["electronics", "sale"], "price" : 999 },
+      { "name" : "Mouse", "stock" : 150, "tags" : ["electronics", "accessory"], "price" : 25 },
+      { "name" : "Keyboard", "stock" : 75, "tags" : ["electronics", "accessory"], "price" : 75 },
+      { "name" : "Monitor", "stock" : 25, "tags" : ["electronics"], "price" : 350 }
     ],
     "store_location" : "Warehouse A",
     "last_updated" : "2025-06-25T10:00:00Z"
@@ -40,7 +40,7 @@ output "comprehensive_field_extraction" {
 # ===================================================================
 output "comprehensive_array_indexing" {
   description = "Example 2: Extracts the name of the first item in the 'items' array."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".items[0].name")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".comprehensive_items[0].name")
 }
 
 # ===================================================================
@@ -48,7 +48,7 @@ output "comprehensive_array_indexing" {
 # ===================================================================
 output "comprehensive_array_projection" {
   description = "Example 3: Creates a new array containing only the names of all items."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[].name]")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[].name]")
 }
 
 # ===================================================================
@@ -56,7 +56,7 @@ output "comprehensive_array_projection" {
 # ===================================================================
 output "comprehensive_array_filtering" {
   description = "Example 4: Filters for items tagged as 'accessory'."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select(.tags[] == \"accessory\")]")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select(.tags[] == \"accessory\")]")
 }
 
 # ===================================================================
@@ -64,7 +64,7 @@ output "comprehensive_array_filtering" {
 # ===================================================================
 output "comprehensive_filter_and_project" {
   description = "Example 5: Filters for 'accessory' items and returns only their names."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select(.tags[] == \"accessory\") | .name]")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select(.tags[] == \"accessory\") | .name]")
 }
 
 # ===================================================================
@@ -74,7 +74,7 @@ output "comprehensive_create_object" {
   description = "Example 6: Creates a custom stock report object."
   value = provider::pyvider::lens_jq(
     local.comprehensive_sample_data_for_func,
-    "{ report_date: .last_updated, inventory: [ .items[] | { item: .name, quantity: .stock, is_electronic: (.tags[] | contains(\"electronics\")) } ] }"
+    "{ report_date: .last_updated, inventory: [ .comprehensive_items[] | { item: .name, quantity: .stock, is_electronic: (.tags[] | contains(\"electronics\")) } ] }"
   )
 }
 
@@ -83,7 +83,7 @@ output "comprehensive_create_object" {
 # ===================================================================
 output "comprehensive_complex_filter" {
   description = "Example 7: Finds items on sale with stock less than 20."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select((.tags[] == \"sale\") and .stock < 20)]")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select((.tags[] == \"sale\") and .stock < 20)]")
 }
 
 # ===================================================================

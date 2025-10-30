@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -74,5 +74,6 @@ def test_schema_rejects_configs_with_wrong_types(config):
     """
     with pytest.raises(CtyValidationError):
         validator.validate(config)
+
 
 # 🧩🔧🔚

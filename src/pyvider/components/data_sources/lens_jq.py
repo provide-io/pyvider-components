@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -10,7 +10,6 @@ from typing import Any, cast
 
 from attrs import define
 
-from provide.foundation import logger
 from pyvider.conversion import cty_to_native
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -68,16 +67,15 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
             raise DataSourceError(f"Invalid JSON in 'json_input': {e}") from e
 
         try:
-            
-            
             result_cty_value = lens.jq(config.query, parsed_json)
-            
+
             native_result = cty_to_native(result_cty_value)
-            
+
             return LensJqState(
                 json_input=config.json_input, query=config.query, result=native_result
             )
         except Exception as e:
             raise DataSourceError(f"Error processing jq query: {e}") from e
+
 
 # 🧩🔧🔚

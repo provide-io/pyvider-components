@@ -44,12 +44,12 @@ locals {
 locals {
   comprehensive_users = [
     { comprehensive_name = "Alice", active = true },
-    { name = "Bob", active = false },
-    { name = "Carol", active = true }
+    { comprehensive_name = "Bob", active = false },
+    { comprehensive_name = "Carol", active = true }
   ]
 
   active_users = provider::pyvider::lens_jq(local.comprehensive_users, "map(select(.active == true))")
-  user_names   = provider::pyvider::lens_jq(local.comprehensive_users, "map(.name)")
+  user_names   = provider::pyvider::lens_jq(local.comprehensive_users, "map(.comprehensive_name)")
 }
 
 # Output the results

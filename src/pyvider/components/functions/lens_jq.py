@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -18,9 +18,6 @@ from ..capabilities.lens import LensCapability
 @register_function(name="lens_jq", component_of="lens")
 def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
     """Applies a jq query and returns a native Python object."""
-    from provide.foundation import logger
-
-    
 
     if not lens.is_enabled:
         raise FunctionError(
@@ -38,16 +35,13 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
         # Assume it's already native Python data
         native_input_data = input_data
 
-    
-    
     try:
-        
         result_cty = lens.jq(query, native_input_data)
-        
+
         result = cty_to_native(result_cty)
         return result
     except Exception:
-        
         raise
+
 
 # 🧩🔧🔚

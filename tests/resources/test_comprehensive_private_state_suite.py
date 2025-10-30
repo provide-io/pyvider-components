@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -198,6 +198,7 @@ class TestPrivateStateEncryption(FoundationTestCase):
     async def test_decryption_invalid_data_fails(self, encryption_key_env):
         """Test that decrypting invalid data raises an error"""
         from pyvider.common.encryption import EncryptionError
+
         with pytest.raises(EncryptionError, match="Ciphertext too short"):
             decrypt(b"invalid-ciphertext-data")
 
@@ -205,6 +206,7 @@ class TestPrivateStateEncryption(FoundationTestCase):
     async def test_decryption_too_short_fails(self, encryption_key_env):
         """Test that decrypting data too short to contain a nonce fails"""
         from pyvider.common.encryption import EncryptionError
+
         with pytest.raises(EncryptionError, match="Ciphertext too short"):
             decrypt(b"short")
 
@@ -496,9 +498,11 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
             pyvider.common.encryption._ENCRYPTION_KEY = None
             # Also clear the key cache to force re-derivation with new key
             from pyvider.common.encryption import clear_encryption_cache
+
             clear_encryption_cache()
 
             from pyvider.common.encryption import EncryptionError
+
             with pytest.raises(EncryptionError, match="Decryption failed"):
                 decrypt(encrypted)
 
@@ -584,5 +588,6 @@ class TestPrivateStatePerformance(FoundationTestCase):
             restored_dict = msgpack.unpackb(decrypted, raw=False)
             restored_state = MockPrivateState(**restored_dict)
             assert restored_state == test_states[i]
+
 
 # 🧩🔧🔚

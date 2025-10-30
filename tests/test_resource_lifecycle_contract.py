@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -86,5 +86,6 @@ class TestResourceLifecycleContract:
             planned_state.content_hash == hashlib.sha256(b"updated content").hexdigest()
         )
         assert planned_state.exists is True
+
 
 # 🧩🔧🔚

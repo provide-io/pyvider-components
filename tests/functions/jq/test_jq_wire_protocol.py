@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -57,5 +57,6 @@ class TestJqWireProtocol:
         assert result_cty.value.type.element_type.equal(CtyString())
         native_result = cty_to_native(result_cty)
         assert native_result == ["Dr. Evelyn Reed", "Dr. Jian Chen", "Maria Rosa"]
+
 
 # 🧩🔧🔚

@@ -25,11 +25,11 @@ locals {
 locals {
   advanced_employees = [
     {
-      advanced_id = 1
-      advanced_name = "Alice Smith"
-      advanced_department = "Engineering"
-      advanced_salary = 95000
-      advanced_skills = ["Python", "Go", "Docker"]
+      id = 1
+      name = "Alice Smith"
+      department = "Engineering"
+      salary = 95000
+      skills = ["Python", "Go", "Docker"]
     },
     {
       id = 2
@@ -50,22 +50,22 @@ locals {
   # Filter and transform arrays
   engineers = provider::pyvider::lens_jq(
     local.advanced_employees,
-    '[.[] | select(.department == "Engineering")]'
+    "[.[] | select(.department == \"Engineering\")]"
   )
 
   high_earners = provider::pyvider::lens_jq(
     local.advanced_employees,
-    '[.[] | select(.salary > 80000) | {name, salary}]'
+    "[.[] | select(.salary > 80000) | {name, salary}]"
   )
 
   all_skills = provider::pyvider::lens_jq(
     local.advanced_employees,
-    '[.[].skills[]] | unique'
+    "[.[].skills[]] | unique"
   )
 
   avg_salary = provider::pyvider::lens_jq(
     local.advanced_employees,
-    '[.[].salary] | add / length'
+    "[.[].salary] | add / length"
   )
 }
 
@@ -91,13 +91,13 @@ locals {
           ]
         },
         {
-          id = "user2"
-          profile = {
-            firstName = "Jane"
-            lastName = "Smith"
-            settings = {
-              theme = "light"
-              notifications = false
+          advanced_id = "user2"
+          advanced_profile = {
+            advanced_firstName = "Jane"
+            advanced_lastName = "Smith"
+            advanced_settings = {
+              advanced_theme = "light"
+              advanced_notifications = false
             }
           }
           posts = [
@@ -112,23 +112,17 @@ locals {
   # Complex transformations
   user_summaries = provider::pyvider::lens_jq(
     local.advanced_api_response,
-    '.data.users | map({
-      id,
-      full_name: (.profile.firstName + " " + .profile.lastName),
-      theme: .profile.settings.theme,
-      total_likes: [.posts[].likes] | add,
-      post_count: (.posts | length)
-    })'
+    ".advanced_data.advanced_users | map({ id: .advanced_id, full_name: (.advanced_profile.advanced_firstName + \" \" + .advanced_profile.advanced_lastName), theme: .advanced_profile.advanced_settings.advanced_theme, total_likes: [.posts[].likes] | add, post_count: (.posts | length) })"
   )
 
   dark_theme_users = provider::pyvider::lens_jq(
     local.advanced_api_response,
-    '.data.users | map(select(.profile.settings.theme == "dark")) | map(.profile.firstName)'
+    "[.advanced_data.advanced_users[] | select(.advanced_profile.advanced_settings.advanced_theme == \"dark\") | .advanced_profile.advanced_firstName]"
   )
 
   popular_posts = provider::pyvider::lens_jq(
     local.advanced_api_response,
-    '.data.users[].posts[] | select(.likes > 10) | .title'
+    "[.advanced_data.advanced_users[].posts[] | select(.likes > 10) | .title]"
   )
 }
 

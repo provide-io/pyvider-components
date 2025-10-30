@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -13,7 +13,6 @@ This test suite verifies:
 5. The provider_testmode capability is properly registered"""
 
 import pytest
-from pyvider.hub import hub
 from pyvider.exceptions import DataSourceError, ResourceError, FunctionError
 from pyvider.protocols.tfprotov6.handlers.utils import check_test_only_access
 
@@ -48,12 +47,12 @@ class TestTestOnlyComponentsMarking:
             StructuredObjectDataSource,
         ]
         for ds_class in test_only_ds:
-            assert hasattr(
-                ds_class, "_is_test_only"
-            ), f"{ds_class.__name__} should have _is_test_only attribute"
-            assert (
-                ds_class._is_test_only is True
-            ), f"{ds_class.__name__}._is_test_only should be True"
+            assert hasattr(ds_class, "_is_test_only"), (
+                f"{ds_class.__name__} should have _is_test_only attribute"
+            )
+            assert ds_class._is_test_only is True, (
+                f"{ds_class.__name__}._is_test_only should be True"
+            )
 
     def test_test_only_resources_marked(self):
         """Test that all test-only resources have _is_test_only=True."""
@@ -62,12 +61,12 @@ class TestTestOnlyComponentsMarking:
             NestedResourceTest,
         ]
         for res_class in test_only_resources:
-            assert hasattr(
-                res_class, "_is_test_only"
-            ), f"{res_class.__name__} should have _is_test_only attribute"
-            assert (
-                res_class._is_test_only is True
-            ), f"{res_class.__name__}._is_test_only should be True"
+            assert hasattr(res_class, "_is_test_only"), (
+                f"{res_class.__name__} should have _is_test_only attribute"
+            )
+            assert res_class._is_test_only is True, (
+                f"{res_class.__name__}._is_test_only should be True"
+            )
 
     def test_production_data_sources_not_marked(self):
         """Test that production data sources do NOT have _is_test_only=True."""
@@ -78,9 +77,9 @@ class TestTestOnlyComponentsMarking:
         ]
         for ds_class in production_ds:
             is_test_only = getattr(ds_class, "_is_test_only", False)
-            assert (
-                is_test_only is False
-            ), f"{ds_class.__name__} should not be marked as test-only"
+            assert is_test_only is False, (
+                f"{ds_class.__name__} should not be marked as test-only"
+            )
 
     def test_production_resources_not_marked(self):
         """Test that production resources do NOT have _is_test_only=True."""
@@ -92,9 +91,9 @@ class TestTestOnlyComponentsMarking:
         ]
         for res_class in production_resources:
             is_test_only = getattr(res_class, "_is_test_only", False)
-            assert (
-                is_test_only is False
-            ), f"{res_class.__name__} should not be marked as test-only"
+            assert is_test_only is False, (
+                f"{res_class.__name__} should not be marked as test-only"
+            )
 
 
 class TestCheckTestOnlyAccess:
@@ -193,9 +192,9 @@ class TestTestOnlyComponentConsistency:
 
         for component in production_components:
             is_test_only = getattr(component, "_is_test_only", False)
-            assert (
-                is_test_only is False
-            ), f"Production component {component.__name__} should not be marked as test-only"
+            assert is_test_only is False, (
+                f"Production component {component.__name__} should not be marked as test-only"
+            )
 
 
 class TestTestModeScenarios:
@@ -234,5 +233,6 @@ class TestTestModeScenarios:
 
         # Note: This test may need adjustment based on actual hub registration
         # It's mainly here to document expected behavior
+
 
 # 🧩🔧🔚

@@ -9,7 +9,10 @@ import os
 import re
 from pathlib import Path
 
-SRC_DIR = Path("/Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components")
+SRC_DIR = Path(
+    "/Users/tim/code/gh/provide-io/pyvider-components/src/pyvider/components"
+)
+
 
 def find_plating_examples():
     """Find all .plating/examples directories."""
@@ -19,18 +22,20 @@ def find_plating_examples():
             plating_dirs.append(Path(root))
     return plating_dirs
 
+
 def get_local_vars(content):
     """Extract local variable names from a terraform file."""
-    locals_pattern = r'locals\s*\{([^}]*)\}'
+    locals_pattern = r"locals\s*\{([^}]*)\}"
     local_vars = set()
 
     for match in re.finditer(locals_pattern, content, re.DOTALL):
         block = match.group(1)
         # Find variable definitions
-        for var_match in re.finditer(r'^\s*(\w+)\s*=', block, re.MULTILINE):
+        for var_match in re.finditer(r"^\s*(\w+)\s*=", block, re.MULTILINE):
             local_vars.add(var_match.group(1))
 
     return local_vars
+
 
 def get_output_names(content):
     """Extract output names from a terraform file."""
@@ -42,38 +47,36 @@ def get_output_names(content):
 
     return outputs
 
+
 def rename_variables_in_content(content, old_name, new_name):
     """Rename a variable throughout the content."""
     # Rename in locals block definitions
     content = re.sub(
-        r'(locals\s*\{[^}]*\b)' + re.escape(old_name) + r'(\s*=)',
-        r'\1' + new_name + r'\2',
+        r"(locals\s*\{[^}]*\b)" + re.escape(old_name) + r"(\s*=)",
+        r"\1" + new_name + r"\2",
         content,
-        flags=re.DOTALL
+        flags=re.DOTALL,
     )
 
     # Rename in local references
     content = re.sub(
-        r'\blocal\.' + re.escape(old_name) + r'\b',
-        f'local.{new_name}',
-        content
+        r"\blocal\." + re.escape(old_name) + r"\b", f"local.{new_name}", content
     )
 
     # Rename in output blocks
-    content = re.sub(
-        r'(output\s+")\w+(")',
-        r'\1' + new_name + r'\2',
-        content
-    )
+    content = re.sub(r'(output\s+")\w+(")', r"\1" + new_name + r"\2", content)
 
     return content
+
 
 def fix_example_directory(examples_dir):
     """Fix variable conflicts in an examples directory."""
     tf_files = list(examples_dir.glob("*.tf"))
 
     # Skip if only provider.tf or single example
-    non_provider_files = [f for f in tf_files if f.name not in ["provider.tf", "example.tf"]]
+    non_provider_files = [
+        f for f in tf_files if f.name not in ["provider.tf", "example.tf"]
+    ]
 
     if len(non_provider_files) <= 1:
         return
@@ -118,15 +121,14 @@ def fix_example_directory(examples_dir):
             new_name = prefix + out
             # Rename output
             content = re.sub(
-                r'output\s+"' + re.escape(out) + r'"',
-                f'output "{new_name}"',
-                content
+                r'output\s+"' + re.escape(out) + r'"', f'output "{new_name}"', content
             )
             modified = True
             print(f"    {tf_file.name}: output {out} -> {new_name}")
 
         if modified:
             tf_file.write_text(content)
+
 
 def main():
     print("Finding .plating/examples directories...")
@@ -136,9 +138,14 @@ def main():
     for examples_dir in plating_dirs:
         fix_example_directory(examples_dir)
 
-    print("\n✅ Variable prefixing complete! All variables now have file-based prefixes.")
+    print(
+        "\n✅ Variable prefixing complete! All variables now have file-based prefixes."
+    )
     print("\nNow regenerate examples with:")
-    print("  plating plate --generate-examples --examples-dir examples --component-type function --component-type data_source --component-type resource")
+    print(
+        "  plating plate --generate-examples --examples-dir examples --component-type function --component-type data_source --component-type resource"
+    )
+
 
 if __name__ == "__main__":
     main()

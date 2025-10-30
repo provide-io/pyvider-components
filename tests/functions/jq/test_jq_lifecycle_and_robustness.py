@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -73,5 +73,6 @@ class TestJqLifecycleAndRobustness:
         assert len(final_result["result"]) > 0
         assert "part_name" in final_result["result"][0]
         assert final_result["result"][0]["part_name"] == "Qubit Capacitor Array"
+
 
 # 🧩🔧🔚

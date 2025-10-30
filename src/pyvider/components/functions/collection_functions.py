@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -70,5 +70,6 @@ def lookup(map_to_search: dict[str, Any] | None, key: str, *defaults) -> Any:
     raise FunctionError(
         f'Invalid key for map lookup: key "{key}" does not exist in the map.'
     )
+
 
 # 🧩🔧🔚

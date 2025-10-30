@@ -26,6 +26,7 @@ SHARED_EXAMPLES = {
     "resource_calculations",
 }
 
+
 def cleanup_function_examples(examples_dir: Path):
     """
     Clean up function examples to remove incorrect duplicates.
@@ -58,8 +59,8 @@ def cleanup_function_examples(examples_dir: Path):
 
             # Decide if this example should be kept
             should_keep = (
-                example_name == function_name or  # Function's own example
-                example_name in SHARED_EXAMPLES    # Shared multi-function example
+                example_name == function_name  # Function's own example
+                or example_name in SHARED_EXAMPLES  # Shared multi-function example
             )
 
             if should_keep:
@@ -85,11 +86,18 @@ async def build_docs_and_examples(overwrite: bool = False):
     api = Plating(context, "pyvider.components")
     result = await api.plate()
 
-
     # Generate examples (use CLI for this since it has the flag)
     import subprocess
-    cmd = ["plating", "plate", "--provider-name", "pyvider",
-           "--package-name", "pyvider.components", "--generate-examples"]
+
+    cmd = [
+        "plating",
+        "plate",
+        "--provider-name",
+        "pyvider",
+        "--package-name",
+        "pyvider.components",
+        "--generate-examples",
+    ]
     subprocess.run(cmd, check=True)
 
     # Clean up function examples
@@ -98,8 +106,10 @@ async def build_docs_and_examples(overwrite: bool = False):
 
     pout("\n✨ Build complete!")
 
+
 if __name__ == "__main__":
     import sys
+
     overwrite = "--overwrite" in sys.argv
     asyncio.run(build_docs_and_examples(overwrite=overwrite))
 

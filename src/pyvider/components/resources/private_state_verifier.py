@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -76,5 +76,6 @@ class PrivateStateVerifierResource(BaseResource):
 
     async def _delete_apply(self, ctx: ResourceContext) -> None:
         pass
+
 
 # 🧩🔧🔚

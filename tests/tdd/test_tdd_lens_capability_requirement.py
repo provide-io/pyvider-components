@@ -1,4 +1,4 @@
-# 
+#
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -63,5 +63,6 @@ class TestTddLensCapabilityRequirement:
         enabled_lens_cap.jq = MagicMock()
         lens_jq(input_data={"a": 1}, query=".a", lens=enabled_lens_cap)
         enabled_lens_cap.jq.assert_called_once_with(".a", {"a": 1})
+
 
 # 🧩🔧🔚
