@@ -1,6 +1,59 @@
 # Pyvider Components
 
-This repository provides a standard set of components for the [Pyvider](https://github.com/provide-io/pyvider) framework, a Python-based framework for building Terraform providers.
+This repository provides a standard set of **example** components for the [Pyvider](https://github.com/provide-io/pyvider) framework, a Python-based framework for building Terraform providers.
+
+## What is pyvider-components?
+
+**pyvider-components is a learning and reference library** that demonstrates how to build Terraform provider components using the Pyvider framework. It contains 100+ working examples of resources, data sources, and functions that you can:
+
+- 📚 **Learn from** - See real-world examples of Pyvider components
+- 🔍 **Reference** - Use as templates for your own providers
+- 🧪 **Test with** - Try out Pyvider features without writing code
+- 🏗️ **Build on** - Fork and customize for your needs
+
+**Note:** This is primarily an **example/learning library**, not a production provider. For production use, the [terraform-provider-pyvider](#relationship-to-terraform-provider-pyvider) packages these components into a deployable provider.
+
+## Relationship to terraform-provider-pyvider
+
+```
+┌─────────────────────────┐
+│   pyvider (framework)   │  ← Core framework for building providers
+└───────────┬─────────────┘
+            │
+            ├─────────────────────────────────────┐
+            │                                     │
+┌───────────▼─────────────┐     ┌───────────────▼──────────────┐
+│   pyvider-components    │────▶│  terraform-provider-pyvider  │
+│   (example library)     │     │  (production provider)       │
+│                         │     │                              │
+│  • Learning resources   │     │  • Uses components from ←    │
+│  • Reference examples   │     │  • Packaged & tested         │
+│  • 100+ demonstrations  │     │  • Production-ready          │
+└─────────────────────────┘     └──────────────────────────────┘
+```
+
+**Key Difference:**
+- **pyvider-components**: Learn how to build components (this repo)
+- **terraform-provider-pyvider**: Use components in production ([terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider))
+
+### When to use pyvider-components
+
+Use this repository when you want to:
+
+✅ Learn how to build Pyvider providers
+✅ See working examples of resources, data sources, and functions
+✅ Experiment with Pyvider features
+✅ Reference implementation patterns
+✅ Build your own custom provider
+
+### When to use terraform-provider-pyvider
+
+Use the provider when you want to:
+
+✅ Use utility resources/data sources in production Terraform
+✅ Access provider functions in your configurations
+✅ Follow a getting started tutorial
+✅ Deploy with Terraform registry compatibility
 
 ## Getting Started
 
