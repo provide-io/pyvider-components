@@ -2,34 +2,34 @@
 
 # Example 1: Basic JSON data extraction
 locals {
-  user_data = {
-    name = "John Doe"
-    age  = 30
-    email = "john.doe@example.com"
-    address = {
-      street = "123 Main St"
-      city   = "Anytown"
-      state  = "CA"
-      zip    = "12345"
+  advanced_user_data = {
+    advanced_name = "John Doe"
+    advanced_age  = 30
+    advanced_email = "john.doe@example.com"
+    advanced_address = {
+      advanced_street = "123 Main St"
+      advanced_city   = "Anytown"
+      advanced_state  = "CA"
+      advanced_zip    = "12345"
     }
     hobbies = ["reading", "hiking", "coding"]
   }
 
   # Extract specific fields
-  user_name = provider::pyvider::lens_jq(local.user_data, ".name")
-  user_city = provider::pyvider::lens_jq(local.user_data, ".address.city")
-  hobby_count = provider::pyvider::lens_jq(local.user_data, ".hobbies | length")
+  user_name = provider::pyvider::lens_jq(local.advanced_user_data, ".name")
+  user_city = provider::pyvider::lens_jq(local.advanced_user_data, ".address.city")
+  hobby_count = provider::pyvider::lens_jq(local.advanced_user_data, ".hobbies | length")
 }
 
 # Example 2: Array manipulation and filtering
 locals {
-  employees = [
+  advanced_employees = [
     {
-      id = 1
-      name = "Alice Smith"
-      department = "Engineering"
-      salary = 95000
-      skills = ["Python", "Go", "Docker"]
+      advanced_id = 1
+      advanced_name = "Alice Smith"
+      advanced_department = "Engineering"
+      advanced_salary = 95000
+      advanced_skills = ["Python", "Go", "Docker"]
     },
     {
       id = 2
@@ -49,40 +49,40 @@ locals {
 
   # Filter and transform arrays
   engineers = provider::pyvider::lens_jq(
-    local.employees,
+    local.advanced_employees,
     '[.[] | select(.department == "Engineering")]'
   )
 
   high_earners = provider::pyvider::lens_jq(
-    local.employees,
+    local.advanced_employees,
     '[.[] | select(.salary > 80000) | {name, salary}]'
   )
 
   all_skills = provider::pyvider::lens_jq(
-    local.employees,
+    local.advanced_employees,
     '[.[].skills[]] | unique'
   )
 
   avg_salary = provider::pyvider::lens_jq(
-    local.employees,
+    local.advanced_employees,
     '[.[].salary] | add / length'
   )
 }
 
 # Example 3: Complex data transformation
 locals {
-  api_response = {
-    status = "success"
-    data = {
-      users = [
+  advanced_api_response = {
+    advanced_status = "success"
+    advanced_data = {
+      advanced_users = [
         {
-          id = "user1"
-          profile = {
-            firstName = "John"
-            lastName = "Doe"
-            settings = {
-              theme = "dark"
-              notifications = true
+          advanced_id = "user1"
+          advanced_profile = {
+            advanced_firstName = "John"
+            advanced_lastName = "Doe"
+            advanced_settings = {
+              advanced_theme = "dark"
+              advanced_notifications = true
             }
           }
           posts = [
@@ -111,7 +111,7 @@ locals {
 
   # Complex transformations
   user_summaries = provider::pyvider::lens_jq(
-    local.api_response,
+    local.advanced_api_response,
     '.data.users | map({
       id,
       full_name: (.profile.firstName + " " + .profile.lastName),
@@ -122,17 +122,17 @@ locals {
   )
 
   dark_theme_users = provider::pyvider::lens_jq(
-    local.api_response,
+    local.advanced_api_response,
     '.data.users | map(select(.profile.settings.theme == "dark")) | map(.profile.firstName)'
   )
 
   popular_posts = provider::pyvider::lens_jq(
-    local.api_response,
+    local.advanced_api_response,
     '.data.users[].posts[] | select(.likes > 10) | .title'
   )
 }
 
-output "lens_jq_examples_results" {
+output "advanced_user_data" {
   description = "Results from various JQ transformation examples"
   value = {
     basic_operations = {

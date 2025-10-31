@@ -9,13 +9,13 @@ resource "pyvider_local_directory" "secure_dir" {
   permissions = "0o700" # Only owner can read/write/execute.
 }
 
-output "directory_paths" {
+output "basic_directory_paths" {
   value = {
     basic  = pyvider_local_directory.basic_dir.path
     secure = pyvider_local_directory.secure_dir.path
   }
 }
 
-output "secure_dir_permissions" {
+output "basic_secure_dir_permissions" {
   value = pyvider_local_directory.secure_dir.permissions
 }

@@ -5,7 +5,7 @@ variable "environment" {
 }
 
 locals {
-  db_host = var.environment == "production" ? "prod.db.example.com" : "dev.db.example.com"
+  advanced_db_host = var.environment == "production" ? "prod.db.example.com" : "dev.db.example.com"
 }
 
 resource "pyvider_file_content" "json_config" {
@@ -15,13 +15,13 @@ resource "pyvider_file_content" "json_config" {
     version  = "1.0.0"
     debug    = var.environment != "production"
     database = {
-      host = local.db_host
+      host = local.advanced_db_host
       port = 5432
     }
   })
 }
 
-output "json_config_hash" {
+output "advanced_db_host" {
   description = "Hash of the generated JSON configuration file."
   value       = pyvider_file_content.json_config.content_hash
 }

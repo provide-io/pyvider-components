@@ -32,7 +32,7 @@ resource "pyvider_file_content" "ci_config" {
   ], "\n")
 }
 
-output "ci_tokens" {
+output "cicd_ci_tokens" {
   value = {
     deploy_token_expires = pyvider_timed_token.ci_deploy_token.expires_at
     test_token_expires = pyvider_timed_token.test_runner_token.expires_at

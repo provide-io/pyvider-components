@@ -9,7 +9,7 @@ data "pyvider_lens_jq" "example" {
   query = ".user.name"
 }
 
-output "extracted_name" {
+output "basic_extracted_name" {
   description = "The name extracted from the JSON input."
   value       = data.pyvider_lens_jq.example.result
 }
