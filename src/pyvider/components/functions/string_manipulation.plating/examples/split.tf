@@ -1,9 +1,9 @@
 locals {
-  csv_data = "apple,banana,cherry"
-  split_by_comma = provider::pyvider::split(local.csv_data, ",")
+  split_csv_data = "apple,banana,cherry"
+  split_by_comma = provider::pyvider::split(",", local.split_csv_data)
   # ["apple", "banana", "cherry"]
 }
 
-output "split_example" {
+output "split_results" {
   value = local.split_by_comma
 }

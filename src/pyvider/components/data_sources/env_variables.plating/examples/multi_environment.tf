@@ -21,7 +21,7 @@ data "pyvider_env_variables" "app_common" {
 
 locals {
   # Environment-specific configuration with fallbacks
-  database_url = lookup(
+  multi_environment_database_url = lookup(
     data.pyvider_env_variables.env_config.values,
     "${upper(var.environment)}_DATABASE_URL",
     "postgres://localhost/${var.environment}"
@@ -40,10 +40,10 @@ locals {
   )
 }
 
-output "environment_config" {
+output "multi_environment_database_url" {
   value = {
     environment = var.environment
-    database_url = local.database_url
+    database_url = local.multi_environment_database_url
     api_url = local.api_url
     log_level = local.log_level
   }

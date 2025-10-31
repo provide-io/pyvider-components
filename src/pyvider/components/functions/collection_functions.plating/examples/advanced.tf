@@ -2,12 +2,12 @@
 
 # Cascading defaults with lookup
 locals {
-  user_config = {
+  advanced_user_config = {
     theme = "dark"
     language = "en"
   }
 
-  default_config = {
+  advanced_default_config = {
     theme = "light"
     language = "en"
     timezone = "UTC"
@@ -15,44 +15,44 @@ locals {
   }
 
   # Lookup with cascading defaults
-  final_theme = provider::pyvider::lookup(
-    local.user_config,
+  advanced_final_theme = provider::pyvider::lookup(
+    local.advanced_user_config,
     "theme",
-    provider::pyvider::lookup(local.default_config, "theme", "light")
+    provider::pyvider::lookup(local.advanced_default_config, "theme", "light")
   )
 
-  final_timezone = provider::pyvider::lookup(
-    local.user_config,
+  advanced_final_timezone = provider::pyvider::lookup(
+    local.advanced_user_config,
     "timezone",
-    provider::pyvider::lookup(local.default_config, "timezone", "UTC")
+    provider::pyvider::lookup(local.advanced_default_config, "timezone", "UTC")
   )
 }
 
 # Feature flag checking
 locals {
-  enabled_features = ["api_v2", "new_ui", "advanced_search"]
+  advanced_enabled_features = ["api_v2", "new_ui", "advanced_search"]
 
   # Check if features are enabled
-  api_v2_enabled = provider::pyvider::contains(local.enabled_features, "api_v2")
-  beta_enabled = provider::pyvider::contains(local.enabled_features, "beta_features")
+  advanced_api_v2_enabled = provider::pyvider::contains(local.advanced_enabled_features, "api_v2")
+  advanced_beta_enabled = provider::pyvider::contains(local.advanced_enabled_features, "beta_features")
 
   # Conditional logic based on contains
-  api_endpoint = local.api_v2_enabled ? "/api/v2" : "/api/v1"
+  advanced_api_endpoint = local.advanced_api_v2_enabled ? "/api/v2" : "/api/v1"
 }
 
 # Length-based conditional logic
 locals {
-  validation_errors = []  # Would be populated by validation
+  advanced_validation_errors = []  # Would be populated by validation
 
-  has_errors = provider::pyvider::length(local.validation_errors) > 0
-  error_count = provider::pyvider::length(local.validation_errors)
+  advanced_has_errors = provider::pyvider::length(local.advanced_validation_errors) > 0
+  advanced_error_count = provider::pyvider::length(local.advanced_validation_errors)
 
-  status = local.has_errors ? "invalid" : "valid"
+  advanced_status = local.advanced_has_errors ? "invalid" : "valid"
 }
 
 # Nested map lookups
 locals {
-  config_tree = {
+  advanced_config_tree = {
     database = {
       primary = {
         host = "db1.example.com"
@@ -72,41 +72,41 @@ locals {
   }
 
   # Safe nested lookups
-  db_config = provider::pyvider::lookup(local.config_tree, "database", {})
-  primary_db = provider::pyvider::lookup(local.db_config, "primary", {})
-  db_host = provider::pyvider::lookup(local.primary_db, "host", "localhost")
+  advanced_db_config = provider::pyvider::lookup(local.advanced_config_tree, "database", {})
+  advanced_primary_db = provider::pyvider::lookup(local.advanced_db_config, "primary", {})
+  advanced_db_host = provider::pyvider::lookup(local.advanced_primary_db, "host", "localhost")
 }
 
 # Collection size validation
 locals {
-  required_fields = ["name", "email", "role"]
-  provided_fields = ["name", "email"]
+  advanced_required_fields = ["name", "email", "role"]
+  advanced_provided_fields = ["name", "email"]
 
-  all_required_present = provider::pyvider::length(local.required_fields) == provider::pyvider::length([
-    for field in local.required_fields :
-    field if provider::pyvider::contains(local.provided_fields, field)
+  advanced_all_required_present = provider::pyvider::length(local.advanced_required_fields) == provider::pyvider::length([
+    for field in local.advanced_required_fields :
+    field if provider::pyvider::contains(local.advanced_provided_fields, field)
   ])
 }
 
-output "advanced_collection_results" {
+output "advanced_results" {
   value = {
     configuration = {
-      theme = local.final_theme
-      timezone = local.final_timezone
+      theme = local.advanced_final_theme
+      timezone = local.advanced_final_timezone
     }
     features = {
-      api_v2 = local.api_v2_enabled
-      beta = local.beta_enabled
-      endpoint = local.api_endpoint
+      api_v2 = local.advanced_api_v2_enabled
+      beta = local.advanced_beta_enabled
+      endpoint = local.advanced_api_endpoint
     }
     validation = {
-      has_errors = local.has_errors
-      error_count = local.error_count
-      status = local.status
-      all_required = local.all_required_present
+      has_errors = local.advanced_has_errors
+      error_count = local.advanced_error_count
+      status = local.advanced_status
+      all_required = local.advanced_all_required_present
     }
     nested_config = {
-      db_host = local.db_host
+      db_host = local.advanced_db_host
     }
   }
 }

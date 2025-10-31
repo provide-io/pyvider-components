@@ -55,7 +55,7 @@ resource "pyvider_file_content" "token_summary" {
   ])
 }
 
-output "basic_token_examples" {
+output "comprehensive_basic_token_examples" {
   description = "Information about created tokens (sensitive values excluded)"
   sensitive   = true
   value = {

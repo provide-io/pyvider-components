@@ -6,12 +6,12 @@ data "pyvider_http_api" "example" {
   }
 }
 
-output "api_response_status" {
+output "basic_api_response_status" {
   description = "The HTTP status code of the API response."
   value       = data.pyvider_http_api.example.status_code
 }
 
-output "api_response_body_preview" {
+output "basic_api_response_body_preview" {
   description = "A preview of the response body."
   value       = substr(data.pyvider_http_api.example.response_body, 0, 100)
 }

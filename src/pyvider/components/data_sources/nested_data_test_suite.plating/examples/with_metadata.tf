@@ -8,12 +8,12 @@ data "pyvider_structured_object_test" "with_metadata" {
   }
 }
 
-output "settings" {
+output "with_metadata_settings" {
   description = "Processed settings from metadata"
   value       = data.pyvider_structured_object_test.with_metadata.generated_config.settings
 }
 
-output "config_hash" {
+output "with_metadata_config_hash" {
   description = "Hash of the configuration name"
   value       = data.pyvider_structured_object_test.with_metadata.summary.config_hash
 }

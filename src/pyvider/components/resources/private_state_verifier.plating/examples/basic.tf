@@ -3,7 +3,7 @@ resource "pyvider_private_state_verifier" "test" {
   input_value = "sensitive-data"
 }
 
-output "verification" {
+output "basic_verification" {
   value = {
     verified      = pyvider_private_state_verifier.test.verification_successful
     hash_length   = pyvider_private_state_verifier.test.output_hash_length

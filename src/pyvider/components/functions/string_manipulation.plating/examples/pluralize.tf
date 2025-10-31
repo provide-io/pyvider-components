@@ -1,14 +1,14 @@
 locals {
-  item = "apple"
-  singular = provider::pyvider::pluralize(local.item, 1)  # "apple"
-  plural = provider::pyvider::pluralize(local.item, 2)    # "apples"
-  custom = provider::pyvider::pluralize("person", 2, "people")  # "people"
+  pluralize_item = "apple"
+  pluralize_singular = provider::pyvider::pluralize(local.pluralize_item, 1)  # "apple"
+  pluralize_plural = provider::pyvider::pluralize(local.pluralize_item, 2)    # "apples"
+  pluralize_custom = provider::pyvider::pluralize("person", 2, "people")  # "people"
 }
 
-output "pluralize_example" {
+output "pluralize_plural" {
   value = {
-    singular = local.singular
-    plural   = local.plural
-    custom   = local.custom
+    singular = local.pluralize_singular
+    plural   = local.pluralize_plural
+    custom   = local.pluralize_custom
   }
 }

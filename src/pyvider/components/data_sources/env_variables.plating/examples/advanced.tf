@@ -10,17 +10,17 @@ data "pyvider_env_variables" "api_config" {
   sensitive_keys = ["API_TOKEN"]
 }
 
-output "api_endpoint" {
+output "advanced_api_endpoint" {
   description = "The API endpoint URL."
   value       = data.pyvider_env_variables.api_config.values["API_URL"]
 }
 
-output "api_timeout" {
+output "advanced_api_timeout" {
   description = "The configured API timeout."
   value       = data.pyvider_env_variables.api_config.values["API_TIMEOUT"]
 }
 
-output "api_token_is_sensitive" {
+output "advanced_api_token_is_sensitive" {
   description = "Demonstrates that the token is in the sensitive_values map."
   value       = "The API token is present in the sensitive outputs."
   sensitive   = true
