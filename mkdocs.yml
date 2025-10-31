@@ -1,15 +1,15 @@
-# MkDocs Configuration
-# For a full reference, see https://www.mkdocs.org/user-guide/configuration/
-# For Material theme options, see https://squidfunk.github.io/mkdocs-material/
+# Inherit shared configuration from provide-foundry
+INHERIT: ../provide-foundry/base-mkdocs.yml
 
+# Project-Specific Configuration
 site_name: Pyvider Components
 site_description: 'Learning and reference library for Pyvider framework components'
 site_author: provide.io
 site_url: https://foundry.provide.io/pyvider-components/
-
 repo_url: https://github.com/provide-io/pyvider-components
 repo_name: provide-io/pyvider-components
 edit_uri: edit/main/docs/
+copyright: 'Copyright &copy; 2017 - 2025 Provide'
 
 # Development server configuration
 dev_addr: '127.0.0.1:8004'
@@ -17,34 +17,12 @@ dev_addr: '127.0.0.1:8004'
 # Standalone mode settings
 docs_dir: docs
 
-# Copyright
-copyright: 'Copyright &copy; 2017 - 2025 Provide'
-
-# Theme Configuration
+# Project-specific theme overrides
 theme:
-  name: material
   logo: assets/logo.svg
   favicon: assets/favicon.ico
-  language: en
-
-  # Features for a top-tier experience
-  features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.sections
-    - navigation.instant
-    - navigation.tracking
-    - navigation.top
-    - navigation.expand
-    - toc.integrate
-    - search.suggest
-    - search.highlight
-    - content.code.annotate
-    - content.tabs.link
-
-  # Color Palette (with light/dark mode toggle)
   palette:
-    # Palette toggle for light mode
+    # Light mode - custom colors for pyvider-components
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: indigo
@@ -52,8 +30,7 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-
-    # Palette toggle for dark mode
+    # Dark mode - custom colors for pyvider-components
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: blue
@@ -61,32 +38,6 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-
-# Plugins
-plugins:
-  - search
-
-# Markdown Extensions
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - toc:
-      permalink: true
-  - tables
 
 # Navigation Structure
 nav:
