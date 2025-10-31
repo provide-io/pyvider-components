@@ -21,7 +21,7 @@ resource "pyvider_file_content" "json_config" {
   })
 }
 
-output "advanced_db_host" {
+output "advanced_config_hash" {
   description = "Hash of the generated JSON configuration file."
   value       = pyvider_file_content.json_config.content_hash
 }
