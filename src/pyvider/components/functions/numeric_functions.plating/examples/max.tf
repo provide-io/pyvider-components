@@ -1,8 +1,8 @@
 locals {
-  numbers = [10, 5, 8, 2, 15]
-  result = provider::pyvider::max(local.numbers) # 15
+  max_numbers = [10, 5, 8, 2, 15]
+  max_result = provider::pyvider::max(local.max_numbers) # 15
 }
 
-output "max_example" {
-  value = local.result
+output "max_result" {
+  value = local.max_result
 }

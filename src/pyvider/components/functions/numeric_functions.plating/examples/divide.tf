@@ -1,7 +1,7 @@
 locals {
-  result = provider::pyvider::divide(12, 3) # 4
+  divide_result = provider::pyvider::divide(12, 3) # 4
 }
 
-output "divide_example" {
-  value = local.result
+output "divide_result" {
+  value = local.divide_result
 }

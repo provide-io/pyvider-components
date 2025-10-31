@@ -24,7 +24,7 @@ data "pyvider_file_info" "directory" {
 }
 
 # Output for existing file - shows all available metadata
-output "existing_file_info" {
+output "advanced_is_valid" {
   value = {
     path          = data.pyvider_file_info.existing_file.path
     exists        = data.pyvider_file_info.existing_file.exists
@@ -36,7 +36,7 @@ output "existing_file_info" {
 }
 
 # Output for non-existent file - useful for validation
-output "nonexistent_file_info" {
+output "advanced_is_valid" {
   value = {
     path   = data.pyvider_file_info.nonexistent_file.path
     exists = data.pyvider_file_info.nonexistent_file.exists
@@ -44,7 +44,7 @@ output "nonexistent_file_info" {
 }
 
 # Output for directory - distinguish between files and directories
-output "directory_info" {
+output "advanced_is_valid" {
   value = {
     path   = data.pyvider_file_info.directory.path
     exists = data.pyvider_file_info.directory.exists
@@ -61,13 +61,13 @@ resource "pyvider_file_content" "conditional_backup" {
 
 # Real-world pattern: Validation and error handling
 locals {
-  file_validation = {
-    is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
-    is_directory   = data.pyvider_file_info.directory.is_dir
-    file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
+  advanced_file_validation = {
+    advanced_is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
+    advanced_is_directory   = data.pyvider_file_info.directory.is_dir
+    advanced_file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
   }
 }
 
-output "validation_results" {
-  value = local.file_validation
+output "advanced_is_valid" {
+  value = local.advanced_file_validation
 }

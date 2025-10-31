@@ -1,9 +1,9 @@
 locals {
-  text = "hello world"
-  replaced = provider::pyvider::replace(local.text, "world", "earth")
+  replace_replace_text = "hello world"
+  replace_replaced = provider::pyvider::replace(local.replace_replace_text, "world", "earth")
   # "hello earth"
 }
 
-output "replace_example" {
-  value = local.replaced
+output "replace_replaced" {
+  value = local.replace_replaced
 }
