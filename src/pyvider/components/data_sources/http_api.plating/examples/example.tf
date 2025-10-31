@@ -1,5 +1,5 @@
 data "pyvider_http_api" "example" {
-  # Configuration options here
+  url = "https://httpbin.org/get"
 }
 
 output "example_data" {
