@@ -8,9 +8,9 @@ locals {
     comprehensive_email = "alice@example.com"
   }
 
-  user_name  = provider::pyvider::lens_jq(local.comprehensive_user_data, ".name")
-  user_email = provider::pyvider::lens_jq(local.comprehensive_user_data, ".email")
-  user_id    = provider::pyvider::lens_jq(local.comprehensive_user_data, ".id")
+  comprehensive_user_name  = provider::pyvider::lens_jq(local.comprehensive_user_data, ".name")
+  comprehensive_user_email = provider::pyvider::lens_jq(local.comprehensive_user_data, ".email")
+  comprehensive_user_id    = provider::pyvider::lens_jq(local.comprehensive_user_data, ".id")
 }
 
 # Example 2: Array operations
@@ -56,9 +56,9 @@ locals {
 output "comprehensive_first_color" {
   value = {
     user_extraction = {
-      name  = local.user_name
-      email = local.user_email
-      id    = local.user_id
+      name  = local.comprehensive_user_name
+      email = local.comprehensive_user_email
+      id    = local.comprehensive_user_id
     }
     array_operations = {
       first = local.comprehensive_first_color

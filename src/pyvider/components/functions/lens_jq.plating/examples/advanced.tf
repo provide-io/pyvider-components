@@ -16,9 +16,9 @@ locals {
   }
 
   # Extract specific fields
-  user_name = provider::pyvider::lens_jq(local.advanced_user_data, ".name")
-  user_city = provider::pyvider::lens_jq(local.advanced_user_data, ".address.city")
-  hobby_count = provider::pyvider::lens_jq(local.advanced_user_data, ".hobbies | length")
+  advanced_user_name = provider::pyvider::lens_jq(local.advanced_user_data, ".name")
+  advanced_user_city = provider::pyvider::lens_jq(local.advanced_user_data, ".address.city")
+  advanced_hobby_count = provider::pyvider::lens_jq(local.advanced_user_data, ".hobbies | length")
 }
 
 # Example 2: Array manipulation and filtering
@@ -136,9 +136,9 @@ output "advanced_user_data" {
   description = "Results from various JQ transformation examples"
   value = {
     basic_operations = {
-      user_name = local.user_name
-      user_city = local.user_city
-      hobby_count = local.hobby_count
+      user_name = local.advanced_user_name
+      user_city = local.advanced_user_city
+      hobby_count = local.advanced_hobby_count
     }
 
     array_processing = {

@@ -56,7 +56,7 @@ output "comprehensive_array_projection" {
 # ===================================================================
 output "comprehensive_array_filtering" {
   description = "Example 4: Filters for items tagged as 'accessory'."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".items[] | select(.tags[] == \"accessory\")")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select(.tags[] == \"accessory\")]")
 }
 
 # ===================================================================
@@ -64,7 +64,7 @@ output "comprehensive_array_filtering" {
 # ===================================================================
 output "comprehensive_filter_and_project" {
   description = "Example 5: Filters for 'accessory' items and returns only their names."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".items[] | select(.tags[] == \"accessory\") | .name")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select(.tags[] == \"accessory\") | .name]")
 }
 
 # ===================================================================
@@ -83,7 +83,7 @@ output "comprehensive_create_object" {
 # ===================================================================
 output "comprehensive_complex_filter" {
   description = "Example 7: Finds items on sale with stock less than 20."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".items[] | select((.tags[] == \"sale\") and .stock < 20)")
+  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.items[] | select((.tags[] == \"sale\") and .stock < 20)]")
 }
 
 # ===================================================================
