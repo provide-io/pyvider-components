@@ -24,7 +24,7 @@ data "pyvider_file_info" "directory" {
 }
 
 # Output for existing file - shows all available metadata
-output "advanced_is_valid" {
+output "advanced_existing_file_info" {
   value = {
     path          = data.pyvider_file_info.existing_file.path
     exists        = data.pyvider_file_info.existing_file.exists
@@ -36,7 +36,7 @@ output "advanced_is_valid" {
 }
 
 # Output for non-existent file - useful for validation
-output "advanced_is_valid" {
+output "advanced_nonexistent_file_info" {
   value = {
     path   = data.pyvider_file_info.nonexistent_file.path
     exists = data.pyvider_file_info.nonexistent_file.exists
@@ -44,7 +44,7 @@ output "advanced_is_valid" {
 }
 
 # Output for directory - distinguish between files and directories
-output "advanced_is_valid" {
+output "advanced_directory_info" {
   value = {
     path   = data.pyvider_file_info.directory.path
     exists = data.pyvider_file_info.directory.exists
@@ -68,6 +68,6 @@ locals {
   }
 }
 
-output "advanced_is_valid" {
+output "advanced_validation_summary" {
   value = local.advanced_file_validation
 }
