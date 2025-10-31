@@ -78,8 +78,29 @@ data "pyvider_http_api" "user_profile" {
 
 # Get posts for the user (using data from first call)
 locals {
-  advanced_user_data = can(jsondecode(data.pyvider_http_api.user_profile.response_body)) ?
-    jsondecode(data.pyvider_http_api.user_profile.response_body) : { id = 1 }
+  advanced_user_data = try(jsondecode(data.pyvider_http_api.user_profile.response_body), {
+    id       = 1
+    name     = "Unknown"
+    username = "unknown"
+    email    = "unknown@example.com"
+    address = {
+      street  = ""
+      suite   = ""
+      city    = ""
+      zipcode = ""
+      geo = {
+        lat = ""
+        lng = ""
+      }
+    }
+    phone   = ""
+    website = ""
+    company = {
+      name        = ""
+      catchPhrase = ""
+      bs          = ""
+    }
+  })
 }
 
 data "pyvider_http_api" "user_posts" {
@@ -102,11 +123,9 @@ data "pyvider_http_api" "unauthorized" {
 # Process responses and handle different scenarios
 locals {
   # Parse successful responses
-  advanced_post_response = can(jsondecode(data.pyvider_http_api.post_json.response_body)) ?
-    jsondecode(data.pyvider_http_api.post_json.response_body) : {}
+  advanced_post_response = try(jsondecode(data.pyvider_http_api.post_json.response_body), {})
 
-  user_posts = can(jsondecode(data.pyvider_http_api.user_posts.response_body)) ?
-    jsondecode(data.pyvider_http_api.user_posts.response_body) : []
+  user_posts = try(jsondecode(data.pyvider_http_api.user_posts.response_body), [])
 
   # Analyze response characteristics
   response_analysis = {
