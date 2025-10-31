@@ -52,13 +52,6 @@ output "advanced_directory_info" {
   }
 }
 
-# Real-world pattern: Conditional resource creation based on file existence
-resource "pyvider_file_content" "conditional_backup" {
-  count    = data.pyvider_file_info.existing_file.exists ? 1 : 0
-  filename = "${data.pyvider_file_info.existing_file.path}.backup"
-  content  = "Backup created because original file exists"
-}
-
 # Real-world pattern: Validation and error handling
 locals {
   advanced_file_validation = {

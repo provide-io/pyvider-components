@@ -47,6 +47,7 @@ class LensCapability(BaseCapability):
             return inferred_type.validate(final_raw_result)
         except Exception as e:
             logger.error(
+                "jq query execution failed",
                 error=str(e),
                 exc_info=True,
             )
