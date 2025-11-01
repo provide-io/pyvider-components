@@ -1,144 +1,121 @@
-# Flavor Makefile
-# Root-level build and test orchestration
+.PHONY: docs-clean docs-functions docs-resources docs-data-sources docs-all docs-serve docs-check test test-plating test-docs
 
-# Include shared documentation targets from provide-foundry
-include ../provide-foundry/Makefile.docs.inc
+# Variables
+DOCS_DIR = docs
+PLATING_DIR = ../plating
+# Set debug logging for all plating operations
+export PLATING_LOG_LEVEL = DEBUG
+export PROVIDE_LOG_LEVEL = DEBUG
 
-.PHONY: help
-help: ## Show this help message
-	@echo "Flavor Build System"
-	@echo "=================="
+# Clean all documentation
+docs-clean:
+	@echo "🧹 Cleaning documentation directory..."
+	rm -rf $(DOCS_DIR)/*
+	@echo "✅ Documentation directory cleaned"
+
+# Generate function documentation
+docs-functions:
+	@echo "📚 Generating function documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/functions --component-type function
+
+# Generate resource documentation
+docs-resources:
+	@echo "📦 Generating resource documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/resources --component-type resource
+
+# Generate data source documentation
+docs-data-sources:
+	@echo "📊 Generating data source documentation..."
+	@plating plate --output-dir $(DOCS_DIR)/data_sources --component-type data_source
+
+# Generate all documentation
+docs-all: docs-clean
+	@echo "🎉 Generating all documentation..."
+	@plating plate --output-dir $(DOCS_DIR) --component-type function --component-type resource --component-type data_source
+	@echo "✅ All documentation generated successfully!"
+	@echo "📁 Files generated:"
+	@find $(DOCS_DIR) -name "*.md" | wc -l | xargs echo "   Total files:"
+	@echo "📍 Location: $(PWD)/$(DOCS_DIR)"
+
+# Check what documentation was generated
+docs-check:
+	@echo "📋 Documentation files generated:"
+	@find $(DOCS_DIR) -name "*.md" | sort
 	@echo ""
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*?## "}; {printf "%-20s %s\n", $$1, $$2}'
+	@echo "📊 Summary:"
+	@echo "  Functions: $$(find $(DOCS_DIR)/functions -name "*.md" 2>/dev/null | wc -l)"
+	@echo "  Resources: $$(find $(DOCS_DIR)/resources -name "*.md" 2>/dev/null | wc -l)"
+	@echo "  Data Sources: $$(find $(DOCS_DIR)/data_sources -name "*.md" 2>/dev/null | wc -l)"
+	@echo "  Total: $$(find $(DOCS_DIR) -name "*.md" 2>/dev/null | wc -l)"
 
-.PHONY: test
-test: ## Run Python tests
-	uv run pytest tests/
+# Show sample content from generated docs
+docs-sample:
+	@echo "📖 Sample content from generated documentation:"
+	@for file in $$(find $(DOCS_DIR) -name "*.md" | head -3); do \
+		echo ""; \
+		echo "=== $$file ==="; \
+		head -15 "$$file"; \
+		echo "..."; \
+	done
 
-.PHONY: test-cov
-test-cov: ## Run Python tests with coverage
-	uv run pytest --cov=flavor --cov-report=term-missing --cov-report=html tests/
+# Test plating functionality
+test-plating:
+	@echo "🧪 Running plating tests..."
+	@cd $(PLATING_DIR) && python -m pytest -v
+	@echo "✅ Plating tests completed"
 
-.PHONY: test-cov-xml
-test-cov-xml: ## Run Python tests with XML coverage for CI
-	uv run pytest --cov=flavor --cov-report=xml --cov-report=term tests/
-
-# Mutation Testing (using mutmut directly)
-.PHONY: mutation-run
-mutation-run: ## Run mutation testing with mutmut
-	@echo "🧬 Running mutation testing..."
-	@mutmut run
-
-.PHONY: mutation-results
-mutation-results: ## Show mutation testing results
-	@mutmut results
-
-.PHONY: mutation-browse
-mutation-browse: ## Open interactive mutation browser
-	@mutmut browse
-
-.PHONY: mutation-clean
-mutation-clean: ## Clean mutation testing artifacts
-	@rm -rf .mutmut-cache html/
-	@echo "🧹 Mutation testing artifacts cleaned"
-
-.PHONY: build-helpers
-build-helpers: ## Build all helpers (Go and Rust)
-	./build.sh
-
-# PSPF Validation with Pretaster
-.PHONY: validate-pspf
-validate-pspf: ## Run PSPF compatibility tests with pretaster
-	@cd tests/pretaster && make test
-
-.PHONY: validate-pspf-full
-validate-pspf-full: ## Run full PSPF validation suite with pretaster
-	@cd tests/pretaster && make all
-
-.PHONY: validate-pspf-combo
-validate-pspf-combo: ## Test all builder/launcher combinations
-	@cd tests/pretaster && make combo-test
-
-.PHONY: validate-package
-validate-package: ## Validate a PSPF package (usage: make validate-package PACKAGE=path/to/package.psp)
-	@if [ -z "$(PACKAGE)" ]; then \
-		echo "Usage: make validate-package PACKAGE=path/to/package.psp"; \
+# Test documentation generation
+test-docs:
+	@echo "🧪 Testing documentation generation..."
+	@make docs-clean >/dev/null 2>&1
+	@make docs-functions >/dev/null 2>&1
+	@echo "📊 Verifying generated documentation:"
+	@if [ $$(find $(DOCS_DIR) -name "*.md" | wc -l) -eq 0 ]; then \
+		echo "❌ No documentation files generated"; \
+		exit 1; \
+	else \
+		echo "✅ Generated $$(find $(DOCS_DIR) -name "*.md" | wc -l) documentation files"; \
+	fi
+	@echo "🔍 Checking content quality:"
+	@if grep -q "signature_markdown" $(DOCS_DIR)/functions/*.md 2>/dev/null; then \
+		echo "❌ Found template variables in generated docs"; \
+		exit 1; \
+	else \
+		echo "✅ No template variables found in generated docs"; \
+	fi
+	@if grep -q "# Returns:" $(DOCS_DIR)/functions/*.md 2>/dev/null; then \
+		echo "✅ Found example usage in generated docs"; \
+	else \
+		echo "❌ No example usage found in generated docs"; \
 		exit 1; \
 	fi
-	@.github/scripts/validate-package-with-pretaster.sh "$(PACKAGE)"
+	@echo "✅ Documentation generation test passed"
 
-.PHONY: clean-cache
-clean-cache: ## Clean Flavor workenv cache
-	@cd tests/pretaster && make clean-cache
+# Run all tests
+test: test-plating test-docs
+	@echo "🎉 All tests passed successfully!"
 
-.PHONY: pretaster-logs
-pretaster-logs: ## Show pretaster test logs
-	@cd tests/pretaster && make show-logs
-
-# ==================== Release Management ====================
-
-.PHONY: wheel
-wheel: ## Build platform-specific wheel (usage: make wheel PLATFORM=darwin_arm64)
-	@if [ -z "$(PLATFORM)" ]; then \
-		echo "Usage: make wheel PLATFORM=darwin_arm64"; \
-		echo "Available platforms: darwin_arm64, darwin_amd64, linux_amd64, linux_arm64"; \
-		exit 1; \
-	fi
-	@python3 tools/build_wheel.py --platform $(PLATFORM)
-
-.PHONY: wheel-universal
-wheel-universal: ## Build universal wheel (no embedded helpers)
-	@python3 tools/build_wheel.py --platform universal
-
-.PHONY: release-all
-release-all: ## Build wheels for all platforms
-	@echo "🚀 Building release wheels for all platforms..."
-	@python3 tools/build_wheel.py --all
-
-.PHONY: release-validate
-release-validate: ## Validate all wheels in dist/
-	@python3 tools/validate_wheel.py --all
-
-.PHONY: release-validate-full
-release-validate-full: ## Full validation of all wheels (includes installation test)
-	@python3 tools/validate_wheel.py --all --full
-
-.PHONY: release-test
-release-test: ## Test release process locally
-	@echo "🧪 Testing release process..."
-	@# Build helpers first
-	@$(MAKE) build-helpers
-	@# Build a test wheel for current platform
-	@PLATFORM=$$(python3 -c "import platform; arch = platform.machine().lower(); arch = 'amd64' if arch == 'x86_64' else 'arm64' if arch in ['arm64', 'aarch64'] else arch; os = 'darwin' if platform.system() == 'Darwin' else 'linux' if platform.system() == 'Linux' else 'windows'; print(f'{os}_{arch}')") && \
-		echo "Testing with platform: $$PLATFORM" && \
-		python3 tools/build_wheel.py --platform $$PLATFORM
-	@# Validate the wheel
-	@python3 tools/validate_wheel.py --all --full
-
-.PHONY: release-clean
-release-clean: ## Clean release artifacts
-	@rm -rf dist/ build/ *.egg-info src/flavor.egg-info
-	@rm -rf dist/bin
-	@find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
-	@echo "✨ Release artifacts cleaned"
-
-.PHONY: release-upload
-release-upload: ## Upload wheels to PyPI (requires authentication)
-	@if [ -z "$$(ls -A dist/*.whl 2>/dev/null)" ]; then \
-		echo "❌ No wheels found in dist/"; \
-		echo "Run 'make release-all' first"; \
-		exit 1; \
-	fi
-	@echo "📤 Uploading to PyPI..."
-	@twine upload dist/*.whl
-
-.PHONY: release-upload-test
-release-upload-test: ## Upload wheels to TestPyPI for testing
-	@if [ -z "$$(ls -A dist/*.whl 2>/dev/null)" ]; then \
-		echo "❌ No wheels found in dist/"; \
-		echo "Run 'make release-all' first"; \
-		exit 1; \
-	fi
-	@echo "📤 Uploading to TestPyPI..."
-	@twine upload --repository testpypi dist/*.whl
+# Help
+help:
+	@echo "📚 Pyvider Components Documentation & Testing Commands"
+	@echo ""
+	@echo "Documentation targets:"
+	@echo "  docs-clean       - Clean documentation directory"
+	@echo "  docs-functions   - Generate function documentation"
+	@echo "  docs-resources   - Generate resource documentation"
+	@echo "  docs-data-sources- Generate data source documentation"
+	@echo "  docs-all         - Generate all documentation"
+	@echo "  docs-check       - Check what documentation was generated"
+	@echo "  docs-sample      - Show sample content from generated docs"
+	@echo ""
+	@echo "Testing targets:"
+	@echo "  test             - Run all tests (plating + docs)"
+	@echo "  test-plating     - Run plating unit tests"
+	@echo "  test-docs        - Test documentation generation"
+	@echo ""
+	@echo "  help             - Show this help message"
+	@echo ""
+	@echo "Example usage:"
+	@echo "  make docs-functions  # Generate individual function .md files"
+	@echo "  make test           # Run all tests"
+	@echo "  make test-docs      # Test doc generation works"
