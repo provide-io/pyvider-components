@@ -1,135 +1,68 @@
-# Python project gitignore
+# Environment
+.env
+.venv
+venv/
+env/
+# Project workenv directory (but not Rust source directories)
+/workenv/
+# Allow Rust workenv source modules
+!src/*/src/workenv/
+
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
+
+# Distribution
 build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
-MANIFEST
-pyvider_components.egg-info/
+.eggs/
 
-# Virtual environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-workenv/
-.workenv/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Testing
+# Test artifacts
 .pytest_cache/
 .coverage
 htmlcov/
-.tox/
-.hypothesis/
-*.cover
-coverage.xml
-*.cover
-.coverage.*
+reports/
 
-# Keys and certificates
-*.key
-*.crt
-*.pem
-keys/
+# IDE
+.idea/
+.vscode/
 
-# Logs
-*.log
-*.log.*
-logs/
-output/
-
-# Temporary files
-*.tmp
-*.temp
-/tmp/
-
-# Terraform / OpenTofu
-*.tfstate
-*.tfstate.*
-*.tfplan
-*.tfplan.*
-.terraform/
-.terraform.lock.hcl
-terraform.lock.hcl
-*.hcl.lock
-*.tfvars
-!*.auto.tfvars
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
-.terraformrc
-terraform.rc
-crash.log
-crash.*.log
-
-# Tofusoup / Testing
-.soup/
-*.soup/
-examples/*/output/
-examples/*/.soup/
-examples/*/.terraform/
-examples/*/.terraform.lock.hcl
-examples/*/terraform.tfstate*
-examples/*/crash.log
-examples/*/*.log
-
-# Garnish
-.garnish-tests/
-*.garnish/test-output/
-*.garnish/examples/*.tfstate*
-*.garnish/examples/.terraform/
-docs/generated/
-
-# Documentation (auto-generated)
-docs/data-sources/
-docs/data_sources/
-docs/functions/
-docs/resources/
-docs/generated*/
-generated/
-
-# Environment files
-env.sh
-*.env.sh
-.envrc
-
-# Flavor/PSP
-.psp/
+# Local Build Artifacts
+# Compiled helper binaries should not be version controlled.
+# They are built from source via `./build.sh`.
+dist/
+*.pspf
 *.psp
-workenv/*bfiles*
-examples/
+target/
+*code.sh
+
+# Test manifests (generated during testing)
+flavor-manifest.json
+tests/pretaster/pretaster-build-manifest.json
+tests/pretaster/test-runner.sh
+*bfile*
+.hypothesis
+*.whl
+# Build artifacts and binaries (but not Rust src/bin/ source directories)
+/bin/
+dist/bin/
+**/target/**/bin/
+# Allow Rust source directories
+!src/*/src/bin/
+core
+*.local.json
+archive_*
+
+# Mutation testing artifacts
+mutants/
+.mutmut-cache
+html/
+
+# Synced theme files (source: provide-foundry/shared-theme/)
+docs/.shared-theme/
+
+# MkDocs generated site
+site/
+bf-*.txt
