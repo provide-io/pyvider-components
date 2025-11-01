@@ -53,8 +53,8 @@ filterwarnings = [
 [project.entry-points.pyvider]
 pyvider-components = "pyvider.components"
 
-[tool.plating]
-provider_name = "pyvider"
+[pyvider]
+name = "pyvider"
 
 [dependency-groups]
 dev = [
