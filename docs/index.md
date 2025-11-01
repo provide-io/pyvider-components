@@ -1,203 +1,172 @@
-# Welcome to FlavorPack
+---
+page_title: "Pyvider Components"
+description: |-
+  Learning and reference library for Pyvider framework components
+---
 
-!!! warning "Alpha Software - Development Version"
-    FlavorPack is currently in early alpha. APIs, file formats, and commands may change without notice. Not recommended for production use. Check current version with `flavor --version`. **Source installation only** at this time.
+# Pyvider Components
 
-**FlavorPack** is a cross-language packaging system that creates self-contained, portable executables using the **Progressive Secure Package Format (PSPF/2025)**. Ship Python applications as single binaries that "just work" - no installation, no dependencies, no configuration required.
+**A learning and reference library** containing 100+ example components for the [Pyvider framework](https://github.com/provide-io/pyvider).
 
-<div class="grid cards" markdown>
+!!! tip "This is a Learning Library"
+    Pyvider-components is designed for **studying and learning** how to build Terraform providers. It's not meant for direct production use. For production, see [terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider).
 
--   :fontawesome-solid-rocket:{ .lg .middle } **Get Started Quickly**
+## Quick Links
 
-    ---
+- 📚 **[Getting Started Guide](getting-started.md)** - New to pyvider-components? Start here!
+- 🔍 **[How to Study Components](how-to/study-components.md)** - Learn the study process
+- 💾 **[Source Code](https://github.com/provide-io/pyvider-components)** - Browse the repository
+- 🚀 **[Production Provider](https://github.com/provide-io/terraform-provider-pyvider)** - Use in production
 
-    Package your first application in under 5 minutes with our comprehensive quickstart guide.
+## What's Inside
 
-    [:octicons-arrow-right-24: Quick Start](getting-started/quickstart.md)
+This repository contains **100+ working examples** organized in three categories:
 
--   :fontawesome-solid-cube:{ .lg .middle } **Single-File Distribution**
+### 📦 Resources (7 total)
 
-    ---
+Manage infrastructure with full lifecycle (create, read, update, delete):
 
-    Package entire applications into one executable that runs anywhere without dependencies.
+- [`pyvider_file_content`](./resources/file_content.md) - Manage file contents
+- [`pyvider_local_directory`](./resources/local_directory.md) - Create and manage directories
+- [`pyvider_timed_token`](./resources/timed_token.md) - Time-based resource (test component)
 
-    [:octicons-arrow-right-24: Package Structure](guide/concepts/package-structure.md)
+[View all resources →](resources/)
 
--   :fontawesome-solid-shield:{ .lg .middle } **Secure by Default**
+### 📥 Data Sources (10 total)
 
-    ---
+Read external data into Terraform:
 
-    Ed25519 signature verification ensures package integrity and authenticity.
+- [`pyvider_env_variables`](./data-sources/env_variables.md) - Access environment variables
+- [`pyvider_file_info`](./data-sources/file_info.md) - Get file/directory metadata
+- [`pyvider_http_api`](./data-sources/http_api.md) - Make HTTP requests
+- [`pyvider_lens_jq`](./data-sources/lens_jq.md) - Transform data with JQ
+- [`pyvider_nested_data_processor`](./data-sources/nested_data_processor.md) - Process nested data
+- [`pyvider_provider_config_reader`](./data-sources/provider_config_reader.md) - Read provider config
 
-    [:octicons-arrow-right-24: Security Model](guide/concepts/security.md)
+[View all data sources →](data-sources/)
 
--   :fontawesome-solid-bolt:{ .lg .middle } **Progressive Extraction**
+### 🔢 Functions (25 total)
 
-    ---
+Transform and compute values - the simplest components to start learning:
 
-    Smart caching extracts only what's needed, when it's needed, for optimal performance.
+**Numeric:** [`add`](./functions/add.md) · [`subtract`](./functions/subtract.md) · [`multiply`](./functions/multiply.md) · [`divide`](./functions/divide.md) · [`min`](./functions/min.md) · [`max`](./functions/max.md) · [`sum`](./functions/sum.md) · [`round`](./functions/round.md)
 
-    [:octicons-arrow-right-24: Work Environments](guide/concepts/workenv.md)
+**String:** [`upper`](./functions/upper.md) · [`lower`](./functions/lower.md) · [`split`](./functions/split.md) · [`join`](./functions/join.md) · [`replace`](./functions/replace.md) · [`format`](./functions/format.md) · [`truncate`](./functions/truncate.md) · [`format_size`](./functions/format_size.md) · [`pluralize`](./functions/pluralize.md) · [`to_snake_case`](./functions/to_snake_case.md) · [`to_kebab_case`](./functions/to_kebab_case.md) · [`to_camel_case`](./functions/to_camel_case.md)
 
--   :fontawesome-solid-language:{ .lg .middle } **Cross-Language Support**
+**Collection:** [`length`](./functions/length.md) · [`contains`](./functions/contains.md) · [`lookup`](./functions/lookup.md)
 
-    ---
+**Type Conversion:** [`tostring`](./functions/tostring.md)
 
-    Python orchestrator with native Go and Rust launchers for maximum efficiency.
+**Transformation:** [`lens_jq`](./functions/lens_jq.md)
 
-    [:octicons-arrow-right-24: Architecture](development/architecture.md)
-
--   :fontawesome-solid-book:{ .lg .middle } **Comprehensive Docs**
-
-    ---
-
-    Detailed guides, API reference, cookbook examples, and troubleshooting help.
-
-    [:octicons-arrow-right-24: User Guide](guide/index.md)
-
-</div>
-
-## What is FlavorPack?
-
-FlavorPack transforms Python applications into self-contained executables using the Progressive Secure Package Format (PSPF/2025). Each package contains everything needed to run - the application code, Python runtime, dependencies, and a native launcher - all in a single `.psp` file.
-
-### Key Features
-
-- **📦 Single-File Distribution**: Package entire applications into one executable file
-- **🔒 Cryptographic Security**: Ed25519 signatures ensure package integrity
-- **⚡ Smart Caching**: Persistent work environment with intelligent validation
-- **🌍 Cross-Platform**: Works on Linux, macOS, and Windows
-- **🎯 Zero Dependencies**: End users need nothing pre-installed
-- **🔧 Native Performance**: Go and Rust launchers for fast execution
+[View all functions →](functions/)
 
 ---
 
-## Part of the provide.io Ecosystem
+## Test Components
 
-This project is part of a larger ecosystem of tools for Python and Terraform development.
+Several components demonstrate specific patterns in isolation - perfect for understanding advanced concepts:
 
-**[View Ecosystem Overview →](https://docs.provide.io/provide-foundation/ecosystem/)**
+**Test Resources:** [`pyvider_private_state_verifier`](./resources/private_state_verifier.md) · [`pyvider_warning_example`](./resources/warning_example.md)
 
-Understand how provide-foundation, pyvider, flavorpack, and other projects work together.
-
----
-
-## Quick Example
-
-```bash
-# Package a Python application
-flavor pack --manifest pyproject.toml --output myapp.psp
-
-# Run the packaged application (no Python installation required!)
-./myapp.psp
-
-# Verify package integrity
-flavor verify myapp.psp
-```
-
-## Architecture Overview
-
-FlavorPack is a cross-language packaging system designed to work seamlessly with other provide.io tools:
-
-```mermaid
-graph TB
-    subgraph "FlavorPack Components"
-        direction TB
-        PY[Python Orchestrator<br/>📦 Build Coordinator]
-        GO[Go Helper<br/>🐹 Builder & Launcher]
-        RS[Rust Helper<br/>🦀 Builder & Launcher]
-    end
-
-    subgraph "PSPF Package (.psp)"
-        direction TB
-        L[Native Launcher<br/>Platform-specific binary]
-        I[Index Block<br/>8KB metadata + signature]
-        M[Metadata<br/>Gzipped JSON manifest]
-        S[Slots<br/>Tar.gz archives]
-        F[Magic Footer<br/>📦🪄]
-    end
-
-    subgraph "Applications"
-        APP1[CLI Tools]
-        APP2[Web Services]
-        APP3[Data Pipelines]
-        APP4[Terraform Providers]
-    end
-
-    APP1 --> PY
-    APP2 --> PY
-    APP3 --> PY
-    APP4 --> PY
-
-    PY --> GO
-    PY --> RS
-    GO --> L
-    RS --> L
-
-    L --> I
-    I --> M
-    M --> S
-    S --> F
-
-    classDef orchestrator fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef helpers fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef pspf fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
-    classDef apps fill:#fff3e0,stroke:#e65100,stroke-width:2px
-
-    class PY orchestrator
-    class GO,RS helpers
-    class L,I,M,S,F pspf
-    class APP1,APP2,APP3,APP4 apps
-```
-
-## PSPF Format
-
-The Progressive Secure Package Format is a polyglot file that works as both an OS executable and a structured package. Each `.psp` file is structured with a native launcher at the start, followed by package metadata and compressed data slots, ending with a cryptographically signed index block.
-
-**Key Components**:
-- **Native Launcher**: Platform-specific executable (Go or Rust)
-- **Metadata Block**: Compressed JSON manifest with package information
-- **Slot Table**: Array of 64-byte descriptors (one per slot)
-- **Slot Data**: Compressed application code, runtime, and dependencies
-- **Index Block**: 8KB structure containing offsets, checksums, and Ed25519 signatures
-- **Magic Markers**: 📦 and 🪄 emoji bytes for format identification
-
-For the complete binary layout diagram and technical specification, see:
-→ [PSPF Format Specification (FEP-0001)](reference/spec/fep-0001-core-format-and-operation-chains.md#32-package-structure-overview)
-
-## Use Cases
-
-!!! example "Perfect for..."
-    - **CLI Tools**: Distribute command-line applications without requiring Python installation
-    - **Data Science**: Package ML models with their entire environment
-    - **DevOps**: Deploy self-contained tools that work everywhere
-    - **Enterprise**: Secure, signed packages with verification built-in
-    - **Terraform**: Package custom providers as single executables
-
-## Platform Support
-
---8<-- "includes/platform-support.md"
-
-## Community
-
-### :material-github: GitHub
-
-All development happens on GitHub with issues, discussions, and pull requests welcome.
-
-[View on GitHub :octicons-arrow-right-24:](https://github.com/provide-io/flavorpack){ .md-button .md-button--primary }
-
-### :material-chat: Support
-
-Join the community for questions, ideas, and collaboration.
-
-[Get Support :octicons-arrow-right-24:](community/support.md){ .md-button }
-
-### :material-book-open: Documentation
-
-Comprehensive guides, tutorials, and API documentation.
-
-[Explore Docs :octicons-arrow-right-24:](getting-started/index.md){ .md-button }
+**Test Data Sources:** [`pyvider_mixed_map_test`](./data-sources/mixed_map_test.md) · [`pyvider_nested_resource_test`](./data-sources/nested_resource_test.md) · [`pyvider_simple_map_test`](./data-sources/simple_map_test.md) · [`pyvider_structured_object_test`](./data-sources/structured_object_test.md)
 
 ---
 
-**Ready to package your Python applications?** Check out our [Quick Start guide](getting-started/quickstart.md) or dive into the [core concepts](guide/concepts/index.md).
+## How to Use This Library
+
+### 1. Start with Getting Started
+
+New to pyvider-components? Begin with the [Getting Started Guide](getting-started.md) to:
+
+- Understand the library's purpose
+- Learn the three component types
+- Study your first component
+- Find your learning path
+
+### 2. Study Components
+
+Follow the systematic process in [How to Study Components](how-to/study-components.md):
+
+1. **Identify** - Choose a component to study
+2. **Source** - Read the implementation
+3. **Schema** - Understand the Terraform interface
+4. **Examples** - Study usage patterns
+5. **Adapt** - Apply to your own work
+
+### 3. Explore Examples
+
+Each component has working Terraform examples in the [`examples/`](https://github.com/provide-io/pyvider-components/tree/main/examples) directory:
+
+- `basic.tf` - Simple usage
+- `advanced.tf` - Complex scenarios
+- `comprehensive.tf` - Full features
+
+### 4. Build Your Own
+
+Use these components as templates for your own Terraform providers:
+
+- Copy the patterns (Apache 2.0 licensed)
+- Adapt for your use case
+- Reference the [Pyvider framework docs](https://github.com/provide-io/pyvider)
+
+---
+
+## Learning Paths
+
+### For Beginners
+
+**Goal:** Understand basic provider development
+
+1. Study simple functions (`add`, `upper`, `length`)
+2. Review basic data sources (`pyvider_env_variables`)
+3. Explore simple resources (`pyvider_file_content`)
+
+**Time:** 1-2 weeks
+
+### For Provider Developers
+
+**Goal:** Build production-ready providers
+
+1. Master all component types
+2. Study test components for patterns
+3. Review error handling and validation
+4. Understand state management
+
+**Time:** 3-4 weeks
+
+### For Contributors
+
+**Goal:** Contribute to terraform-provider-pyvider
+
+1. Study existing production components
+2. Understand packaging patterns
+3. Review terraform-provider-pyvider codebase
+4. Follow contribution guidelines
+
+**Time:** 1 week
+
+---
+
+## Related Projects
+
+Pyvider-components is part of the provide.io ecosystem:
+
+- **[Pyvider](https://github.com/provide-io/pyvider)** - Core framework for building Terraform providers
+- **[terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider)** - Production provider (use this in Terraform)
+- **[provide-foundation](https://docs.provide.io)** - Python foundations and utilities
+- **[Ecosystem Overview](https://docs.provide.io/provide-foundation/ecosystem/)** - How all projects fit together
+
+---
+
+## Ready to Learn?
+
+👉 **[Start with the Getting Started Guide →](getting-started.md)**
+
+Or jump directly to:
+
+- [How to Study Components](how-to/study-components.md)
+- [View Functions Reference](functions/)
+- [View Data Sources Reference](data-sources/)
+- [View Resources Reference](resources/)
+- [Browse Source Code](https://github.com/provide-io/pyvider-components)
