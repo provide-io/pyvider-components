@@ -1,4 +1,4 @@
-INHERIT: ../provide-foundry/base-mkdocs.yml
+INHERIT: .provide/foundry/base-mkdocs.yml
 site_name: Pyvider Components
 site_description: Learning and reference library for Pyvider framework components
 site_author: provide.io
