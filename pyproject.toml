@@ -56,6 +56,9 @@ pyvider-components = "pyvider.components"
 [pyvider]
 name = "pyvider"
 
+[tool.plating]
+provides_content = true
+
 [dependency-groups]
 dev = [
     "provide-testkit[standard,build,profiling]",
