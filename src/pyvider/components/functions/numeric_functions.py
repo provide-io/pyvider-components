@@ -97,7 +97,7 @@ def sum_list(numbers: list[int | float] | None) -> int | float | None:
         "options": "Optional: Precision (decimal places, default: 0)",
     },
 )
-def round_number(number: int | float | None, *options) -> int | float | None:
+def round_number(number: int | float | None, *options: int) -> int | float | None:
     """
     Round a number to specified decimal places.
 
