@@ -132,7 +132,6 @@ env.sh
 .psp/
 *.psp
 workenv/*bfiles*
-examples/
 site/
 
 # Extracted provide.io tooling artifacts
