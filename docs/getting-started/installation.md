@@ -215,9 +215,9 @@ python -c "import platform; print(f'{platform.system()}_{platform.machine()}')"
 
 Now that you have pyvider-components installed:
 
-1. **[Understand the Framework](../guides/orientation.md)** - Learn core Pyvider concepts
-2. **[Build Your Own Provider](../guides/build-your-own.md)** - Create a custom provider
-3. **[Explore Components](../index.md)** - Browse available resources, data sources, and functions
+1. **[Understand the Framework](../guides/orientation/)** - Learn core Pyvider concepts
+2. **[Build Your Own Provider](../guides/build-your-own/)** - Create a custom provider
+3. **[Explore Components](../index/)** - Browse available resources, data sources, and functions
 
 ## Additional Resources
 
