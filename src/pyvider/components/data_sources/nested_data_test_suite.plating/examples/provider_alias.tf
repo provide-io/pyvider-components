@@ -1,4 +1,4 @@
 provider "pyvider" {
-  alias              = "test"
+  alias            = "test"
   pyvider_testmode = true
 }

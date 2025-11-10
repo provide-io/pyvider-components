@@ -33,11 +33,11 @@ nav:
   - Understand the Pyvider Framework: guides/orientation.md
   - Build Your Own Provider with Pyvider: guides/build-your-own.md
 - Resources:
-  - timed_token: resources/timed_token.md
+  - pyvider_timed_token: resources/timed_token.md
 - Data Sources:
-  - env_variables: data-sources/env_variables.md
-  - nested_data_processor: data-sources/nested_data_processor.md
-  - provider_config_reader: data-sources/provider_config_reader.md
+  - pyvider_env_variables: data-sources/env_variables.md
+  - pyvider_nested_data_processor: data-sources/nested_data_processor.md
+  - pyvider_provider_config_reader: data-sources/provider_config_reader.md
 - Functions:
   - add: functions/add.md
   - contains: functions/contains.md
@@ -65,24 +65,24 @@ nav:
   - upper: functions/upper.md
 - File Operations:
   - Resources:
-    - file_content: resources/file_content.md
-    - local_directory: resources/local_directory.md
+    - pyvider_file_content: resources/file_content.md
+    - pyvider_local_directory: resources/local_directory.md
   - Data Sources:
-    - file_info: data-sources/file_info.md
+    - pyvider_file_info: data-sources/file_info.md
 - Lens:
   - Data Sources:
-    - lens_jq: data-sources/lens_jq.md
+    - pyvider_lens_jq: data-sources/lens_jq.md
   - Functions:
     - lens_jq: functions/lens_jq.md
 - Network:
   - Data Sources:
-    - http_api: data-sources/http_api.md
+    - pyvider_http_api: data-sources/http_api.md
 - Test Mode:
   - Resources:
-    - private_state_verifier: resources/private_state_verifier.md
-    - warning_example: resources/warning_example.md
+    - pyvider_private_state_verifier: resources/private_state_verifier.md
+    - pyvider_warning_example: resources/warning_example.md
   - Data Sources:
-    - mixed_map_test: data-sources/mixed_map_test.md
-    - nested_resource_test: data-sources/nested_resource_test.md
-    - simple_map_test: data-sources/simple_map_test.md
-    - structured_object_test: data-sources/structured_object_test.md
+    - pyvider_mixed_map_test: data-sources/mixed_map_test.md
+    - pyvider_nested_resource_test: data-sources/nested_resource_test.md
+    - pyvider_simple_map_test: data-sources/simple_map_test.md
+    - pyvider_structured_object_test: data-sources/structured_object_test.md
