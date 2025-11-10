@@ -29,9 +29,6 @@ theme:
       name: Switch to light mode
 nav:
 - Overview: index.md
-- Guides:
-  - Understand the Pyvider Framework: guides/orientation.md
-  - Build Your Own Provider with Pyvider: guides/build-your-own.md
 - Resources:
   - pyvider_timed_token: resources/timed_token.md
 - Data Sources:
