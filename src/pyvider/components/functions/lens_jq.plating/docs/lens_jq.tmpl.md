@@ -1,5 +1,6 @@
 ---
 page_title: "Function: lens_jq"
+subcategory: "Lens"
 description: |-
   Applies jq queries to JSON data for powerful data transformation and extraction
 ---
