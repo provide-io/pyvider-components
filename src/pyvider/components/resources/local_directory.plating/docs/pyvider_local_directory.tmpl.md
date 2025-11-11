@@ -110,9 +110,3 @@ output "directory_contents" {
   value = "Directory has ${pyvider_local_directory.monitored.file_count} items"
 }
 ```
-
-## Related Components
-
-- **pyvider_file_content** (Resource) - Create files within managed directories
-- **pyvider_file_info** (Data Source) - Check directory existence without managing it
-- **pyvider_env_variables** (Data Source) - Use environment variables in directory paths

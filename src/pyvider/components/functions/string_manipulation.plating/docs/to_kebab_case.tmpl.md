@@ -71,10 +71,3 @@ locals {
   # Result: ["primary-button", "navigation-menu", "footer-links"]
 }
 ```
-
-## Related Components
-
-- **to_snake_case** (Function) - Convert to snake_case format
-- **to_camel_case** (Function) - Convert to camelCase format
-- **upper** (Function) - Convert to uppercase
-- **lower** (Function) - Convert to lowercase

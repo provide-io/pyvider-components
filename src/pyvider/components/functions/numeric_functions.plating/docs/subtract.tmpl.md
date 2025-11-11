@@ -76,9 +76,3 @@ locals {
   budget_remaining = provider::pyvider::subtract(var.budget_allocated, var.budget_spent)  # 1749.25
 }
 ```
-
-## Related Components
-
-- **add** (Function) - Add two numbers together
-- **multiply** (Function) - Multiply two numbers together
-- **divide** (Function) - Divide one number by another

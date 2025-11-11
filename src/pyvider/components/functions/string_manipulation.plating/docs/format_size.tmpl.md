@@ -74,9 +74,3 @@ locals {
   # Result: ["1.0 KB", "1.0 MB", "1.0 GB"]
 }
 ```
-
-## Related Components
-
-- **round** (Function) - Round numeric values for display
-- **format** (Function) - Format strings with placeholders
-- **tostring** (Function) - Convert numbers to strings
