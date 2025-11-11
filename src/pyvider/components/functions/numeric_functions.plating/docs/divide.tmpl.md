@@ -76,10 +76,3 @@ locals {
   success_rate = provider::pyvider::divide(var.successful_requests, var.total_requests)  # 0.95
 }
 ```
-
-## Related Components
-
-- **add** (Function) - Add two numbers together
-- **subtract** (Function) - Subtract one number from another
-- **multiply** (Function) - Multiply two numbers together
-- **round** (Function) - Round division results to specific precision

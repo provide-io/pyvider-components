@@ -74,10 +74,3 @@ locals {
   service_header = provider::pyvider::upper(var.service_name)  # "API GATEWAY"
 }
 ```
-
-## Related Components
-
-- **lower** (Function) - Convert strings to lowercase
-- **to_snake_case** (Function) - Convert to snake_case format
-- **to_camel_case** (Function) - Convert to camelCase format
-- **to_kebab_case** (Function) - Convert to kebab-case format

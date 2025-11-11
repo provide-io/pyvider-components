@@ -167,8 +167,3 @@ resource "pyvider_warning_example" "legacy" {
 ```bash
 terraform import pyvider_warning_example.example <id>
 ```
-
-## Related Components
-
-- **pyvider_private_state_verifier** (Resource) - Verify private state encryption mechanisms
-- **pyvider_simple_resource** (Resource) - Basic resource for comparison testing

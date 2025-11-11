@@ -91,9 +91,3 @@ locals {
   )  # [{"name": "api", "load": 67.5}, {"name": "db", "load": 62.5}]
 }
 ```
-
-## Related Components
-
-- **lookup** (Function) - Simple key-value lookups for basic map access
-- **contains** (Function) - Check array membership for simpler containment tests
-- **length** (Function) - Get collection sizes

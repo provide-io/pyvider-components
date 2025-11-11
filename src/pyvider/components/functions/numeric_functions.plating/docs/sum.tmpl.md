@@ -79,10 +79,3 @@ locals {
   total_memory = provider::pyvider::sum([for server in var.server_specs : server.memory_gb])   # 112
 }
 ```
-
-## Related Components
-
-- **add** (Function) - Add two numbers together
-- **max** (Function) - Find the maximum value in a list
-- **min** (Function) - Find the minimum value in a list
-- **length** (Function) - Get the count of elements in a list

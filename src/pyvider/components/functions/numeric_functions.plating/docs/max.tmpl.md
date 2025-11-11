@@ -68,9 +68,3 @@ locals {
   slowest_response = provider::pyvider::max(var.response_times_ms)  # 520
 }
 ```
-
-## Related Components
-
-- **min** (Function) - Find the minimum value in a list
-- **sum** (Function) - Calculate the sum of all values in a list
-- **length** (Function) - Get the count of elements in a list

@@ -71,9 +71,3 @@ locals {
   # Result: "2 children"
 }
 ```
-
-## Related Components
-
-- **format** (Function) - Format strings with placeholders
-- **tostring** (Function) - Convert numbers to strings
-- **length** (Function) - Get counts for pluralization

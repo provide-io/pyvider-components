@@ -81,10 +81,3 @@ locals {
   success_rate_display = provider::pyvider::round(local.success_rate_pct, 1)  # 84.7
 }
 ```
-
-## Related Components
-
-- **add** (Function) - Add numbers that may need rounding
-- **divide** (Function) - Divide numbers and round the results
-- **multiply** (Function) - Multiply numbers and round the results
-- **sum** (Function) - Sum values and round the total

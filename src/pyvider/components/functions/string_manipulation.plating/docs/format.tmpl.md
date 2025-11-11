@@ -74,9 +74,3 @@ locals {
   # Result: "/var/log/production/api.log"
 }
 ```
-
-## Related Components
-
-- **join** (Function) - Join lists with delimiters
-- **tostring** (Function) - Convert values to strings explicitly
-- **concat** (Built-in) - Concatenate strings without formatting

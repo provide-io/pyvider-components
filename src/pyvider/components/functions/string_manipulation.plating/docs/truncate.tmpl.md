@@ -71,9 +71,3 @@ locals {
   # Result: "Advanced Terraform Pro [more]"
 }
 ```
-
-## Related Components
-
-- **length** (Function) - Get string length to check if truncation is needed
-- **format** (Function) - Format strings with placeholders
-- **replace** (Function) - Replace text in strings

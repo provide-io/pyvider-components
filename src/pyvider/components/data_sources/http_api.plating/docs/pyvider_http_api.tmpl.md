@@ -161,9 +161,3 @@ locals {
   service_healthy = data.pyvider_http_api.health_check.status_code == 200
 }
 ```
-
-## Related Components
-
-- **pyvider_file_content** (Resource) - Save API responses to files
-- **pyvider_env_variables** (Data Source) - Use environment variables for API credentials
-- **pyvider_lens_jq** (Data Source) - Transform API responses with JQ queries

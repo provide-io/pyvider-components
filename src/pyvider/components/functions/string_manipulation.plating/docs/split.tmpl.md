@@ -72,9 +72,3 @@ locals {
   # Result: ["web1", "web2", "web3", "db1"]
 }
 ```
-
-## Related Components
-
-- **join** (Function) - Join lists into strings using delimiters
-- **contains** (Function) - Check if results contain specific elements
-- **length** (Function) - Get the count of split elements

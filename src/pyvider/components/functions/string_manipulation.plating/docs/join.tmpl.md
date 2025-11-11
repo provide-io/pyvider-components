@@ -79,9 +79,3 @@ locals {
   log_path = provider::pyvider::join("/", [var.base_path, "log", var.app_name])  # "var/log/myapp"
 }
 ```
-
-## Related Components
-
-- **split** (Function) - Split strings into lists using delimiters
-- **format** (Function) - Format strings with placeholders
-- **concat** (Built-in) - Concatenate multiple lists
