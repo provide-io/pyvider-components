@@ -101,9 +101,3 @@ locals {
   }
 }
 ```
-
-## Related Components
-
-- **format** (Function) - Format strings with placeholders and automatic type conversion
-- **join** (Function) - Join lists into strings with automatic conversion
-- **pluralize** (Function) - Format text based on numeric values

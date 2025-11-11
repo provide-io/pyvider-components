@@ -73,9 +73,3 @@ locals {
   # Result: "C:/Program Files/MyApp"
 }
 ```
-
-## Related Components
-
-- **split** (Function) - Split strings on delimiters
-- **join** (Function) - Join lists into strings
-- **format** (Function) - Format strings with placeholders

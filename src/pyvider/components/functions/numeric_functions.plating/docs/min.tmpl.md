@@ -68,9 +68,3 @@ locals {
   minimum_usage = provider::pyvider::min(var.cpu_usage_percent)  # 28
 }
 ```
-
-## Related Components
-
-- **max** (Function) - Find the maximum value in a list
-- **sum** (Function) - Calculate the sum of all values in a list
-- **length** (Function) - Get the count of elements in a list

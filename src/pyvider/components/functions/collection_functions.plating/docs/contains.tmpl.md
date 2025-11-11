@@ -107,10 +107,3 @@ locals {
   access_granted = local.is_allowed && !local.is_blocked
 }
 ```
-
-## Related Components
-
-- **length** (Function) - Get the size of collections
-- **lookup** (Function) - Look up values in maps for key-value searches
-- **split** (Function) - Split strings to create searchable lists
-- **join** (Function) - Join lists after filtering

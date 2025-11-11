@@ -76,10 +76,3 @@ locals {
   monthly_cost = provider::pyvider::multiply(var.instance_price, var.hours_per_month)  # 109.5
 }
 ```
-
-## Related Components
-
-- **add** (Function) - Add two numbers together
-- **subtract** (Function) - Subtract one number from another
-- **divide** (Function) - Divide one number by another
-- **sum** (Function) - Calculate the sum of multiple numbers in a list

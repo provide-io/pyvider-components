@@ -110,10 +110,3 @@ resource "pyvider_local_directory" "app_dirs" {
   path  = "/tmp/app_${count.index + 1}"
 }
 ```
-
-## Related Components
-
-- **contains** (Function) - Check if a list contains an element
-- **lookup** (Function) - Look up values in maps
-- **max** (Function) - Find maximum value
-- **min** (Function) - Find minimum value
