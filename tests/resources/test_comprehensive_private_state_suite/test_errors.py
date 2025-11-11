@@ -1,3 +1,60 @@
+#
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+"""Test error conditions and edge cases."""
+
+from __future__ import annotations
+
+import os
+import uuid
+from typing import Any
+
+import attrs
+import msgpack
+import pytest
+from provide.testkit import FoundationTestCase
+from provide.testkit.mocking import patch
+
+from pyvider.common.encryption import decrypt, encrypt
+from pyvider.components.resources.private_state_verifier import (
+    PrivateStateVerifierResource,
+)
+from pyvider.components.resources.timed_token import (
+    TimedTokenPrivateState,
+    TimedTokenResource,
+)
+from pyvider.conversion import marshal, unmarshal
+from pyvider.hub import hub
+from pyvider.protocols.tfprotov6.handlers import (
+    ApplyResourceChangeHandler,
+    PlanResourceChangeHandler,
+    ReadResourceHandler,
+)
+import pyvider.protocols.tfprotov6.protobuf as pb
+from pyvider.resources.base import BaseResource
+from pyvider.resources.context import ResourceContext
+from pyvider.resources.private_state import PrivateState
+from pyvider.schema import a_str, s_resource
+
+
+@attrs.define(frozen=True)
+class MockPrivateState(PrivateState):
+    """Mock private state class for unit tests"""
+
+    secret_token: str
+    internal_id: str
+    version: int = 1
+
+
+# Import shared test resource from test_encryption
+from test_comprehensive_private_state_suite.test_encryption import (
+    TestPrivateStateResource,
+)
+
+
+class TestPrivateStateErrorHandling(FoundationTestCase):
     """Test error conditions and edge cases"""
 
     @pytest.mark.asyncio
@@ -87,5 +144,4 @@
         assert context.get_private_state(MockPrivateState) is None
 
 
-# Performance and Compatibility Tests
-class TestPrivateStatePerformance(FoundationTestCase):
+# 🧩🔧🔚
