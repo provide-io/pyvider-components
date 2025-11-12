@@ -7,8 +7,8 @@
 
 import pytest
 
-from pyvider.components.provider import PyviderProvider
-from pyvider.components.capabilities.core import CoreCapability
+from pyvider.components.provider import PyviderProvider  # type: ignore[import-untyped]
+from pyvider.components.capabilities.core import CoreCapability  # type: ignore[import-untyped]
 from pyvider.hub import hub
 from pyvider.providers.base import ProviderMetadata
 
@@ -68,7 +68,7 @@ class TestPyviderProvider:
     @pytest.mark.asyncio
     async def test_provider_with_multiple_capabilities(self):
         """Test provider setup with multiple capabilities."""
-        from pyvider.components.capabilities.lens import LensCapability
+        from pyvider.components.capabilities.lens import LensCapability  # type: ignore[import-untyped]
 
         provider = PyviderProvider()
 
@@ -92,7 +92,7 @@ class TestCoreCapability:
     def test_core_capability_initialization(self):
         """Test core capability initializes without config."""
         capability = CoreCapability(config=None)
-        # Should not raise
+        assert capability.config is None
 
     def test_core_capability_schema_contribution(self):
         """Test core capability returns schema with pyvider_testmode."""

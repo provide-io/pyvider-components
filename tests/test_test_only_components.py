@@ -12,28 +12,58 @@ This test suite verifies:
 4. Test-only components are accessible when test mode is enabled
 5. The pyvider_testmode capability is properly registered"""
 
+from importlib import import_module
+
 import pytest
 from pyvider.exceptions import DataSourceError, ResourceError, FunctionError
-from pyvider.protocols.tfprotov6.handlers.utils import check_test_only_access
 
-# Import all components
-from pyvider.components.data_sources.nested_data_test_suite import (
-    SimpleMapDataSource,
-    MixedMapDataSource,
-    StructuredObjectDataSource,
-    NestedResourceTest,
+utils_module = import_module("pyvider.protocols.tfprotov6.handlers.utils")
+check_test_only_access = getattr(utils_module, "check_test_only_access")
+get_all_components = getattr(utils_module, "get_all_components")
+
+data_sources_module = import_module(
+    "pyvider.components.data_sources.nested_data_test_suite"
 )
-from pyvider.components.resources.private_state_verifier import (
-    PrivateStateVerifierResource,
+SimpleMapDataSource = getattr(data_sources_module, "SimpleMapDataSource")
+MixedMapDataSource = getattr(data_sources_module, "MixedMapDataSource")
+StructuredObjectDataSource = getattr(data_sources_module, "StructuredObjectDataSource")
+NestedResourceTest = getattr(data_sources_module, "NestedResourceTest")
+
+PrivateStateVerifierResource = getattr(
+    import_module("pyvider.components.resources.private_state_verifier"),
+    "PrivateStateVerifierResource",
 )
-from pyvider.components.resources.file_content import FileContentResource
-from pyvider.components.resources.local_directory import LocalDirectoryResource
-from pyvider.components.resources.timed_token import TimedTokenResource
-from pyvider.components.resources.warning_example import WarningExampleResource
-from pyvider.components.data_sources.env_variables import EnvVariablesDataSource
-from pyvider.components.data_sources.file_info import FileInfoDataSource
-from pyvider.components.data_sources.http_api import HTTPAPIDataSource
-from pyvider.components.capabilities.core import CoreCapability
+FileContentResource = getattr(
+    import_module("pyvider.components.resources.file_content"),
+    "FileContentResource",
+)
+LocalDirectoryResource = getattr(
+    import_module("pyvider.components.resources.local_directory"),
+    "LocalDirectoryResource",
+)
+TimedTokenResource = getattr(
+    import_module("pyvider.components.resources.timed_token"),
+    "TimedTokenResource",
+)
+WarningExampleResource = getattr(
+    import_module("pyvider.components.resources.warning_example"),
+    "WarningExampleResource",
+)
+EnvVariablesDataSource = getattr(
+    import_module("pyvider.components.data_sources.env_variables"),
+    "EnvVariablesDataSource",
+)
+FileInfoDataSource = getattr(
+    import_module("pyvider.components.data_sources.file_info"),
+    "FileInfoDataSource",
+)
+HTTPAPIDataSource = getattr(
+    import_module("pyvider.components.data_sources.http_api"),
+    "HTTPAPIDataSource",
+)
+CoreCapability = getattr(
+    import_module("pyvider.components.capabilities.core"), "CoreCapability"
+)
 
 
 class TestTestOnlyComponentsMarking:
@@ -202,20 +232,18 @@ class TestTestModeScenarios:
 
     def test_import_test_only_components(self):
         """Test that we can import test-only components without errors."""
-        from pyvider.components.data_sources.nested_data_test_suite import (
-            SimpleMapDataSource,
+        ds_module = import_module(
+            "pyvider.components.data_sources.nested_data_test_suite"
         )
-        from pyvider.components.resources.private_state_verifier import (
-            PrivateStateVerifierResource,
+        resource_module = import_module(
+            "pyvider.components.resources.private_state_verifier"
         )
 
-        assert SimpleMapDataSource is not None
-        assert PrivateStateVerifierResource is not None
+        assert hasattr(ds_module, "SimpleMapDataSource")
+        assert hasattr(resource_module, "PrivateStateVerifierResource")
 
     def test_get_all_components_includes_test_only(self):
         """Test that get_all_components includes test-only components."""
-        from pyvider.protocols.tfprotov6.handlers.utils import get_all_components
-
         data_sources = get_all_components("data_sources")
         resources = get_all_components("resources")
 
@@ -231,8 +259,10 @@ class TestTestModeScenarios:
             "pyvider_nested_resource_test",
         }
 
-        # Note: This test may need adjustment based on actual hub registration
-        # It's mainly here to document expected behavior
+        data_source_names = set(data_sources.keys())
+        resource_names = set(resources.keys())
+        assert test_only_ds_names.issubset(data_source_names)
+        assert test_only_resource_names.issubset(resource_names)
 
 
 # 🧩🔧🔚
