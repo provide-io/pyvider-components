@@ -12,8 +12,8 @@ This script:
 
 import asyncio
 from pathlib import Path
-from plating.plating import Plating
-from plating.types import PlatingContext
+from plating.plating import Plating  # type: ignore[import-untyped]
+from plating.types import PlatingContext  # type: ignore[import-untyped]
 from provide.foundation import file as foundation_file
 from provide.foundation import pout, perr
 
@@ -84,7 +84,7 @@ async def build_docs_and_examples(overwrite: bool = False):
     # Generate documentation
     context = PlatingContext(provider_name="pyvider")
     api = Plating(context, "pyvider.components")
-    result = await api.plate()
+    await api.plate()
 
     # Generate examples (use CLI for this since it has the flag)
     import subprocess

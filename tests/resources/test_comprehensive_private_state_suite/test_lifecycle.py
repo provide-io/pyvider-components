@@ -7,14 +7,15 @@
 
 from __future__ import annotations
 
+from importlib import import_module
 
 import attrs
 import pytest
-from provide.testkit import FoundationTestCase
+from provide.testkit import FoundationTestCase  # type: ignore[import-untyped]
 
 from pyvider.components.resources.private_state_verifier import (
     PrivateStateVerifierResource,
-)
+)  # type: ignore[import-untyped]
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
@@ -24,6 +25,10 @@ from pyvider.protocols.tfprotov6.handlers import (
 )
 import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.private_state import PrivateState
+
+TestPrivateStateResource = import_module(
+    "test_comprehensive_private_state_suite.test_encryption"
+).TestPrivateStateResource
 
 
 @attrs.define(frozen=True)
@@ -48,12 +53,6 @@ class MockResourceConfig:
     """Mock resource config class"""
 
     name: str
-
-
-# Import shared test resource from test_encryption
-from test_comprehensive_private_state_suite.test_encryption import (
-    TestPrivateStateResource,
-)
 
 
 class TestPrivateStateResourceLifecycle(FoundationTestCase):
