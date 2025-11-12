@@ -7,7 +7,7 @@ repo_url: https://github.com/provide-io/pyvider-components
 repo_name: provide-io/pyvider-components
 edit_uri: edit/main/docs/
 copyright: Copyright &copy; 2017 - 2025 Provide
-dev_addr: 127.0.0.1:8004
+dev_addr: 127.0.0.1:11012
 docs_dir: docs
 theme:
   logo: assets/logo.svg
