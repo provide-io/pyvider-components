@@ -1,0 +1,76 @@
+[project]
+name = "node-sysmon"
+version = "1.0.0"
+description = "Node.js System Monitor - packaged with FlavorPack"
+requires-python = ">=3.11"  # Only for BUILD orchestration, not runtime!
+
+# NO Python dependencies - this is a Node.js package!
+dependencies = []
+
+[tool.flavor]
+package_name = "node-sysmon"
+# Helper script for packaging (Python only at build time)
+entry_point = "package_node:main"
+
+[tool.flavor.metadata]
+description = """
+Node.js System Monitor - Pure JavaScript CLI
+
+This demonstrates FlavorPack packaging Node.js applications.
+The package contains:
+- Node.js binary (v22+, ~50 MB compressed)
+- Pure JavaScript application (~10 KB)
+- NO Python runtime required!
+
+Package format (PSPF/2025):
+- Slot 0: Node.js interpreter
+- Slot 1: JavaScript code
+
+Proves FlavorPack works with ANY language!
+"""
+tags = ["nodejs", "javascript", "cli", "non-python"]
+homepage = "https://github.com/provide-io/flavorpack"
+
+[tool.flavor.execution]
+# Execute with Node.js - NO Python!
+command = "{workenv}/bin/node"
+args = ["{workenv}/app/sysmon.js"]
+
+[tool.flavor.execution.runtime.env]
+unset = ["*"]
+pass = [
+    "PATH",
+    "HOME",
+    "USER",
+    "TERM",
+    "LANG",
+    "LC_*",
+    "NODE_*"  # Node-specific env vars
+]
+
+[[tool.flavor.slots]]
+id = 0
+purpose = "runtime"
+path = "bin/node"
+extract_to = "{workenv}/bin/node"
+lifecycle = "cached"
+operations = "gzip"
+permissions = 0o755
+
+[[tool.flavor.slots]]
+id = 1
+purpose = "code"
+path = "."
+extract_to = "{workenv}/app"
+lifecycle = "cached"
+operations = "tar|gzip"
+permissions = 0o755
+include = ["sysmon.js", "package.json"]
+exclude = ["bin/", "*.md", "manifest.json", "pyproject.toml"]
+
+[tool.flavor.build]
+dependencies = []
+
+[tool.flavor.signing]
+deterministic = true
+key_seed = "node-sysmon-v1"

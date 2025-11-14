@@ -8,6 +8,7 @@ This directory contains complete, working examples demonstrating FlavorPack's pa
 
 **Pure stdlib system information tool - zero external dependencies**
 
+Language: **Python**
 A lightweight CLI tool demonstrating minimal dependency packaging.
 
 ```bash
@@ -39,10 +40,26 @@ flavor pack --manifest pyproject.toml --output sysinfo.psp
 
 ---
 
-### 2. Glances Monitor (`glances-wrapper/`)
+### 2. MiniMonitor (`minimonitor/`)
+
+**Glances-like system monitor - demonstrates TUI patterns**
+
+Language: **Python**
+A real-time system monitor with TUI interface, proving the Glances packaging pattern works.
+
+```bash
+cd minimonitor
+python minimonitor.py
+python minimonitor.py --json
+```
+
+---
+
+### 3. Glances Wrapper (`glances-wrapper/`)
 
 **Python-based system monitoring (htop/btop alternative) - complex real-world application**
 
+Language: **Python**
 A full-featured system monitor demonstrating complex dependency management.
 
 ```bash
@@ -75,16 +92,82 @@ flavor pack --manifest pyproject.toml --output glances.psp
 
 ---
 
+### 4. Dash Utils (`dash-utils/`)
+
+**Pure POSIX shell scripts - NO Python runtime**
+
+Language: **Shell (dash)**
+Demonstrates packaging non-Python applications using FlavorPack.
+
+```bash
+cd dash-utils
+dash dash-utils.sh sysinfo
+dash dash-utils.sh procmon
+dash dash-utils.sh benchmark
+```
+
+**Package Structure:**
+- Slot 0: dash binary (127 KB)
+- Slot 1: Shell scripts (357 lines)
+
+**Key Features:**
+- System information (OS, CPU, memory, disk)
+- Disk usage analyzer
+- Process monitor
+- Network information
+- System benchmark
+
+**Key Lessons:**
+- Packaging non-Python executables
+- Slot system for binary + scripts
+- TOML and JSON manifests
+- Zero Python at runtime
+
+---
+
+### 5. Node-Sysmon (`node-sysmon/`)
+
+**Pure JavaScript system monitor - NO Python runtime**
+
+Language: **Node.js (JavaScript)**
+Demonstrates packaging Node.js applications using FlavorPack.
+
+```bash
+cd node-sysmon
+node sysmon.js sysinfo
+node sysmon.js network
+node sysmon.js --json
+```
+
+**Package Structure:**
+- Slot 0: Node.js binary (~118 MB)
+- Slot 1: JavaScript code (287 lines)
+
+**Key Features:**
+- System information (OS, CPU, memory)
+- Network interfaces and configuration
+- Process details and memory usage
+- JSON output for automation
+- Zero npm dependencies (pure Node.js stdlib)
+
+**Key Lessons:**
+- Packaging JavaScript applications
+- Node.js runtime bundling
+- Multiple manifest formats (package.json, TOML, JSON)
+- Beautiful CLI with ANSI colors
+
+---
+
 ## Comparison Matrix
 
-| Aspect | SysInfo | Glances |
-|--------|---------|---------|
-| **Complexity** | Simple | Complex |
-| **Dependencies** | 0 | 30+ |
-| **Package Size** | 26 MB | 35-80 MB |
-| **Build Time** | ~30s | ~2-3min |
-| **Use Case** | Education | Production |
-| **Target** | Beginners | Advanced |
+| Aspect | SysInfo | MiniMonitor | Glances | Dash Utils | Node-Sysmon |
+|--------|---------|-------------|---------|------------|-------------|
+| **Language** | Python | Python | Python | Shell | JavaScript |
+| **Complexity** | Simple | Medium | Complex | Simple | Medium |
+| **Dependencies** | 0 | 0 | 30+ | 0 | 0 |
+| **Package Size** | 26 MB | 26 MB | 35-80 MB | 2-5 MB | 42 MB |
+| **Runtime** | Python | Python | Python | dash | Node.js |
+| **Use Case** | Education | Demo | Production | Education | Demo |
 
 ## Why These Examples?
 
