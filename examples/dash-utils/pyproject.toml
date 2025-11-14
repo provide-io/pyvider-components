@@ -33,7 +33,6 @@ pass = [
     "LC_*",
 ]
 
-[tool.flavor.slots]
 # Slot 0: dash binary (statically linked with musl)
 [[tool.flavor.slots]]
 id = 0
