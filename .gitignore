@@ -24,6 +24,8 @@ build/
 .coverage
 htmlcov/
 reports/
+*.log
+test-output.log
 
 # IDE
 .idea/
