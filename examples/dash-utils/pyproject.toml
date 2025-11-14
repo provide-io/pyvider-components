@@ -1,0 +1,88 @@
+# FlavorPack manifest for dash-utils
+# Demonstrates packaging NON-PYTHON executables using the slot system
+
+[project]
+name = "dash-utils"
+version = "1.0.0"
+description = "Shell utilities toolkit - Pure dash scripts, no Python runtime!"
+requires-python = ">=3.11"  # Only needed for BUILDING, not running!
+
+# NO Python dependencies - this is a shell script package!
+dependencies = []
+
+[tool.flavor]
+package_name = "dash-utils"
+# This Python script just helps package the dash binary + scripts
+entry_point = "package_dash:main"
+
+[tool.flavor.execution]
+# CRITICAL: Run dash directly, not Python!
+# After extraction, execute the dash binary with our main script
+command = "{workenv}/bin/dash"
+args = ["{workenv}/scripts/dash-utils.sh"]
+
+[tool.flavor.execution.runtime.env]
+# Minimal environment - dash scripts need very little
+unset = ["*"]
+pass = [
+    "PATH",
+    "HOME",
+    "USER",
+    "TERM",
+    "LANG",
+    "LC_*",
+]
+
+[tool.flavor.slots]
+# Slot 0: dash binary (statically linked with musl)
+[[tool.flavor.slots]]
+id = 0
+purpose = "runtime"  # The dash interpreter
+path = "bin/dash"    # Static dash binary
+extract_to = "{workenv}/bin/dash"
+lifecycle = "cached"
+operations = "gzip"
+permissions = 0o755  # Executable
+
+# Slot 1: Shell scripts
+[[tool.flavor.slots]]
+id = 1
+purpose = "code"     # Our application code (shell scripts)
+path = "scripts/"    # All .sh files
+extract_to = "{workenv}/scripts"
+lifecycle = "cached"
+operations = "tar|gzip"  # tar + gzip compression
+permissions = 0o755  # All scripts executable
+
+[tool.flavor.build]
+# No Python wheels needed!
+dependencies = []
+exclude = [
+    "**/__pycache__",
+    "**/*.pyc",
+    ".git/",
+    "*.md",
+]
+
+[tool.flavor.signing]
+deterministic = true
+key_seed = "dash-utils-v1"
+
+[tool.flavor.metadata]
+description = """
+Dash Utilities Toolkit - Pure shell script package
+
+This demonstrates FlavorPack's ability to package NON-PYTHON
+applications. The package contains:
+- Static dash binary (musl-linked, ~100KB)
+- Pure POSIX shell scripts
+- NO Python runtime required at execution!
+
+The package format (PSPF/2025) is language-agnostic:
+- Slot 0: dash interpreter (static binary)
+- Slot 1: Shell scripts (application code)
+
+This proves FlavorPack can package ANY executable + data!
+"""
+tags = ["shell", "dash", "posix", "non-python"]
+homepage = "https://github.com/provide-io/flavorpack"
