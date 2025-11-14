@@ -1,0 +1,26 @@
+{
+  "name": "node-sysmon",
+  "version": "1.0.0",
+  "description": "System monitor CLI written in pure Node.js - packaged with FlavorPack",
+  "main": "sysmon.js",
+  "bin": {
+    "node-sysmon": "./sysmon.js"
+  },
+  "scripts": {
+    "start": "node sysmon.js",
+    "test": "node sysmon.js sysinfo"
+  },
+  "keywords": [
+    "system-monitor",
+    "cli",
+    "nodejs",
+    "flavorpack",
+    "pspf"
+  ],
+  "author": "FlavorPack Demo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}
