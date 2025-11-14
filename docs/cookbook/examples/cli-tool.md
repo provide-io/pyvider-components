@@ -2,7 +2,151 @@
 
 This guide shows how to package a Python command-line tool into a self-contained executable using FlavorPack.
 
-## Example: A Simple Git Helper
+## Example 1: System Information Tool (Pure Stdlib)
+
+This example demonstrates packaging a CLI tool with **zero external dependencies** - using only Python's standard library.
+
+**Location:** `examples/sysinfo-cli/`
+
+**Features:**
+- System information display (OS, architecture, hostname, Python version)
+- Environment details (user, shell, PATH, environment variables)
+- Process information (PID, executable, working directory)
+- Multiple output modes (text with Unicode formatting, JSON)
+- Zero dependencies (pure stdlib: `platform`, `os`, `sys`, `argparse`, `json`)
+
+### 1. The Application
+
+```python
+# examples/sysinfo-cli/sysinfo.py
+#!/usr/bin/env python3
+"""System information tool packaged with FlavorPack."""
+
+import argparse
+import json
+import os
+import platform
+import sys
+from datetime import datetime
+
+
+def get_system_info():
+    """Gather system information."""
+    return {
+        "System": platform.system(),
+        "Release": platform.release(),
+        "Version": platform.version(),
+        "Machine": platform.machine(),
+        "Processor": platform.processor(),
+        "Architecture": " ".join(platform.architecture()),
+        "Hostname": platform.node(),
+        "Python Version": platform.python_version(),
+        "Python Implementation": platform.python_implementation(),
+        "Python Compiler": platform.python_compiler(),
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="System Information Tool (packaged with FlavorPack)"
+    )
+    parser.add_argument("--system", action="store_true", help="Show only system information")
+    parser.add_argument("--env", action="store_true", help="Show only environment information")
+    parser.add_argument("--process", action="store_true", help="Show only process information")
+    parser.add_argument("--json", action="store_true", help="Output in JSON format")
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0.0")
+
+    args = parser.parse_args()
+
+    # Gather data
+    data = {}
+    if args.system or not any([args.system, args.env, args.process]):
+        data["System Information"] = get_system_info()
+
+    # Output
+    if args.json:
+        print(json.dumps(data, indent=2))
+    else:
+        print("╔══════════════════════════════════════════════════════════╗")
+        print("║                 SYSTEM INFORMATION TOOL                  ║")
+        print("║           Packaged with FlavorPack (PSPF/2025)           ║")
+        print("╚══════════════════════════════════════════════════════════╝")
+        # ... format and display sections ...
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### 2. Configure Manifest
+
+```toml
+# examples/sysinfo-cli/pyproject.toml
+[project]
+name = "sysinfo"
+version = "1.0.0"
+description = "System information CLI tool"
+requires-python = ">=3.11"
+
+[tool.flavor]
+package_name = "sysinfo"
+entry_point = "sysinfo:main"
+
+[tool.flavor.execution.runtime.env]
+# Security: Clear all environment variables by default
+unset = ["*"]
+# Pass only essential variables
+pass = ["PATH", "HOME", "USER", "SHELL", "TERM", "LANG", "LC_*"]
+
+[tool.flavor.build]
+# Zero external dependencies!
+dependencies = []
+
+[tool.flavor.signing]
+key_seed = "deterministic-build-seed-123"
+```
+
+### 3. Package and Run
+
+```bash
+# Package the tool
+cd examples/sysinfo-cli
+flavor pack --manifest pyproject.toml --output sysinfo.psp
+
+# Run it
+./sysinfo.psp
+./sysinfo.psp --system
+./sysinfo.psp --json
+```
+
+**Output:**
+```
+╔══════════════════════════════════════════════════════════╗
+║                 SYSTEM INFORMATION TOOL                  ║
+║           Packaged with FlavorPack (PSPF/2025)           ║
+╚══════════════════════════════════════════════════════════╝
+
+============================================================
+  System Information
+============================================================
+  System                : Linux
+  Release               : 4.4.0
+  Machine               : x86_64
+  Python Version        : 3.11.14
+```
+
+**Why This Example?**
+- **No dependencies** = smallest package size (~26 MB)
+- **Fast builds** = no wheel downloads required
+- **Maximum compatibility** = works everywhere Python works
+- **Security** = environment variable filtering demonstrated
+- **Professional UX** = Unicode formatting, JSON output mode
+
+See `examples/sysinfo-cli/README.md` for the complete source code and `PACKAGING_DEMO.md` for detailed packaging workflow.
+
+---
+
+## Example 2: A Simple Git Helper
 
 Let's package a CLI tool that helps with common Git operations.
 

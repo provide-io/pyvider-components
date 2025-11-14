@@ -55,6 +55,12 @@ flavor pack
 
 Package a Click-based CLI application.
 
+!!! tip "Complete CLI Examples Available"
+    See **[CLI Tool Packaging Guide](cli-tool.md)** for two complete examples:
+
+    - **SysInfo Tool** (`examples/sysinfo-cli/`) - Pure stdlib, zero dependencies
+    - **Git Helper** - Click-based with multiple commands
+
 ```toml
 # pyproject.toml
 [project]
