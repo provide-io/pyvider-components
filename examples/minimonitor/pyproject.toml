@@ -1,0 +1,56 @@
+# FlavorPack manifest for Mini System Monitor
+# Demonstrates the same packaging pattern as Glances
+
+[project]
+name = "minimonitor"
+version = "1.0.0"
+description = "Mini system monitor demonstrating Glances packaging pattern"
+requires-python = ">=3.11"
+
+# Zero external dependencies (like our SysInfo example)
+# Real Glances would have: glances, psutil, defusedxml, etc.
+dependencies = []
+
+[tool.flavor]
+package_name = "minimonitor"
+entry_point = "minimonitor:main"
+
+[tool.flavor.execution]
+# Same pattern as Glances
+command = "{workenv}/bin/minimonitor"
+
+[tool.flavor.execution.runtime.env]
+# Security: Clear all environment variables by default
+unset = ["*"]
+
+# Pass essential system and terminal variables (same as Glances)
+pass = [
+    # System essentials
+    "PATH",
+    "HOME",
+    "USER",
+    "HOSTNAME",
+
+    # Terminal support (critical for TUI)
+    "TERM",
+    "COLORTERM",
+    "TERMINFO",
+    "LINES",
+    "COLUMNS",
+
+    # Locale/Language
+    "LANG",
+    "LC_*",
+]
+
+[tool.flavor.build]
+# Include only necessary files
+exclude = [
+    "**/__pycache__",
+    "**/*.pyc",
+    ".git/",
+]
+
+[tool.flavor.signing]
+# Deterministic builds
+key_seed = "minimonitor-demo-v1"
