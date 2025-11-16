@@ -4,196 +4,126 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FlavorPack is a cross-language packaging system implementing the Progressive Secure Package Format (PSPF/2025). It creates self-contained, portable executables from Python applications using native Go/Rust launchers.
+`pyvider-components` is a collection of standard components for the Pyvider Framework - a Python-based Terraform provider framework. The project implements Terraform data sources, resources, and functions that can be consumed through a gRPC plugin interface.
 
-## Binary Compatibility
+## Architecture & Structure
 
-All Linux binaries are built as static executables:
-- **Go**: Built with `CGO_ENABLED=0` for static linking
-- **Rust**: Built with musl libc for static linking
-- **Compatibility**: Works on CentOS 7+, Amazon Linux 2023, Ubuntu, Alpine, and any Linux distribution
-- **No glibc dependencies**: Binaries are fully portable
+The codebase follows a component-based architecture with three main component types:
 
-## Development Commands
+1. **Data Sources** (`src/pyvider/components/data_sources/`) - Read-only data providers for Terraform
+2. **Resources** (`src/pyvider/components/resources/`) - Manage stateful infrastructure components  
+3. **Functions** (`src/pyvider/components/functions/`) - Stateless utility functions for Terraform
 
-### Environment Setup
+Each component includes:
+- Python implementation file
+- Integration with the Pyvider RPC plugin system
+
+Key architectural patterns:
+- Components inherit from base classes in `pyvider-rpcplugin` (e.g., `DataSourceBase`, `ResourceBase`, `FunctionBase`)
+- Uses `attrs` for data validation and schema definition
+- Implements gRPC-based communication with Terraform
+- Capabilities system for advanced features (lens transformations, API interactions)
+
+## Development Environment Setup
+
 ```bash
-# Build Go and Rust helpers (required for packaging)
-make build-helpers
-# or directly
-./build.sh
+# Set up the development environment (creates virtual env, installs dependencies)
+source ./env.sh
+
+# The script will:
+# - Install UV package manager if needed
+# - Create platform-specific virtual environment in workenv/
+# - Install project dependencies and dev tools
+# - Configure PYTHONPATH and tool paths
 ```
+
+## Common Development Commands
 
 ### Testing
 ```bash
-# Run all Python tests
-make test
+# Run all tests
+pytest
 
-# Run specific test modules
-uv run pytest tests/format_2025/test_pspf_2025_core.py
-uv run pytest tests/cli/test_cli.py -v
+# Run specific test file
+uv run pytest tests/test_tdd_function_semantics.py
 
 # Run with coverage
-uv run pytest --cov=flavor --cov-report=term-missing
+uv run pytest --cov=pyvider.components --cov-report=term-missing
 
-# Run PSPF validation tests
-make validate-pspf
+# Run tests in parallel
+uv run pytest -n auto
 
-# Test all builder/launcher combinations
-make validate-pspf-combo
+# Run with verbose output
+uv run pytest -v
 ```
 
-### Linting and Formatting
+### Code Quality
 ```bash
-# Format code
+# Type checking
+uv run pyright
+uv run mypy src/
+
+# Linting and formatting
+uv run ruff check src/ tests/
 uv run ruff format src/ tests/
 
-# Lint code
-uv run ruff check src/ tests/
-
-# Type checking
-uv run mypy src/flavor
+# Security scanning
+bandit -r src/
 ```
 
-### Package Operations
+### Building
 ```bash
-# Create a package
-flavor pack --manifest pyproject.toml --output myapp.psp
+# Build the package
+uv build
 
-# Verify package integrity
-flavor verify myapp.psp
+# Install in editable mode
+uv pip install -e .
 
-# Inspect package contents
-flavor inspect myapp.psp
-
-# Extract package contents
-flavor extract myapp.psp --output-dir extracted/
-
-# Generate signing keys
-flavor keygen --output keys/
+# Sync all dependencies
+uv sync --all-groups
 ```
 
-### Release Management
+### Working with Examples
 ```bash
-# Build platform-specific wheel
-make wheel PLATFORM=darwin_arm64
+# Most examples are in the examples/ directory
+cd examples/integrated_test/
 
-# Build wheels for all platforms
-make release-all
+# Initialize Terraform/OpenTofu
+tofu init
 
-# Validate wheels
-make release-validate-full
-
-# Clean release artifacts
-make release-clean
+# Run the example
+tofu apply
 ```
 
-## Architecture
+## Important Project Instructions
 
-The project has a polyglot architecture with three main layers:
-
-1. **Python Orchestrator** (`src/flavor/`)
-   - `packaging/orchestrator.py` - Main build coordinator
-   - `packaging/python_packager.py` - Python-specific packaging
-   - `psp/format_2025/builder.py` - PSPF package assembly
-   - `psp/format_2025/reader.py` - Package reading/extraction
-   - `psp/format_2025/launcher.py` - Launcher management
-   - `psp/format_2025/crypto.py` - Ed25519 signing/verification
-
-2. **Native Helpers** (`src/`)
-   - `flavor-go/` - Go builder and launcher implementations
-   - `flavor-rust/` - Rust builder and launcher implementations
-   - Built binaries are placed in `dist/bin/` and embedded during packaging
-
-3. **PSPF Package Structure**
-   - See `docs/reference/spec/` for complete binary format specification
-   - SlotDescriptor: 64-byte binary format (see `docs/reference/spec/SLOT_DESCRIPTOR_SPECIFICATION.md`)
-   - Operations: 64-bit packed operation chains (see `docs/reference/spec/fep-0001-core-format-and-operation-chains.md`)
-
-## Key Patterns
-
-### Helper Selection
-The system automatically selects appropriate builder/launcher combinations based on platform and availability. See `src/flavor/packaging/orchestrator_helpers.py` for the selection logic.
-
-### Slot System
-Packages use numbered slots for different components:
-- Slot 0: Usually Python runtime/environment
-- Slot 1: Application code
-- Slot 2+: Additional resources
-
-### Workenv Management
-Packages extract to cached work environments for efficiency. The cache is validated using checksums and signatures. See `src/flavor/psp/format_2025/launcher.py`.
-
-### Cross-Language Testing
-The `tests/pretaster/` tool validates PSPF packages across all builder/launcher combinations to ensure compatibility.
-
-## Important Files
-
-- `src/flavor/psp/format_2025/constants.py` - Format constants and specifications
-- `src/flavor/psp/format_2025/spec.py` - PSPF specification implementation
-- `spec/pspf_2025/proto/modules/operations.proto` - Operation definitions
-- `src/flavor/psp/format_2025/operations.py` - Operation chain packing/unpacking
-- `src/flavor/psp/format_2025/handlers.py` - Maps operations to implementations
-- `src/flavor/psp/format_2025/slots.py` - SlotDescriptor with operations field
-- `src/flavor-go/pkg/psp/format_2025/constants.go` - Go format constants
-- `src/flavor-rust/src/psp/format_2025/constants.rs` - Rust format constants
-- `tests/pretaster/` - PSPF validation tools
+- **Rebuild flavor helpers before testing/verification** to avoid using inaccurate helpers
+- Platform-specific virtual environments are created under `workenv/` with naming pattern `pyvider-components_${OS}_${ARCH}`
+- The project requires Python >=3.11
 
 ## Testing Strategy
 
-- **Unit tests**: Fast, isolated tests for individual components
-- **Integration tests**: Test interactions between Python, Go, and Rust components
-- **Cross-language tests**: Verify all builder/launcher combinations work
-- **Security tests**: Verify signature validation and integrity checks
-- **Packaging tests**: End-to-end package creation and execution
+The test suite includes:
+- **Unit tests** for individual functions and components
+- **Lifecycle tests** for resources (create, read, update, delete operations)
+- **End-to-end tests** for complex workflows like encryption
+- **TDD-style tests** for function semantics and stdlib functions
 
-Use pytest markers to run specific test categories:
-```bash
-uv run pytest -m unit
-uv run pytest -m integration
-uv run pytest -m cross_language
-uv run pytest -m security
-```
-- you will remember to NEVER do ad-hoc signing unless SPECIFICALLY REQUESTED, or you suggest it and I approve.
-- make sure to remember to use debug/trace logging instead of "print" statements when debugging.
-- use pretaster or taster instead of "simple tests." no PSPF tests in /tmp. ALL tests MUST use pretaster or taster - NEVER create standalone test files or test manifests.
-- nope. you will *NEVER* hardcode permissions directly into code.
-- flavorpack is the name of the package. `flavor` is the actual tool/API.
-- use constants for the default permissions, then the metadata must be able to override it. you will not directly embed default permissions into the code. anything default must be a constant.
-- no lauchers will ever intercept command line arguments unless the flavor cli option is enabled.
+When adding new components:
+1. Create the component in the appropriate directory
+3. Write comprehensive tests covering all operations
+4. Ensure the component registers properly with the Pyvider framework
 
-## CRITICAL REQUIREMENTS - NEVER FORGET
+## Component Development Pattern
 
-### NO BACKWARD COMPATIBILITY - EVER
-- **ABSOLUTELY NO** backward compatibility code, functions, variables, or patterns
-- **NO** migration logic or versioning checks for old formats  
-- **NO** "if old_version then..." type code
-- **ALWAYS** implement the end-state solution directly
-- This is a greenfield project - assume everything is brand new
-- If something needs changing, replace it entirely - don't add compatibility layers
+When implementing new components:
 
-### Code Quality Standards
-- **Trace logging is essential** - preserve all debug/trace logging for diagnostics
-- Only remove logging if there's a proven detrimental performance impact
-- Use structured logging with emoji prefixes (DAS pattern)
-- All implementations must be production-ready and reliable
-- Rust code must compile with `--warnings-as-errors` (strict mode)
+1. **Data Sources**: Inherit from `DataSourceBase`, implement `read()` method
+2. **Resources**: Inherit from `ResourceBase`, implement CRUD operations
+3. **Functions**: Inherit from `FunctionBase`, implement `call()` method
 
-### SCHEMA IS OPERATIONS-ONLY
-- **Operations field** - 64-bit uint64, the only encoding mechanism
-- **Operation chains** - Up to 8 operations packed into single integer
-- **Protobuf** - All operations defined in .proto files
-- **SlotDescriptor format** - See `docs/reference/spec/SLOT_DESCRIPTOR_SPECIFICATION.md` for exact binary layout
-
-### Testing Requirements
-- **ALL tests MUST use pretaster or taster** - NEVER create standalone test files
-- **NO test manifests in /tmp** - use pretaster/taster infrastructure only
-- **NO simple/quick tests** - use the proper testing framework
-- Cross-language compatibility must be verified through pretaster
-- If pretaster/taster aren't available, note that testing is blocked - don't create alternatives
-- no. you should not be writing your own examples. you should be using fucking pretaster.
-- Rather than "no hardcoded defaults" i mean "no inline defaults." defaults may be stored in a common file for the project. either defaults.py or constants.py, and THOSE will ALWAYS be used instead of inline defaults.
-- "import annotations" is okay so I can use the unquoted types.
-- After writing each Python file, run the code quality tools - ruff check --fix --unsafe-fixes, ty check, mypy, ruff format, then run each of the tools again. this way CQ is performed during the dev process.%
-- no print ever for debug. use the debug logger.
-- When you want the CI pipeline to work, you must manually start the Helper Prep action.
+All components should:
+- Use `attrs` classes for schema definition
+- Include proper error handling and diagnostics
+- Follow existing naming conventions (snake_case for Python, appropriate for Terraform)
+- It can use __future__ annotations to use unquoted annotations
