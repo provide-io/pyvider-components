@@ -51,13 +51,13 @@ filterwarnings = [
 ]
 
 [tool.ruff]
-line-length = 88
+line-length = 111
 indent-width = 4
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP"]
-ignore = ["E501"]
+select = ["E", "F", "W", "I", "UP", "ANN", "B", "C90", "SIM", "PTH", "RUF"]
+ignore = ["ANN401", "E501"]
 
 [tool.ruff.format]
 quote-style = "double"
