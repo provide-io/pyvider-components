@@ -141,3 +141,6 @@ site/
 
 # Extracted provide.io tooling artifacts
 .provide/
+.mypy_cache/
+.ruff_cache/
+.archive/
