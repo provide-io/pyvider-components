@@ -1,10 +1,9 @@
-# pyvider/components/resources/local_directory.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/resources/local_directory.py
 #
+
+"""TODO: Add module docstring."""
 
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, cast
@@ -16,6 +15,7 @@ if TYPE_CHECKING:
 
 from provide.foundation import logger
 from provide.foundation.errors import resilient
+
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
@@ -179,5 +179,4 @@ class LocalDirectoryResource(
                 )
 
 
-# 📁🏠📂
-# 🧩🔧📦🪄
+# 🧩🔧🔚

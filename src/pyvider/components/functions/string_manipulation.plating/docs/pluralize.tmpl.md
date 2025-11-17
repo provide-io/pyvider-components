@@ -1,26 +1,73 @@
 ---
 page_title: "Function: pluralize"
 description: |-
-  Choose a singular or plural word based on a count.
+  Pluralizes words based on count with support for custom plural forms
 ---
 
 # pluralize (Function)
 
-Return the correct singular or plural form for a word. Optionally pass a count and a custom plural.
+The `pluralize` function converts words to their plural form based on a count value. It automatically applies English pluralization rules and allows custom plural forms for irregular words, making it essential for grammatically correct user-facing messages.
+
+Proper pluralization improves the quality of dynamically generated text in reports, notifications, and user interfaces. The function returns singular form for count of 1 and plural form otherwise, with support for custom plural forms to handle irregular words.
+
+## Capabilities
+
+This function enables you to:
+
+- **User interface messages**: Display grammatically correct messages in outputs
+- **Report generation**: Create proper text in dynamic reports with counts
+- **Notification systems**: Generate contextual notifications with correct grammar
+- **Data summaries**: Create readable count descriptions for resources
+- **Form validation**: Display appropriate error messages with counts
 
 ## Example Usage
 
-{{ example('pluralize') }}
+{{ example("example") }}
 
 ## Signature
 
-`pluralize(word: string, options: variadic) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `word` (string, required) — Base word to pluralize. Returns `null` when this is `null`.
-- `options` (variadic, optional) — First value is the count (default `1`); second value overrides the plural form.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The singular form when the count is `1`, otherwise the plural. Returns `null` when `word` is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}
+
+## Return Value
+
+Returns the singular or plural form based on count:
+- Returns singular form for count of 1
+- Returns plural form for all other counts (0, 2+, negative, decimals)
+- Returns `null` if the word is `null`
+- Applies standard English pluralization rules unless custom plural provided
+
+## Common Patterns
+
+### Resource Count Messages
+```terraform
+variable "server_count" {
+  default = 3
+}
+
+locals {
+  message = "${var.server_count} ${provider::pyvider::pluralize("server", var.server_count)}"
+  # Result: "3 servers"
+}
+```
+
+### Irregular Plurals
+```terraform
+variable "child_count" {
+  default = 2
+}
+
+locals {
+  description = "${var.child_count} ${provider::pyvider::pluralize("child", var.child_count, "children")}"
+  # Result: "2 children"
+}
+```

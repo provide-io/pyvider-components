@@ -1,6 +1,9 @@
 #
-# tests/resources/test_tdd_private_state.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -9,11 +12,10 @@ from typing import Any
 import attrs
 import msgpack
 import pytest
-
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
-from pyvider.schema import a_str, s_resource
+from pyvider.schema import PvsSchema, a_str, s_resource
 
 
 # GIVEN a resource that uses a structured private state object
@@ -28,7 +30,7 @@ class ResourceWithPrivateState(BaseResource):
 
     # Other required abstract methods...
     @classmethod
-    def get_schema(cls):
+    def get_schema(cls) -> PvsSchema:
         return s_resource({"name": a_str()})
 
     async def _validate_config(self, config: Any) -> list[str]:
@@ -71,4 +73,4 @@ async def test_private_state_roundtrip():
     assert rehydrated_private_state_obj == planned_private_state_obj
 
 
-# 🧪🔒✅
+# 🧩🔧🔚

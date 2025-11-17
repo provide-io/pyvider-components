@@ -1,18 +1,21 @@
 #
-# tests/test_local_directory_lifecycle.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
 
-from pathlib import Path
+"""TODO: Add module docstring."""
+
 import shutil
+from pathlib import Path
 
 import pytest
+from pyvider.resources.context import ResourceContext
 
 from pyvider.components.resources.local_directory import (
     LocalDirectoryConfig,
     LocalDirectoryResource,
     LocalDirectoryState,
 )
-from pyvider.resources.context import ResourceContext
 
 
 @pytest.fixture
@@ -68,4 +71,4 @@ async def test_create_lifecycle_contract(
     assert read_state.permissions == "0o775"
 
 
-# 🧪📁🔄
+# 🧩🔧🔚

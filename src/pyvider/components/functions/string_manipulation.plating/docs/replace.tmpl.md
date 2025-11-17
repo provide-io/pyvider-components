@@ -1,27 +1,75 @@
 ---
 page_title: "Function: replace"
 description: |-
-  Replace all occurrences of a substring.
+  Replaces all occurrences of a substring with another string
 ---
 
 # replace (Function)
 
-Produce a new string with each match substituted. Empty strings are used when the search or replacement arguments are `null`.
+The `replace` function searches for all occurrences of a substring within a string and replaces them with a replacement string. It handles null values gracefully and performs global replacement, replacing all occurrences rather than just the first match.
+
+String replacement is fundamental for text manipulation, configuration templating, and data cleaning. The function's global replacement behavior ensures consistent transformations across entire strings.
+
+## Capabilities
+
+This function enables you to:
+
+- **Text normalization**: Replace unwanted characters or patterns for standardization
+- **Path manipulation**: Convert path separators or modify path structures
+- **Configuration templating**: Replace placeholders in configuration templates dynamically
+- **Data cleaning**: Remove or replace invalid characters from input data
+- **URL manipulation**: Modify URLs or endpoints for different environments
 
 ## Example Usage
 
-{{ example('replace') }}
+{{ example("example") }}
 
 ## Signature
 
-`replace(string: string, search: string, replacement: string) -> string`
+`{{ signature_markdown }}`
 
-## Parameters
+## Arguments
 
-- `string` (string, required) — Text to update. Returns `null` when this is `null`.
-- `search` (string, required) — Substring to find. Defaults to `""` when `null`.
-- `replacement` (string, required) — Text that replaces each occurrence. Defaults to `""` when `null`.
+{{ arguments_markdown }}
 
-## Returns
+{% if has_variadic %}
+## Variadic Arguments
 
-The updated string, or `null` when the input string is `null`.
+{{ variadic_argument_markdown }}
+{% endif %}
+
+## Return Value
+
+Returns a new string with all occurrences of the search string replaced:
+- Replaces ALL occurrences (global replacement)
+- Case-sensitive matching
+- Returns the original string if no matches found
+- Returns `null` if the input string is `null`
+- Empty search string returns original string unchanged
+
+## Common Patterns
+
+### Configuration Templating
+```terraform
+variable "environment" {
+  default = "production"
+}
+
+locals {
+  template = "Deploying to ENV_PLACEHOLDER environment"
+  message = provider::pyvider::replace(local.template, "ENV_PLACEHOLDER", var.environment)
+  # Result: "Deploying to production environment"
+}
+```
+
+### Path Manipulation
+```terraform
+variable "windows_path" {
+  default = "C:\\Program Files\\MyApp"
+}
+
+locals {
+  unix_path = provider::pyvider::replace(var.windows_path, "\\", "/")
+  # Result: "C:/Program Files/MyApp"
+}
+```

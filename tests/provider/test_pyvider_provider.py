@@ -1,11 +1,11 @@
 """Tests for pyvider-components provider implementation."""
 
 import pytest
-
-from pyvider.components.provider import PyviderProvider
-from pyvider.components.capabilities.core import CoreCapability
 from pyvider.hub import hub
 from pyvider.providers.base import ProviderMetadata
+
+from pyvider.components.capabilities.core import CoreCapability
+from pyvider.components.provider import PyviderProvider
 
 
 class TestPyviderProvider:
@@ -90,13 +90,13 @@ class TestCoreCapability:
         # Should not raise
 
     def test_core_capability_schema_contribution(self):
-        """Test core capability returns schema with provider_testmode."""
+        """Test core capability returns schema with pyvider_testmode."""
         schema_contrib = CoreCapability.get_schema_contribution()
 
-        # Core capability provides provider_testmode config attribute
+        # Core capability provides pyvider_testmode config attribute
         assert isinstance(schema_contrib, dict)
         assert len(schema_contrib) == 1
-        assert "provider_testmode" in schema_contrib
+        assert "pyvider_testmode" in schema_contrib
 
 
 class TestProviderRegistration:

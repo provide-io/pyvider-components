@@ -1,14 +1,13 @@
-# pyvider/components/resources/timed_token.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/resources/timed_token.py
 #
+
+"""TODO: Add module docstring."""
 
 import datetime
-from typing import TYPE_CHECKING, Any, Literal
 import uuid
+from typing import TYPE_CHECKING, Any, Literal
 
 from attrs import define, evolve
 
@@ -16,6 +15,7 @@ if TYPE_CHECKING:
     pyvider_timed_token = Literal["pyvider_timed_token"]
 
 from provide.foundation import logger
+
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.decorators import register_resource
@@ -113,4 +113,5 @@ class TimedTokenResource(
 
 
 # ⏰🎟️🔑
-# 🧩🔧📦🪄
+
+# 🧩🔧🔚

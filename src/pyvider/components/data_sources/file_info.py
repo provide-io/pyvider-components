@@ -1,15 +1,13 @@
-# pyvider/components/data_sources/file_info.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/file_info.py
 #
 
-# components/data_sources/file_info.py
+"""TODO: Add module docstring."""
+
 import datetime
-from pathlib import Path
 import stat
+from pathlib import Path
 from typing import TYPE_CHECKING, Literal, cast
 
 from attrs import define, field
@@ -20,6 +18,7 @@ if TYPE_CHECKING:
 from provide.foundation import logger
 from provide.foundation.errors import ErrorCategory, capture_error_context, resilient
 from provide.foundation.file import get_mtime, get_size
+
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -173,5 +172,4 @@ class FileInfoDataSource(
         )
 
 
-# 📄ℹ️📊
-# 🧩🔧📄🪄
+# 🧩🔧🔚

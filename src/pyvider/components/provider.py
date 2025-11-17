@@ -1,15 +1,13 @@
-# pyvider/components/provider.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+#
 
-"""
-Provider implementation for pyvider-components.
+"""Provider implementation for pyvider-components.
 
 This provides the reference implementation of a Pyvider provider,
 managing standard components for local file manipulation,
-HTTP data sources, and utility functions.
-"""
+HTTP data sources, and utility functions."""
 
 from pyvider.providers import BaseProvider, ProviderMetadata, register_provider
 
@@ -23,5 +21,8 @@ class PyviderProvider(BaseProvider):
     HTTP data sources, and utility functions.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(metadata=ProviderMetadata(name="pyvider", version="0.1.0"))
+
+
+# 🧩🔧🔚

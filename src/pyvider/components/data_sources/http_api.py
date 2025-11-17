@@ -1,10 +1,9 @@
-# pyvider/components/data_sources/http_api.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/http_api.py
 #
+
+"""TODO: Add module docstring."""
 
 from decimal import Decimal
 from typing import TYPE_CHECKING, Literal, cast
@@ -15,12 +14,13 @@ if TYPE_CHECKING:
     pyvider_http_api = Literal["pyvider_http_api"]
 
 from provide.foundation import logger
-from provide.foundation.transport import HTTPMethod, request
+from provide.foundation.transport import HTTPMethod, Response, request
 from provide.foundation.transport.errors import (
     HTTPResponseError,
     TransportConnectionError,
     TransportTimeoutError,
 )
+
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -104,7 +104,7 @@ class HTTPAPIDataSource(
         )
         return errors
 
-    async def _make_http_request(self, config: HTTPAPIConfig):
+    async def _make_http_request(self, config: HTTPAPIConfig) -> Response:
         """Make HTTP request using provide-foundation transport."""
         try:
             # Handle None values from unknown/computed config at plan time
@@ -163,4 +163,5 @@ class HTTPAPIDataSource(
 
 
 # 🌐📡📊
-# 🧩🔧📄🪄
+
+# 🧩🔧🔚

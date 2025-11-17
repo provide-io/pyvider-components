@@ -1,10 +1,11 @@
-# pyvider/components/capabilities/api.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/capabilities/api.py
 #
+
+"""TODO: Add module docstring."""
+
+from typing import Any
 
 from pyvider.capabilities import BaseCapability, register_capability
 from pyvider.schema import PvsAttribute, a_bool, a_map, a_num, a_str
@@ -55,9 +56,8 @@ class ApiCapability(AbstractApiCapability):
     The Pyvider API capability.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
 
-# 🔌🌐🛠️
-# 🧩🔧📄🪄
+# 🧩🔧🔚

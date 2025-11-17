@@ -1,16 +1,13 @@
-# pyvider/components/data_sources/nested_data_test_suite.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/nested_data_test_suite.py
 #
 
-# pyvider/components/test_suite/nested_data_test.py
-# Comprehensive test suite to isolate CTY nested data issues
-from decimal import Decimal
+"""TODO: Add module docstring."""
+
 import hashlib
 import json
+from decimal import Decimal
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define, field
@@ -331,7 +328,7 @@ class NestedResourceTest(
     async def read(self, ctx: ResourceContext) -> NestedResourceState | None:
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext):
+    async def _delete_apply(self, ctx: ResourceContext) -> None:
         pass
 
 
@@ -359,5 +356,4 @@ def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> 
     return json.dumps(result, default=str)
 
 
-# 🧪📦📊
-# 🧩🔧📄🪄
+# 🧩🔧🔚
