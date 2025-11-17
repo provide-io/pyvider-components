@@ -1,19 +1,22 @@
 #
-# tests/functions/jq/test_jq_wire_protocol.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 import json
 from pathlib import Path
 from typing import Any
 
 import pytest
-
-from pyvider.components.capabilities.lens import LensCapability
-from pyvider.components.functions.lens_jq import lens_jq as lens_jq_function
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.conversion import cty_to_native, marshal, unmarshal
 from pyvider.cty import CtyDynamic, CtyList, CtyString, CtyValue
 from pyvider.protocols.tfprotov6.handlers import CallFunctionHandler
-import pyvider.protocols.tfprotov6.protobuf as pb
+
+from pyvider.components.capabilities.lens import LensCapability
+from pyvider.components.functions.lens_jq import lens_jq as lens_jq_function
 
 TF_DATA_PATH = Path("tests/fixtures/advanced_jq_test")
 
@@ -56,4 +59,4 @@ class TestJqWireProtocol:
         assert native_result == ["Dr. Evelyn Reed", "Dr. Jian Chen", "Maria Rosa"]
 
 
-# 🧪🔍🔌
+# 🧩🔧🔚

@@ -1,6 +1,9 @@
 #
-# tests/resources/test_tdd_private_state_lifecycle.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -8,12 +11,11 @@ from typing import Any
 
 import attrs
 import pytest
-
 from pyvider.exceptions import ResourceError
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
-from pyvider.schema import a_str, s_resource
+from pyvider.schema import PvsSchema, a_str, s_resource
 
 
 # 1. Define a structured class for the resource's private state.
@@ -46,7 +48,7 @@ class StatefulResource(BaseResource):
     private_state_class = StatefulPrivateState
 
     @classmethod
-    def get_schema(cls):
+    def get_schema(cls) -> PvsSchema:
         return s_resource(
             attributes={
                 "name": a_str(required=True),
@@ -148,4 +150,4 @@ async def test_private_state_is_passed_from_plan_to_apply():
     assert final_private_state is None
 
 
-# 🧪🔒🔄
+# 🧩🔧🔚

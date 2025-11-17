@@ -1,6 +1,9 @@
 #
-# tests/resources/test_tdd_private_state_in_read.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -9,17 +12,16 @@ from typing import Any
 import attrs
 import msgpack
 import pytest
-
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.common.encryption import encrypt
 from pyvider.conversion import marshal, unmarshal
 from pyvider.exceptions import ResourceError
 from pyvider.hub import hub, register_resource
 from pyvider.protocols.tfprotov6.handlers import ReadResourceHandler
-import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
-from pyvider.schema import a_num, a_str, s_resource
+from pyvider.schema import PvsSchema, a_num, a_str, s_resource
 
 
 @attrs.define(frozen=True)
@@ -40,7 +42,7 @@ class ResourceWithPrivateStateInRead(BaseResource):
     private_state_class = ReadPrivateState
 
     @classmethod
-    def get_schema(cls):
+    def get_schema(cls) -> PvsSchema:
         return s_resource({"name": a_str(), "read_version": a_num(computed=True)})
 
     async def _validate_config(self, config: Any) -> list[str]:
@@ -96,4 +98,4 @@ async def test_read_handler_provides_private_state_to_context(encryption_key_env
         hub.unregister("resource", resource_name)
 
 
-# 🧪🔒📖
+# 🧩🔧🔚

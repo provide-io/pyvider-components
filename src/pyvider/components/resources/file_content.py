@@ -1,10 +1,9 @@
-# pyvider/components/resources/file_content.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/resources/file_content.py
 #
+
+"""TODO: Add module docstring."""
 
 import hashlib
 from pathlib import Path
@@ -23,6 +22,7 @@ from provide.foundation.file import (
     safe_delete,
     safe_read_text,
 )
+
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
@@ -166,5 +166,4 @@ class FileContentResource(
             logger.debug("File does not exist, nothing to delete", path=str(path))
 
 
-# 📄💾🔧
-# 🧩🔧📦🪄
+# 🧩🔧🔚

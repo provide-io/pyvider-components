@@ -1,10 +1,9 @@
-# pyvider/components/functions/string_manipulation.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/functions/string_manipulation.py
 #
+
+"""TODO: Add module docstring."""
 
 from typing import Any
 
@@ -18,6 +17,7 @@ from provide.foundation.formatting import (
     to_snake_case,
     truncate,
 )
+
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
@@ -183,7 +183,7 @@ def snake_case(text: str | None) -> str | None:
         "options": "Optional: Pass true for PascalCase (default: false for camelCase)",
     },
 )
-def camel_case(text: str | None, *options) -> str | None:
+def camel_case(text: str | None, *options: bool) -> str | None:
     """
     Convert text to camelCase (or PascalCase if upper_first is true).
 
@@ -223,7 +223,7 @@ def kebab_case(text: str | None) -> str | None:
         "options": "Optional: Precision for decimal places (default: 1)",
     },
 )
-def format_file_size(size_bytes: int | None, *options) -> str | None:
+def format_file_size(size_bytes: int | None, *options: int) -> str | None:
     """
     Format bytes as human-readable size (e.g., "1.5 KB", "2.3 MB").
 
@@ -255,7 +255,7 @@ def format_file_size(size_bytes: int | None, *options) -> str | None:
         "options": "Optional: First arg is max_length (default: 100), second is suffix (default: '...')",
     },
 )
-def truncate_text(text: str | None, *options) -> str | None:
+def truncate_text(text: str | None, *options: int | str) -> str | None:
     """
     Truncate text to specified length with optional suffix.
 
@@ -296,7 +296,7 @@ def truncate_text(text: str | None, *options) -> str | None:
         "options": "Optional: First arg is count (default: 1), second is custom plural form",
     },
 )
-def pluralize_word(word: str | None, *options) -> str | None:
+def pluralize_word(word: str | None, *options: int | str) -> str | None:
     """
     Pluralize a word based on count with optional custom plural form.
 
@@ -331,4 +331,5 @@ def pluralize_word(word: str | None, *options) -> str | None:
 
 
 # ✂️📝🎯
-# 🧩🔧🔣🪄
+
+# 🧩🔧🔚

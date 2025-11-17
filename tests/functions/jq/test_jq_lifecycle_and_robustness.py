@@ -1,17 +1,20 @@
 #
-# tests/functions/jq/test_jq_lifecycle_and_robustness.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 import json
 from pathlib import Path
 from typing import Any
 
 import pytest
-
-from pyvider.components.data_sources.lens_jq import LensJqDataSource
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.conversion import marshal, unmarshal
 from pyvider.protocols.tfprotov6.handlers import ReadDataSourceHandler
-import pyvider.protocols.tfprotov6.protobuf as pb
+
+from pyvider.components.data_sources.lens_jq import LensJqDataSource
 
 TF_DATA_PATH = Path("tests/fixtures/advanced_jq_test")
 
@@ -72,4 +75,4 @@ class TestJqLifecycleAndRobustness:
         assert final_result["result"][0]["part_name"] == "Qubit Capacitor Array"
 
 
-# 🧪🔍💪
+# 🧩🔧🔚
