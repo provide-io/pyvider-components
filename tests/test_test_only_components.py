@@ -15,55 +15,29 @@ This test suite verifies:
 from importlib import import_module
 
 import pytest
-from pyvider.exceptions import DataSourceError, ResourceError, FunctionError
+from pyvider.exceptions import DataSourceError, FunctionError, ResourceError
 
 utils_module = import_module("pyvider.protocols.tfprotov6.handlers.utils")
-check_test_only_access = getattr(utils_module, "check_test_only_access")
-get_all_components = getattr(utils_module, "get_all_components")
+check_test_only_access = utils_module.check_test_only_access
+get_all_components = utils_module.get_all_components
 
 data_sources_module = import_module(
     "pyvider.components.data_sources.nested_data_test_suite"
 )
-SimpleMapDataSource = getattr(data_sources_module, "SimpleMapDataSource")
-MixedMapDataSource = getattr(data_sources_module, "MixedMapDataSource")
-StructuredObjectDataSource = getattr(data_sources_module, "StructuredObjectDataSource")
-NestedResourceTest = getattr(data_sources_module, "NestedResourceTest")
+SimpleMapDataSource = data_sources_module.SimpleMapDataSource
+MixedMapDataSource = data_sources_module.MixedMapDataSource
+StructuredObjectDataSource = data_sources_module.StructuredObjectDataSource
+NestedResourceTest = data_sources_module.NestedResourceTest
 
-PrivateStateVerifierResource = getattr(
-    import_module("pyvider.components.resources.private_state_verifier"),
-    "PrivateStateVerifierResource",
-)
-FileContentResource = getattr(
-    import_module("pyvider.components.resources.file_content"),
-    "FileContentResource",
-)
-LocalDirectoryResource = getattr(
-    import_module("pyvider.components.resources.local_directory"),
-    "LocalDirectoryResource",
-)
-TimedTokenResource = getattr(
-    import_module("pyvider.components.resources.timed_token"),
-    "TimedTokenResource",
-)
-WarningExampleResource = getattr(
-    import_module("pyvider.components.resources.warning_example"),
-    "WarningExampleResource",
-)
-EnvVariablesDataSource = getattr(
-    import_module("pyvider.components.data_sources.env_variables"),
-    "EnvVariablesDataSource",
-)
-FileInfoDataSource = getattr(
-    import_module("pyvider.components.data_sources.file_info"),
-    "FileInfoDataSource",
-)
-HTTPAPIDataSource = getattr(
-    import_module("pyvider.components.data_sources.http_api"),
-    "HTTPAPIDataSource",
-)
-CoreCapability = getattr(
-    import_module("pyvider.components.capabilities.core"), "CoreCapability"
-)
+PrivateStateVerifierResource = import_module("pyvider.components.resources.private_state_verifier").PrivateStateVerifierResource
+FileContentResource = import_module("pyvider.components.resources.file_content").FileContentResource
+LocalDirectoryResource = import_module("pyvider.components.resources.local_directory").LocalDirectoryResource
+TimedTokenResource = import_module("pyvider.components.resources.timed_token").TimedTokenResource
+WarningExampleResource = import_module("pyvider.components.resources.warning_example").WarningExampleResource
+EnvVariablesDataSource = import_module("pyvider.components.data_sources.env_variables").EnvVariablesDataSource
+FileInfoDataSource = import_module("pyvider.components.data_sources.file_info").FileInfoDataSource
+HTTPAPIDataSource = import_module("pyvider.components.data_sources.http_api").HTTPAPIDataSource
+CoreCapability = import_module("pyvider.components.capabilities.core").CoreCapability
 
 
 class TestTestOnlyComponentsMarking:
@@ -246,9 +220,10 @@ class TestTestModeScenarios:
         """Test that get_all_components includes test-only components."""
         # Run fresh discovery to ensure all components are registered
         # (other tests may have unregistered some resources)
+        import asyncio
+
         from pyvider.hub import hub
         from pyvider.hub.discovery import ComponentDiscovery
-        import asyncio
 
         discovery = ComponentDiscovery(hub)
         asyncio.run(discovery.discover_all())

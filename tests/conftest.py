@@ -8,11 +8,11 @@
 import os
 
 import pytest
-
-from pyvider.components.capabilities.lens import LensCapability
 from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
 from pyvider.providers.base import BaseProvider, ProviderMetadata
+
+from pyvider.components.capabilities.lens import LensCapability
 
 # Register pytest plugins for test fixtures
 pytest_plugins = [

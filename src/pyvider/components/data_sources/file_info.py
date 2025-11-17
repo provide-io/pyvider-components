@@ -6,15 +6,15 @@
 """TODO: Add module docstring."""
 
 import datetime
-from pathlib import Path
 import stat
+from pathlib import Path
 from typing import cast
 
 from attrs import define, field
-
 from provide.foundation import logger
 from provide.foundation.errors import capture_error_context, resilient
 from provide.foundation.file import get_mtime, get_size
+
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError

@@ -6,13 +6,13 @@
 """TODO: Add module docstring."""
 
 import pytest
+from pyvider.exceptions import DataSourceError
+from pyvider.resources.context import ResourceContext
 
 from pyvider.components.data_sources.env_variables import (
     EnvVariablesConfig,
     EnvVariablesDataSource,
 )
-from pyvider.exceptions import DataSourceError
-from pyvider.resources.context import ResourceContext
 
 
 @pytest.fixture
