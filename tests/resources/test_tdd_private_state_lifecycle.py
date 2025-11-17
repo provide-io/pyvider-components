@@ -1,9 +1,6 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/resources/test_tdd_private_state_lifecycle.py
 #
-
-"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -11,6 +8,7 @@ from typing import Any
 
 import attrs
 import pytest
+
 from pyvider.exceptions import ResourceError
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
@@ -150,4 +148,4 @@ async def test_private_state_is_passed_from_plan_to_apply():
     assert final_private_state is None
 
 
-# 🧩🔧🔚
+# 🧪🔒🔄

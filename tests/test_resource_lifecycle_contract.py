@@ -1,20 +1,17 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/test_resource_lifecycle_contract.py
 #
-
-"""TODO: Add module docstring."""
 
 import hashlib
 
 import pytest
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.resources.file_content import (
     FileContentConfig,
     FileContentResource,
     FileContentState,
 )
+from pyvider.resources.context import ResourceContext
 
 
 class TestResourceLifecycleContract:
@@ -88,4 +85,4 @@ class TestResourceLifecycleContract:
         assert planned_state.exists is True
 
 
-# 🧩🔧🔚
+# 🧪🔄📋

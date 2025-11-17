@@ -1,15 +1,20 @@
+# pyvider/components/data_sources/lens_jq.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/data_sources/lens_jq.py
+#
 
 import json
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define
 
+if TYPE_CHECKING:
+    pyvider_lens_jq = Literal["pyvider_lens_jq"]
+
+from provide.foundation import logger
 from pyvider.conversion import cty_to_native
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -51,7 +56,7 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
     async def _validate_config(self, config: LensJqConfig) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext, *, lens: LensCapability) -> LensJqState:
+    async def read(self, ctx: ResourceContext, *, lens: LensCapability) -> LensJqState:  # type: ignore[override]
         if not lens.is_enabled:
             raise DataSourceError(
                 "The 'lens' capability is disabled in the provider configuration."
@@ -67,10 +72,20 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
             raise DataSourceError(f"Invalid JSON in 'json_input': {e}") from e
 
         try:
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE about to call lens.jq with query={config.query!r}, input_data={parsed_json}"
+            )
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE lens object: {lens}, type: {type(lens)}"
+            )
             result_cty_value = lens.jq(config.query, parsed_json)
-
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE lens.jq returned: {type(result_cty_value)} = {result_cty_value}"
+            )
             native_result = cty_to_native(result_cty_value)
-
+            logger.debug(
+                f"🔧 LENS_JQ_DATA_SOURCE final result: {type(native_result)} = {native_result}"
+            )
             return LensJqState(
                 json_input=config.json_input, query=config.query, result=native_result
             )
@@ -78,4 +93,5 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
             raise DataSourceError(f"Error processing jq query: {e}") from e
 
 
-# 🧩🔧🔚
+# 🔍🔧📊
+# 🧩🔧📄🪄

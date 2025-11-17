@@ -1,9 +1,6 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/resources/test_tdd_resource_context_contract.py
 #
-
-"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -11,11 +8,12 @@ from typing import Any
 
 import attrs
 import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
+
 from pyvider.conversion import marshal, unmarshal
 from pyvider.cty import CtyMark, CtyValue
 from pyvider.hub import hub, register_resource
 from pyvider.protocols.tfprotov6.handlers import PlanResourceChangeHandler
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
@@ -151,4 +149,4 @@ async def test_plan_handler_populates_full_resource_context(encryption_key_env):
         hub.unregister("resource", resource_name)
 
 
-# 🧩🔧🔚
+# 🧪📋✅

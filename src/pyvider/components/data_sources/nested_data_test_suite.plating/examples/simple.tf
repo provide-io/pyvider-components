@@ -6,12 +6,12 @@ data "pyvider_simple_map_test" "example" {
   }
 }
 
-output "simple_processed_data" {
+output "processed_data" {
   description = "Map with all values converted to uppercase"
   value       = data.pyvider_simple_map_test.example.processed_data
 }
 
-output "simple_data_hash" {
+output "data_hash" {
   description = "SHA256 hash of the processed data"
   value       = data.pyvider_simple_map_test.example.data_hash
 }

@@ -1,9 +1,10 @@
+# pyvider/components/resources/private_state_verifier.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/resources/private_state_verifier.py
+#
 
 from typing import Any
 
@@ -56,20 +57,24 @@ class PrivateStateVerifierResource(BaseResource):
     ) -> tuple[dict[str, Any], VerifierPrivateState]:
         base_plan["decrypted_token"] = a_unknown(a_str())
         # Handle None/unknown input_value at plan time (e.g., when using timestamp())
-        input_val = ctx.config.input_value if ctx.config.input_value else ""
+        input_val = (
+            ctx.config.input_value if ctx.config and ctx.config.input_value else ""
+        )  # type: ignore[union-attr]
+        assert self.private_state_class is not None
         private_state = self.private_state_class(
-            secret_token=f"SECRET_FOR_{input_val.upper()}"
+            secret_token=f"SECRET_FOR_{input_val.upper()}"  # type: ignore[call-arg]
         )
-        return base_plan, private_state
+        return base_plan, private_state  # type: ignore[return-value]
 
     async def _create_apply(self, ctx: ResourceContext) -> tuple[VerifierState, None]:
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
         final_state = evolve(
-            ctx.planned_state, decrypted_token=ctx.private_state.secret_token
+            ctx.planned_state,
+            decrypted_token=ctx.private_state.secret_token,  # type: ignore[attr-defined]
         )
-        return final_state, None
+        return final_state, None  # type: ignore[return-value]
 
     async def read(self, ctx: ResourceContext) -> VerifierState | None:
         return ctx.state
@@ -78,4 +83,5 @@ class PrivateStateVerifierResource(BaseResource):
         pass
 
 
-# 🧩🔧🔚
+# 🔒✅🛡️
+# 🧩🔧📦🪄

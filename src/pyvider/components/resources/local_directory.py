@@ -1,18 +1,21 @@
+# pyvider/components/resources/local_directory.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/resources/local_directory.py
+#
 
 from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define
+
+if TYPE_CHECKING:
+    pyvider_local_directory = Literal["pyvider_local_directory"]
+
 from provide.foundation import logger
 from provide.foundation.errors import resilient
-
-from pyvider.common.types import StateType
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
@@ -103,9 +106,9 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @resilient()
-    async def _create_apply(
+    async def _create_apply(  # type: ignore[override]
         self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    ) -> tuple[LocalDirectoryState | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
@@ -119,7 +122,8 @@ class LocalDirectoryResource(
 
         path.mkdir(parents=True, exist_ok=True)
         try:
-            path.chmod(int(planned_state.permissions, 8))
+            permissions_str = planned_state.permissions or "0o755"
+            path.chmod(int(permissions_str, 8))
             logger.debug(
                 "Set directory permissions",
                 path=str(path),
@@ -129,11 +133,11 @@ class LocalDirectoryResource(
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
             ) from e
-        return ctx.planned_state, None
+        return ctx.planned_state, None  # type: ignore[return-value]
 
-    async def _update_apply(
+    async def _update_apply(  # type: ignore[override]
         self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    ) -> tuple[LocalDirectoryState | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()
@@ -153,6 +157,7 @@ class LocalDirectoryResource(
             permissions=current_permissions,
             file_count=file_count,
         )
+        assert self.state_class is not None
         return self.state_class(
             path=str(path),
             permissions=current_permissions,
@@ -174,4 +179,5 @@ class LocalDirectoryResource(
                 )
 
 
-# 🧩🔧🔚
+# 📁🏠📂
+# 🧩🔧📦🪄

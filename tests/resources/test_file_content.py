@@ -1,9 +1,6 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/resources/test_file_content.py
 #
-
-"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -12,13 +9,13 @@ from pathlib import Path
 
 import pytest
 from provide.testkit import FoundationTestCase
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.resources.file_content import (
     FileContentConfig,
     FileContentResource,
     FileContentState,
 )
+from pyvider.resources.context import ResourceContext
 
 
 class TestFileContent(FoundationTestCase):
@@ -76,4 +73,4 @@ class TestFileContent(FoundationTestCase):
         assert not temp_file.exists()
 
 
-# 🧩🔧🔚
+# 🧪📄🔧

@@ -1,8 +1,8 @@
-data "pyvider_file_info" "target_file" {
-  path = "/tmp/example_file.txt"
+data "pyvider_file_info" "example" {
+  # Configuration options here
 }
 
 output "example_data" {
   description = "Data from pyvider_file_info"
-  value       = data.pyvider_file_info.target_file
+  value       = data.pyvider_file_info.example
 }

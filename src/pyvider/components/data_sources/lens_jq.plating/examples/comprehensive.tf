@@ -4,12 +4,12 @@
 locals {
   # Sample data for demonstrating the jq function.
   # The function can accept raw Terraform objects directly.
-  comprehensive_sample_data_for_func = {
-    comprehensive_items = [
-      { "name" : "Laptop", "stock" : 15, "tags" : ["electronics", "sale"], "price" : 999 },
-      { "name" : "Mouse", "stock" : 150, "tags" : ["electronics", "accessory"], "price" : 25 },
-      { "name" : "Keyboard", "stock" : 75, "tags" : ["electronics", "accessory"], "price" : 75 },
-      { "name" : "Monitor", "stock" : 25, "tags" : ["electronics"], "price" : 350 }
+  sample_data_for_func = {
+    items = [
+      { "name" : "Laptop", "stock" : 15, "tags" : ["electronics", "sale"], "specs" : { "cpu" : "i7", "ram_gb" : 16 } },
+      { "name" : "Mouse", "stock" : 150, "tags" : ["electronics", "accessory"], "specs" : { "dpi" : 1200 } },
+      { "name" : "Keyboard", "stock" : 75, "tags" : ["electronics", "accessory"], "specs" : { "layout" : "US" } },
+      { "name" : "Monitor", "stock" : 25, "tags" : ["electronics"], "specs" : { "size_inch" : 27, "resolution" : "4K" } }
     ],
     "store_location" : "Warehouse A",
     "last_updated" : "2025-06-25T10:00:00Z"
@@ -30,60 +30,60 @@ locals {
 # ===================================================================
 # Example 1: Simple Field Extraction (Result is a primitive)
 # ===================================================================
-output "comprehensive_field_extraction" {
+output "ex1_store_location" {
   description = "Example 1: Extracts the 'store_location' field."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".store_location")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".store_location")
 }
 
 # ===================================================================
 # Example 2: Array Indexing (Result is a primitive)
 # ===================================================================
-output "comprehensive_array_indexing" {
+output "ex2_first_item_name" {
   description = "Example 2: Extracts the name of the first item in the 'items' array."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, ".comprehensive_items[0].name")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[0].name")
 }
 
 # ===================================================================
 # Example 3: Array Projection (Result is a list)
 # ===================================================================
-output "comprehensive_array_projection" {
+output "ex3_all_item_names" {
   description = "Example 3: Creates a new array containing only the names of all items."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[].name]")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, "[.items[].name]")
 }
 
 # ===================================================================
 # Example 4: Filtering an Array (Result is a list of objects)
 # ===================================================================
-output "comprehensive_array_filtering" {
+output "ex4_accessory_items" {
   description = "Example 4: Filters for items tagged as 'accessory'."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select(.tags[] == \"accessory\")]")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select(.tags[] == \"accessory\")")
 }
 
 # ===================================================================
 # Example 5: Filtering and Projecting (Result is a list)
 # ===================================================================
-output "comprehensive_filter_and_project" {
+output "ex5_accessory_names" {
   description = "Example 5: Filters for 'accessory' items and returns only their names."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select(.tags[] == \"accessory\") | .name]")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select(.tags[] == \"accessory\") | .name")
 }
 
 # ===================================================================
 # Example 6: Creating a New Object (Result is an object)
 # ===================================================================
-output "comprehensive_create_object" {
+output "ex6_stock_report" {
   description = "Example 6: Creates a custom stock report object."
   value = provider::pyvider::lens_jq(
-    local.comprehensive_sample_data_for_func,
-    "{ report_date: .last_updated, inventory: [ .comprehensive_items[] | { item: .name, quantity: .stock, is_electronic: (.tags[] | contains(\"electronics\")) } ] }"
+    local.sample_data_for_func,
+    "{ report_date: .last_updated, inventory: [ .items[] | { item: .name, quantity: .stock, is_electronic: (.tags[] | contains(\"electronics\")) } ] }"
   )
 }
 
 # ===================================================================
 # Example 7: Complex Filtering (Result is a list of objects)
 # ===================================================================
-output "comprehensive_complex_filter" {
+output "ex7_urgent_restock_items" {
   description = "Example 7: Finds items on sale with stock less than 20."
-  value       = provider::pyvider::lens_jq(local.comprehensive_sample_data_for_func, "[.comprehensive_items[] | select((.tags[] == \"sale\") and .stock < 20)]")
+  value       = provider::pyvider::lens_jq(local.sample_data_for_func, ".items[] | select((.tags[] == \"sale\") and .stock < 20)")
 }
 
 # ===================================================================
@@ -94,7 +94,7 @@ data "pyvider_lens_jq" "get_active_admins" {
   query      = ".users[] | select(.active == true and (.roles[] | contains(\"admin\"))) | .name"
 }
 
-output "comprehensive_data_source_result" {
+output "ex8_active_admin_from_ds" {
   description = "Example 8: Result from the lens_jq data source."
   # The data source returns a string. Since the query result is a primitive ("Alice"),
   # we do not need jsondecode() here. If the query returned a list or object, we would.
@@ -109,7 +109,7 @@ data "pyvider_lens_jq" "filter_active_users" {
   query      = "[.users[] | select(.active == true)] | length"
 }
 
-output "comprehensive_active_users_count" {
+output "active_user_count" {
   description = "Count of active users using jq aggregation"
   value       = data.pyvider_lens_jq.filter_active_users.result
 }

@@ -1,74 +1,26 @@
 ---
 page_title: "Function: split"
 description: |-
-  Splits a string into a list using a specified delimiter
+  Break a string into parts using a delimiter.
 ---
 
 # split (Function)
 
-The `split` function takes a delimiter and a string, then returns a list of substrings created by splitting the original string at each occurrence of the delimiter. It handles null values gracefully and edge cases like empty strings, making it ideal for parsing delimited data.
-
-String splitting is essential for processing configuration values, parsing paths, and extracting data from formatted strings. The function's predictable behavior with edge cases ensures robust handling of various input scenarios.
-
-## Capabilities
-
-This function enables you to:
-
-- **Path parsing**: Split file paths into components for analysis or manipulation
-- **CSV processing**: Parse comma-separated values into individual elements
-- **Configuration parsing**: Split delimited configuration strings into lists
-- **Tag processing**: Split tag strings into individual tags for iteration
-- **Data extraction**: Extract values from structured strings
+Split text into a list of values. A `null` input returns `null`, an empty string yields an empty list, and a `null` delimiter is treated as `""`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('split') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`split(string: string, delimiter: string) -> list[string]`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `string` (string, required) — Text to split. Returns `null` when this is `null`.
+- `delimiter` (string, required) — Separator used for splitting. Defaults to `""` when `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
-
-## Return Value
-
-Returns a list of strings created by splitting the input:
-- Empty string returns an empty list `[]`
-- String without delimiter returns a single-element list
-- Returns `null` if the input string is `null`
-- Empty delimiter splits into individual characters
-
-## Common Patterns
-
-### Environment Variable Processing
-```terraform
-variable "path_env" {
-  type = string
-  default = "/usr/local/bin:/usr/bin:/bin"
-}
-
-locals {
-  path_dirs = provider::pyvider::split(":", var.path_env)
-  # Result: ["/usr/local/bin", "/usr/bin", "/bin"]
-}
-```
-
-### CSV Data Parsing
-```terraform
-variable "server_list" {
-  default = "web1,web2,web3,db1"
-}
-
-locals {
-  servers = provider::pyvider::split(",", var.server_list)
-  # Result: ["web1", "web2", "web3", "db1"]
-}
-```
+A list of strings. Empty input text yields `[]`.

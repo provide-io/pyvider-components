@@ -1,9 +1,10 @@
+# pyvider/components/functions/numeric_functions.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/functions/numeric_functions.py
+#
 
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
@@ -97,7 +98,7 @@ def sum_list(numbers: list[int | float] | None) -> int | float | None:
         "options": "Optional: Precision (decimal places, default: 0)",
     },
 )
-def round_number(number: int | float | None, *options: int) -> int | float | None:
+def round_number(number: int | float | None, *options) -> int | float | None:
     """
     Round a number to specified decimal places.
 
@@ -125,5 +126,4 @@ def round_number(number: int | float | None, *options: int) -> int | float | Non
 
 
 # 🔢➕🎯
-
-# 🧩🔧🔚
+# 🧩🔧🔣🪄

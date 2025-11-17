@@ -1,78 +1,26 @@
 ---
 page_title: "Function: multiply"
 description: |-
-  Multiplies two numbers with intelligent integer conversion
+  Multiply two numbers with `null` safety.
 ---
 
 # multiply (Function)
 
-The `multiply` function multiplies two numbers (integers or floats) and returns the result. It handles null values gracefully and automatically converts floating-point results to integers when they represent whole numbers, ensuring optimal numeric type selection.
-
-Multiplication is fundamental for scaling calculations, resource sizing, and cost projections. The automatic type optimization ensures that results are presented in their most natural form, with whole numbers returned as integers for clarity.
-
-## Capabilities
-
-This function enables you to:
-
-- **Scaling calculations**: Multiply base values by scaling factors for resource sizing
-- **Cost projections**: Calculate total costs by multiplying unit prices by quantities
-- **Resource allocation**: Determine total resources needed by multiplying per-unit requirements
-- **Rate calculations**: Compute totals by multiplying rates by time periods
-- **Capacity planning**: Calculate total capacity by multiplying unit capacity by count
+Return the product of two numeric values. If either argument is `null`, the result is `null`. Whole-number results are returned as integers.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('multiply') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`multiply(a: number, b: number) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `a` (number, required) — First factor. Returns `null` when this or `b` is `null`.
+- `b` (number, required) — Second factor.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
-
-## Return Value
-
-Returns the product as a number. The return type is automatically optimized:
-- If the result is a whole number, returns an integer
-- If the result has decimal places, returns a float
-- Returns `null` if either input is `null`
-
-## Common Patterns
-
-### Resource Scaling
-```terraform
-variable "servers_per_zone" {
-  default = 3
-}
-
-variable "availability_zones" {
-  default = 4
-}
-
-locals {
-  total_servers = provider::pyvider::multiply(var.servers_per_zone, var.availability_zones)  # 12
-}
-```
-
-### Cost Calculation
-```terraform
-variable "instance_price" {
-  default = 0.15
-}
-
-variable "hours_per_month" {
-  default = 730
-}
-
-locals {
-  monthly_cost = provider::pyvider::multiply(var.instance_price, var.hours_per_month)  # 109.5
-}
-```
+The product, or `null` when either input is `null`. Integer results are cast to whole numbers.

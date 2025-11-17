@@ -19,7 +19,7 @@ data "local_file" "verify_create" {
   depends_on = [pyvider_file_content.test_create]
 }
 
-output "lifecycle_created_file" {
+output "created_file" {
   value = {
     filename     = pyvider_file_content.test_create.filename
     content      = pyvider_file_content.test_create.content
@@ -28,7 +28,7 @@ output "lifecycle_created_file" {
   }
 }
 
-output "lifecycle_verification" {
+output "verification" {
   value = {
     file_content = data.local_file.verify_create.content
     matches      = data.local_file.verify_create.content == pyvider_file_content.test_create.content
@@ -36,6 +36,6 @@ output "lifecycle_verification" {
 }
 
 # Run apply, then modify the content and run apply again to test updates
-output "lifecycle_update_instructions" {
+output "update_instructions" {
   value = "To test update: Change 'test_update' resource content to 'Updated content' and apply again"
 }

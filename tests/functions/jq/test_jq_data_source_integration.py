@@ -1,14 +1,10 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/functions/jq/test_jq_data_source_integration.py
 #
-
-"""TODO: Add module docstring."""
 
 import json
 
 import pytest
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.capabilities.lens import LensCapability
 from pyvider.components.data_sources.lens_jq import (
@@ -16,6 +12,7 @@ from pyvider.components.data_sources.lens_jq import (
     LensJqDataSource,
     LensJqState,
 )
+from pyvider.resources.context import ResourceContext
 
 
 @pytest.mark.usefixtures("provider_in_hub")
@@ -36,4 +33,4 @@ async def test_lens_jq_data_source_with_problematic_input():
     assert state.result == "hello from list"
 
 
-# 🧩🔧🔚
+# 🧪🔍📊

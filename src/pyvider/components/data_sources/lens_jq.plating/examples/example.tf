@@ -1,17 +1,8 @@
-locals {
-  sample_json = jsonencode({
-    name  = "Example"
-    value = 42
-    items = ["apple", "banana", "cherry"]
-  })
-}
-
 data "pyvider_lens_jq" "example" {
-  json_input = local.sample_json
-  query      = ".name"
+  # Configuration options here
 }
 
 output "example_data" {
   description = "Data from pyvider_lens_jq"
-  value       = data.pyvider_lens_jq.example.result
+  value       = data.pyvider_lens_jq.example
 }
