@@ -1,14 +1,18 @@
 #
-# tests/resources/test_file_content_properties.py
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
+
+"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
-from hypothesis import given, strategies as st
 import pytest
+from hypothesis import given
+from hypothesis import strategies as st
+from pyvider.cty.exceptions import CtyValidationError
 
 from pyvider.components.resources.file_content import FileContentResource
-from pyvider.cty.exceptions import CtyValidationError
 
 # Get the schema from the resource
 schema = FileContentResource.get_schema()
@@ -73,4 +77,4 @@ def test_schema_rejects_configs_with_wrong_types(config):
         validator.validate(config)
 
 
-# 🧪📄🏷️
+# 🧩🔧🔚

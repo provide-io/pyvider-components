@@ -1,10 +1,9 @@
-# pyvider/components/data_sources/env_variables.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/data_sources/env_variables.py
 #
+
+"""TODO: Add module docstring."""
 
 import os
 import re
@@ -17,6 +16,7 @@ if TYPE_CHECKING:
 
 from provide.foundation import logger
 from provide.foundation.errors import ErrorCategory, capture_error_context, resilient
+
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -173,5 +173,4 @@ class EnvVariablesDataSource(
         )
 
 
-# 🌍🔤📊
-# 🧩🔧📄🪄
+# 🧩🔧🔚

@@ -1,15 +1,15 @@
-# pyvider/components/functions/collection_functions.py
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-# pyvider/components/functions/collection_functions.py
 #
+
+"""TODO: Add module docstring."""
 
 from typing import Any
 
 from provide.foundation import logger
 from provide.foundation.errors import resilient
+
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
@@ -44,7 +44,7 @@ def contains(list_to_check: list[Any] | None, element: Any) -> bool | None:
 
 @register_function(name="lookup", summary="Performs a dynamic lookup into a map.")
 @resilient()
-def lookup(map_to_search: dict[str, Any] | None, key: str, *defaults) -> Any:
+def lookup(map_to_search: dict[str, Any] | None, key: str, *defaults: Any) -> Any:
     """
     Lookup a key in a map and return its value, or a default if the key doesn't exist.
 
@@ -73,5 +73,4 @@ def lookup(map_to_search: dict[str, Any] | None, key: str, *defaults) -> Any:
     )
 
 
-# 📚🔧🎯
-# 🧩🔧🔣🪄
+# 🧩🔧🔚
