@@ -1,16 +1,13 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/test_tdd_function_semantics.py
 #
 
-"""TODO: Add module docstring."""
-
 import pytest
-from pyvider.conversion import unmarshal
-from pyvider.cty import CtyNumber, CtyString, CtyValue
 
 from pyvider.components.functions.numeric_functions import add
 from pyvider.components.functions.string_manipulation import lower, upper
+from pyvider.conversion import unmarshal
+from pyvider.cty import CtyNumber, CtyString, CtyValue
 
 
 @pytest.mark.usefixtures("discovered_components_session")
@@ -25,9 +22,9 @@ class TestFunctionSemantics:
     @pytest.mark.asyncio
     async def test_add_with_unknown_operand_returns_unknown(self):
         """TDD: add(known, unknown) -> unknown"""
-        import pyvider.protocols.tfprotov6.protobuf as pb
         from pyvider.conversion import marshal
         from pyvider.protocols.tfprotov6.handlers import CallFunctionHandler
+        import pyvider.protocols.tfprotov6.protobuf as pb
 
         arg1 = marshal(10, schema=CtyNumber())
         arg2 = marshal(CtyValue.unknown(CtyNumber()), schema=CtyNumber())
@@ -42,9 +39,9 @@ class TestFunctionSemantics:
     @pytest.mark.asyncio
     async def test_upper_with_unknown_operand_returns_unknown(self):
         """TDD: upper(unknown) -> unknown"""
-        import pyvider.protocols.tfprotov6.protobuf as pb
         from pyvider.conversion import marshal
         from pyvider.protocols.tfprotov6.handlers import CallFunctionHandler
+        import pyvider.protocols.tfprotov6.protobuf as pb
 
         arg = marshal(CtyValue.unknown(CtyString()), schema=CtyString())
         request = pb.CallFunction.Request(name="upper", arguments=[arg])
@@ -72,4 +69,4 @@ class TestFunctionSemantics:
         assert result is None
 
 
-# 🧩🔧🔚
+# 🧪🎯📚

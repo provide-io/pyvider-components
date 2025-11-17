@@ -1,18 +1,22 @@
+# pyvider/components/data_sources/env_variables.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/data_sources/env_variables.py
+#
 
 import os
 import re
-from typing import cast
+from typing import TYPE_CHECKING, Literal, cast
 
 from attrs import define, field
-from provide.foundation import logger
-from provide.foundation.errors import capture_error_context, resilient
 
+if TYPE_CHECKING:
+    pyvider_env_variables = Literal["pyvider_env_variables"]
+
+from provide.foundation import logger
+from provide.foundation.errors import ErrorCategory, capture_error_context, resilient
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -126,10 +130,12 @@ class EnvVariablesDataSource(
             except re.error as e:
                 context = capture_error_context(
                     e,
-                    category="validation",
-                    operation="regex_compile",
-                    regex_pattern=config.regex,
-                    case_sensitive=case_sensitive,
+                    category=ErrorCategory.USER,
+                    context={
+                        "operation": "regex_compile",
+                        "regex_pattern": config.regex,
+                        "case_sensitive": case_sensitive,
+                    },
                 )
                 raise DataSourceError(
                     f"Invalid regex provided: {e}. Context: {context}"
@@ -167,4 +173,5 @@ class EnvVariablesDataSource(
         )
 
 
-# 🧩🔧🔚
+# 🌍🔤📊
+# 🧩🔧📄🪄

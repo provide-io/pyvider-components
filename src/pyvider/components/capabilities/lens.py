@@ -1,15 +1,16 @@
+# pyvider/components/capabilities/lens.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/capabilities/lens.py
+#
 
 from typing import Any
 
 import jq
-from provide.foundation import logger
 
+from provide.foundation import logger
 from pyvider.capabilities import BaseCapability, register_capability
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import infer_cty_type_from_raw
@@ -37,7 +38,9 @@ class LensCapability(BaseCapability):
         """
         Executes a JQ query and converts the raw Python result to a CtyValue.
         """
-
+        logger.debug(
+            "⚙️ LENS-JQ ✅ Applying jq query via LensCapability service", query=query
+        )
         try:
             # THE FIX: Use the correct `compile(...).transform(...)` API.
             compiled_query = jq.compile(query)
@@ -47,7 +50,7 @@ class LensCapability(BaseCapability):
             return inferred_type.validate(final_raw_result)
         except Exception as e:
             logger.error(
-                "jq query execution failed",
+                "⚙️ LENS-JQ ❌ JQ processing failed in capability",
                 error=str(e),
                 exc_info=True,
             )
@@ -69,5 +72,4 @@ class LensCapability(BaseCapability):
 
 
 # 🔍👁️🛠️
-
-# 🧩🔧🔚
+# 🧩🔧📄🪄

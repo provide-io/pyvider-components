@@ -1,15 +1,20 @@
+# pyvider/components/resources/file_content.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/resources/file_content.py
+#
 
 import hashlib
 from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define, field
+
+if TYPE_CHECKING:
+    pyvider_file_content = Literal["pyvider_file_content"]
+
 from provide.foundation import logger
 from provide.foundation.errors import resilient
 from provide.foundation.file import (
@@ -18,8 +23,6 @@ from provide.foundation.file import (
     safe_delete,
     safe_read_text,
 )
-
-from pyvider.common.types import StateType
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
@@ -84,6 +87,7 @@ class FileContentResource(
             content_length=len(content),
             content_hash=content_hash[:8],
         )
+        assert self.state_class is not None
         return self.state_class(
             filename=filename_to_read,
             content=content,
@@ -127,9 +131,9 @@ class FileContentResource(
         return await self._create(ctx, base_plan)
 
     @resilient()
-    async def _create_apply(
+    async def _create_apply(  # type: ignore[override]
         self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    ) -> tuple[FileContentState | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
         logger.debug("Creating file", path=str(path))
@@ -142,9 +146,9 @@ class FileContentResource(
         )
         return planned_state, None
 
-    async def _update_apply(
+    async def _update_apply(  # type: ignore[override]
         self, ctx: ResourceContext
-    ) -> tuple[StateType | None, None]:
+    ) -> tuple[FileContentState | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()
@@ -162,4 +166,5 @@ class FileContentResource(
             logger.debug("File does not exist, nothing to delete", path=str(path))
 
 
-# 🧩🔧🔚
+# 📄💾🔧
+# 🧩🔧📦🪄

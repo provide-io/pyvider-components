@@ -1,9 +1,6 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/resources/test_tdd_private_state.py
 #
-
-"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
@@ -12,6 +9,7 @@ from typing import Any
 import attrs
 import msgpack
 import pytest
+
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
@@ -73,4 +71,4 @@ async def test_private_state_roundtrip():
     assert rehydrated_private_state_obj == planned_private_state_obj
 
 
-# 🧩🔧🔚
+# 🧪🔒✅

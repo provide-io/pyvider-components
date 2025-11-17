@@ -1,17 +1,21 @@
+# pyvider/components/resources/timed_token.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/resources/timed_token.py
+#
 
 import datetime
+from typing import TYPE_CHECKING, Any, Literal
 import uuid
-from typing import Any
 
 from attrs import define, evolve
-from provide.foundation import logger
 
+if TYPE_CHECKING:
+    pyvider_timed_token = Literal["pyvider_timed_token"]
+
+from provide.foundation import logger
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.decorators import register_resource
@@ -68,26 +72,29 @@ class TimedTokenResource(
         base_plan["token"] = a_unknown(a_str())
         base_plan["expires_at"] = a_unknown(a_str())
 
+        assert self.private_state_class is not None
         private_state = self.private_state_class(
-            token=f"token-{uuid.uuid4()}",
-            expires_at=(
+            token=f"token-{uuid.uuid4()}",  # type: ignore[call-arg]
+            expires_at=(  # type: ignore[call-arg]
                 datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)
             ).isoformat(),
         )
         logger.debug(f"Creating private state: {private_state}")
-        return base_plan, private_state
+        return base_plan, private_state  # type: ignore[return-value]
 
     async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[TimedTokenState, TimedTokenPrivateState]:
         # Evolve the planned state, filling in the computed value for 'id'.
+        assert ctx.planned_state is not None
+        assert ctx.private_state is not None
         final_state = evolve(
             ctx.planned_state,
             id=f"timed-token-id-{uuid.uuid4()}",
-            token=ctx.private_state.token,
-            expires_at=ctx.private_state.expires_at,
+            token=ctx.private_state.token,  # type: ignore[attr-defined]
+            expires_at=ctx.private_state.expires_at,  # type: ignore[attr-defined]
         )
-        return final_state, ctx.private_state
+        return final_state, ctx.private_state  # type: ignore[return-value]
 
     async def read(self, ctx: ResourceContext) -> TimedTokenState | None:
         logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")
@@ -106,5 +113,4 @@ class TimedTokenResource(
 
 
 # ⏰🎟️🔑
-
-# 🧩🔧🔚
+# 🧩🔧📦🪄

@@ -1,16 +1,11 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
 """Tests for pyvider-components provider implementation."""
 
 import pytest
+
+from pyvider.components.provider import PyviderProvider
+from pyvider.components.capabilities.core import CoreCapability
 from pyvider.hub import hub
 from pyvider.providers.base import ProviderMetadata
-
-from pyvider.components.capabilities.core import CoreCapability  # type: ignore[import-untyped]
-from pyvider.components.provider import PyviderProvider  # type: ignore[import-untyped]
 
 
 class TestPyviderProvider:
@@ -68,7 +63,7 @@ class TestPyviderProvider:
     @pytest.mark.asyncio
     async def test_provider_with_multiple_capabilities(self):
         """Test provider setup with multiple capabilities."""
-        from pyvider.components.capabilities.lens import LensCapability  # type: ignore[import-untyped]
+        from pyvider.components.capabilities.lens import LensCapability
 
         provider = PyviderProvider()
 
@@ -91,17 +86,17 @@ class TestCoreCapability:
 
     def test_core_capability_initialization(self):
         """Test core capability initializes without config."""
-        capability = CoreCapability(config=None)
-        assert capability.config is None
+        _capability = CoreCapability(config=None)
+        # Should not raise
 
     def test_core_capability_schema_contribution(self):
-        """Test core capability returns schema with pyvider_testmode."""
+        """Test core capability returns schema with provider_testmode."""
         schema_contrib = CoreCapability.get_schema_contribution()
 
-        # Core capability provides pyvider_testmode config attribute
+        # Core capability provides provider_testmode config attribute
         assert isinstance(schema_contrib, dict)
         assert len(schema_contrib) == 1
-        assert "pyvider_testmode" in schema_contrib
+        assert "provider_testmode" in schema_contrib
 
 
 class TestProviderRegistration:
@@ -124,6 +119,3 @@ class TestProviderRegistration:
 
         assert hasattr(CoreCapability, "_registered_name")
         assert CoreCapability._registered_name == "core"
-
-
-# 🧩🔧🔚

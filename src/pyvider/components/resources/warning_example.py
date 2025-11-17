@@ -1,9 +1,10 @@
+# pyvider/components/resources/warning_example.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/resources/warning_example.py
+#
 
 from typing import Any
 
@@ -55,16 +56,17 @@ class WarningExampleResource(BaseResource):
         self, ctx: ResourceContext, base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any], None]:
         config = ctx.config
-        if config.old_name is not None:
+        assert config is not None
+        if config.old_name is not None:  # type: ignore[union-attr]
             ctx.add_attribute_warning(
                 attribute_path="old_name",
                 summary="Attribute 'old_name' is deprecated",
                 detail="Please use the 'name' attribute instead.",
             )
 
-        planned_name = config.name or config.old_name
-        if config.source_file:
-            planned_name = f"from_file:{config.source_file}"
+        planned_name = config.name or config.old_name  # type: ignore[union-attr]
+        if config.source_file:  # type: ignore[union-attr]
+            planned_name = f"from_file:{config.source_file}"  # type: ignore[union-attr]
 
         if planned_name is None:
             base_plan["name"] = a_unknown(a_str())
@@ -76,10 +78,12 @@ class WarningExampleResource(BaseResource):
     async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[WarningExampleState, None]:
+        assert self.state_class is not None
+        assert ctx.planned_state is not None
         final_state = self.state_class(
-            name=ctx.planned_state.name,
-            old_name=ctx.planned_state.old_name,
-            source_file=ctx.planned_state.source_file,
+            name=ctx.planned_state.name,  # type: ignore[attr-defined]
+            old_name=ctx.planned_state.old_name,  # type: ignore[attr-defined]
+            source_file=ctx.planned_state.source_file,  # type: ignore[attr-defined]
         )
         return final_state, None
 
@@ -91,5 +95,4 @@ class WarningExampleResource(BaseResource):
 
 
 # ⚠️💡📚
-
-# 🧩🔧🔚
+# 🧩🔧📦🪄

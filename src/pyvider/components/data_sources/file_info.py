@@ -1,20 +1,25 @@
+# pyvider/components/data_sources/file_info.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+
+# pyvider/components/data_sources/file_info.py
 #
 
-"""TODO: Add module docstring."""
-
+# components/data_sources/file_info.py
 import datetime
-import stat
 from pathlib import Path
-from typing import cast
+import stat
+from typing import TYPE_CHECKING, Literal, cast
 
 from attrs import define, field
-from provide.foundation import logger
-from provide.foundation.errors import capture_error_context, resilient
-from provide.foundation.file import get_mtime, get_size
 
+if TYPE_CHECKING:
+    pyvider_file_info = Literal["pyvider_file_info"]
+
+from provide.foundation import logger
+from provide.foundation.errors import ErrorCategory, capture_error_context, resilient
+from provide.foundation.file import get_mtime, get_size
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
@@ -104,7 +109,9 @@ class FileInfoDataSource(
             stat_info = path.stat()
         except (OSError, PermissionError) as e:
             context = capture_error_context(
-                e, category="file_access", operation="stat", file_path=config.path
+                e,
+                category=ErrorCategory.SYSTEM,
+                context={"operation": "stat", "file_path": config.path},
             )
             logger.warning(
                 "Failed to access file", path=config.path, error=str(e), context=context
@@ -166,4 +173,5 @@ class FileInfoDataSource(
         )
 
 
-# 🧩🔧🔚
+# 📄ℹ️📊
+# 🧩🔧📄🪄

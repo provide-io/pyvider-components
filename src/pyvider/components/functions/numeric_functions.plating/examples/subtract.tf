@@ -1,7 +1,7 @@
 locals {
-  subtract_result = provider::pyvider::subtract(10, 4) # 6
+  result = provider::pyvider::subtract(10, 4) # 6
 }
 
-output "subtract_result" {
-  value = local.subtract_result
+output "subtract_example" {
+  value = local.result
 }

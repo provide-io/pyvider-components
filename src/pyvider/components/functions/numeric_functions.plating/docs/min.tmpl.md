@@ -1,70 +1,25 @@
 ---
 page_title: "Function: min"
 description: |-
-  Finds the minimum value in a list of numbers with error handling for empty lists
+  Return the smallest number in a list.
 ---
 
 # min (Function)
 
-The `min` function finds and returns the smallest number from a list of numbers. It requires at least one number in the list and handles null values gracefully, making it ideal for identifying baseline values, minimum requirements, and cost optimization scenarios.
-
-Minimum value detection is essential for establishing baselines, identifying underutilized resources, and finding optimal configurations. The function preserves numeric types, ensuring accurate representation of both integer and floating-point minimums.
-
-## Capabilities
-
-This function enables you to:
-
-- **Baseline identification**: Find minimum resource requirements for right-sizing
-- **Cost optimization**: Identify lowest costs or most efficient configurations
-- **Performance analysis**: Determine best-case performance metrics
-- **Resource efficiency**: Find underutilized resources for optimization
-- **Quality control**: Identify minimum acceptable thresholds
+Find the minimum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('min') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`min(numbers: list[number]) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `numbers` (list[number], required) — Values to evaluate. Must contain at least one element. Returns `null` when this is `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
-
-## Return Value
-
-Returns the smallest number from the list:
-- Works with both integers and floats
-- Returns the actual minimum value (preserves type)
-- Returns `null` if the input list is `null`
-
-## Common Patterns
-
-### Cost Optimization
-```terraform
-variable "instance_costs" {
-  default = [0.15, 0.25, 0.12, 0.30, 0.18]
-}
-
-locals {
-  lowest_cost = provider::pyvider::min(var.instance_costs)  # 0.12
-}
-```
-
-### Baseline Metrics
-```terraform
-variable "cpu_usage_percent" {
-  default = [45, 32, 58, 28, 51]
-}
-
-locals {
-  minimum_usage = provider::pyvider::min(var.cpu_usage_percent)  # 28
-}
-```
+The minimum number in the list, or `null` when the list is `null`.

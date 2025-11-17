@@ -9,7 +9,7 @@ data "pyvider_file_info" "example" {
   path = pyvider_file_content.example.filename
 }
 
-output "basic_file_info_example" {
+output "file_info_example" {
   value = {
     path    = data.pyvider_file_info.example.path
     exists  = data.pyvider_file_info.example.exists

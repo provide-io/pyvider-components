@@ -4,7 +4,7 @@ data "pyvider_env_variables" "user" {
   keys = ["MY_APP_USERNAME"]
 }
 
-output "basic_username" {
+output "username" {
   description = "The username read from the environment."
-  value       = lookup(data.pyvider_env_variables.user.values, "MY_APP_USERNAME", "not_set")
+  value       = data.pyvider_env_variables.user.values["MY_APP_USERNAME"]
 }

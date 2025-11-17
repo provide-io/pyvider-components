@@ -1,16 +1,25 @@
+# pyvider/components/data_sources/nested_data_test_suite.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
+
+# pyvider/components/data_sources/nested_data_test_suite.py
 #
 
-"""TODO: Add module docstring."""
-
+# pyvider/components/test_suite/nested_data_test.py
+# Comprehensive test suite to isolate CTY nested data issues
+from decimal import Decimal
 import hashlib
 import json
-from decimal import Decimal
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define, field
+
+if TYPE_CHECKING:
+    pyvider_simple_map_test = Literal["pyvider_simple_map_test"]
+    pyvider_mixed_map_test = Literal["pyvider_mixed_map_test"]
+    pyvider_structured_object_test = Literal["pyvider_structured_object_test"]
+    pyvider_nested_resource_test = Literal["pyvider_nested_resource_test"]
 
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
@@ -350,4 +359,5 @@ def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> 
     return json.dumps(result, default=str)
 
 
-# 🧩🔧🔚
+# 🧪📦📊
+# 🧩🔧📄🪄
