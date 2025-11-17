@@ -4,6 +4,13 @@ dynamic = ["version"]
 description = "Standard Components for the Pyvider Framework"
 readme = "README.md"
 requires-python = ">=3.11"
+
+[project.urls]
+Homepage = "https://foundry.provide.io/pyvider-components/"
+Documentation = "https://foundry.provide.io/pyvider-components/"
+Repository = "https://foundry.provide.io/pyvider-components/repo"
+Issues = "https://foundry.provide.io/pyvider-components/issues"
+
 dependencies = [
     "provide-foundation",
     "pyvider-rpcplugin",
