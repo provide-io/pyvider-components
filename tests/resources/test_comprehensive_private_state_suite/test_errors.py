@@ -7,21 +7,20 @@
 
 from __future__ import annotations
 
-from importlib import import_module
 import os
+from importlib import import_module
 
 import attrs
 import pytest
+import pyvider.protocols.tfprotov6.protobuf as pb
 from provide.testkit import FoundationTestCase  # type: ignore[import-untyped]
 from provide.testkit.mocking import patch  # type: ignore[import-untyped]
-
 from pyvider.common.encryption import decrypt, encrypt
 from pyvider.conversion import marshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
     ApplyResourceChangeHandler,
 )
-import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
 

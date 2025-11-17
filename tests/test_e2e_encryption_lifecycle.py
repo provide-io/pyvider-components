@@ -6,17 +6,17 @@
 """TODO: Add module docstring."""
 
 import pytest
-
-from pyvider.components.resources.private_state_verifier import (
-    PrivateStateVerifierResource,
-)
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
     ApplyResourceChangeHandler,
     PlanResourceChangeHandler,
 )
-import pyvider.protocols.tfprotov6.protobuf as pb
+
+from pyvider.components.resources.private_state_verifier import (
+    PrivateStateVerifierResource,
+)
 
 
 @pytest.mark.asyncio
