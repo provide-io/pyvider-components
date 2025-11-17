@@ -12,10 +12,11 @@ This script:
 
 import asyncio
 from pathlib import Path
+
 from plating.plating import Plating  # type: ignore[import-untyped]
 from plating.types import PlatingContext  # type: ignore[import-untyped]
 from provide.foundation import file as foundation_file
-from provide.foundation import pout, perr
+from provide.foundation import perr, pout
 
 # Multi-function example names that should be kept everywhere
 SHARED_EXAMPLES = {

@@ -7,16 +7,17 @@
 
 from provide.foundation.utils.versioning import get_version
 
+from pyvider.components.capabilities.core import CoreCapability
+
 # Ensure provider is registered on import
 from pyvider.components.provider import PyviderProvider
-from pyvider.components.capabilities.core import CoreCapability
 
 __version__ = get_version("pyvider-components", caller_file=__file__)
 
 __all__ = [
-    "__version__",
-    "PyviderProvider",
     "CoreCapability",
+    "PyviderProvider",
+    "__version__",
 ]
 
 # 🧩🔧🔚

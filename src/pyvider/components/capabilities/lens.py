@@ -8,8 +8,8 @@
 from typing import Any
 
 import jq
-
 from provide.foundation import logger
+
 from pyvider.capabilities import BaseCapability, register_capability
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import infer_cty_type_from_raw

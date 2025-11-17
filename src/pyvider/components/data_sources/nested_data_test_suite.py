@@ -5,9 +5,9 @@
 
 """TODO: Add module docstring."""
 
-from decimal import Decimal
 import hashlib
 import json
+from decimal import Decimal
 from typing import Any, cast
 
 from attrs import define, field

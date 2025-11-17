@@ -6,11 +6,11 @@
 """Tests for pyvider-components provider implementation."""
 
 import pytest
-
-from pyvider.components.provider import PyviderProvider  # type: ignore[import-untyped]
-from pyvider.components.capabilities.core import CoreCapability  # type: ignore[import-untyped]
 from pyvider.hub import hub
 from pyvider.providers.base import ProviderMetadata
+
+from pyvider.components.capabilities.core import CoreCapability  # type: ignore[import-untyped]
+from pyvider.components.provider import PyviderProvider  # type: ignore[import-untyped]
 
 
 class TestPyviderProvider:
