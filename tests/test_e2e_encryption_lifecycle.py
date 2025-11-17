@@ -1,22 +1,15 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""TODO: Add module docstring."""
-
 import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
+
+from pyvider.components.resources.private_state_verifier import (
+    PrivateStateVerifierResource,
+)
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
     ApplyResourceChangeHandler,
     PlanResourceChangeHandler,
 )
-
-from pyvider.components.resources.private_state_verifier import (
-    PrivateStateVerifierResource,
-)
+import pyvider.protocols.tfprotov6.protobuf as pb
 
 
 @pytest.mark.asyncio
@@ -54,6 +47,3 @@ async def test_private_state_verifier_lifecycle(
         assert final_state.value["decrypted_token"].value == "SECRET_FOR_TEST-RUN"
     finally:
         hub.unregister("resource", resource_name)
-
-
-# 🧩🔧🔚

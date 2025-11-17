@@ -1,76 +1,25 @@
 ---
 page_title: "Function: upper"
 description: |-
-  Converts a string to uppercase with null-safe handling
+  Convert a string to uppercase characters.
 ---
 
 # upper (Function)
 
-The `upper` function takes a string and returns a new string with all alphabetic characters converted to uppercase. It handles null values gracefully by returning null when the input is null, making it safe for use with optional or dynamic string values.
-
-Case conversion is fundamental for text normalization and comparison operations. Converting text to uppercase ensures consistent formatting for configuration values, environment variables, and case-insensitive matching scenarios.
-
-## Capabilities
-
-This function enables you to:
-
-- **Case normalization**: Standardize text case for comparisons and consistency
-- **Display formatting**: Format text for headers or emphasis in outputs
-- **Data consistency**: Normalize user input or imported data to uppercase
-- **Configuration values**: Standardize environment or configuration strings
-- **Search operations**: Normalize text for case-insensitive matching
+Return the uppercase version of the provided text. Passing `null` keeps the value `null`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('upper') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`upper(input_str: string) -> string`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `input_str` (string, required) — Text to convert. `null` values are returned as `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
-
-## Return Value
-
-Returns a new string with all alphabetic characters converted to uppercase:
-- Non-alphabetic characters (numbers, symbols, spaces) remain unchanged
-- Returns `null` if the input is `null`
-- Returns an empty string if the input is an empty string
-
-## Common Patterns
-
-### Environment Variables
-```terraform
-variable "env" {
-  type = string
-  default = "dev"
-}
-
-locals {
-  environment_upper = provider::pyvider::upper(var.env)
-}
-
-resource "pyvider_file_content" "config" {
-  filename = "/tmp/app_config.env"
-  content  = "ENVIRONMENT=${local.environment_upper}"
-}
-```
-
-### Header Formatting
-```terraform
-variable "service_name" {
-  default = "api gateway"
-}
-
-locals {
-  service_header = provider::pyvider::upper(var.service_name)  # "API GATEWAY"
-}
-```
+The uppercase string.

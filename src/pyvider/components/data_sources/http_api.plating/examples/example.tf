@@ -1,8 +1,8 @@
-data "pyvider_http_api" "get_example" {
-  url = "https://httpbin.org/get"
+data "pyvider_http_api" "example" {
+  # Configuration options here
 }
 
 output "example_data" {
   description = "Data from pyvider_http_api"
-  value       = data.pyvider_http_api.get_example
+  value       = data.pyvider_http_api.example
 }

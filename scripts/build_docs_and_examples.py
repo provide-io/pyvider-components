@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""Build documentation and examples, then clean up incorrect duplicates.
+"""
+Build documentation and examples, then clean up incorrect duplicates.
 
 This script:
 1. Generates documentation using plating
 2. Generates executable examples
-3. Cleans up incorrect example duplicates caused by shared .plating directories"""
+3. Cleans up incorrect example duplicates caused by shared .plating directories
+"""
 
 import asyncio
 from pathlib import Path
-
-from plating.plating import Plating  # type: ignore[import-untyped]
-from plating.types import PlatingContext  # type: ignore[import-untyped]
+from plating.plating import Plating
+from plating.types import PlatingContext
 from provide.foundation import file as foundation_file
-from provide.foundation import perr, pout
+from provide.foundation import pout, perr
 
 # Multi-function example names that should be kept everywhere
 SHARED_EXAMPLES = {
@@ -26,7 +23,6 @@ SHARED_EXAMPLES = {
     "aggregations",
     "resource_calculations",
 }
-
 
 def cleanup_function_examples(examples_dir: Path):
     """
@@ -50,6 +46,7 @@ def cleanup_function_examples(examples_dir: Path):
             continue
 
         function_name = function_path.name
+        pout(f"📦 Cleaning {function_name}...")
 
         # Check each example subdirectory
         for example_path in function_path.iterdir():
@@ -60,8 +57,8 @@ def cleanup_function_examples(examples_dir: Path):
 
             # Decide if this example should be kept
             should_keep = (
-                example_name == function_name  # Function's own example
-                or example_name in SHARED_EXAMPLES  # Shared multi-function example
+                example_name == function_name or  # Function's own example
+                example_name in SHARED_EXAMPLES    # Shared multi-function example
             )
 
             if should_keep:
@@ -72,6 +69,7 @@ def cleanup_function_examples(examples_dir: Path):
                 foundation_file.safe_rmtree(example_path, missing_ok=True)
                 removed_count += 1
 
+    pout(f"\n✅ Cleanup complete: kept {kept_count}, removed {removed_count} duplicate examples")
 
 async def build_docs_and_examples(overwrite: bool = False):
     """Build documentation and clean examples."""
@@ -83,22 +81,18 @@ async def build_docs_and_examples(overwrite: bool = False):
         return
 
     # Generate documentation
+    pout("🍽️  Generating documentation...")
     context = PlatingContext(provider_name="pyvider")
     api = Plating(context, "pyvider.components")
-    await api.plate()
+    result = await api.plate()
+
+    pout(f"✅ Generated {result.files_generated} documentation files")
 
     # Generate examples (use CLI for this since it has the flag)
+    pout("\n📁 Generating executable examples...")
     import subprocess
-
-    cmd = [
-        "plating",
-        "plate",
-        "--provider-name",
-        "pyvider",
-        "--package-name",
-        "pyvider.components",
-        "--generate-examples",
-    ]
+    cmd = ["plating", "plate", "--provider-name", "pyvider",
+           "--package-name", "pyvider.components", "--generate-examples"]
     subprocess.run(cmd, check=True)
 
     # Clean up function examples
@@ -107,11 +101,7 @@ async def build_docs_and_examples(overwrite: bool = False):
 
     pout("\n✨ Build complete!")
 
-
 if __name__ == "__main__":
     import sys
-
     overwrite = "--overwrite" in sys.argv
     asyncio.run(build_docs_and_examples(overwrite=overwrite))
-
-# 🧩🔧🔚

@@ -53,54 +53,54 @@ data "pyvider_env_variables" "without_empty" {
 
 # --- Outputs ---
 
-output "comprehensive_by_keys_result" {
+output "by_keys_result" {
   description = "Result of filtering by specific keys."
   value       = data.pyvider_env_variables.by_keys.values
 }
 
-output "comprehensive_by_prefix_sensitive_result" {
+output "by_prefix_sensitive_result" {
   description = "Result of case-sensitive prefix filtering."
   value       = data.pyvider_env_variables.by_prefix_sensitive.values
 }
 
-output "comprehensive_by_prefix_insensitive_result" {
+output "by_prefix_insensitive_result" {
   description = "Result of case-insensitive prefix filtering with transformations."
   value       = data.pyvider_env_variables.by_prefix_insensitive.values
 }
 
-output "comprehensive_by_regex_result" {
+output "by_regex_result" {
   description = "Result of regex filtering."
   value       = data.pyvider_env_variables.by_regex.values
 }
 
-output "comprehensive_with_sensitive_result" {
+output "with_sensitive_result" {
   description = "Demonstrates sensitive key handling. The sensitive value should be redacted in CLI output."
   value       = data.pyvider_env_variables.with_sensitive.all_values
   sensitive   = true # Mark the whole output as sensitive for safety
 }
 
-output "comprehensive_with_sensitive_nonsensitive_part" {
+output "with_sensitive_nonsensitive_part" {
   description = "The non-sensitive part of the sensitive test."
   value       = data.pyvider_env_variables.with_sensitive.values
 }
 
-output "comprehensive_with_sensitive_sensitive_part" {
+output "with_sensitive_sensitive_part" {
   description = "The sensitive part of the sensitive test."
   value       = data.pyvider_env_variables.with_sensitive.sensitive_values
   sensitive   = true
 }
 
-output "comprehensive_exclude_empty_result" {
+output "exclude_empty_result" {
   description = "Should only contain TEST_VAR1."
   value       = data.pyvider_env_variables.with_empty.values
 }
 
-output "comprehensive_include_empty_result" {
+output "include_empty_result" {
   description = "Should contain both TEST_VAR1 and an empty TEST_EMPTY_VAR."
   value       = data.pyvider_env_variables.without_empty.values
 }
 
-output "comprehensive_full_environment_seen_by_provider" {
+output "full_environment_seen_by_provider" {
   description = "A complete dump of the environment as seen by the provider process."
   value       = data.pyvider_env_variables.by_keys.all_environment
   sensitive   = true

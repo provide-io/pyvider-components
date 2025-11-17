@@ -1,13 +1,11 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/resources/test_file_content_lifecycle.py
 #
-
-"""TODO: Add module docstring."""
 
 from __future__ import annotations
 
 import pytest
+
 from pyvider.conversion import marshal, unmarshal
 from pyvider.cty import CtyValue
 from pyvider.schema import PvsObjectType, a_bool, a_str, s_resource
@@ -39,4 +37,4 @@ async def test_file_content_plan_apply_lifecycle():
     assert unmarshaled_val["filename"].value == "/tmp/test.txt"
 
 
-# 🧩🔧🔚
+# 🧪📄🔄

@@ -1,18 +1,15 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/conftest.py
 #
-
-"""TODO: Add module docstring."""
 
 import os
 
 import pytest
+
+from pyvider.components.capabilities.lens import LensCapability
 from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
 from pyvider.providers.base import BaseProvider, ProviderMetadata
-
-from pyvider.components.capabilities.lens import LensCapability
 
 # Register pytest plugins for test fixtures
 pytest_plugins = [
@@ -47,4 +44,4 @@ def discovered_components_session():
     asyncio.run(discovery.discover_all())
 
 
-# 🧩🔧🔚
+# 🧪⚙️🔧

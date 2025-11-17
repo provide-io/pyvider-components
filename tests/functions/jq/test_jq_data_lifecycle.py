@@ -1,9 +1,6 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/functions/jq/test_jq_data_lifecycle.py
 #
-
-"""TODO: Add module docstring."""
 
 from pyvider.conversion import marshal, unmarshal
 from pyvider.cty import CtyDynamic
@@ -27,4 +24,4 @@ def test_full_marshal_unmarshal_function_argument_pipeline():
     assert final_native_arg == native_data
 
 
-# 🧩🔧🔚
+# 🧪🔍🔄

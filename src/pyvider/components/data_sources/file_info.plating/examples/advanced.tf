@@ -24,7 +24,7 @@ data "pyvider_file_info" "directory" {
 }
 
 # Output for existing file - shows all available metadata
-output "advanced_existing_file_info" {
+output "existing_file_info" {
   value = {
     path          = data.pyvider_file_info.existing_file.path
     exists        = data.pyvider_file_info.existing_file.exists
@@ -36,7 +36,7 @@ output "advanced_existing_file_info" {
 }
 
 # Output for non-existent file - useful for validation
-output "advanced_nonexistent_file_info" {
+output "nonexistent_file_info" {
   value = {
     path   = data.pyvider_file_info.nonexistent_file.path
     exists = data.pyvider_file_info.nonexistent_file.exists
@@ -44,7 +44,7 @@ output "advanced_nonexistent_file_info" {
 }
 
 # Output for directory - distinguish between files and directories
-output "advanced_directory_info" {
+output "directory_info" {
   value = {
     path   = data.pyvider_file_info.directory.path
     exists = data.pyvider_file_info.directory.exists
@@ -52,15 +52,22 @@ output "advanced_directory_info" {
   }
 }
 
+# Real-world pattern: Conditional resource creation based on file existence
+resource "pyvider_file_content" "conditional_backup" {
+  count    = data.pyvider_file_info.existing_file.exists ? 1 : 0
+  filename = "${data.pyvider_file_info.existing_file.path}.backup"
+  content  = "Backup created because original file exists"
+}
+
 # Real-world pattern: Validation and error handling
 locals {
-  advanced_file_validation = {
-    advanced_is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
-    advanced_is_directory   = data.pyvider_file_info.directory.is_dir
-    advanced_file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
+  file_validation = {
+    is_valid       = data.pyvider_file_info.existing_file.exists && data.pyvider_file_info.existing_file.is_file
+    is_directory   = data.pyvider_file_info.directory.is_dir
+    file_is_recent = can(timeadd(data.pyvider_file_info.existing_file.modified_time, "24h"))
   }
 }
 
-output "advanced_validation_summary" {
-  value = local.advanced_file_validation
+output "validation_results" {
+  value = local.file_validation
 }

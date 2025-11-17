@@ -2,12 +2,12 @@ data "pyvider_structured_object_test" "basic" {
   config_name = "my-config"
 }
 
-output "basic_generated_config" {
+output "generated_config" {
   description = "Generated configuration object with nested attributes"
   value       = data.pyvider_structured_object_test.basic.generated_config
 }
 
-output "basic_summary" {
+output "summary" {
   description = "Summary information with nested details"
   value       = data.pyvider_structured_object_test.basic.summary
 }

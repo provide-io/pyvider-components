@@ -1,18 +1,11 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-
-"""TODO: Add module docstring."""
-
 import pytest
-from pyvider.exceptions import DataSourceError
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.data_sources.env_variables import (
     EnvVariablesConfig,
     EnvVariablesDataSource,
 )
+from pyvider.exceptions import DataSourceError
+from pyvider.resources.context import ResourceContext
 
 
 @pytest.fixture
@@ -171,6 +164,3 @@ class TestEnvVariablesDataSource:
         errors = await data_source.validate(EnvVariablesConfig(keys=["A"], prefix="B"))
         assert len(errors) == 1
         assert "Only one of 'keys', 'prefix', or 'regex' can be specified" in errors[0]
-
-
-# 🧩🔧🔚

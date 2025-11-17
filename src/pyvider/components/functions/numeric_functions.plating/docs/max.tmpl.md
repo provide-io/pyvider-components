@@ -1,70 +1,25 @@
 ---
 page_title: "Function: max"
 description: |-
-  Finds the maximum value in a list of numbers with error handling for empty lists
+  Return the largest number in a list.
 ---
 
 # max (Function)
 
-The `max` function finds and returns the largest number from a list of numbers. It requires at least one number in the list and handles null values gracefully, making it essential for capacity planning, performance optimization, and identifying peak values.
-
-Finding maximum values is critical for many infrastructure decisions, from determining peak resource requirements to identifying bottlenecks. The function works with both integers and floats, returning results in their natural numeric form.
-
-## Capabilities
-
-This function enables you to:
-
-- **Capacity planning**: Find maximum resource requirements to ensure adequate provisioning
-- **Performance optimization**: Identify peak performance values for tuning and optimization
-- **Scaling decisions**: Determine maximum load or usage to guide auto-scaling policies
-- **Budget planning**: Find highest costs or allocations for worst-case planning
-- **Quality metrics**: Identify best performance indicators from measurement sets
+Find the maximum value from the provided list. A `null` list returns `null`; an empty list raises a `FunctionError`.
 
 ## Example Usage
 
-{{ example("example") }}
+{{ example('max') }}
 
 ## Signature
 
-`{{ signature_markdown }}`
+`max(numbers: list[number]) -> number`
 
-## Arguments
+## Parameters
 
-{{ arguments_markdown }}
+- `numbers` (list[number], required) — Values to evaluate. Must contain at least one element. Returns `null` when this is `null`.
 
-{% if has_variadic %}
-## Variadic Arguments
+## Returns
 
-{{ variadic_argument_markdown }}
-{% endif %}
-
-## Return Value
-
-Returns the largest number from the list:
-- Works with both integers and floats
-- Returns the actual maximum value (preserves type)
-- Returns `null` if the input list is `null`
-
-## Common Patterns
-
-### Peak Resource Identification
-```terraform
-variable "memory_usage_gb" {
-  default = [2.5, 8.1, 4.3, 12.7, 6.2]
-}
-
-locals {
-  peak_memory = provider::pyvider::max(var.memory_usage_gb)  # 12.7
-}
-```
-
-### Performance Metrics
-```terraform
-variable "response_times_ms" {
-  default = [250, 180, 520, 195, 275]
-}
-
-locals {
-  slowest_response = provider::pyvider::max(var.response_times_ms)  # 520
-}
-```
+The maximum number in the list, or `null` when the list is `null`.

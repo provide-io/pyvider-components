@@ -1,17 +1,14 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/test_tdd_stdlib_functions.py
 #
 
-"""TODO: Add module docstring."""
-
 import pytest
-from pyvider.exceptions import FunctionError
 
 # Functions to be tested
 from pyvider.components.functions.collection_functions import contains, length, lookup
 from pyvider.components.functions.string_manipulation import format_str, join
 from pyvider.components.functions.type_conversion_functions import tostring
+from pyvider.exceptions import FunctionError
 
 
 class TestStdlibFunctions:
@@ -81,4 +78,4 @@ class TestStdlibFunctions:
         assert result == "a, true, 123, false"
 
 
-# 🧩🔧🔚
+# 🧪🎯📦

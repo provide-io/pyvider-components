@@ -1,20 +1,17 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
+# tests/tdd/test_tdd_lens_capability_requirement.py
 #
-
-"""TODO: Add module docstring."""
 
 from unittest.mock import MagicMock
 
 import attrs
 import pytest
-from pyvider.exceptions import DataSourceError, FunctionError
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.capabilities.lens import LensCapability
 from pyvider.components.data_sources.lens_jq import LensJqDataSource
 from pyvider.components.functions.lens_jq import lens_jq
+from pyvider.exceptions import DataSourceError, FunctionError
+from pyvider.resources.context import ResourceContext
 
 
 @attrs.define
@@ -65,4 +62,4 @@ class TestTddLensCapabilityRequirement:
         enabled_lens_cap.jq.assert_called_once_with(".a", {"a": 1})
 
 
-# 🧩🔧🔚
+# 🧪🔍✅

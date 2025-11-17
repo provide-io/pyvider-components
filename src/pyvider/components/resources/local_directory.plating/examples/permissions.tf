@@ -6,7 +6,7 @@ resource "pyvider_local_directory" "test_default_perms" {
   path = "/tmp/pyvider_test_dir_default"
 }
 
-output "permissions_default_perms_output" {
+output "default_perms_output" {
   description = "Details of the directory created with default permissions."
   value = {
     id          = pyvider_local_directory.test_default_perms.id
@@ -22,7 +22,7 @@ resource "pyvider_local_directory" "test_custom_perms" {
   permissions = "0o777"
 }
 
-output "permissions_custom_perms_output" {
+output "custom_perms_output" {
   description = "Details of the directory created with custom permissions."
   value = {
     id          = pyvider_local_directory.test_custom_perms.id
@@ -37,7 +37,7 @@ resource "pyvider_local_directory" "test_nested_dir" {
   path = "/tmp/pyvider_test_nested/a/b/c"
 }
 
-output "permissions_nested_dir_output" {
+output "nested_dir_output" {
   description = "Details of a nested directory structure."
   value       = pyvider_local_directory.test_nested_dir.id
 }

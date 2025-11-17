@@ -1,14 +1,14 @@
+# pyvider/components/functions/type_conversion_functions.py
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-#
 
-"""TODO: Add module docstring."""
+# pyvider/components/functions/type_conversion_functions.py
+#
 
 from typing import Any
 
 from provide.foundation import logger
-
 from pyvider.hub import register_function
 
 
@@ -30,5 +30,4 @@ def tostring(value: Any | None) -> str | None:
 
 
 # 🔄🏷️🎯
-
-# 🧩🔧🔚
+# 🧩🔧🔣🪄
