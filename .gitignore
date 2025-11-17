@@ -139,8 +139,10 @@ env.sh
 workenv/*bfiles*
 site/
 
-# Extracted provide.io tooling artifacts
-.provide/
+# Extracted provide.io tooling artifacts (track .md files, ignore generated)
+.provide/foundry/
+.provide/cache/
+.provide/tmp/
 .mypy_cache/
 .ruff_cache/
 .archive/
