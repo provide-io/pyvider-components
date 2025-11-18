@@ -1,0 +1,141 @@
+=========================================
+Testing Pyvider Component Examples
+=========================================
+
+[1;33mTesting: data_source/env_variables[0m
+  Running tofu init...
+  Running tofu plan...
+[0;31m  ✗ FAILED: tofu plan[0m
+
+[1;33mTesting: data_source/file_info[0m
+  Running tofu init...
+[0;31m  ✗ FAILED: tofu init[0m
+
+[1;33mTesting: data_source/http_api[0m
+  Running tofu init...
+[0;31m  ✗ FAILED: tofu init[0m
+
+[1;33mTesting: data_source/lens_jq[0m
+  Running tofu init...
+[0;31m  ✗ FAILED: tofu init[0m
+
+[1;33mTesting: data_source/mixed_map_test[0m
+  Running tofu init...
+  Running tofu plan...
+[0;31m  ✗ FAILED: tofu plan[0m
+
+[1;33mTesting: data_source/nested_data_processor[0m
+[1;33m  ⚠️  No .tf files found, skipping[0m
+
+[1;33mTesting: data_source/nested_data_test_suite[0m
+  Running tofu init...
+  Running tofu plan...
+  Running tofu apply...
+[0;32m  ✓ PASSED[0m
+
+[1;33mTesting: data_source/nested_resource_test[0m
+[1;33m  ⚠️  No .tf files found, skipping[0m
+
+[1;33mTesting: data_source/provider_config_reader[0m
+  Running tofu init...
+  Running tofu plan...
+[0;31m  ✗ FAILED: tofu plan[0m
+
+[1;33mTesting: data_source/simple_map_test[0m
+  Running tofu init...
+  Running tofu plan...
+[0;31m  ✗ FAILED: tofu plan[0m
+
+[1;33mTesting: data_source/structured_object_test[0m
+  Running tofu init...
+  Running tofu plan...
+[0;31m  ✗ FAILED: tofu plan[0m
+
+[1;33mTesting: function/add[0m
+  Running tofu init...
+  Running tofu plan...
+  Running tofu apply...
+[0;32m  ✓ PASSED[0m
+
+[1;33mTesting: function/collection_functions[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/collection_functions: No such file or directory
+[1;33mTesting: function/contains[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/contains: No such file or directory
+[1;33mTesting: function/divide[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/divide: No such file or directory
+[1;33mTesting: function/format[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/format: No such file or directory
+[1;33mTesting: function/format_size[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/format_size: No such file or directory
+[1;33mTesting: function/join[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/join: No such file or directory
+[1;33mTesting: function/length[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/length: No such file or directory
+[1;33mTesting: function/lens_jq[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/lens_jq: No such file or directory
+[1;33mTesting: function/lookup[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/lookup: No such file or directory
+[1;33mTesting: function/lower[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/lower: No such file or directory
+[1;33mTesting: function/max[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/max: No such file or directory
+[1;33mTesting: function/min[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/min: No such file or directory
+[1;33mTesting: function/multiply[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/multiply: No such file or directory
+[1;33mTesting: function/numeric_functions[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/numeric_functions: No such file or directory
+[1;33mTesting: function/pluralize[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/pluralize: No such file or directory
+[1;33mTesting: function/replace[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/replace: No such file or directory
+[1;33mTesting: function/round[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/round: No such file or directory
+[1;33mTesting: function/split[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/split: No such file or directory
+[1;33mTesting: function/string_manipulation[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/string_manipulation: No such file or directory
+[1;33mTesting: function/subtract[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/subtract: No such file or directory
+[1;33mTesting: function/sum[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/sum: No such file or directory
+[1;33mTesting: function/to_camel_case[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/to_camel_case: No such file or directory
+[1;33mTesting: function/to_kebab_case[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/to_kebab_case: No such file or directory
+[1;33mTesting: function/to_snake_case[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/to_snake_case: No such file or directory
+[1;33mTesting: function/tostring[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/tostring: No such file or directory
+[1;33mTesting: function/truncate[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/truncate: No such file or directory
+[1;33mTesting: function/type_conversion_functions[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/type_conversion_functions: No such file or directory
+[1;33mTesting: function/upper[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/function/upper: No such file or directory
+[1;33mTesting: resource/file_content[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/resource/file_content: No such file or directory
+[1;33mTesting: resource/local_directory[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/resource/local_directory: No such file or directory
+[1;33mTesting: resource/private_state_verifier[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/resource/private_state_verifier: No such file or directory
+[1;33mTesting: resource/timed_token[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/resource/timed_token: No such file or directory
+[1;33mTesting: resource/warning_example[0m
+test_examples.sh: line 34: cd: /Users/tim/code/gh/provide-io/pyvider-components/examples/resource/warning_example: No such file or directory
+=========================================
+Test Summary
+=========================================
+Total: 45
+[0;32mPassed: 2[0m
+[0;31mFailed: 8[0m
+
+Failed examples:
+  [0;31m✗ data_source/env_variables (plan)[0m
+  [0;31m✗ data_source/file_info (init)[0m
+  [0;31m✗ data_source/http_api (init)[0m
+  [0;31m✗ data_source/lens_jq (init)[0m
+  [0;31m✗ data_source/mixed_map_test (plan)[0m
+  [0;31m✗ data_source/provider_config_reader (plan)[0m
+  [0;31m✗ data_source/simple_map_test (plan)[0m
+  [0;31m✗ data_source/structured_object_test (plan)[0m

@@ -1,0 +1,148 @@
+# Python project gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pyvider_components.egg-info/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+workenv/
+.workenv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup and log files
+*.bak
+*.log
+logs/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+coverage.xml
+*.cover
+.coverage.*
+
+# Keys and certificates
+*.key
+*.crt
+*.pem
+keys/
+
+# Logs
+*.log
+*.log.*
+logs/
+output/
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Terraform / OpenTofu
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.*
+.terraform/
+.terraform.lock.hcl
+terraform.lock.hcl
+*.hcl.lock
+*.tfvars
+!*.auto.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+crash.log
+crash.*.log
+
+# Tofusoup / Testing
+.soup/
+*.soup/
+examples/*/output/
+examples/*/.soup/
+examples/*/.terraform/
+examples/*/.terraform.lock.hcl
+examples/*/terraform.tfstate*
+examples/*/crash.log
+examples/*/*.log
+
+# Garnish
+.garnish-tests/
+*.garnish/test-output/
+*.garnish/examples/*.tfstate*
+*.garnish/examples/.terraform/
+docs/generated/
+
+# Documentation (auto-generated)
+docs/data-sources/
+docs/data_sources/
+docs/functions/
+docs/resources/
+docs/generated*/
+generated/
+
+# Environment files
+env.sh
+*.env.sh
+.envrc
+
+# Flavor/PSP
+.psp/
+*.psp
+workenv/*bfiles*
+site/
+
+# Extracted provide.io tooling artifacts (track .md files, ignore generated)
+.provide/foundry/
+.provide/cache/
+.provide/tmp/
+.mypy_cache/
+.ruff_cache/
+.archive/

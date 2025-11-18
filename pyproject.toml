@@ -1,0 +1,101 @@
+[project]
+name = "pyvider-components"
+dynamic = ["version"]
+description = "Standard Components for the Pyvider Framework"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "provide-foundation",
+    "pyvider-rpcplugin",
+    "httpx>=0.28.1",
+    "jq>=1.9.1",
+    "jinja2>=3.1.6",
+    "pyvider-cty",
+    "pyvider",
+    "plating",
+]
+
+[project.urls]
+Homepage = "https://foundry.provide.io/pyvider-components/"
+Documentation = "https://foundry.provide.io/pyvider-components/"
+Repository = "https://foundry.provide.io/pyvider-components/repo"
+Issues = "https://foundry.provide.io/pyvider-components/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
+
+[tool.setuptools.package-data]
+"*" = ["*.plating/**/*"]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks integration tests",
+    "unit: marks unit tests",
+]
+filterwarnings = [
+    "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
+]
+
+[tool.ruff]
+line-length = 111
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "ANN", "B", "C90", "SIM", "PTH", "RUF"]
+ignore = ["ANN401", "E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN001", "ANN002", "ANN003", "ANN201", "ANN202", "ANN204", "E402"]
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "src"
+strict = true
+pretty = true
+show_error_codes = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["pyvider.*", "jinja2.*", "rich.*", "click.*", "attrs.*", "httpx.*", "jq.*"]
+ignore_missing_imports = true
+
+[project.entry-points.pyvider]
+pyvider-components = "pyvider.components"
+
+[pyvider]
+name = "pyvider"
+
+[tool.plating]
+provides_content = true
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.148.1",
+    "provide-testkit[standard,build,profiling]",
+    "pyvider-rpcplugin[test]",
+]
