@@ -55,6 +55,7 @@ markers = [
 filterwarnings = [
     "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
 ]
+addopts = "--dist load"
 
 [tool.ruff]
 line-length = 111
