@@ -21,7 +21,6 @@ authors = [
 maintainers = [
     { name = "provide.io", email = "code@provide.io" },
 ]
-keywords = ["pyvider", "terraform", "provider", "components", "resources", "data-sources"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
