@@ -100,3 +100,18 @@ dev = [
     "provide-testkit[standard,build,profiling]",
     "pyvider-rpcplugin[test]",
 ]
+
+[tool.coverage.run]
+source = ["pyvider.components"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
