@@ -4,10 +4,6 @@
 #
 
 
-"""JQ lens data source for JSON querying."""
-
-from __future__ import annotations
-
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast
 

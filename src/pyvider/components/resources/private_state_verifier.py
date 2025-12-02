@@ -5,8 +5,6 @@
 #
 
 
-"""Private state verifier resource for testing sensitive data handling."""
-
 from typing import Any
 
 from attrs import define, evolve
