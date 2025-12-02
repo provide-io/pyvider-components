@@ -4,8 +4,6 @@
 #
 
 
-"""Collection manipulation functions for arrays and objects."""
-
 from typing import Any
 
 from provide.foundation import logger

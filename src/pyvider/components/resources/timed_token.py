@@ -5,8 +5,6 @@
 #
 
 
-"""Timed token resource for generating expiring authentication tokens."""
-
 import datetime
 from typing import TYPE_CHECKING, Any, Literal
 import uuid

@@ -4,8 +4,6 @@
 #
 
 
-"""HTTP API data source for making HTTP requests."""
-
 from decimal import Decimal
 from typing import TYPE_CHECKING, Literal, cast
 
