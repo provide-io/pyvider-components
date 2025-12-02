@@ -90,7 +90,7 @@ class EnvVariablesDataSource(
         return []
 
     @resilient()
-    async def read(self, ctx: ResourceContext) -> EnvVariablesState:
+    async def read(self, ctx: ResourceContext) -> EnvVariablesState:  # noqa: C901
         if not ctx.config:
             raise DataSourceError("Configuration is required.")
         config = cast(EnvVariablesConfig, ctx.config)
