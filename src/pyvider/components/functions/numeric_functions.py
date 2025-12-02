@@ -4,8 +4,6 @@
 #
 
 
-"""Numeric computation functions for mathematical operations."""
-
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 

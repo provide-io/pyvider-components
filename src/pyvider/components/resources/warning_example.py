@@ -4,8 +4,6 @@
 #
 
 
-"""Warning example resource for demonstrating resource warnings."""
-
 from typing import Any
 
 from attrs import define
