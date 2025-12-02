@@ -72,9 +72,7 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
         assert self.private_state_class is not None
         private_state = self.private_state_class(
             token=f"token-{uuid.uuid4()}",
-            expires_at=(
-                datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)
-            ).isoformat(),
+            expires_at=(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)).isoformat(),
         )
         logger.debug(f"Creating private state: {private_state}")
         return base_plan, private_state
