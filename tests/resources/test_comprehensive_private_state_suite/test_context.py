@@ -29,9 +29,7 @@ class TestResourceContextConvenienceMethods(FoundationTestCase):
     @pytest.fixture
     def sample_context(self):
         """Create a ResourceContext with private state"""
-        private_state = MockPrivateState(
-            secret_token="test-token", internal_id="test-internal-id", version=1
-        )
+        private_state = MockPrivateState(secret_token="test-token", internal_id="test-internal-id", version=1)
         return ResourceContext(private_state=private_state)
 
     @pytest.fixture
@@ -64,9 +62,7 @@ class TestResourceContextConvenienceMethods(FoundationTestCase):
 
     def test_get_private_state_same_type_passthrough(self):
         """Test get_private_state passes through when already correct type"""
-        original_state = MockPrivateState(
-            secret_token="test", internal_id="test-id", version=1
-        )
+        original_state = MockPrivateState(secret_token="test", internal_id="test-id", version=1)
         context = ResourceContext(private_state=original_state)
 
         retrieved = context.get_private_state(MockPrivateState)

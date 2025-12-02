@@ -131,19 +131,13 @@ async def test_plan_handler_populates_full_resource_context(encryption_key_env):
             f"Handler returned diagnostics: {[d.summary for d in response.diagnostics]}"
         )
 
-        planned_state_cty = unmarshal(
-            response.planned_state, schema=resource_schema.block
-        )
-        planned_state = ContextAwareResource.from_cty(
-            planned_state_cty, ContextSnapshotState
-        )
+        planned_state_cty = unmarshal(response.planned_state, schema=resource_schema.block)
+        planned_state = ContextAwareResource.from_cty(planned_state_cty, ContextSnapshotState)
 
         assert planned_state.config_cty_was_present is True, (
             "config_cty was not passed to the resource's plan method."
         )
-        assert planned_state.api_key_was_sensitive is True, (
-            "The 'api_key' attribute lost its sensitive mark."
-        )
+        assert planned_state.api_key_was_sensitive is True, "The 'api_key' attribute lost its sensitive mark."
         assert planned_state.username_was_sensitive is False, (
             "The 'username' attribute was incorrectly marked as sensitive."
         )

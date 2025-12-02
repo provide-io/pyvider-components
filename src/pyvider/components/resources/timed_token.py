@@ -43,9 +43,7 @@ class TimedTokenPrivateState(PrivateState):
 
 
 @register_resource("pyvider_timed_token")
-class TimedTokenResource(
-    BaseResource["pyvider_timed_token", TimedTokenState, TimedTokenConfig]
-):
+class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, TimedTokenConfig]):
     config_class = TimedTokenConfig
     state_class = TimedTokenState
     private_state_class = TimedTokenPrivateState
@@ -81,9 +79,7 @@ class TimedTokenResource(
         logger.debug(f"Creating private state: {private_state}")
         return base_plan, private_state  # type: ignore[return-value]
 
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[TimedTokenState, TimedTokenPrivateState]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[TimedTokenState, TimedTokenPrivateState]:
         # Evolve the planned state, filling in the computed value for 'id'.
         assert ctx.planned_state is not None
         assert ctx.private_state is not None

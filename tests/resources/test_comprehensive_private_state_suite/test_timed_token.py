@@ -67,9 +67,7 @@ class TestTimedTokenResource(FoundationTestCase):
                 planned_private=plan_response.planned_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
             assert not apply_response.diagnostics
             assert apply_response.private
 
@@ -100,9 +98,7 @@ class TestTimedTokenResource(FoundationTestCase):
 
     def test_timed_token_private_state_structure(self):
         """Test that TimedTokenPrivateState has the correct structure"""
-        private_state = TimedTokenPrivateState(
-            token="test-token", expires_at="2025-08-06T10:00:00Z"
-        )
+        private_state = TimedTokenPrivateState(token="test-token", expires_at="2025-08-06T10:00:00Z")
 
         assert private_state.token == "test-token"
         assert private_state.expires_at == "2025-08-06T10:00:00Z"

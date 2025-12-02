@@ -63,9 +63,7 @@ def lower(input_str: str | None) -> str | None:
     return input_str.lower()
 
 
-@register_function(
-    name="format", summary="Formats a string using positional arguments."
-)
+@register_function(name="format", summary="Formats a string using positional arguments.")
 @resilient()
 def format_str(template: str | None, values: list[Any] | None) -> str | None:
     """
@@ -91,9 +89,7 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
         logger.debug("Formatted string", template=template, value_count=len(value_list))
         return result
     except IndexError as e:
-        raise FunctionError(
-            f"Formatting failed: not enough values for template '{template}'."
-        ) from e
+        raise FunctionError(f"Formatting failed: not enough values for template '{template}'.") from e
 
 
 @register_function(name="join", summary="Joins list elements with a delimiter.")
@@ -143,9 +139,7 @@ def split(delimiter: str | None, string: str | None) -> list[str] | None:
 
 
 @register_function(name="replace", summary="Replaces occurrences of a substring.")
-def replace(
-    string: str | None, search: str | None, replacement: str | None
-) -> str | None:
+def replace(string: str | None, search: str | None, replacement: str | None) -> str | None:
     """
     Replace all occurrences of a substring.
 

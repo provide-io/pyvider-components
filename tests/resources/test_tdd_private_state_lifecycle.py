@@ -81,19 +81,13 @@ class StatefulResource(BaseResource):
         """
         # This is the core assertion of the contract.
         if not ctx.private_state:
-            raise ResourceError(
-                "Apply phase received no private state, but one was expected."
-            )
+            raise ResourceError("Apply phase received no private state, but one was expected.")
 
         if not isinstance(ctx.private_state, StatefulPrivateState):
-            raise ResourceError(
-                f"Private state has incorrect type: got {type(ctx.private_state).__name__}"
-            )
+            raise ResourceError(f"Private state has incorrect type: got {type(ctx.private_state).__name__}")
 
         if ctx.private_state.transient_token != "secret-plan-token":
-            raise ResourceError(
-                "The private state received by apply was tampered with or lost."
-            )
+            raise ResourceError("The private state received by apply was tampered with or lost.")
 
         # If validation passes, return the final state.
         final_state = StatefulResourceState(
@@ -124,9 +118,7 @@ async def test_private_state_is_passed_from_plan_to_apply():
     plan_context = ResourceContext(config=config_obj)
     base_plan = {"name": "test-resource"}
 
-    planned_state_dict, planned_private_state = await resource._create(
-        plan_context, base_plan
-    )
+    planned_state_dict, planned_private_state = await resource._create(plan_context, base_plan)
     planned_state = resource.state_class(**planned_state_dict)
 
     assert planned_private_state is not None

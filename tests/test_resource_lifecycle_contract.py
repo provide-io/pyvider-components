@@ -82,9 +82,7 @@ class TestResourceLifecycleContract:
         planned_state = resource.state_class(**planned_state_dict)
 
         assert planned_state.content == "updated content"
-        assert (
-            planned_state.content_hash == hashlib.sha256(b"updated content").hexdigest()
-        )
+        assert planned_state.content_hash == hashlib.sha256(b"updated content").hexdigest()
         assert planned_state.exists is True
 
 
