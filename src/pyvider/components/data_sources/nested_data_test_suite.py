@@ -1,11 +1,11 @@
 # type: ignore
 #
-"""Nested data test suite data source for testing complex structures."""
-
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
+
+"""Nested data test suite data source for testing complex structures."""
 import hashlib
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast
