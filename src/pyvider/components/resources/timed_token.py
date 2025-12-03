@@ -1,11 +1,11 @@
 # type: ignore
 #
+"""Timed token resource for generating expiring authentication tokens."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
-
-"""Timed token resource for generating expiring authentication tokens."""
 import datetime
 from typing import TYPE_CHECKING, Any, Literal
 import uuid

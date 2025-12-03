@@ -1,10 +1,10 @@
 #
+"""Numeric computation functions for mathematical operations."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
-
-"""Numeric computation functions for mathematical operations."""
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
