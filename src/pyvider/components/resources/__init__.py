@@ -1,13 +1,10 @@
 #
-"""Resource components package."""
-
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 
 """Resource components package."""
-
 """Pyvider Function Components
 ===========================
 This package contains all function components that are automatically discovered
