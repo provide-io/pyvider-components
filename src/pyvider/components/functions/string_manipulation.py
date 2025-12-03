@@ -1,10 +1,10 @@
 #
-"""String manipulation functions for text processing."""
-
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
+
+"""String manipulation functions for text processing."""
 from typing import Any
 
 from provide.foundation import logger

@@ -1,11 +1,11 @@
 # type: ignore
 #
-"""Local directory resource for managing directory creation and cleanup."""
-
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
+
+"""Local directory resource for managing directory creation and cleanup."""
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, cast
 
