@@ -1,8 +1,9 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+"""Provider configuration reader data source."""
+
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 from typing import Any, cast
 

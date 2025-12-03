@@ -1,5 +1,7 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+"""Function components package."""
+
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
