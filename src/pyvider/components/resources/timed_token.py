@@ -1,9 +1,10 @@
 # type: ignore
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+"""Timed token resource for generating expiring authentication tokens."""
+
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 import datetime
 from typing import TYPE_CHECKING, Any, Literal
