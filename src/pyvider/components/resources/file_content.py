@@ -1,9 +1,9 @@
 #
-"""File content resource for managing file creation and updates."""
-
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
+
+"""File content resource for managing file creation and updates."""
 
 import hashlib
 from pathlib import Path
