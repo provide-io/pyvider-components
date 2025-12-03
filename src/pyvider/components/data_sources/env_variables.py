@@ -1,10 +1,10 @@
 #
+"""Environment variables data source for accessing system environment."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
-
-"""Environment variables data source for accessing system environment."""
 import os
 import re
 from typing import TYPE_CHECKING, Literal, cast
