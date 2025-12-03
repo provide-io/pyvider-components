@@ -33,9 +33,7 @@ class TestTddLensCapabilityRequirement:
         return _factory
 
     @pytest.mark.asyncio
-    async def test_data_source_fails_when_capability_is_disabled(
-        self, capability_factory
-    ):
+    async def test_data_source_fails_when_capability_is_disabled(self, capability_factory):
         disabled_lens_cap = capability_factory(enabled=False)
         data_source = LensJqDataSource()
         ctx = ResourceContext(config=data_source.config_class("{}", "."))
@@ -43,9 +41,7 @@ class TestTddLensCapabilityRequirement:
             await data_source.read(ctx, lens=disabled_lens_cap)
 
     @pytest.mark.asyncio
-    async def test_data_source_succeeds_and_calls_service_when_enabled(
-        self, capability_factory
-    ):
+    async def test_data_source_succeeds_and_calls_service_when_enabled(self, capability_factory):
         enabled_lens_cap = capability_factory(enabled=True)
         enabled_lens_cap.jq = MagicMock()
         data_source = LensJqDataSource()

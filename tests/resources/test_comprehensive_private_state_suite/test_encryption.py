@@ -58,9 +58,7 @@ class MockResourceConfig:
     name: str
 
 
-class TestPrivateStateResource(
-    BaseResource["test_private_state", MockResourceState, MockResourceConfig]
-):
+class TestPrivateStateResource(BaseResource["test_private_state", MockResourceState, MockResourceConfig]):
     """Test resource that uses private state"""
 
     config_class = MockResourceConfig
@@ -90,12 +88,8 @@ class TestPrivateStateResource(
         )
         return base_plan, private_state
 
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[MockResourceState, MockPrivateState]:
-        final_state = MockResourceState(
-            name=ctx.config.name, public_id=f"public-{ctx.config.name}"
-        )
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[MockResourceState, MockPrivateState]:
+        final_state = MockResourceState(name=ctx.config.name, public_id=f"public-{ctx.config.name}")
         # Keep the private state for future reads
         return final_state, ctx.private_state
 
@@ -126,21 +120,15 @@ class TestPrivateStateEncryption(FoundationTestCase):
         )
 
     @pytest.mark.asyncio
-    async def test_encryption_decryption_roundtrip(
-        self, encryption_key_env, sample_private_state
-    ):
+    async def test_encryption_decryption_roundtrip(self, encryption_key_env, sample_private_state):
         """Test that private state can be encrypted and decrypted correctly"""
         # Serialize to msgpack
-        serialized = msgpack.packb(
-            attrs.asdict(sample_private_state), use_bin_type=True
-        )
+        serialized = msgpack.packb(attrs.asdict(sample_private_state), use_bin_type=True)
 
         # Encrypt
         encrypted_data = encrypt(serialized)
         assert encrypted_data != serialized
-        assert len(encrypted_data) > len(
-            serialized
-        )  # Should be longer due to nonce + MAC
+        assert len(encrypted_data) > len(serialized)  # Should be longer due to nonce + MAC
 
         # Decrypt
         decrypted_data = decrypt(encrypted_data)
@@ -153,13 +141,9 @@ class TestPrivateStateEncryption(FoundationTestCase):
         assert restored_state == sample_private_state
 
     @pytest.mark.asyncio
-    async def test_encryption_produces_different_ciphertext(
-        self, encryption_key_env, sample_private_state
-    ):
+    async def test_encryption_produces_different_ciphertext(self, encryption_key_env, sample_private_state):
         """Test that encryption produces different ciphertext each time (due to random nonce)"""
-        serialized = msgpack.packb(
-            attrs.asdict(sample_private_state), use_bin_type=True
-        )
+        serialized = msgpack.packb(attrs.asdict(sample_private_state), use_bin_type=True)
 
         encrypted1 = encrypt(serialized)
         encrypted2 = encrypt(serialized)

@@ -18,9 +18,7 @@ class AbstractApiCapability(BaseCapability):
     @staticmethod
     def get_schema_contribution() -> dict[str, PvsAttribute]:
         return {
-            "api_endpoint": a_str(
-                optional=True, description="The base URL for the API endpoint."
-            ),
+            "api_endpoint": a_str(optional=True, description="The base URL for the API endpoint."),
             "api_token": a_str(
                 optional=True,
                 sensitive=True,

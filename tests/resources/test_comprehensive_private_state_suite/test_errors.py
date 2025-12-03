@@ -67,9 +67,7 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
         encrypted = encrypt(test_data)
 
         # Change the key
-        with patch.dict(
-            os.environ, {"PYVIDER_PRIVATE_STATE_SHARED_SECRET": "different-key"}
-        ):
+        with patch.dict(os.environ, {"PYVIDER_PRIVATE_STATE_SHARED_SECRET": "different-key"}):
             # Reset cached key to force reload
             import pyvider.common.encryption
 
@@ -105,17 +103,10 @@ class TestPrivateStateErrorHandling(FoundationTestCase):
                 planned_private=corrupted_private,
             )
 
-            apply_response = await ApplyResourceChangeHandler(
-                apply_request, context=None
-            )
-            assert apply_response.diagnostics, (
-                "Expected diagnostics for corrupted private state"
-            )
+            apply_response = await ApplyResourceChangeHandler(apply_request, context=None)
+            assert apply_response.diagnostics, "Expected diagnostics for corrupted private state"
             assert len(apply_response.diagnostics) > 0
-            assert (
-                "Failed to deserialize private state"
-                in apply_response.diagnostics[0].detail
-            )
+            assert "Failed to deserialize private state" in apply_response.diagnostics[0].detail
 
         finally:
             hub.unregister("resource", resource_name)

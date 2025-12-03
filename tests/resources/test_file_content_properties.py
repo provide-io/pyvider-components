@@ -22,9 +22,7 @@ validator = schema.block.to_cty_type()
 # Define a Hypothesis strategy for generating valid FileContent configurations
 # This strategy generates dictionaries with 'filename' and 'content' keys,
 # where the values are text strings.
-valid_configs = st.fixed_dictionaries(
-    {"filename": st.text(min_size=1), "content": st.text()}
-)
+valid_configs = st.fixed_dictionaries({"filename": st.text(min_size=1), "content": st.text()})
 
 
 @given(config=valid_configs)

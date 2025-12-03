@@ -53,9 +53,7 @@ class ResourceWithPrivateStateInRead(BaseResource):
             raise ResourceError("Read operation received no private state.")
         if not isinstance(ctx.private_state, ReadPrivateState):
             raise ResourceError("Private state has incorrect type.")
-        return self.state_class(
-            name=ctx.state.name, read_version=ctx.private_state.version
-        )
+        return self.state_class(name=ctx.state.name, read_version=ctx.private_state.version)
 
     async def _create(self, ctx, base_plan):
         pass
@@ -79,9 +77,7 @@ async def test_read_handler_provides_private_state_to_context(encryption_key_env
         prior_state_data = {"name": "existing-resource", "read_version": 1}
         private_state_obj = ReadPrivateState(internal_id="id-123", version=2)
         current_state_dv = marshal(prior_state_data, schema=schema.block)
-        raw_private_bytes = msgpack.packb(
-            attrs.asdict(private_state_obj), use_bin_type=True
-        )
+        raw_private_bytes = msgpack.packb(attrs.asdict(private_state_obj), use_bin_type=True)
         encrypted_private_bytes = encrypt(raw_private_bytes)
         request = pb.ReadResource.Request(
             type_name=resource_name,

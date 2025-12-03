@@ -47,20 +47,14 @@ class LocalDirectoryResource(
     def get_schema(cls) -> PvsSchema:
         return s_resource(
             {
-                "path": a_str(
-                    required=True, description="The path of the directory to manage."
-                ),
+                "path": a_str(required=True, description="The path of the directory to manage."),
                 "permissions": a_str(
                     optional=True,
                     computed=True,
                     description="The permissions for the directory in octal format. Must start with '0o' (e.g., '0o755').",
                 ),
-                "id": a_str(
-                    computed=True, description="The absolute path of the directory."
-                ),
-                "file_count": a_num(
-                    computed=True, description="The number of files in the directory."
-                ),
+                "id": a_str(computed=True, description="The absolute path of the directory."),
+                "file_count": a_num(computed=True, description="The number of files in the directory."),
             }
         )
 
@@ -173,9 +167,7 @@ class LocalDirectoryResource(
             try:
                 path.rmdir()
             except OSError:
-                logger.warning(
-                    f"Directory {path} is not empty and will not be removed."
-                )
+                logger.warning(f"Directory {path} is not empty and will not be removed.")
 
 
 # 🧩🔧🔚
