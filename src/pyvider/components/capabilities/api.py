@@ -1,10 +1,10 @@
 #
+"""Capability API definitions."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
-
-"""Capability API definitions."""
 from typing import Any
 
 from pyvider.capabilities import BaseCapability, register_capability
