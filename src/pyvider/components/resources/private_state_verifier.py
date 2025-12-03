@@ -55,12 +55,12 @@ class PrivateStateVerifierResource(BaseResource):
     ) -> tuple[dict[str, Any], VerifierPrivateState]:
         base_plan["decrypted_token"] = a_unknown(a_str())
         # Handle None/unknown input_value at plan time (e.g., when using timestamp())
-        input_val = ctx.config.input_value if ctx.config and ctx.config.input_value else ""  # type: ignore[union-attr]
+        input_val = ctx.config.input_value if ctx.config and ctx.config.input_value else ""
         assert self.private_state_class is not None
         private_state = self.private_state_class(
-            secret_token=f"SECRET_FOR_{input_val.upper()}"  # type: ignore[call-arg]
+            secret_token=f"SECRET_FOR_{input_val.upper()}"
         )
-        return base_plan, private_state  # type: ignore[return-value]
+        return base_plan, private_state
 
     async def _create_apply(self, ctx: ResourceContext) -> tuple[VerifierState, None]:
         if not ctx.private_state:
@@ -68,9 +68,9 @@ class PrivateStateVerifierResource(BaseResource):
 
         final_state = evolve(
             ctx.planned_state,
-            decrypted_token=ctx.private_state.secret_token,  # type: ignore[attr-defined]
+            decrypted_token=ctx.private_state.secret_token,
         )
-        return final_state, None  # type: ignore[return-value]
+        return final_state, None
 
     async def read(self, ctx: ResourceContext) -> VerifierState | None:
         return ctx.state
