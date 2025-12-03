@@ -71,13 +71,11 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
 
         assert self.private_state_class is not None
         private_state = self.private_state_class(
-            token=f"token-{uuid.uuid4()}",  # type: ignore[call-arg]
-            expires_at=(  # type: ignore[call-arg]
-                datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)
-            ).isoformat(),
+            token=f"token-{uuid.uuid4()}",
+            expires_at=(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)).isoformat(),
         )
         logger.debug(f"Creating private state: {private_state}")
-        return base_plan, private_state  # type: ignore[return-value]
+        return base_plan, private_state
 
     async def _create_apply(self, ctx: ResourceContext) -> tuple[TimedTokenState, TimedTokenPrivateState]:
         # Evolve the planned state, filling in the computed value for 'id'.
