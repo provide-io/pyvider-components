@@ -1,8 +1,9 @@
 #
+"""Private state verifier resource for testing sensitive data handling."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 from typing import Any
 
@@ -57,9 +58,7 @@ class PrivateStateVerifierResource(BaseResource):
         # Handle None/unknown input_value at plan time (e.g., when using timestamp())
         input_val = ctx.config.input_value if ctx.config and ctx.config.input_value else ""
         assert self.private_state_class is not None
-        private_state = self.private_state_class(
-            secret_token=f"SECRET_FOR_{input_val.upper()}"
-        )
+        private_state = self.private_state_class(secret_token=f"SECRET_FOR_{input_val.upper()}")
         return base_plan, private_state
 
     async def _create_apply(self, ctx: ResourceContext) -> tuple[VerifierState, None]:

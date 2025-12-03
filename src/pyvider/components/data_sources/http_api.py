@@ -1,8 +1,9 @@
 #
+"""HTTP API data source for making HTTP requests."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 from decimal import Decimal
 from typing import TYPE_CHECKING, Literal, cast

@@ -1,8 +1,9 @@
 #
+"""JQ lens data source for JSON querying."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast

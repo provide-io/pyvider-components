@@ -1,8 +1,9 @@
 #
+"""Nested data test suite data source for testing complex structures."""
+
 # SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-
 
 import hashlib
 import json
