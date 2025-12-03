@@ -84,10 +84,10 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
         final_state = evolve(
             ctx.planned_state,
             id=f"timed-token-id-{uuid.uuid4()}",
-            token=ctx.private_state.token,  # type: ignore[attr-defined]
-            expires_at=ctx.private_state.expires_at,  # type: ignore[attr-defined]
+            token=ctx.private_state.token,
+            expires_at=ctx.private_state.expires_at,
         )
-        return final_state, ctx.private_state  # type: ignore[return-value]
+        return final_state, ctx.private_state
 
     async def read(self, ctx: ResourceContext) -> TimedTokenState | None:
         logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")

@@ -99,7 +99,7 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @resilient()
-    async def _create_apply(  # type: ignore[override]
+    async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[LocalDirectoryState | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
@@ -126,9 +126,9 @@ class LocalDirectoryResource(
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
             ) from e
-        return ctx.planned_state, None  # type: ignore[return-value]
+        return ctx.planned_state, None
 
-    async def _update_apply(  # type: ignore[override]
+    async def _update_apply(
         self, ctx: ResourceContext
     ) -> tuple[LocalDirectoryState | None, None]:
         return await self._create_apply(ctx)

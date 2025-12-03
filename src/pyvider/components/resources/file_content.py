@@ -122,7 +122,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return await self._create(ctx, base_plan)
 
     @resilient()
-    async def _create_apply(  # type: ignore[override]
+    async def _create_apply(
         self, ctx: ResourceContext
     ) -> tuple[FileContentState | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
@@ -137,7 +137,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         )
         return planned_state, None
 
-    async def _update_apply(  # type: ignore[override]
+    async def _update_apply(
         self, ctx: ResourceContext
     ) -> tuple[FileContentState | None, None]:
         return await self._create_apply(ctx)
