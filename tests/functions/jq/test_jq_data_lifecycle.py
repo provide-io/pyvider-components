@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
 
 from pyvider.conversion import marshal, unmarshal
 from pyvider.cty import CtyDynamic
