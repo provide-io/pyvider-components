@@ -43,9 +43,7 @@ class FileContentState:
 
 
 @register_resource("pyvider_file_content")
-class FileContentResource(
-    BaseResource["pyvider_file_content", FileContentState, FileContentConfig]
-):
+class FileContentResource(BaseResource["pyvider_file_content", FileContentState, FileContentConfig]):
     config_class = FileContentConfig
     state_class = FileContentState
 
@@ -65,11 +63,7 @@ class FileContentResource(
 
     @resilient()
     async def read(self, ctx: ResourceContext) -> FileContentState | None:
-        filename_to_read = (
-            ctx.state.filename
-            if ctx.state
-            else (ctx.config.filename if ctx.config else None)
-        )
+        filename_to_read = ctx.state.filename if ctx.state else (ctx.config.filename if ctx.config else None)
         if not filename_to_read:
             logger.debug("No filename provided for read operation")
             return None
@@ -118,9 +112,7 @@ class FileContentResource(
 
         # Compute content hash for known content
         base_plan["exists"] = True
-        base_plan["content_hash"] = hashlib.sha256(
-            config.content.encode("utf-8")
-        ).hexdigest()
+        base_plan["content_hash"] = hashlib.sha256(config.content.encode("utf-8")).hexdigest()
 
         return base_plan, None
 

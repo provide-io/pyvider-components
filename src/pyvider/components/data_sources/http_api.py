@@ -49,9 +49,7 @@ class HTTPAPIState:
 
 
 @register_data_source("pyvider_http_api")
-class HTTPAPIDataSource(
-    BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPIConfig]
-):
+class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPIConfig]):
     config_class = HTTPAPIConfig
     state_class = HTTPAPIState
 
@@ -134,9 +132,7 @@ class HTTPAPIDataSource(
                 method=config.method,  # Use original method from config
                 status_code=response.status,  # Foundation transport uses 'status'
                 response_body=response.text,  # Foundation transport has text property
-                response_time_ms=int(
-                    response.elapsed_ms
-                ),  # Foundation transport tracks elapsed_ms
+                response_time_ms=int(response.elapsed_ms),  # Foundation transport tracks elapsed_ms
                 response_headers=response.headers,  # Foundation transport headers are already dict
                 header_count=len(response.headers),
                 content_type=response.headers.get("content-type"),
@@ -147,13 +143,9 @@ class HTTPAPIDataSource(
             HTTPResponseError,
         ) as e:
             logger.error(f"HTTP request failed: {e}", exc_info=True)
-            return HTTPAPIState(
-                url=config.url, method=config.method, error_message=str(e)
-            )
+            return HTTPAPIState(url=config.url, method=config.method, error_message=str(e))
         except Exception as e:
-            logger.error(
-                f"An unexpected error occurred during HTTP request: {e}", exc_info=True
-            )
+            logger.error(f"An unexpected error occurred during HTTP request: {e}", exc_info=True)
             return HTTPAPIState(
                 url=config.url,
                 method=config.method,

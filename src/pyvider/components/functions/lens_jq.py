@@ -19,17 +19,13 @@ def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
     """Applies a jq query and returns a native Python object."""
 
     if not lens.is_enabled:
-        raise FunctionError(
-            "The 'lens' capability is disabled in the provider configuration."
-        )
+        raise FunctionError("The 'lens' capability is disabled in the provider configuration.")
 
     if not isinstance(query, str) or not query:
         raise FunctionError("The 'query' argument must be a non-empty string.")
 
     # Ensure input_data is converted to native Python before passing to JQ
-    native_input_data = (
-        cty_to_native(input_data) if isinstance(input_data, CtyValue) else input_data
-    )
+    native_input_data = cty_to_native(input_data) if isinstance(input_data, CtyValue) else input_data
 
     try:
         result_cty = lens.jq(query, native_input_data)
