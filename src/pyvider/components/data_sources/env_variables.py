@@ -44,9 +44,7 @@ class EnvVariablesState:
 
 
 @register_data_source("pyvider_env_variables")
-class EnvVariablesDataSource(
-    BaseDataSource["pyvider_env_variables", EnvVariablesState, EnvVariablesConfig]
-):
+class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariablesState, EnvVariablesConfig]):
     config_class = EnvVariablesConfig
     state_class = EnvVariablesState
 
@@ -71,9 +69,7 @@ class EnvVariablesDataSource(
 
     @resilient()
     async def _validate_config(self, config: EnvVariablesConfig) -> list[str]:
-        filter_count = sum(
-            1 for v in [config.keys, config.prefix, config.regex] if v is not None
-        )
+        filter_count = sum(1 for v in [config.keys, config.prefix, config.regex] if v is not None)
         if filter_count > 1:
             logger.debug(
                 "Multiple filters specified",
@@ -136,9 +132,7 @@ class EnvVariablesDataSource(
                         "case_sensitive": case_sensitive,
                     },
                 )
-                raise DataSourceError(
-                    f"Invalid regex provided: {e}. Context: {context}"
-                ) from e
+                raise DataSourceError(f"Invalid regex provided: {e}. Context: {context}") from e
         else:
             for key, value in source_vars.items():
                 if exclude_empty and not value:
@@ -158,12 +152,8 @@ class EnvVariablesDataSource(
             )
             transformed_vars[final_key] = final_value
         sensitive_keys_set = set(config.sensitive_keys or [])
-        sensitive_vals = {
-            k: v for k, v in transformed_vars.items() if k in sensitive_keys_set
-        }
-        non_sensitive_vals = {
-            k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set
-        }
+        sensitive_vals = {k: v for k, v in transformed_vars.items() if k in sensitive_keys_set}
+        non_sensitive_vals = {k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set}
         return EnvVariablesState(
             values=non_sensitive_vals,
             sensitive_values=sensitive_vals,

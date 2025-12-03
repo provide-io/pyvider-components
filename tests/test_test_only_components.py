@@ -21,15 +21,15 @@ utils_module = import_module("pyvider.protocols.tfprotov6.handlers.utils")
 check_test_only_access = utils_module.check_test_only_access
 get_all_components = utils_module.get_all_components
 
-data_sources_module = import_module(
-    "pyvider.components.data_sources.nested_data_test_suite"
-)
+data_sources_module = import_module("pyvider.components.data_sources.nested_data_test_suite")
 SimpleMapDataSource = data_sources_module.SimpleMapDataSource
 MixedMapDataSource = data_sources_module.MixedMapDataSource
 StructuredObjectDataSource = data_sources_module.StructuredObjectDataSource
 NestedResourceTest = data_sources_module.NestedResourceTest
 
-PrivateStateVerifierResource = import_module("pyvider.components.resources.private_state_verifier").PrivateStateVerifierResource
+PrivateStateVerifierResource = import_module(
+    "pyvider.components.resources.private_state_verifier"
+).PrivateStateVerifierResource
 FileContentResource = import_module("pyvider.components.resources.file_content").FileContentResource
 LocalDirectoryResource = import_module("pyvider.components.resources.local_directory").LocalDirectoryResource
 TimedTokenResource = import_module("pyvider.components.resources.timed_token").TimedTokenResource
@@ -54,9 +54,7 @@ class TestTestOnlyComponentsMarking:
             assert hasattr(ds_class, "_is_test_only"), (
                 f"{ds_class.__name__} should have _is_test_only attribute"
             )
-            assert ds_class._is_test_only is True, (
-                f"{ds_class.__name__}._is_test_only should be True"
-            )
+            assert ds_class._is_test_only is True, f"{ds_class.__name__}._is_test_only should be True"
 
     def test_test_only_resources_marked(self):
         """Test that all test-only resources have _is_test_only=True."""
@@ -68,9 +66,7 @@ class TestTestOnlyComponentsMarking:
             assert hasattr(res_class, "_is_test_only"), (
                 f"{res_class.__name__} should have _is_test_only attribute"
             )
-            assert res_class._is_test_only is True, (
-                f"{res_class.__name__}._is_test_only should be True"
-            )
+            assert res_class._is_test_only is True, f"{res_class.__name__}._is_test_only should be True"
 
     def test_production_data_sources_not_marked(self):
         """Test that production data sources do NOT have _is_test_only=True."""
@@ -81,9 +77,7 @@ class TestTestOnlyComponentsMarking:
         ]
         for ds_class in production_ds:
             is_test_only = getattr(ds_class, "_is_test_only", False)
-            assert is_test_only is False, (
-                f"{ds_class.__name__} should not be marked as test-only"
-            )
+            assert is_test_only is False, f"{ds_class.__name__} should not be marked as test-only"
 
     def test_production_resources_not_marked(self):
         """Test that production resources do NOT have _is_test_only=True."""
@@ -95,9 +89,7 @@ class TestTestOnlyComponentsMarking:
         ]
         for res_class in production_resources:
             is_test_only = getattr(res_class, "_is_test_only", False)
-            assert is_test_only is False, (
-                f"{res_class.__name__} should not be marked as test-only"
-            )
+            assert is_test_only is False, f"{res_class.__name__} should not be marked as test-only"
 
 
 class TestCheckTestOnlyAccess:
@@ -124,18 +116,14 @@ class TestCheckTestOnlyAccess:
     def test_test_only_data_source_blocked_without_test_mode(self):
         """Test-only data sources should be blocked when test mode is disabled."""
         with pytest.raises(DataSourceError) as exc_info:
-            check_test_only_access(
-                SimpleMapDataSource, "pyvider_simple_map_test", "data_source"
-            )
+            check_test_only_access(SimpleMapDataSource, "pyvider_simple_map_test", "data_source")
 
         assert "test-only" in str(exc_info.value).lower()
 
     def test_test_only_function_blocked_without_test_mode(self):
         """Test-only functions should be blocked when test mode is disabled."""
         with pytest.raises(FunctionError) as exc_info:
-            check_test_only_access(
-                SimpleMapDataSource, "pyvider_nested_data_processor", "function"
-            )
+            check_test_only_access(SimpleMapDataSource, "pyvider_nested_data_processor", "function")
 
         assert "test-only" in str(exc_info.value).lower()
 
@@ -152,9 +140,7 @@ class TestCoreCapability:
         """Test that CoreCapability provides pyvider_testmode schema."""
         schema = CoreCapability.get_schema_contribution()
 
-        assert "pyvider_testmode" in schema, (
-            "CoreCapability should provide pyvider_testmode attribute"
-        )
+        assert "pyvider_testmode" in schema, "CoreCapability should provide pyvider_testmode attribute"
 
         pyvider_testmode_attr = schema["pyvider_testmode"]
         assert pyvider_testmode_attr is not None
@@ -206,12 +192,8 @@ class TestTestModeScenarios:
 
     def test_import_test_only_components(self):
         """Test that we can import test-only components without errors."""
-        ds_module = import_module(
-            "pyvider.components.data_sources.nested_data_test_suite"
-        )
-        resource_module = import_module(
-            "pyvider.components.resources.private_state_verifier"
-        )
+        ds_module = import_module("pyvider.components.data_sources.nested_data_test_suite")
+        resource_module = import_module("pyvider.components.resources.private_state_verifier")
 
         assert hasattr(ds_module, "SimpleMapDataSource")
         assert hasattr(resource_module, "PrivateStateVerifierResource")

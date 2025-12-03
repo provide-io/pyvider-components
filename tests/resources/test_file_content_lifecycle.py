@@ -27,9 +27,7 @@ async def test_file_content_plan_apply_lifecycle():
     assert isinstance(schema.block, PvsObjectType)
 
     validator_type = schema.block.to_cty_type()
-    config_val = validator_type.validate(
-        {"filename": "/tmp/test.txt", "content": "hello"}
-    )
+    config_val = validator_type.validate({"filename": "/tmp/test.txt", "content": "hello"})
 
     # THE FIX: Provide the schema to the marshaller.
     config_dv = marshal(config_val, schema=schema.block)
