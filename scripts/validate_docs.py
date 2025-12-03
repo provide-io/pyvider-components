@@ -46,7 +46,7 @@ def validate_frontmatter(file_path: Path) -> tuple[bool, str]:
     return True, subcategory
 
 
-def main() -> None:
+def main() -> None:  # noqa: C901
     docs_dir = Path("/REDACTED_ABS_PATH")
 
     if not docs_dir.exists():
