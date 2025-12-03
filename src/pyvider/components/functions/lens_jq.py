@@ -1,17 +1,11 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
+"""JQ lens function for JSON querying and transformation."""
+
+# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
-
-"""JQ lens function for JSON querying and transformation."""
-
-from __future__ import annotations
-
-from typing import TYPE_CHECKING, Any
-
-if TYPE_CHECKING:
-    from ..capabilities.lens import LensCapability
+from typing import Any
 
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import cty_to_native
