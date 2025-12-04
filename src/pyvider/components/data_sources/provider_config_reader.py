@@ -4,6 +4,7 @@
 #
 
 
+"""Provider configuration reader data source."""
 from typing import Any, cast
 
 from attrs import define

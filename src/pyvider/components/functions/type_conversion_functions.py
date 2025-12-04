@@ -4,6 +4,7 @@
 #
 
 
+"""Type conversion functions for data transformation."""
 from typing import Any
 
 from provide.foundation import logger

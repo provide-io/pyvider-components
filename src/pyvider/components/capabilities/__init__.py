@@ -4,4 +4,6 @@
 #
 
 
+"""Capability components package."""
+
 # 🧩🔧🔚
