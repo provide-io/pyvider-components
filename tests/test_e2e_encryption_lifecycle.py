@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""TODO: Add module docstring."""
 
 import pytest
 import pyvider.protocols.tfprotov6.protobuf as pb
