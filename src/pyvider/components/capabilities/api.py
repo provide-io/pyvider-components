@@ -4,6 +4,7 @@
 #
 
 
+"""Capability API definitions."""
 from typing import Any
 
 from pyvider.capabilities import BaseCapability, register_capability

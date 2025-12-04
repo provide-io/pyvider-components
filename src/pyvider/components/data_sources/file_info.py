@@ -4,6 +4,7 @@
 #
 
 
+"""File information data source for querying file metadata."""
 import datetime
 import stat
 from pathlib import Path

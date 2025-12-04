@@ -4,6 +4,7 @@
 #
 
 
+"""Environment variables data source for accessing system environment."""
 import os
 import re
 from typing import TYPE_CHECKING, Literal, cast
