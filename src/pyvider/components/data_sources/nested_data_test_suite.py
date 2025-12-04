@@ -4,6 +4,7 @@
 #
 
 
+"""Nested data test suite data source for testing complex structures."""
 import hashlib
 import json
 from decimal import Decimal
