@@ -5,6 +5,7 @@
 
 
 """Lens capability implementation."""
+
 from typing import Any
 
 import jq

@@ -5,6 +5,7 @@
 
 
 """JQ lens function for JSON querying and transformation."""
+
 from typing import Any
 
 from pyvider.cty import CtyValue
