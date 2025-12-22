@@ -5,6 +5,7 @@
 
 
 """String manipulation functions for text processing."""
+
 from typing import Any
 
 from provide.foundation import logger
