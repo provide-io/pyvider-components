@@ -82,8 +82,7 @@ markers = [
 filterwarnings = [
     "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
 ]
-addopts = "-m 'not memray'"
-norecursedirs = [".git", "build", "dist", "*.egg-info", ".venv", "htmlcov", ".hypothesis", "tests/memray"]
+addopts = "--dist load"
 # Parallel execution: pytest -n <workers> (range: 2-16, recommend: CPU cores or 8, max: 16 to avoid xdist hang)
 
 [tool.ruff]
