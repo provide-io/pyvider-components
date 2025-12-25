@@ -15,7 +15,7 @@ from pyvider.protocols.tfprotov6.handlers import ReadDataSourceHandler
 
 from pyvider.components.data_sources.lens_jq import LensJqDataSource
 
-TF_DATA_PATH = Path("tests/fixtures/advanced_jq_test")
+TF_DATA_PATH = Path(__file__).parent.parent.parent / "fixtures" / "advanced_jq_test"
 
 
 @pytest.fixture(scope="module")
