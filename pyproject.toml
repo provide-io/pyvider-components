@@ -130,8 +130,7 @@ provides_content = true
 
 [dependency-groups]
 dev = [
-    "hypothesis>=6.148.1",
-    "provide-testkit[standard,build,profiling]",
+    "provide-testkit[standard,advanced-testing,build,profiling]",
     "pyvider-rpcplugin[test]",
 ]
 
