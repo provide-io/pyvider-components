@@ -1,3 +1,13 @@
+#
+# pyvider-components/pyproject.toml
+#
+# Standard Components for the Pyvider Framework
+#
+
+[build-system]
+requires = ["setuptools>=75.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pyvider-components"
 dynamic = ["version"]
