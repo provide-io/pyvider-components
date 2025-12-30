@@ -101,6 +101,11 @@ ignore = [
     "PLR2004",  # magic-value-comparison (too noisy)
 ]
 
+[tool.ruff.lint.isort]
+known-first-party = ["pyvider", "tests"]
+force-sort-within-sections = true
+combine-as-imports = true
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
