@@ -46,8 +46,8 @@ dependencies = [
 [project.urls]
 Homepage = "https://foundry.provide.io/pyvider-components/"
 Documentation = "https://foundry.provide.io/pyvider-components/"
-Repository = "https://github.com/provide-io/pyvider-components"
-Issues = "https://github.com/provide-io/pyvider-components/issues"
+Repository = "https://foundry.provide.io/pyvider-components/repo"
+Issues = "https://foundry.provide.io/pyvider-components/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
