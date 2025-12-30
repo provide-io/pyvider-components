@@ -138,7 +138,6 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
                 logger.debug("Detected MIME type", path=config.path, mime_type=mime_type)
             except ImportError:
                 logger.debug("mimetypes module not available")
-                pass
 
         return FileInfoState(
             path=config.path,
