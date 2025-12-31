@@ -127,7 +127,7 @@ class MixedMapDataSource(BaseDataSource["pyvider_mixed_map_test", MixedMapState,
                 if isinstance(v, str):
                     processed_data[k] = v.upper()
                 elif isinstance(v, (int, float, Decimal)):
-                    processed_data[k] = v + 1
+                    processed_data[k] = v + 1  # type: ignore[assignment]
                 else:
                     processed_data[k] = v
         else:
@@ -328,7 +328,7 @@ def nested_data_processor(input_json: str, processing_mode: str = "analyze") -> 
         },
     }
     if processing_mode == "analyze":
-        result["summary"]["total_keys"] = len(input_data)
+        result["summary"]["total_keys"] = len(input_data)  # type: ignore[assignment]
 
     return json.dumps(result, default=str)
 

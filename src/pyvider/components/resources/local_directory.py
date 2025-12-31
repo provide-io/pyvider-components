@@ -79,8 +79,8 @@ class LocalDirectoryResource(
         return []
 
     async def _create(
-        self, ctx: ResourceContext[LocalDirectoryConfig, LocalDirectoryState, None], base_plan: dict[str, Any]
-    ) -> tuple[dict[str, Any] | None, None]:
+        self, ctx: ResourceContext, base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any] | None, None]:  # type: ignore[override]
         config = cast(LocalDirectoryConfig, ctx.config)
         if not config:
             return None, None
@@ -92,8 +92,8 @@ class LocalDirectoryResource(
         return base_plan, None
 
     async def _update(
-        self, ctx: ResourceContext[LocalDirectoryConfig, LocalDirectoryState, None], base_plan: dict[str, Any]
-    ) -> tuple[dict[str, Any] | None, None]:
+        self, ctx: ResourceContext, base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any] | None, None]:  # type: ignore[override]
         config = cast(LocalDirectoryConfig, ctx.config)
         if not config:
             return None, None
@@ -101,7 +101,7 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[LocalDirectoryState | None, None]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[LocalDirectoryState | None, None]:  # type: ignore[override]
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
@@ -128,11 +128,11 @@ class LocalDirectoryResource(
             ) from e
         return ctx.planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext) -> tuple[LocalDirectoryState | None, None]:
+    async def _update_apply(self, ctx: ResourceContext) -> tuple[LocalDirectoryState | None, None]:  # type: ignore[override]
         return await self._create_apply(ctx)
 
     @resilient()
-    async def read(self, ctx: ResourceContext[LocalDirectoryConfig, LocalDirectoryState, None]) -> LocalDirectoryState | None:
+    async def read(self, ctx: ResourceContext) -> LocalDirectoryState | None:
         if not ctx.state or not ctx.state.path:
             logger.debug("No state or path provided for read operation")
             return None
@@ -156,7 +156,7 @@ class LocalDirectoryResource(
             file_count=file_count,
         )
 
-    async def _delete_apply(self, ctx: ResourceContext[LocalDirectoryConfig, LocalDirectoryState, None]) -> None:
+    async def _delete_apply(self, ctx: ResourceContext) -> None:
         state = cast(LocalDirectoryState, ctx.state)
         if not state or not state.path:
             return
