@@ -35,7 +35,7 @@ class VerifierPrivateState(PrivateState):
 
 
 @register_resource("pyvider_private_state_verifier", test_only=True)
-class PrivateStateVerifierResource(BaseResource):
+class PrivateStateVerifierResource(BaseResource[VerifierState, VerifierState, VerifierConfig]):
     config_class = VerifierConfig
     state_class = VerifierState
     private_state_class = VerifierPrivateState
@@ -53,8 +53,8 @@ class PrivateStateVerifierResource(BaseResource):
         return []
 
     async def _create(
-        self, ctx: ResourceContext, base_plan: dict[str, Any]
-    ) -> tuple[dict[str, Any], VerifierPrivateState]:
+        self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState], base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any] | None, VerifierPrivateState | None]:
         base_plan["decrypted_token"] = a_unknown(a_str())
         # Handle None/unknown input_value at plan time (e.g., when using timestamp())
         input_val = ctx.config.input_value if ctx.config and ctx.config.input_value else ""
@@ -62,20 +62,20 @@ class PrivateStateVerifierResource(BaseResource):
         private_state = self.private_state_class(secret_token=f"SECRET_FOR_{input_val.upper()}")
         return base_plan, private_state
 
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[VerifierState, None]:
+    async def _create_apply(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> tuple[VerifierState | None, VerifierPrivateState | None]:
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
-        final_state = evolve(
+        state: VerifierState = evolve(
             ctx.planned_state,
             decrypted_token=ctx.private_state.secret_token,
         )
-        return final_state, None
+        return state, None
 
-    async def read(self, ctx: ResourceContext) -> VerifierState | None:
+    async def read(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> VerifierState | None:
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext) -> None:
+    async def _delete_apply(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> None:
         pass
 
 
