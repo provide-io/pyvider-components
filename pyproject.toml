@@ -1,3 +1,13 @@
+#
+# pyvider-components/pyproject.toml
+#
+# Standard Components for the Pyvider Framework
+#
+
+[build-system]
+requires = ["setuptools>=75.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pyvider-components"
 dynamic = ["version"]
@@ -11,6 +21,7 @@ authors = [
 maintainers = [
     { name = "provide.io", email = "code@provide.io" },
 ]
+keywords = ["pyvider", "terraform", "provider", "components", "resources", "data-sources"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -38,10 +49,6 @@ Homepage = "https://foundry.provide.io/pyvider-components/"
 Documentation = "https://foundry.provide.io/pyvider-components/"
 Repository = "https://foundry.provide.io/pyvider-components/repo"
 Issues = "https://foundry.provide.io/pyvider-components/issues"
-
-[build-system]
-requires = ["setuptools>=75.0", "wheel"]
-build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -100,6 +107,11 @@ ignore = [
     "PLR0915",  # too-many-statements (refactor later)
     "PLR2004",  # magic-value-comparison (too noisy)
 ]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pyvider", "tests"]
+force-sort-within-sections = true
+combine-as-imports = true
 
 [tool.ruff.format]
 quote-style = "double"
