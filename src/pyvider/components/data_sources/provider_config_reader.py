@@ -29,7 +29,7 @@ class ProviderConfigReaderState:
 
 
 @register_data_source("pyvider_provider_config_reader")
-class ProviderConfigReaderDataSource(BaseDataSource[Any, ProviderConfigReaderState, None]):  # type: ignore[type-arg]
+class ProviderConfigReaderDataSource(BaseDataSource[Any, ProviderConfigReaderState, None]):
     state_class = ProviderConfigReaderState
     config_class = None
 
