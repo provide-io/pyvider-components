@@ -6,6 +6,8 @@
 
 
 """Nested data test suite data source for testing complex structures."""
+
+from decimal import Decimal
 import hashlib
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast
@@ -286,8 +288,8 @@ class NestedResourceTest(
 
     async def _create(
         self,
-        ctx: ResourceContext[NestedResourceConfig, NestedResourceState, None],
-        base_plan: dict[str, Any],
+        ctx: ResourceContext,
+        base_plan: dict[str, Any],  # type: ignore[type-arg]
     ) -> tuple[dict[str, Any] | None, None]:
         # Create the applied state by copying the plan and adding computed values
         applied_state = base_plan.copy()
