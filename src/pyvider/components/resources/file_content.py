@@ -91,10 +91,8 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         )
 
     async def _create(
-        self,
-        ctx: ResourceContext[FileContentState, None],
-        base_plan: dict[str, Any],
-    ) -> tuple[dict[str, Any] | None, None]:
+        self, ctx: ResourceContext, base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any] | None, None]:  # type: ignore[override]
         # base_plan already contains all config fields (merged by framework)
         # Resources only need to add/modify computed fields
 
@@ -121,14 +119,12 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return base_plan, None
 
     async def _update(
-        self,
-        ctx: ResourceContext[FileContentState, None],
-        base_plan: dict[str, Any],
-    ) -> tuple[dict[str, Any] | None, None]:
+        self, ctx: ResourceContext, base_plan: dict[str, Any]
+    ) -> tuple[dict[str, Any] | None, None]:  # type: ignore[override]
         return await self._create(ctx, base_plan)
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[FileContentState | None, None]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[FileContentState | None, None]:  # type: ignore[override]
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
         logger.debug("Creating file", path=str(path))
@@ -141,7 +137,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         )
         return planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext) -> tuple[FileContentState | None, None]:
+    async def _update_apply(self, ctx: ResourceContext) -> tuple[FileContentState | None, None]:  # type: ignore[override]
         return await self._create_apply(ctx)
 
     @resilient()
