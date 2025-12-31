@@ -6,9 +6,9 @@
 
 """Nested data test suite data source for testing complex structures."""
 
+from decimal import Decimal
 import hashlib
 import json
-from decimal import Decimal
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define, field
@@ -73,7 +73,7 @@ class SimpleMapDataSource(BaseDataSource["pyvider_simple_map_test", SimpleMapSta
     async def _validate_config(self, config: SimpleMapConfig) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext) -> SimpleMapState:
+    async def read(self, ctx: ResourceContext) -> SimpleMapState:  # type: ignore[type-arg]
         config = cast(SimpleMapConfig, ctx.config)
         input_data = config.input_data or {}
         processed_data = {k: v.upper() for k, v in input_data.items()}
@@ -117,7 +117,7 @@ class MixedMapDataSource(BaseDataSource["pyvider_mixed_map_test", MixedMapState,
     async def _validate_config(self, config: MixedMapConfig) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext) -> MixedMapState:
+    async def read(self, ctx: ResourceContext) -> MixedMapState:  # type: ignore[type-arg]
         config = cast(MixedMapConfig, ctx.config)
         input_data = config.input_data or {}
 
@@ -200,7 +200,7 @@ class StructuredObjectDataSource(
     async def _validate_config(self, config: StructuredObjectConfig) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext) -> StructuredObjectState:
+    async def read(self, ctx: ResourceContext) -> StructuredObjectState:  # type: ignore[type-arg]
         config = cast(StructuredObjectConfig, ctx.config)
         metadata = config.metadata or {}
         generated_config = {
@@ -281,7 +281,9 @@ class NestedResourceTest(
         return []
 
     async def _create(
-        self, ctx: ResourceContext, base_plan: dict[str, Any]
+        self,
+        ctx: ResourceContext,
+        base_plan: dict[str, Any],  # type: ignore[type-arg]
     ) -> tuple[dict[str, Any] | None, None]:
         # Create the applied state by copying the plan and adding computed values
         applied_state = base_plan.copy()
@@ -302,10 +304,10 @@ class NestedResourceTest(
 
         return applied_state, None
 
-    async def read(self, ctx: ResourceContext) -> NestedResourceState | None:
+    async def read(self, ctx: ResourceContext) -> NestedResourceState | None:  # type: ignore[type-arg]
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext) -> None:
+    async def _delete_apply(self, ctx: ResourceContext) -> None:  # type: ignore[type-arg]
         pass
 
 

@@ -30,7 +30,7 @@ class ProviderConfigReaderState:
 
 
 @register_data_source("pyvider_provider_config_reader")
-class ProviderConfigReaderDataSource(BaseDataSource[Any, ProviderConfigReaderState, None]):  # type: ignore[type-arg]
+class ProviderConfigReaderDataSource(BaseDataSource[Any, ProviderConfigReaderState, None]):
     state_class = ProviderConfigReaderState
     config_class = None
 
@@ -50,7 +50,7 @@ class ProviderConfigReaderDataSource(BaseDataSource[Any, ProviderConfigReaderSta
     async def _validate_config(self, config: Any) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext) -> ProviderConfigReaderState:
+    async def read(self, ctx: ResourceContext) -> ProviderConfigReaderState:  # type: ignore[type-arg]
         provider_ctx = cast(ProviderContext, hub.get_component("singleton", "provider_context"))
         if not provider_ctx or not provider_ctx.config:
             raise DataSourceError("Provider context has not been configured.")

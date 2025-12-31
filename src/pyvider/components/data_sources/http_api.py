@@ -121,7 +121,7 @@ class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPI
             # Foundation transport already includes retry logic
             raise DataSourceError(f"HTTP request failed: {e}") from e
 
-    async def read(self, ctx: ResourceContext) -> HTTPAPIState:
+    async def read(self, ctx: ResourceContext) -> HTTPAPIState:  # type: ignore[type-arg]
         config = cast(HTTPAPIConfig, ctx.config)
         if not config:
             raise DataSourceError("Configuration is missing.")
