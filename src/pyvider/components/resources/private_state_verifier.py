@@ -52,10 +52,8 @@ class PrivateStateVerifierResource(BaseResource[VerifierState, VerifierState, Ve
     async def _validate_config(self, config: VerifierConfig) -> list[str]:
         return []
 
-    async def _create(  # type: ignore[override]
-        self,
-        ctx: ResourceContext[VerifierState, VerifierPrivateState],
-        base_plan: dict[str, Any],
+    async def _create(
+        self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState], base_plan: dict[str, Any]
     ) -> tuple[dict[str, Any] | None, VerifierPrivateState | None]:
         base_plan["decrypted_token"] = a_unknown(a_str())
         # Handle None/unknown input_value at plan time (e.g., when using timestamp())
@@ -64,23 +62,20 @@ class PrivateStateVerifierResource(BaseResource[VerifierState, VerifierState, Ve
         private_state = self.private_state_class(secret_token=f"SECRET_FOR_{input_val.upper()}")
         return base_plan, private_state
 
-    async def _create_apply(  # type: ignore[override]
-        self, ctx: ResourceContext[VerifierState, VerifierPrivateState]
-    ) -> tuple[VerifierState | None, VerifierPrivateState | None]:
+    async def _create_apply(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> tuple[VerifierState | None, VerifierPrivateState | None]:
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")
 
-        assert ctx.planned_state is not None
         state: VerifierState = evolve(
             ctx.planned_state,
             decrypted_token=ctx.private_state.secret_token,
         )
         return state, None
 
-    async def read(self, ctx: ResourceContext) -> VerifierState | None:  # type: ignore[type-arg]
+    async def read(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> VerifierState | None:
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext) -> None:  # type: ignore[type-arg]
+    async def _delete_apply(self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]) -> None:
         pass
 
 
