@@ -55,7 +55,7 @@ class LensJqDataSource(BaseDataSource["pyvider_lens_jq", LensJqState, LensJqConf
     async def _validate_config(self, config: LensJqConfig) -> list[str]:
         return []
 
-    async def read(self, ctx: ResourceContext, *, lens: LensCapability) -> LensJqState:  # type: ignore[override]
+    async def read(self, ctx: ResourceContext, *, lens: LensCapability) -> LensJqState:  # type: ignore[type-arg, override]
         if not lens.is_enabled:
             raise DataSourceError("The 'lens' capability is disabled in the provider configuration.")
 

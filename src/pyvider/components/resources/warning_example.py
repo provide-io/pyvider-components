@@ -24,7 +24,7 @@ class WarningExampleState:
 
 
 @register_resource("pyvider_warning_example")
-class WarningExampleResource(BaseResource):
+class WarningExampleResource(BaseResource[WarningExampleState, WarningExampleState, WarningExampleState]):
     state_class = WarningExampleState
     config_class = WarningExampleState
 
@@ -46,7 +46,7 @@ class WarningExampleResource(BaseResource):
             errors.append("One of 'name', 'old_name', or 'source_file' must be specified.")
         return errors
 
-    async def _create(self, ctx: ResourceContext, base_plan: dict[str, Any]) -> tuple[dict[str, Any], None]:
+    async def _create(self, ctx: ResourceContext, base_plan: dict[str, Any]) -> tuple[dict[str, Any], None]:  # type: ignore[type-arg]
         config = ctx.config
         assert config is not None
         if config.old_name is not None:
@@ -67,7 +67,7 @@ class WarningExampleResource(BaseResource):
 
         return base_plan, None
 
-    async def _create_apply(self, ctx: ResourceContext) -> tuple[WarningExampleState, None]:
+    async def _create_apply(self, ctx: ResourceContext) -> tuple[WarningExampleState, None]:  # type: ignore[type-arg]
         assert self.state_class is not None
         assert ctx.planned_state is not None
         final_state = self.state_class(
@@ -77,10 +77,10 @@ class WarningExampleResource(BaseResource):
         )
         return final_state, None
 
-    async def read(self, ctx: ResourceContext) -> WarningExampleState | None:
+    async def read(self, ctx: ResourceContext) -> WarningExampleState | None:  # type: ignore[type-arg]
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext) -> None:
+    async def _delete_apply(self, ctx: ResourceContext) -> None:  # type: ignore[type-arg]
         pass
 
 

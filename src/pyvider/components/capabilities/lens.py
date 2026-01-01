@@ -25,16 +25,17 @@ class LensCapability(BaseCapability):
     """
 
     def __init__(self, config: Any | None = None) -> None:
-        super().__init__(config)
+        super().__init__(config)  # type: ignore[safe-super]
         self._config = config
 
     @property
     def is_enabled(self) -> bool:
         if self._config and hasattr(self._config, "lens_enabled"):
-            return self._config.lens_enabled
+            enabled: bool = self._config.lens_enabled
+            return enabled
         return True
 
-    def jq(self, query: str, input_data: Any) -> CtyValue:
+    def jq(self, query: str, input_data: Any) -> CtyValue[Any]:
         """
         Executes a JQ query and converts the raw Python result to a CtyValue.
         """

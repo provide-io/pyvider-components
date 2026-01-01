@@ -16,7 +16,7 @@ from pyvider.hub import register_function
 
 
 @register_function(name="length", summary="Returns the length of a given list, map, or string.")
-def length(collection: list | dict | str | None) -> int | None:
+def length(collection: list[Any] | dict[str, Any] | str | None) -> int | None:
     if collection is None:
         return None
     result = len(collection)
