@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Simple script to validate Terraform provider documentation."""
 
+from pathlib import Path
 import re
 import sys
-from pathlib import Path
 
 
 def validate_frontmatter(file_path: Path) -> tuple[bool, str]:

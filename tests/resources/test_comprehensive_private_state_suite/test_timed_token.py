@@ -8,9 +8,13 @@
 from __future__ import annotations
 
 import attrs
-import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
 from provide.testkit import FoundationTestCase
+import pytest
+
+from pyvider.components.resources.timed_token import (
+    TimedTokenPrivateState,
+    TimedTokenResource,
+)
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
@@ -18,12 +22,8 @@ from pyvider.protocols.tfprotov6.handlers import (
     PlanResourceChangeHandler,
     ReadResourceHandler,
 )
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.private_state import PrivateState
-
-from pyvider.components.resources.timed_token import (
-    TimedTokenPrivateState,
-    TimedTokenResource,
-)
 
 
 @attrs.define(frozen=True)

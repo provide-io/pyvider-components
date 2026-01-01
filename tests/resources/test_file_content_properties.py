@@ -6,12 +6,11 @@
 
 from __future__ import annotations
 
+from hypothesis import given, strategies as st
 import pytest
-from hypothesis import given
-from hypothesis import strategies as st
-from pyvider.cty.exceptions import CtyValidationError
 
 from pyvider.components.resources.file_content import FileContentResource
+from pyvider.cty.exceptions import CtyValidationError
 
 # Get the schema from the resource
 schema = FileContentResource.get_schema()
