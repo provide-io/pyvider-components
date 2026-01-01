@@ -56,7 +56,7 @@ class ApiCapability(AbstractApiCapability):
     """
 
     def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+        super().__init__(**kwargs)  # type: ignore[safe-super]
 
 
 # 🧩🔧🔚
