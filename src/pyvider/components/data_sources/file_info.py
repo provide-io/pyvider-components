@@ -7,8 +7,8 @@
 """File information data source for querying file metadata."""
 
 import datetime
-import stat
 from pathlib import Path
+import stat
 from typing import TYPE_CHECKING, Literal, cast
 
 from attrs import define, field
@@ -86,7 +86,7 @@ class FileInfoDataSource(BaseDataSource["pyvider_file_info", FileInfoState, File
         return []
 
     @resilient()
-    async def read(self, ctx: ResourceContext) -> FileInfoState:
+    async def read(self, ctx: ResourceContext) -> FileInfoState:  # type: ignore[type-arg]
         if not ctx.config:
             raise DataSourceError("Configuration is missing.")
         config = cast(FileInfoConfig, ctx.config)
