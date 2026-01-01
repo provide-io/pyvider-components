@@ -66,8 +66,8 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
 
     async def _create(  # type: ignore[override]
         self,
-        ctx: ResourceContext,
-        base_plan: dict[str, Any],  # type: ignore[type-arg]
+        ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState],
+        base_plan: dict[str, Any],
     ) -> tuple[dict[str, Any] | None, TimedTokenPrivateState | None]:
         base_plan["id"] = a_unknown(a_str())
         base_plan["token"] = a_unknown(a_str())
@@ -81,9 +81,9 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
         logger.debug(f"Creating private state: {private_state}")
         return base_plan, private_state
 
-    async def _create_apply(
-        self, ctx: ResourceContext
-    ) -> tuple[TimedTokenState | None, TimedTokenPrivateState | None]:  # type: ignore[type-arg, override]
+    async def _create_apply(  # type: ignore[override]
+        self, ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState]
+    ) -> tuple[TimedTokenState | None, TimedTokenPrivateState | None]:
         # Evolve the planned state, filling in the computed value for 'id'.
         assert ctx.planned_state is not None
         assert ctx.private_state is not None
@@ -95,7 +95,7 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
         )
         return final_state, ctx.private_state
 
-    async def read(self, ctx: ResourceContext) -> TimedTokenState | None:  # type: ignore[type-arg]
+    async def read(self, ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState]) -> TimedTokenState | None:
         logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")
         if ctx.private_state and ctx.state:
             # Private state is automatically decrypted by the framework
@@ -108,7 +108,7 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
             return state
         return ctx.state
 
-    async def _delete_apply(self, ctx: ResourceContext) -> None:  # type: ignore[type-arg]
+    async def _delete_apply(self, ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState]) -> None:
         pass
 
 
