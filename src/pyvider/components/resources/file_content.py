@@ -128,7 +128,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return await self._create(ctx, base_plan)
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext[FileContentState, None]) -> tuple[FileContentState | None, None]:
+    async def _create_apply(
+        self, ctx: ResourceContext[FileContentState, None]
+    ) -> tuple[FileContentState | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
         logger.debug("Creating file", path=str(path))
@@ -141,7 +143,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         )
         return planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext[FileContentState, None]) -> tuple[FileContentState | None, None]:
+    async def _update_apply(
+        self, ctx: ResourceContext[FileContentState, None]
+    ) -> tuple[FileContentState | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()
