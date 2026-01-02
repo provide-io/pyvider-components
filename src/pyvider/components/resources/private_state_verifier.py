@@ -54,7 +54,7 @@ class PrivateStateVerifierResource(BaseResource[VerifierState, VerifierState, Ve
 
     async def _create(  # type: ignore[override]
         self,
-        ctx: ResourceContext[VerifierState, VerifierPrivateState],
+        ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState],
         base_plan: dict[str, Any],
     ) -> tuple[dict[str, Any] | None, VerifierPrivateState | None]:
         base_plan["decrypted_token"] = a_unknown(a_str())
@@ -65,7 +65,7 @@ class PrivateStateVerifierResource(BaseResource[VerifierState, VerifierState, Ve
         return base_plan, private_state
 
     async def _create_apply(  # type: ignore[override]
-        self, ctx: ResourceContext[VerifierState, VerifierPrivateState]
+        self, ctx: ResourceContext[VerifierConfig, VerifierState, VerifierPrivateState]
     ) -> tuple[VerifierState | None, VerifierPrivateState | None]:
         if not ctx.private_state:
             raise ResourceError("Apply phase failed: private state was not received.")

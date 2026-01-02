@@ -64,7 +64,9 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return []
 
     @resilient()
-    async def read(self, ctx: ResourceContext[FileContentState, None]) -> FileContentState | None:
+    async def read(
+        self, ctx: ResourceContext[FileContentConfig, FileContentState, None]
+    ) -> FileContentState | None:
         filename_to_read = ctx.state.filename if ctx.state else (ctx.config.filename if ctx.config else None)
         if not filename_to_read:
             logger.debug("No filename provided for read operation")
@@ -92,7 +94,7 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
 
     async def _create(
         self,
-        ctx: ResourceContext[FileContentState, None],
+        ctx: ResourceContext[FileContentConfig, FileContentState, None],
         base_plan: dict[str, Any],
     ) -> tuple[dict[str, Any] | None, None]:
         # base_plan already contains all config fields (merged by framework)
@@ -122,14 +124,14 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
 
     async def _update(
         self,
-        ctx: ResourceContext[FileContentState, None],
+        ctx: ResourceContext[FileContentConfig, FileContentState, None],
         base_plan: dict[str, Any],
     ) -> tuple[dict[str, Any] | None, None]:
         return await self._create(ctx, base_plan)
 
     @resilient()
     async def _create_apply(
-        self, ctx: ResourceContext[FileContentState, None]
+        self, ctx: ResourceContext[FileContentConfig, FileContentState, None]
     ) -> tuple[FileContentState | None, None]:
         planned_state = cast(FileContentState, ctx.planned_state)
         path = Path(planned_state.filename)
@@ -144,12 +146,12 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
         return planned_state, None
 
     async def _update_apply(
-        self, ctx: ResourceContext[FileContentState, None]
+        self, ctx: ResourceContext[FileContentConfig, FileContentState, None]
     ) -> tuple[FileContentState | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()
-    async def _delete_apply(self, ctx: ResourceContext[FileContentState, None]) -> None:
+    async def _delete_apply(self, ctx: ResourceContext[FileContentConfig, FileContentState, None]) -> None:
         state = cast(FileContentState, ctx.state)
         if not state or not state.filename:
             logger.debug("No state or filename provided for delete operation")
