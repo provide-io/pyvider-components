@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import attrs
 import msgpack
-import pytest
 from provide.testkit import FoundationTestCase
+import pytest
+
 from pyvider.common.encryption import decrypt, encrypt
 from pyvider.resources.private_state import PrivateState
 

@@ -10,9 +10,12 @@ from __future__ import annotations
 from importlib import import_module
 
 import attrs
-import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
 from provide.testkit import FoundationTestCase  # type: ignore[import-untyped]
+import pytest
+
+from pyvider.components.resources.private_state_verifier import (
+    PrivateStateVerifierResource,
+)  # type: ignore[import-untyped]
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
@@ -20,11 +23,8 @@ from pyvider.protocols.tfprotov6.handlers import (
     PlanResourceChangeHandler,
     ReadResourceHandler,
 )
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.private_state import PrivateState
-
-from pyvider.components.resources.private_state_verifier import (
-    PrivateStateVerifierResource,
-)  # type: ignore[import-untyped]
 
 TestPrivateStateResource = import_module(
     "test_comprehensive_private_state_suite.test_encryption"

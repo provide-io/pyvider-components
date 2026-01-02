@@ -9,11 +9,11 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
-from pyvider.conversion import marshal, unmarshal
-from pyvider.protocols.tfprotov6.handlers import ReadDataSourceHandler
 
 from pyvider.components.data_sources.lens_jq import LensJqDataSource
+from pyvider.conversion import marshal, unmarshal
+from pyvider.protocols.tfprotov6.handlers import ReadDataSourceHandler
+import pyvider.protocols.tfprotov6.protobuf as pb
 
 TF_DATA_PATH = Path(__file__).parent.parent.parent / "fixtures" / "advanced_jq_test"
 

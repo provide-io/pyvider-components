@@ -7,7 +7,6 @@
 import json
 
 import pytest
-from pyvider.resources.context import ResourceContext
 
 from pyvider.components.capabilities.lens import LensCapability
 from pyvider.components.data_sources.lens_jq import (
@@ -15,6 +14,7 @@ from pyvider.components.data_sources.lens_jq import (
     LensJqDataSource,
     LensJqState,
 )
+from pyvider.resources.context import ResourceContext
 
 
 @pytest.mark.usefixtures("provider_in_hub")
