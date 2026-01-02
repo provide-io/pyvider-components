@@ -105,7 +105,9 @@ class LocalDirectoryResource(
         return base_plan, None
 
     @resilient()
-    async def _create_apply(self, ctx: ResourceContext[LocalDirectoryState, None]) -> tuple[LocalDirectoryState | None, None]:
+    async def _create_apply(
+        self, ctx: ResourceContext[LocalDirectoryState, None]
+    ) -> tuple[LocalDirectoryState | None, None]:
         planned_state = cast(LocalDirectoryState, ctx.planned_state)
         path = Path(planned_state.path)
         logger.debug("Creating directory", path=str(path))
@@ -132,7 +134,9 @@ class LocalDirectoryResource(
             ) from e
         return ctx.planned_state, None
 
-    async def _update_apply(self, ctx: ResourceContext[LocalDirectoryState, None]) -> tuple[LocalDirectoryState | None, None]:
+    async def _update_apply(
+        self, ctx: ResourceContext[LocalDirectoryState, None]
+    ) -> tuple[LocalDirectoryState | None, None]:
         return await self._create_apply(ctx)
 
     @resilient()

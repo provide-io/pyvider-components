@@ -97,7 +97,9 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
         )
         return final_state, ctx.private_state
 
-    async def read(self, ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState]) -> TimedTokenState | None:
+    async def read(
+        self, ctx: ResourceContext[TimedTokenState, TimedTokenPrivateState]
+    ) -> TimedTokenState | None:
         logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")
         if ctx.private_state and ctx.state:
             # Private state is automatically decrypted by the framework
