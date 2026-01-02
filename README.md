@@ -127,6 +127,58 @@ See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main
 ## License
 See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
 
+## Key Features
+Key features are highlighted in the sections below and in the documentation.
+
+## Getting Started
+
+To use the `pyvider-components` provider, configure it in your Terraform project:
+
+```terraform
+terraform {
+  required_providers {
+    pyvider = {
+      source  = "local/providers/pyvider"
+      version = ">= 0.0.0"  # For development/learning
+      # For specific versions: version = "~> 0.1"
+    }
+  }
+}
+
+provider "pyvider" {
+  # Provider configuration options go here
+}
+```
+
+## Documentation
+Documentation lives in [docs/index.md](docs/index.md).
+
+## Development
+
+To contribute, set up the development environment using `uv`.
+
+```bash
+# Create a virtual environment and install all dependencies
+uv sync --all-groups
+
+# Activate the environment
+source .venv/bin/activate
+```
+
+### Testing
+
+Run the test suite with `pytest`.
+
+```bash
+pytest
+```
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## License
+See [LICENSE](LICENSE) for license details.
+
 ## What is pyvider-components?
 
 **pyvider-components is a learning and reference library** that demonstrates how to build Terraform provider components using the Pyvider framework. It contains working examples of resources, data sources, and functions that you can:
@@ -247,5 +299,3 @@ output "uppercase_example" {
   value = provider::pyvider::upper("hello world")
 }
 ```
-
-Copyright (c) Provide.io LLC.
