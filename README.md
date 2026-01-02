@@ -73,7 +73,9 @@ See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main
 See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
 
 ## Key Features
-Key features are highlighted in the sections below and in the documentation.
+- Reusable provider components shared across pyvider-based providers.
+- Data sources and helpers for registry metadata and provider info.
+- Designed to pair with `terraform-provider-pyvider`.
 
 ## Getting Started
 
@@ -96,7 +98,8 @@ provider "pyvider" {
 ```
 
 ## Documentation
-Documentation lives in [docs/index.md](docs/index.md).
+- [Documentation index](docs/index.md)
+- [Examples](examples/README.md)
 
 ## Development
 
