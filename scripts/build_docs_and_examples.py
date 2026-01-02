@@ -15,8 +15,7 @@ from pathlib import Path
 
 from plating.plating import Plating  # type: ignore[import-untyped]
 from plating.types import PlatingContext  # type: ignore[import-untyped]
-from provide.foundation import file as foundation_file
-from provide.foundation import perr, pout
+from provide.foundation import file as foundation_file, perr, pout
 
 # Multi-function example names that should be kept everywhere
 SHARED_EXAMPLES = {

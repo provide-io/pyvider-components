@@ -11,12 +11,13 @@ from typing import Any
 import attrs
 import msgpack
 import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
+
 from pyvider.common.encryption import encrypt
 from pyvider.conversion import marshal, unmarshal
 from pyvider.exceptions import ResourceError
 from pyvider.hub import hub, register_resource
 from pyvider.protocols.tfprotov6.handlers import ReadResourceHandler
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState

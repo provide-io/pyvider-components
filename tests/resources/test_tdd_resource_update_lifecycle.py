@@ -8,21 +8,21 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
 from provide.testkit import FoundationTestCase
-from pyvider.conversion import marshal, unmarshal
-from pyvider.protocols.tfprotov6.handlers import (
-    ApplyResourceChangeHandler,
-    PlanResourceChangeHandler,
-)
-from pyvider.resources.context import ResourceContext
+import pytest
 
 from pyvider.components.resources.local_directory import (
     LocalDirectoryConfig,
     LocalDirectoryResource,
     LocalDirectoryState,
 )
+from pyvider.conversion import marshal, unmarshal
+from pyvider.protocols.tfprotov6.handlers import (
+    ApplyResourceChangeHandler,
+    PlanResourceChangeHandler,
+)
+import pyvider.protocols.tfprotov6.protobuf as pb
+from pyvider.resources.context import ResourceContext
 
 
 @pytest.fixture

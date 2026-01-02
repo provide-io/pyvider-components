@@ -5,17 +5,17 @@
 
 
 import pytest
-import pyvider.protocols.tfprotov6.protobuf as pb
+
+from pyvider.components.resources.private_state_verifier import (
+    PrivateStateVerifierResource,
+)
 from pyvider.conversion import marshal, unmarshal
 from pyvider.hub import hub
 from pyvider.protocols.tfprotov6.handlers import (
     ApplyResourceChangeHandler,
     PlanResourceChangeHandler,
 )
-
-from pyvider.components.resources.private_state_verifier import (
-    PrivateStateVerifierResource,
-)
+import pyvider.protocols.tfprotov6.protobuf as pb
 
 
 @pytest.mark.asyncio
