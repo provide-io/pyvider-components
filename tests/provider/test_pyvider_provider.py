@@ -1,11 +1,11 @@
 """Tests for pyvider-components provider implementation."""
 
 import pytest
-from pyvider.hub import hub
-from pyvider.providers.base import ProviderMetadata
 
 from pyvider.components.capabilities.core import CoreCapability
 from pyvider.components.provider import PyviderProvider
+from pyvider.hub import hub
+from pyvider.providers.base import ProviderMetadata
 
 
 class TestPyviderProvider:
