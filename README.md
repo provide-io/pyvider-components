@@ -16,66 +16,8 @@ This repository provides a standard set of example components for the [Pyvider](
 ## Quick Start
 
 1. Install: `uv add pyvider-components`
-1. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
-1. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
-
-## Getting Started
-
-To use the `pyvider-components` provider, configure it in your Terraform project:
-
-```terraform
-terraform {
-  required_providers {
-    pyvider = {
-      source  = "local/providers/pyvider"
-      version = ">= 0.0.0"  # For development/learning
-      # For specific versions: version = "~> 0.1"
-    }
-  }
-}
-
-provider "pyvider" {
-  # Provider configuration options go here
-}
-```
-
-## Documentation
-
-- [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
-- [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
-
-## Development
-
-### Quick Start
-
-```bash
-# Set up environment
-uv sync
-
-# Run common tasks
-uv run pytest             # Run tests
-uv run ruff check .       # Check code
-uv run ruff format .      # Format code
-```
-
-See [CLAUDE.md](https://github.com/provide-io/pyvider-components/blob/main/CLAUDE.md) for detailed development instructions and architecture information.
-
-```bash
-pytest
-```
-
-## Contributing
-
-See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main/CONTRIBUTING.md) for contribution guidelines.
-
-## License
-
-See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
-
-## Key Features
-- Reusable provider components shared across pyvider-based providers.
-- Data sources and helpers for registry metadata and provider info.
-- Designed to pair with `terraform-provider-pyvider`.
+2. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+3. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Getting Started
 
