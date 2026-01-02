@@ -98,8 +98,8 @@ provider "pyvider" {
 ```
 
 ## Documentation
-- [Documentation index](docs/index.md)
-- [Examples](examples/README.md)
+- [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+- [Examples](https://github.com/provide-io/pyvider-components/blob/main/examples/README.md)
 
 ## Development
 
@@ -122,10 +122,10 @@ pytest
 ```
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
-See [LICENSE](LICENSE) for license details.
+See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
 
 ## What is pyvider-components?
 
@@ -247,3 +247,5 @@ output "uppercase_example" {
   value = provider::pyvider::upper("hello world")
 }
 ```
+
+Copyright (c) Provide.io LLC.
