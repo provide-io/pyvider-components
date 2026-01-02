@@ -8,9 +8,9 @@ description: |-
 
 ## What This Repo Covers
 
-- Component design patterns and guidance
-- How to assemble a provider using the components
-- Reference links to the generated component docs
+!!! warning "Pre-release"
+    This documentation covers a pre-release. APIs and features may change, and some documented or roadmap items are exploratory and may change or be removed.
+
 
 ## Component Reference
 
