@@ -1,4 +1,4 @@
-# Pyvider Components
+# 🧩🔧 Pyvider Components
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -6,12 +6,22 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![CI](https://github.com/provide-io/pyvider-components/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/pyvider-components/actions)
 
-This repository provides a standard set of **example** components for the [Pyvider](https://github.com/provide-io/pyvider) framework, a Python-based framework for building Terraform providers.
+**Example components for the Pyvider Terraform provider framework**
 
-## Key Features
-- Reusable provider components shared across pyvider-based providers.
-- Data sources and helpers for registry metadata and provider info.
-- Designed to pair with `terraform-provider-pyvider`.
+This repository provides a standard set of example components for the [Pyvider](https://github.com/provide-io/pyvider) framework, demonstrating how to build Terraform providers in Python.
+
+## ✨ Key Features
+
+- 📚 **Learning Resources** - Real-world examples of Pyvider components
+- 🔧 **Reusable Components** - Data sources, resources, and functions ready to use
+- 🧪 **Test Patterns** - Reference implementations for provider testing
+- 🏗️ **Build Templates** - Fork and customize for your own providers
+
+## Quick Start
+
+1. Install: `uv add pyvider-components`
+2. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+3. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Getting Started
 
