@@ -35,7 +35,7 @@ provider "pyvider" {
 
 ## Documentation
 - [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
-- [Examples](https://github.com/provide-io/pyvider-components/blob/main/examples/README.md)
+- [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Development
 
