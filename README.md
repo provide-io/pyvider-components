@@ -190,4 +190,4 @@ output "uppercase_example" {
 }
 ```
 
-Copyright (c) Provide.io LLC.
+Copyright (c) provide.io LLC.
