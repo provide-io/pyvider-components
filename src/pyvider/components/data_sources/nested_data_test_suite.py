@@ -283,7 +283,7 @@ class NestedResourceTest(
 
     async def _create(
         self,
-        ctx: ResourceContext[NestedResourceState, None],
+        ctx: ResourceContext[NestedResourceConfig, NestedResourceState, None],
         base_plan: dict[str, Any],
     ) -> tuple[dict[str, Any] | None, None]:
         # Create the applied state by copying the plan and adding computed values
