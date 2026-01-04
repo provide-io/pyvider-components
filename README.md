@@ -49,19 +49,20 @@ provider "pyvider" {
 
 ## Development
 
-To contribute, set up the development environment using `uv`.
+### Quick Start
 
 ```bash
-# Create a virtual environment and install all dependencies
-uv sync --all-groups
+# Set up environment
+uv sync
 
-# Activate the environment
-source .venv/bin/activate
+# Run common tasks
+we test           # Run tests
+we lint           # Check code
+we format         # Format code
+we tasks          # See all available commands
 ```
 
-### Testing
-
-Run the test suite with `pytest`.
+See [CLAUDE.md](https://github.com/provide-io/pyvider-components/blob/main/CLAUDE.md) for detailed development instructions and architecture information.
 
 ```bash
 pytest
