@@ -33,7 +33,6 @@ classifiers = [
 ]
 dependencies = [
     "provide-foundation",
-    "provide-foundry",
     "pyvider-rpcplugin",
     "httpx>=0.28.1",
     "jq>=1.9.1,<1.11.0; sys_platform != 'win32' or platform_machine != 'ARM64'",
@@ -138,6 +137,10 @@ provides_content = true
 dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]",
     "pyvider-rpcplugin[test]",
+]
+docs = [
+    # provide-foundry - install separately for docs builds (not published to PyPI)
+    # Install with: uv pip install -e ../provide-foundry
 ]
 
 [tool.coverage.run]
