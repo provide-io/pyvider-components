@@ -77,7 +77,7 @@ bandit -r src/
 uv build
 
 # Install in editable mode
-uv pip install -e .
+uv add --editable .
 
 # Sync all dependencies
 uv sync --all-groups
