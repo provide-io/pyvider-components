@@ -169,7 +169,10 @@ Use this repository when you want to:
 
 Use the provider when you want to:
 
-✅ Learn and experiment with Pyvider in Terraform ✅ Test provider functions and resources ✅ Follow a getting started tutorial ✅ Build sample configurations
+✅ Learn and experiment with Pyvider in Terraform
+✅ Test provider functions and resources
+✅ Follow a getting started tutorial
+✅ Build sample configurations
 
 ______________________________________________________________________
 
