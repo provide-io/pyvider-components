@@ -32,8 +32,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "provide-foundation>=0.3.29",
-    "pyvider-rpcplugin>=0.3.21",
+    "provide-foundation",
+    "provide-foundry",
+    "pyvider-rpcplugin",
     "httpx>=0.28.1",
     "jq>=1.9.1,<1.11.0; sys_platform != 'win32' or platform_machine != 'ARM64'",
     "jinja2>=3.1.6",
