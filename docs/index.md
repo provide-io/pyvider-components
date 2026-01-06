@@ -1,103 +1,29 @@
 ---
-page_title: "Pyvider Provider"
+page_title: "Pyvider Components"
 description: |-
-  Terraform provider for pyvider
+  Reusable Terraform provider components for the Pyvider framework
 ---
 
-# Pyvider Provider
+# Pyvider Components
 
 !!! warning "Pre-release"
     This documentation covers a pre-release. APIs and features may change during the pre-release series.
 
+Pyvider Components is a library of reusable resources, data sources, and functions built for Pyvider providers.
 
-Terraform provider for pyvider - A Python-based Terraform provider built with the Pyvider framework.
+## What This Repo Covers
 
-## Example Usage
+- Component design patterns and guidance
+- How to assemble a provider using the components
+- Reference links to the generated component docs
 
-```terraform
-provider "pyvider" {
-  # Configuration options
-}
-```
+## Component Reference
 
-## Schema
+Component reference pages are generated from provider schemas and published on the docs site:
 
-No provider configuration required.
+- https://foundry.provide.io/terraform-provider-pyvider/
 
-### Resources
+## Guides
 
-- [`pyvider_timed_token`](./resources/timed_token/)
-
-### Data Sources
-
-- [`pyvider_env_variables`](./data-sources/env_variables/)
-- [`pyvider_nested_data_processor`](./data-sources/nested_data_processor/)
-- [`pyvider_provider_config_reader`](./data-sources/provider_config_reader/)
-
-### Functions
-
-- [`add`](./functions/add/)
-- [`contains`](./functions/contains/)
-- [`divide`](./functions/divide/)
-- [`format`](./functions/format/)
-- [`format_size`](./functions/format_size/)
-- [`join`](./functions/join/)
-- [`length`](./functions/length/)
-- [`lookup`](./functions/lookup/)
-- [`lower`](./functions/lower/)
-- [`max`](./functions/max/)
-- [`min`](./functions/min/)
-- [`multiply`](./functions/multiply/)
-- [`pluralize`](./functions/pluralize/)
-- [`replace`](./functions/replace/)
-- [`round`](./functions/round/)
-- [`split`](./functions/split/)
-- [`subtract`](./functions/subtract/)
-- [`sum`](./functions/sum/)
-- [`to_camel_case`](./functions/to_camel_case/)
-- [`to_kebab_case`](./functions/to_kebab_case/)
-- [`to_snake_case`](./functions/to_snake_case/)
-- [`tostring`](./functions/tostring/)
-- [`truncate`](./functions/truncate/)
-- [`upper`](./functions/upper/)
-
-## File Operations
-
-### Resources
-
-- [`pyvider_file_content`](./resources/file_content/)
-- [`pyvider_local_directory`](./resources/local_directory/)
-
-### Data Sources
-
-- [`pyvider_file_info`](./data-sources/file_info/)
-
-## Lens
-
-### Data Sources
-
-- [`pyvider_lens_jq`](./data-sources/lens_jq/)
-
-### Functions
-
-- [`lens_jq`](./functions/lens_jq/)
-
-## Network
-
-### Data Sources
-
-- [`pyvider_http_api`](./data-sources/http_api/)
-
-## Test Mode
-
-### Test Resources
-
-- [`pyvider_private_state_verifier`](./resources/private_state_verifier/)
-- [`pyvider_warning_example`](./resources/warning_example/)
-
-### Test Data Sources
-
-- [`pyvider_mixed_map_test`](./data-sources/mixed_map_test/)
-- [`pyvider_nested_resource_test`](./data-sources/nested_resource_test/)
-- [`pyvider_simple_map_test`](./data-sources/simple_map_test/)
-- [`pyvider_structured_object_test`](./data-sources/structured_object_test/)
+- [Orientation](guides/orientation.md)
+- [Build Your Own Provider](guides/build-your-own.md)
