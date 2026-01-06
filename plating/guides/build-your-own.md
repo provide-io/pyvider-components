@@ -11,7 +11,7 @@ This guide outlines a pragmatic path to building a Terraform provider in Python 
 ## 1. Set up your development environment
 
 - Install Python 3.11+ (Pyvider targets modern Python features).
-- Add [uv](https://github.com/astral-sh/uv) or `pip` to manage dependencies.
+- Add [uv](https://github.com/astral-sh/uv) to manage dependencies.
 - Clone the [pyvider](https://github.com/provide-io/pyvider) framework so you can reference the examples and API docs offline if needed.
 
 ```bash
