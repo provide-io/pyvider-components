@@ -96,17 +96,17 @@ See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE
             │                                     │
 ┌───────────▼─────────────┐     ┌───────────────▼──────────────┐
 │   pyvider-components    │────▶│  terraform-provider-pyvider  │
-│   (example library)     │     │  (POC/example provider)      │
+│   (example library)     │     │  (pre-release/testing provider)      │
 │                         │     │                              │
 │  • Learning resources   │     │  • Uses components from ←    │
 │  • Reference examples   │     │  • Packaged & tested         │
-│  • Component demos      │     │  • POC/Learning tool         │
+│  • Component demos      │     │  • Pre-release learning tool         │
 └─────────────────────────┘     └──────────────────────────────┘
 ```
 
 **Key Difference:**
 - **pyvider-components**: Learn how to build components (this repo)
-- **terraform-provider-pyvider**: POC provider for testing and learning ([terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider))
+- **terraform-provider-pyvider**: Pre-release provider for testing and learning ([terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider))
 
 ### When to use pyvider-components
 
@@ -125,7 +125,7 @@ Use the provider when you want to:
 ✅ Learn and experiment with Pyvider in Terraform
 ✅ Test provider functions and resources
 ✅ Follow a getting started tutorial
-✅ Build proof-of-concept configurations
+✅ Build sample configurations
 
 ---
 
