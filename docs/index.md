@@ -4,12 +4,7 @@ description: |-
   Reusable Terraform provider components for the Pyvider framework
 ---
 
-# Pyvider Components
-
-!!! warning "Pre-release"
-    This documentation covers a pre-release. APIs and features may change during the pre-release series.
-
-Pyvider Components is a library of reusable resources, data sources, and functions built for Pyvider providers.
+# Pyvider ComponentsPyvider Components is a library of reusable resources, data sources, and functions built for Pyvider providers.
 
 ## What This Repo Covers
 
