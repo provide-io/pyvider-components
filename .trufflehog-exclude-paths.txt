@@ -7,3 +7,10 @@ docs/.*$
 test_docs/.*$
 examples/.*$
 src/(.*/)?[^/]*\.plating/.*$
+keys/.*$
+helpers/[^/]*/keys/.*$
+helpers/[^/]*/configs/keys/.*$
+tests/[^/]*/keys/.*$
+tests/[^/]*/configs/keys/.*$
+site/.*$
+tests/.*$
