@@ -186,4 +186,14 @@ allowed_paths = [
     "examples/**",
     # Plating template examples
     "src/**/*.plating/**",
+    # Test signing keys
+    "keys/**",
+    "helpers/*/keys/**",
+    "helpers/*/configs/keys/**",
+    "tests/*/keys/**",
+    "tests/*/configs/keys/**",
+    # Built documentation site
+    "site/**",
+    # Test files
+    "tests/**",
 ]
