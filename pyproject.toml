@@ -153,3 +153,36 @@ exclude_lines = [
     "if __name__ == .__main__.:",
     "if TYPE_CHECKING:",
 ]
+
+[tool.bandit]
+exclude_dirs = [".venv", "tests", "workenv"]
+
+################################################################################
+# Security Scanning Allowlist
+################################################################################
+
+[tool.security]
+# Paths to exclude from secret scanning (TruffleHog, GitGuardian, Gitleaks)
+# Run: we security generate (via wrknv) to regenerate tool configs
+description = "Test documentation and example files - intentionally committed"
+allowed_paths = [
+    # Bfiles test output
+    "bf-*.txt",
+    # Generated documentation with example HCL
+    "docs/**",
+    "test_docs/**",
+    # Terraform examples with test tfplan files
+    "examples/**",
+    # Plating template examples
+    "src/**/*.plating/**",
+    # Test signing keys
+    "keys/**",
+    "helpers/*/keys/**",
+    "helpers/*/configs/keys/**",
+    "tests/*/keys/**",
+    "tests/*/configs/keys/**",
+    # Built documentation site
+    "site/**",
+    # Test files
+    "tests/**",
+]
