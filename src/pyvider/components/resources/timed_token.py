@@ -80,7 +80,8 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
                 datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)
             ).isoformat(),
         )
-        logger.debug(f"Creating private state: {private_state}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Creating private state: {private_state}")
         return base_plan, private_state
 
     async def _create_apply(  # type: ignore[override]
@@ -100,7 +101,8 @@ class TimedTokenResource(BaseResource["pyvider_timed_token", TimedTokenState, Ti
     async def read(
         self, ctx: ResourceContext[TimedTokenConfig, TimedTokenState, TimedTokenPrivateState]
     ) -> TimedTokenState | None:
-        logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")
+        if logger.is_debug_enabled():
+            logger.debug(f"Read method called. ctx.private_state: {ctx.private_state}")
         if ctx.private_state and ctx.state:
             # Private state is automatically decrypted by the framework
             # Just use the values directly from the private state
