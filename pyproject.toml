@@ -137,6 +137,7 @@ provides_content = true
 dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]",
     "pyvider-rpcplugin[test]",
+    "wrknv @ git+https://github.com/provide-io/wrknv.git@main",
 ]
 
 [tool.coverage.run]
