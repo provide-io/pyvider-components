@@ -1,6 +1,6 @@
-# AGENTS.md
+# CLAUDE.md
 
-This file provides guidance for AI assistants when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -27,11 +27,14 @@ Key architectural patterns:
 ## Development Environment Setup
 
 ```bash
-# Install dependencies
-uv sync
+# Set up the development environment (creates virtual env, installs dependencies)
+source ./env.sh
 
-# Activate environment (if needed)
-source .venv/bin/activate
+# The script will:
+# - Install UV package manager if needed
+# - Create platform-specific virtual environment in workenv/
+# - Install project dependencies and dev tools
+# - Configure PYTHONPATH and tool paths
 ```
 
 ## Common Development Commands
@@ -95,7 +98,7 @@ tofu apply
 ## Important Project Instructions
 
 - **Rebuild flavor helpers before testing/verification** to avoid using inaccurate helpers
-- Virtual environment is created under `.venv/`
+- Platform-specific virtual environments are created under `workenv/` with naming pattern `pyvider-components_${OS}_${ARCH}`
 - The project requires Python >=3.11
 
 ## Testing Strategy
