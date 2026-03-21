@@ -76,6 +76,7 @@ markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "integration: marks integration tests",
     "unit: marks unit tests",
+    "memray: memory profiling stress tests (run with -m memray)",
 ]
 filterwarnings = [
     "ignore:Module already imported so cannot be rewritten.*:pytest.PytestAssertRewriteWarning",
