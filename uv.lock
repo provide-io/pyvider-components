@@ -2402,7 +2402,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jq", specifier = ">=1.9.1" },
     { name = "plating" },
-    { name = "provide-foundation", specifier = ">=0.3.21,<0.4" },
+    { name = "provide-foundation", specifier = ">=0.3.21" },
     { name = "pyvider" },
     { name = "pyvider-cty" },
     { name = "pyvider-rpcplugin" },
