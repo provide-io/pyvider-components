@@ -24,6 +24,24 @@ from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_bool, a_list, a_map, a_str, s_data_source
 
+# Characters that end the literal prefix of a regex pattern
+_REGEX_SPECIAL = frozenset(r"\[](){}*+?.|^$")
+
+
+def _extract_literal_prefix(pattern: str) -> str:
+    """Extract the leading literal prefix from a regex pattern.
+
+    Used as a fast pre-filter: keys that don't start with this prefix
+    can be skipped without invoking the regex engine, avoiding Match
+    object allocations.
+    """
+    prefix_chars: list[str] = []
+    for ch in pattern:
+        if ch in _REGEX_SPECIAL:
+            break
+        prefix_chars.append(ch)
+    return "".join(prefix_chars)
+
 
 @define(frozen=True)
 class EnvVariablesConfig:
@@ -119,8 +137,14 @@ class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariable
             flags = 0 if case_sensitive else re.IGNORECASE
             try:
                 compiled_regex = re.compile(config.regex, flags)
+                # Pre-filter with literal prefix to avoid Match object allocations
+                # for keys that obviously won't match.
+                literal_pfx = _extract_literal_prefix(config.regex) if case_sensitive else ""
+                _match = compiled_regex.match
                 for key, value in source_vars.items():
-                    if compiled_regex.match(key):
+                    if literal_pfx and not key.startswith(literal_pfx):
+                        continue
+                    if _match(key):
                         if exclude_empty and not value:
                             continue
                         filtered_vars[key] = value
@@ -140,22 +164,31 @@ class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariable
                 if exclude_empty and not value:
                     continue
                 filtered_vars[key] = value
-        transformed_vars = {}
-        for key, value in filtered_vars.items():
-            final_key = (
-                key.upper()
-                if config.transform_keys == "upper"
-                else (key.lower() if config.transform_keys == "lower" else key)
-            )
-            final_value = (
-                value.upper()
-                if config.transform_values == "upper"
-                else (value.lower() if config.transform_values == "lower" else value)
-            )
-            transformed_vars[final_key] = final_value
-        sensitive_keys_set = set(config.sensitive_keys or [])
-        sensitive_vals = {k: v for k, v in transformed_vars.items() if k in sensitive_keys_set}
-        non_sensitive_vals = {k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set}
+        # Skip transform loop when no transforms are configured
+        if config.transform_keys or config.transform_values:
+            transformed_vars: dict[str, str] = {}
+            for key, value in filtered_vars.items():
+                final_key = (
+                    key.upper()
+                    if config.transform_keys == "upper"
+                    else (key.lower() if config.transform_keys == "lower" else key)
+                )
+                final_value = (
+                    value.upper()
+                    if config.transform_values == "upper"
+                    else (value.lower() if config.transform_values == "lower" else value)
+                )
+                transformed_vars[final_key] = final_value
+        else:
+            transformed_vars = filtered_vars
+        # Skip sensitive key splitting when no sensitive keys configured
+        if config.sensitive_keys:
+            sensitive_keys_set = frozenset(config.sensitive_keys)
+            sensitive_vals = {k: v for k, v in transformed_vars.items() if k in sensitive_keys_set}
+            non_sensitive_vals = {k: v for k, v in transformed_vars.items() if k not in sensitive_keys_set}
+        else:
+            sensitive_vals = {}
+            non_sensitive_vals = transformed_vars
         return EnvVariablesState(
             values=non_sensitive_vals,
             sensitive_values=sensitive_vals,

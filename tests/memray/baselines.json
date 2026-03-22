@@ -1,5 +1,5 @@
 {
-  "collection_functions_total_allocations": 2049849,
-  "env_datasource_total_allocations": 3580828,
-  "string_functions_total_allocations": 2718947
+  "collection_functions_total_allocations": 4880,
+  "env_datasource_total_allocations": 1040844,
+  "string_functions_total_allocations": 4942
 }
