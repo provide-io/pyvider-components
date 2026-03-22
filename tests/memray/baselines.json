@@ -1,0 +1,5 @@
+{
+  "collection_functions_total_allocations": 2049849,
+  "env_datasource_total_allocations": 3580828,
+  "string_functions_total_allocations": 2718947
+}
