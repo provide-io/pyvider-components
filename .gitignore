@@ -145,3 +145,4 @@ site/
 .mypy_cache/
 .ruff_cache/
 .archive/
+memray-output/
