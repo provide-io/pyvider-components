@@ -22,35 +22,45 @@ def stress_key_filtering() -> None:
         filtered = {}
         for key in keys_list:
             value = source_vars.get(key)
-            if value is not None:
-                if value:  # exclude_empty=True
-                    filtered[key] = value
+            if value is not None and value:  # exclude_empty=True
+                filtered[key] = value
 
 
 def stress_prefix_filtering() -> None:
     """Simulate prefix filtering logic from EnvVariablesDataSource.read()."""
     source_vars = os.environ.copy()
     prefix = "MYAPP_"
+    _startswith = str.startswith
 
     for _ in range(5_000):
         filtered = {}
         for key, value in source_vars.items():
-            if key.startswith(prefix):
-                if value:  # exclude_empty=True
-                    filtered[key] = value
+            if _startswith(key, prefix) and value:  # exclude_empty=True
+                filtered[key] = value
 
 
 def stress_regex_filtering() -> None:
     """Simulate regex filtering logic from EnvVariablesDataSource.read()."""
     source_vars = os.environ.copy()
-    compiled_regex = re.compile(r"TEST_PREFIX_\d+")
+    regex_str = r"TEST_PREFIX_\d+"
+    compiled_regex = re.compile(regex_str)
+    # Mirror production code: extract literal prefix for fast pre-filtering
+    _regex_special = frozenset(r"\[](){}*+?.|^$")
+    prefix_chars: list[str] = []
+    for ch in regex_str:
+        if ch in _regex_special:
+            break
+        prefix_chars.append(ch)
+    literal_pfx = "".join(prefix_chars)
+    _match = compiled_regex.match
 
     for _ in range(5_000):
         filtered = {}
         for key, value in source_vars.items():
-            if compiled_regex.match(key):
-                if value:  # exclude_empty=True
-                    filtered[key] = value
+            if literal_pfx and not key.startswith(literal_pfx):
+                continue
+            if _match(key) and value:  # exclude_empty=True
+                filtered[key] = value
 
 
 def main() -> None:
