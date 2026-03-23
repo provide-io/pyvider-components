@@ -6,12 +6,16 @@
 
 """JQ lens data source for JSON querying."""
 
+from __future__ import annotations
+
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define
 
 if TYPE_CHECKING:
+    from ..capabilities.lens import LensCapability
+
     pyvider_lens_jq = Literal["pyvider_lens_jq"]
 
 from pyvider.conversion import cty_to_native
@@ -20,8 +24,6 @@ from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_dyn, a_str, s_data_source
-
-from ..capabilities.lens import LensCapability
 
 
 @define(frozen=True)
