@@ -6,14 +6,17 @@
 
 """JQ lens function for JSON querying and transformation."""
 
-from typing import Any
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from ..capabilities.lens import LensCapability
 
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import cty_to_native
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
-
-from ..capabilities.lens import LensCapability
 
 
 @register_function(name="lens_jq", component_of="lens")
