@@ -8,7 +8,6 @@
 
 from typing import Any
 
-import jq
 from provide.foundation import logger
 
 from pyvider.capabilities import BaseCapability, register_capability
@@ -39,6 +38,7 @@ class LensCapability(BaseCapability):
         """
         Executes a JQ query and converts the raw Python result to a CtyValue.
         """
+        import jq  # deferred: only needed when executing a lens query
 
         try:
             # THE FIX: Use the correct `compile(...).transform(...)` API.
