@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 
 from provide.testkit import FoundationTestCase
 import pytest
@@ -60,6 +61,7 @@ class TestResourceUpdateLifecycle(FoundationTestCase):
         assert refined_plan["permissions"] == "0o777"
         assert refined_plan["id"] == str(temp_dir_with_initial_state.resolve())
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Unix file permissions not enforced on Windows")
     @pytest.mark.asyncio
     async def test_update_apply(self, resource: LocalDirectoryResource, temp_dir_with_initial_state: Path):
         planned_state = LocalDirectoryState(
