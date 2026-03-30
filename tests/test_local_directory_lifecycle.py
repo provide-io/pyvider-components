@@ -6,6 +6,7 @@
 
 from pathlib import Path
 import shutil
+import sys
 
 import pytest
 
@@ -32,6 +33,7 @@ def resource() -> LocalDirectoryResource:
     return LocalDirectoryResource()
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="Unix file permissions not enforced on Windows")
 @pytest.mark.asyncio
 async def test_create_lifecycle_contract(resource: LocalDirectoryResource, temp_dir: Path):
     # 1. Define the configuration with the CANONICAL format.
