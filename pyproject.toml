@@ -34,14 +34,14 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "provide-foundation>=0.3.21",
-    "pyvider-rpcplugin",
+    "provide-foundation>=0.3.29",
+    "pyvider-rpcplugin>=0.3.21",
     "httpx>=0.28.1",
     "jq>=1.9.1,<1.11.0",
     "jinja2>=3.1.6",
-    "pyvider-cty",
-    "pyvider",
-    "plating",
+    "pyvider-cty>=0.3.21",
+    "pyvider>=0.3.22",
+    "plating>=0.3.22",
 ]
 
 [project.urls]
