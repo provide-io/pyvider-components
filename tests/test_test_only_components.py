@@ -188,6 +188,62 @@ class TestTestOnlyComponentConsistency:
             )
 
 
+class TestMixedMapConfigValidation:
+    """Regression tests for Bug #2: mixed_map_test crashes with opaque error on string input."""
+
+    def test_validate_config_rejects_string_input(self):
+        """_validate_config should return errors when input_data is a string."""
+        import asyncio
+
+        ds = MixedMapDataSource()
+        # Simulate what happens when jsonencode() passes a string
+        config = MixedMapDataSource.config_class(input_data='{"key": "value"}')  # type: ignore[arg-type]
+        errors = asyncio.run(ds._validate_config(config))
+        assert len(errors) == 1
+        assert "must be a map" in errors[0]
+        assert "str" in errors[0]
+
+    def test_validate_config_accepts_dict_input(self):
+        """_validate_config should pass when input_data is a dict."""
+        import asyncio
+
+        ds = MixedMapDataSource()
+        config = MixedMapDataSource.config_class(input_data={"key": "value"})
+        errors = asyncio.run(ds._validate_config(config))
+        assert errors == []
+
+    def test_validate_config_accepts_none_input(self):
+        """_validate_config should pass when input_data is None."""
+        import asyncio
+
+        ds = MixedMapDataSource()
+        config = MixedMapDataSource.config_class(input_data=None)
+        errors = asyncio.run(ds._validate_config(config))
+        assert errors == []
+
+
+class TestCheckTestOnlyAccessEnvFallback:
+    """Regression tests for Bug #3: test-only functions can't see pyvider_testmode."""
+
+    def test_env_var_fallback_allows_test_only(self, monkeypatch):
+        """check_test_only_access should allow test-only when PYVIDER_TESTMODE env var is set."""
+        monkeypatch.setenv("PYVIDER_TESTMODE", "true")
+        # Ensure no provider_context is registered by using a component that IS test-only
+        # The function should not raise because env var fallback kicks in
+        # (This test works because provider_context may not be registered in unit tests)
+        try:
+            check_test_only_access(SimpleMapDataSource, "pyvider_simple_map_test", "data_source")
+        except DataSourceError:
+            pytest.fail("check_test_only_access should allow access when PYVIDER_TESTMODE=true")
+
+    def test_env_var_fallback_blocks_when_unset(self, monkeypatch):
+        """check_test_only_access should block when env var is not set and no provider_context."""
+        monkeypatch.delenv("PYVIDER_TESTMODE", raising=False)
+        with pytest.raises(DataSourceError) as exc_info:
+            check_test_only_access(SimpleMapDataSource, "pyvider_simple_map_test", "data_source")
+        assert "test-only" in str(exc_info.value).lower()
+
+
 class TestTestModeScenarios:
     """Test various scenarios with test mode enabled/disabled."""
 
