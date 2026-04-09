@@ -87,10 +87,18 @@ def format_str(template: str | None, values: list[Any] | None) -> str | None:
     value_list = values or []
     try:
         str_values = [tostring(v) for v in value_list]
-        result = template.format(*str_values)
+        # Support both %-style (%s, %d, %f) and {}-style placeholders
+        import re
+
+        if re.search(r"%[sdfrg]", template):
+            # Normalize all %-placeholders to %s since values are stringified
+            normalized = re.sub(r"%[dfrg]", "%s", template)
+            result = normalized % tuple(str_values)
+        else:
+            result = template.format(*str_values)
         logger.debug("Formatted string", template=template, value_count=len(value_list))
         return result
-    except IndexError as e:
+    except (IndexError, TypeError) as e:
         raise FunctionError(f"Formatting failed: not enough values for template '{template}'.") from e
 
 
