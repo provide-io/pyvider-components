@@ -79,5 +79,34 @@ class TestStdlibFunctions:
         result = join(", ", ["a", True, 123, False])
         assert result == "a, true, 123, false"
 
+    # --- format: %-style placeholder support (regression for Bug #1) ---
+    def test_format_percent_s_placeholders(self):
+        """format() should support %s placeholders."""
+        result = format_str("Provider: %s v%s", ["pyvider", "0.3.21"])
+        assert result == "Provider: pyvider v0.3.21"
+
+    def test_format_percent_s_single_value(self):
+        """format() should support a single %s placeholder."""
+        result = format_str("Count: %s", [42])
+        assert result == "Count: 42"
+
+    def test_format_braces_still_work(self):
+        """format() should still support {} placeholders."""
+        result = format_str("{} + {} = {}", [1, 2, 3])
+        assert result == "1 + 2 = 3"
+
+    def test_format_percent_d_placeholder(self):
+        """format() should support %d placeholders."""
+        result = format_str("Value: %d", [42])
+        assert result == "Value: 42"
+
+    def test_format_null_template_returns_null(self):
+        assert format_str(None, ["a"]) is None
+
+    def test_format_empty_values_percent_s(self):
+        """format() with %s but no values should raise FunctionError."""
+        with pytest.raises(FunctionError):
+            format_str("Hello %s", [])
+
 
 # 🧩🔧🔚

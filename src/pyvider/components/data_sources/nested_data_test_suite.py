@@ -116,6 +116,11 @@ class MixedMapDataSource(BaseDataSource["pyvider_mixed_map_test", MixedMapState,
         )
 
     async def _validate_config(self, config: MixedMapConfig) -> list[str]:
+        if config.input_data is not None and not isinstance(config.input_data, dict):
+            return [
+                f"input_data must be a map, got {type(config.input_data).__name__}. "
+                f'Use a map literal like {{key = "value"}} instead of jsonencode().'
+            ]
         return []
 
     async def read(self, ctx: ResourceContext) -> MixedMapState:  # type: ignore[type-arg]
