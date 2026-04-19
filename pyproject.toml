@@ -150,7 +150,7 @@ provides_content = true
 dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]",
     "pyvider-rpcplugin[test]",
-    "wrknv @ git+https://github.com/provide-io/wrknv.git@main",
+    "wrknv>=0.3.21",
 ]
 # docs group requires provide-foundry which is not on PyPI - install locally for docs builds
 # docs = [
