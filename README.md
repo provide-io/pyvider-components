@@ -1,10 +1,6 @@
 # 🧩🔧 Pyvider Components
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![uv](https://img.shields.io/badge/uv-package_manager-FF6B35.svg)](https://github.com/astral-sh/uv)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![CI](https://github.com/provide-io/pyvider-components/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/pyvider-components/actions)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/) [![uv](https://img.shields.io/badge/uv-package_manager-FF6B35.svg)](https://github.com/astral-sh/uv) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![CI](https://github.com/provide-io/pyvider-components/actions/workflows/ci.yml/badge.svg)](https://github.com/provide-io/pyvider-components/actions)
 
 **Example components for the Pyvider Terraform provider framework**
 
@@ -20,8 +16,8 @@ This repository provides a standard set of example components for the [Pyvider](
 ## Quick Start
 
 1. Install: `uv add pyvider-components`
-2. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
-3. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
+1. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+1. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Getting Started
 
@@ -44,6 +40,7 @@ provider "pyvider" {
 ```
 
 ## Documentation
+
 - [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
 - [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
@@ -68,9 +65,11 @@ pytest
 ```
 
 ## Contributing
+
 See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
+
 See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
 
 ## What is pyvider-components?
@@ -104,6 +103,7 @@ See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE
 ```
 
 **Key Difference:**
+
 - **pyvider-components**: Learn how to build components (this repo)
 - **terraform-provider-pyvider**: Pre-release provider for testing and learning ([terraform-provider-pyvider](https://github.com/provide-io/terraform-provider-pyvider))
 
@@ -111,22 +111,15 @@ See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE
 
 Use this repository when you want to:
 
-✅ Learn how to build Pyvider providers
-✅ See working examples of resources, data sources, and functions
-✅ Experiment with Pyvider features
-✅ Reference implementation patterns
-✅ Build your own custom provider
+✅ Learn how to build Pyvider providers ✅ See working examples of resources, data sources, and functions ✅ Experiment with Pyvider features ✅ Reference implementation patterns ✅ Build your own custom provider
 
 ### When to use terraform-provider-pyvider
 
 Use the provider when you want to:
 
-✅ Learn and experiment with Pyvider in Terraform
-✅ Test provider functions and resources
-✅ Follow a getting started tutorial
-✅ Build sample configurations
+✅ Learn and experiment with Pyvider in Terraform ✅ Test provider functions and resources ✅ Follow a getting started tutorial ✅ Build sample configurations
 
----
+______________________________________________________________________
 
 ## Part of the provide.io Ecosystem
 
@@ -136,34 +129,34 @@ This project is part of a larger ecosystem of tools for Python and Terraform dev
 
 Understand how provide-foundation, pyvider, flavorpack, and other projects work together.
 
----
+______________________________________________________________________
 
 ## Components
 
 ### Data Sources
 
--   `pyvider_env_variables`: Provides access to environment variables.
--   `pyvider_file_info`: Provides metadata about a file or directory.
--   `pyvider_http_api`: Makes an HTTP request and returns the response.
--   `pyvider_lens_jq`: Transforms data using a JQ expression.
+- `pyvider_env_variables`: Provides access to environment variables.
+- `pyvider_file_info`: Provides metadata about a file or directory.
+- `pyvider_http_api`: Makes an HTTP request and returns the response.
+- `pyvider_lens_jq`: Transforms data using a JQ expression.
 
 ### Resources
 
--   `pyvider_file_content`: Manages the content of a file.
--   `pyvider_local_directory`: Manages a directory on the local filesystem.
--   `pyvider_private_state_verifier`: Verifies the private state of a resource (for testing).
--   `pyvider_timed_token`: Manages a short-lived token (for testing).
--   `pyvider_warning_example`: Demonstrates how to return warnings (for testing).
+- `pyvider_file_content`: Manages the content of a file.
+- `pyvider_local_directory`: Manages a directory on the local filesystem.
+- `pyvider_private_state_verifier`: Verifies the private state of a resource (for testing).
+- `pyvider_timed_token`: Manages a short-lived token (for testing).
+- `pyvider_warning_example`: Demonstrates how to return warnings (for testing).
 
 ### Functions
 
 A rich set of utility functions are provided for common data manipulations.
 
--   **Numeric:** `add`, `subtract`, `multiply`, `divide`, `sum`, `min`, `max`, `round`
--   **String:** `upper`, `lower`, `split`, `join`, `replace`, `format`, `truncate`, `format_size`, `pluralize`, `to_snake_case`, `to_kebab_case`, `to_camel_case`
--   **Collection:** `length`, `contains`, `lookup`
--   **Type Conversion:** `tostring`
--   **Transformation:** `lens_jq`
+- **Numeric:** `add`, `subtract`, `multiply`, `divide`, `sum`, `min`, `max`, `round`
+- **String:** `upper`, `lower`, `split`, `join`, `replace`, `format`, `truncate`, `format_size`, `pluralize`, `to_snake_case`, `to_kebab_case`, `to_camel_case`
+- **Collection:** `length`, `contains`, `lookup`
+- **Type Conversion:** `tostring`
+- **Transformation:** `lens_jq`
 
 ## Examples
 
