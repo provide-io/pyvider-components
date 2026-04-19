@@ -1,5 +1,5 @@
 ---
-page_title: "Pyvider Components"
+page_title: Pyvider Components
 description: |-
   Reusable Terraform provider components for the Pyvider framework
 ---

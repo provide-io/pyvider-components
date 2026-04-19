@@ -11,14 +11,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The codebase follows a component-based architecture with three main component types:
 
 1. **Data Sources** (`src/pyvider/components/data_sources/`) - Read-only data providers for Terraform
-2. **Resources** (`src/pyvider/components/resources/`) - Manage stateful infrastructure components  
-3. **Functions** (`src/pyvider/components/functions/`) - Stateless utility functions for Terraform
+1. **Resources** (`src/pyvider/components/resources/`) - Manage stateful infrastructure components
+1. **Functions** (`src/pyvider/components/functions/`) - Stateless utility functions for Terraform
 
 Each component includes:
+
 - Python implementation file
 - Integration with the Pyvider RPC plugin system
 
 Key architectural patterns:
+
 - Components inherit from base classes in `pyvider-rpcplugin` (e.g., `DataSourceBase`, `ResourceBase`, `FunctionBase`)
 - Uses `attrs` for data validation and schema definition
 - Implements gRPC-based communication with Terraform
@@ -40,6 +42,7 @@ source ./env.sh
 ## Common Development Commands
 
 ### Testing
+
 ```bash
 # Run all tests
 pytest
@@ -58,6 +61,7 @@ uv run pytest -v
 ```
 
 ### Code Quality
+
 ```bash
 # Type checking
 uv run pyright
@@ -72,6 +76,7 @@ bandit -r src/
 ```
 
 ### Building
+
 ```bash
 # Build the package
 uv build
@@ -84,6 +89,7 @@ uv sync --all-groups
 ```
 
 ### Working with Examples
+
 ```bash
 # Most examples are in the examples/ directory
 cd examples/integrated_test/
@@ -104,25 +110,28 @@ tofu apply
 ## Testing Strategy
 
 The test suite includes:
+
 - **Unit tests** for individual functions and components
 - **Lifecycle tests** for resources (create, read, update, delete operations)
 - **End-to-end tests** for complex workflows like encryption
 - **TDD-style tests** for function semantics and stdlib functions
 
 When adding new components:
+
 1. Create the component in the appropriate directory
-3. Write comprehensive tests covering all operations
-4. Ensure the component registers properly with the Pyvider framework
+1. Write comprehensive tests covering all operations
+1. Ensure the component registers properly with the Pyvider framework
 
 ## Component Development Pattern
 
 When implementing new components:
 
 1. **Data Sources**: Inherit from `DataSourceBase`, implement `read()` method
-2. **Resources**: Inherit from `ResourceBase`, implement CRUD operations
-3. **Functions**: Inherit from `FunctionBase`, implement `call()` method
+1. **Resources**: Inherit from `ResourceBase`, implement CRUD operations
+1. **Functions**: Inherit from `FunctionBase`, implement `call()` method
 
 All components should:
+
 - Use `attrs` classes for schema definition
 - Include proper error handling and diagnostics
 - Follow existing naming conventions (snake_case for Python, appropriate for Terraform)
