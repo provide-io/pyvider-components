@@ -8,12 +8,12 @@ from unittest.mock import MagicMock
 
 import attrs
 import pytest
+from pyvider.exceptions import DataSourceError, FunctionError
+from pyvider.resources.context import ResourceContext
 
 from pyvider.components.capabilities.lens import LensCapability
 from pyvider.components.data_sources.lens_jq import LensJqDataSource
 from pyvider.components.functions.lens_jq import lens_jq
-from pyvider.exceptions import DataSourceError, FunctionError
-from pyvider.resources.context import ResourceContext
 
 
 @attrs.define

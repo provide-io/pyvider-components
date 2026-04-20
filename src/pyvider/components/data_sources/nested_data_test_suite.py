@@ -7,9 +7,9 @@
 
 """Nested data test suite data source for testing complex structures."""
 
-from decimal import Decimal
 import hashlib
 import json
+from decimal import Decimal
 from typing import TYPE_CHECKING, Any, Literal, cast
 
 from attrs import define, field

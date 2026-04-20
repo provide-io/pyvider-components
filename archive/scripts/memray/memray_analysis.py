@@ -99,25 +99,27 @@ def generate_analysis_report(output_dir: Path) -> str:
         else:
             report_lines.append(f"| {name} | {size} | {peak} | {allocs} |")
 
-    report_lines.extend([
-        "",
-        "## Hot Paths Profiled",
-        "",
-        "1. **String functions** (`memray_string_functions_stress`): tostring, format_str, upper, lower, join, split, replace",
-        "2. **Collection functions** (`memray_collection_functions_stress`): lookup, length, contains",
-        "3. **Env datasource** (`memray_env_datasource_stress`): key filtering, prefix filtering, regex filtering",
-        "",
-        "## Next Steps",
-        "",
-        "```bash",
-        "# View flamegraphs in browser",
-        "open memray-output/*_flamegraph.html",
-        "",
-        "# Update baselines after optimization",
-        "we run memray.update-baseline",
-        "```",
-        "",
-    ])
+    report_lines.extend(
+        [
+            "",
+            "## Hot Paths Profiled",
+            "",
+            "1. **String functions** (`memray_string_functions_stress`): tostring, format_str, upper, lower, join, split, replace",
+            "2. **Collection functions** (`memray_collection_functions_stress`): lookup, length, contains",
+            "3. **Env datasource** (`memray_env_datasource_stress`): key filtering, prefix filtering, regex filtering",
+            "",
+            "## Next Steps",
+            "",
+            "```bash",
+            "# View flamegraphs in browser",
+            "open memray-output/*_flamegraph.html",
+            "",
+            "# Update baselines after optimization",
+            "we run memray.update-baseline",
+            "```",
+            "",
+        ]
+    )
 
     return "\n".join(report_lines)
 

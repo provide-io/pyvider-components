@@ -5,6 +5,7 @@
 
 
 """JQ lens data source for JSON querying."""
+
 import json
 from typing import TYPE_CHECKING, Any, Literal, cast
 
