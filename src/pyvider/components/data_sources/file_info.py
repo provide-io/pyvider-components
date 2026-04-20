@@ -5,9 +5,10 @@
 
 
 """File information data source for querying file metadata."""
+
 import datetime
-from pathlib import Path
 import stat
+from pathlib import Path
 from typing import TYPE_CHECKING, Literal, cast
 
 from attrs import define, field

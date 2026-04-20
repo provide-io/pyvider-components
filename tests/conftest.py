@@ -4,6 +4,7 @@
 #
 
 
+import contextlib
 import os
 import sys
 
@@ -25,17 +26,15 @@ if sys.platform == "win32":
         for _attr in ("wrapped", "stream"):
             _inner = getattr(_real, _attr, None)
             if _inner is not None and hasattr(_inner, "reconfigure"):
-                try:
+                with contextlib.suppress(Exception):
                     _inner.reconfigure(encoding="utf-8", errors="replace")
-                except Exception:
-                    pass
 
 import pytest
-
-from pyvider.components.capabilities.lens import LensCapability
 from pyvider.hub import hub
 from pyvider.hub.discovery import ComponentDiscovery
 from pyvider.providers.base import BaseProvider, ProviderMetadata
+
+from pyvider.components.capabilities.lens import LensCapability
 
 # Register pytest plugins for test fixtures
 pytest_plugins = [

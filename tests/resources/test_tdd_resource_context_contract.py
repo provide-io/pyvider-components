@@ -10,12 +10,11 @@ from typing import Any
 
 import attrs
 import pytest
-
+import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.conversion import marshal, unmarshal
 from pyvider.cty import CtyMark, CtyValue
 from pyvider.hub import hub, register_resource
 from pyvider.protocols.tfprotov6.handlers import PlanResourceChangeHandler
-import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState

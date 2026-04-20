@@ -85,4 +85,3 @@ locals {
   total_cost = provider::pyvider::add(var.base_cost, var.addon_cost)  # 126.25
 }
 ```
-

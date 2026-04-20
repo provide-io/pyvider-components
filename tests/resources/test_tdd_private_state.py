@@ -11,7 +11,6 @@ from typing import Any
 import attrs
 import msgpack
 import pytest
-
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.resources.private_state import PrivateState
