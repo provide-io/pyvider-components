@@ -5,6 +5,7 @@
 
 
 """Environment variables data source for accessing system environment."""
+
 import os
 import re
 from typing import TYPE_CHECKING, Literal, cast
@@ -104,7 +105,7 @@ class EnvVariablesDataSource(BaseDataSource["pyvider_env_variables", EnvVariable
         return []
 
     @resilient()
-    async def read(self, ctx: ResourceContext) -> EnvVariablesState:  # type: ignore[type-arg]  # noqa: C901
+    async def read(self, ctx: ResourceContext) -> EnvVariablesState:  # type: ignore[type-arg]
         if not ctx.config:
             raise DataSourceError("Configuration is required.")
         config = cast(EnvVariablesConfig, ctx.config)

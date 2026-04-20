@@ -15,7 +15,6 @@ This test suite verifies:
 from importlib import import_module
 
 import pytest
-
 from pyvider.exceptions import DataSourceError, FunctionError, ResourceError
 
 utils_module = import_module("pyvider.protocols.tfprotov6.handlers.utils")

@@ -16,8 +16,8 @@ This repository provides a standard set of example components for the [Pyvider](
 ## Quick Start
 
 1. Install: `uv add pyvider-components`
-2. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
-3. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
+1. Read the [Documentation](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+1. Explore [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Getting Started
 
@@ -40,6 +40,7 @@ provider "pyvider" {
 ```
 
 ## Documentation
+
 - [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
 - [Examples](https://github.com/provide-io/pyvider-components/blob/main/examples/README.md)
 
@@ -64,12 +65,15 @@ pytest
 ```
 
 ## Contributing
+
 See [CONTRIBUTING.md](https://github.com/provide-io/pyvider-components/blob/main/CONTRIBUTING.md) for contribution guidelines.
 
 ## License
+
 See [LICENSE](https://github.com/provide-io/pyvider-components/blob/main/LICENSE) for license details.
 
 ## Key Features
+
 - Reusable provider components shared across pyvider-based providers.
 - Data sources and helpers for registry metadata and provider info.
 - Designed to pair with `terraform-provider-pyvider`.
@@ -95,6 +99,7 @@ provider "pyvider" {
 ```
 
 ## Documentation
+
 - [Documentation index](docs/index.md)
 - [Examples](examples/README.md)
 
@@ -119,9 +124,11 @@ pytest
 ```
 
 ## Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## License
+
 See [LICENSE](LICENSE) for license details.
 
 ## What is pyvider-components?
@@ -169,10 +176,7 @@ Use this repository when you want to:
 
 Use the provider when you want to:
 
-✅ Learn and experiment with Pyvider in Terraform
-✅ Test provider functions and resources
-✅ Follow a getting started tutorial
-✅ Build sample configurations
+✅ Learn and experiment with Pyvider in Terraform ✅ Test provider functions and resources ✅ Follow a getting started tutorial ✅ Build sample configurations
 
 ______________________________________________________________________
 
@@ -184,7 +188,7 @@ This project is part of a larger ecosystem of tools for Python and Terraform dev
 
 Understand how provide-foundation, pyvider, flavorpack, and other projects work together.
 
----
+______________________________________________________________________
 
 ## Components
 
