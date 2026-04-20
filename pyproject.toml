@@ -138,7 +138,6 @@ provides_content = true
 dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]",
     "pyvider-rpcplugin[test]",
-    "wrknv @ git+https://github.com/provide-io/wrknv.git@main",
 ]
 
 [tool.coverage.run]
@@ -165,7 +164,6 @@ exclude_dirs = [".venv", "tests", "workenv"]
 
 [tool.security]
 # Paths to exclude from secret scanning (TruffleHog, GitGuardian, Gitleaks)
-# Run: we security generate (via wrknv) to regenerate tool configs
 description = "Test documentation and example files - intentionally committed"
 allowed_paths = [
     # Bfiles test output
