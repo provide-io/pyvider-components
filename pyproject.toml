@@ -32,14 +32,14 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "provide-foundation>=0.3.29",
-    "pyvider-rpcplugin>=0.3.21",
+    "provide-foundation>=0.4.0",
+    "pyvider-rpcplugin>=0.4.0",
     "httpx>=0.28.1",
     "jq>=1.9.1,<1.11.0; sys_platform != 'win32' or platform_machine != 'ARM64'",
     "jinja2>=3.1.6",
-    "pyvider-cty>=0.3.21",
-    "pyvider>=0.3.22",
-    "plating>=0.3.22",
+    "pyvider-cty>=0.4.0",
+    "pyvider>=0.4.0",
+    "plating>=0.4.0",
 ]
 
 [project.urls]
@@ -139,8 +139,8 @@ provides_content = true
 
 [dependency-groups]
 dev = [
-    "provide-testkit[standard,advanced-testing,build,profiling]",
-    "pyvider-rpcplugin[test]",
+    "provide-testkit[standard,advanced-testing,build,profiling]>=0.4.0",
+    "pyvider-rpcplugin[test]>=0.4.0",
 ]
 
 [tool.coverage.run]

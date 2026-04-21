@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: Copyright (c) 2026 provide.io llc. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-
 INHERIT: .provide/foundry/base-mkdocs.yml
 site_name: Pyvider Components
 site_description: Learning and reference library for Pyvider framework components
@@ -10,7 +7,7 @@ repo_url: https://github.com/provide-io/pyvider-components
 repo_name: provide-io/pyvider-components
 edit_uri: edit/main/docs/
 copyright: ©2024-2025 provide.io llc<br/>🛠️ with 💚 and 🦝 on 🌎
-dev_addr: 127.0.0.1:11014
+dev_addr: 127.0.0.1:11008
 docs_dir: docs
 theme:
   logo: assets/logo.svg

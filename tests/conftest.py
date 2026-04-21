@@ -4,7 +4,6 @@
 #
 
 
-import contextlib
 import os
 import sys
 
@@ -26,8 +25,10 @@ if sys.platform == "win32":
         for _attr in ("wrapped", "stream"):
             _inner = getattr(_real, _attr, None)
             if _inner is not None and hasattr(_inner, "reconfigure"):
-                with contextlib.suppress(Exception):
+                try:
                     _inner.reconfigure(encoding="utf-8", errors="replace")
+                except Exception:
+                    pass
 
 import pytest
 from pyvider.hub import hub
