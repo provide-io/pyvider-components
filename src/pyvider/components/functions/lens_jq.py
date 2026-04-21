@@ -1,24 +1,26 @@
 #
-# SPDX-FileCopyrightText: Copyright (c) 2025 provide.io llc. All rights reserved.
+# SPDX-FileCopyrightText: Copyright (c) provide.io llc. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 
 
 """JQ lens function for JSON querying and transformation."""
 
+from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from ..capabilities.lens import LensCapability
 
 from pyvider.cty import CtyValue
 from pyvider.cty.conversion import cty_to_native
 from pyvider.exceptions import FunctionError
 from pyvider.hub import register_function
 
-if TYPE_CHECKING:
-    from pyvider.components.capabilities.lens import LensCapability
-
 
 @register_function(name="lens_jq", component_of="lens")
-def lens_jq(input_data: Any, query: str, *, lens: "LensCapability") -> Any:
+def lens_jq(input_data: Any, query: str, *, lens: LensCapability) -> Any:
     """Applies a jq query and returns a native Python object."""
 
     if not lens.is_enabled:
