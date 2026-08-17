@@ -42,8 +42,24 @@ This function enables you to:
 
 Returns the quotient as a number. The return type is automatically optimized:
 - If the result is a whole number, returns an integer
-- If the result has decimal places, returns a float
+- If the result has decimal places, returns the exact decimal
 - Returns `null` if either input is `null`
+- **Raises an error** when the divisor is `0`
+
+## Precision
+
+Arithmetic is exact decimal arithmetic, not binary floating point, and carries as many
+significant digits as Terraform's own numbers do. That is what a practitioner writing
+decimal literals expects:
+
+```terraform
+provider::pyvider::add(0.1, 0.2)       # 0.3, not 0.30000000000000004
+provider::pyvider::subtract(0.3, 0.1)  # 0.2, not 0.19999999999999998
+provider::pyvider::multiply(1.1, 1.1)  # 1.21, not 1.2100000000000002
+```
+
+A result too large for a 64-bit float stays a number rather than becoming infinity, and a
+division that does not terminate is carried to 155 significant digits rather than 16.
 
 ## Common Patterns
 

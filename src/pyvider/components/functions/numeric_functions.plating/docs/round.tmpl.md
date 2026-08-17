@@ -45,6 +45,24 @@ Returns the rounded number:
 - When `precision` is positive: returns a float with the specified decimal places
 - Returns `null` if either input is `null`
 
+## How Ties Are Broken
+
+`round` is not one of Terraform's own functions, so its behaviour here is this provider's
+rather than a match for something you may already know. A value exactly halfway between
+two candidates rounds to the **nearest even** result — "banker's rounding" — rather than
+away from zero:
+
+```terraform
+provider::pyvider::round(2.5)   # 2, not 3
+provider::pyvider::round(3.5)   # 4
+provider::pyvider::round(0.5)   # 0, not 1
+provider::pyvider::round(-2.5)  # -2, not -3
+```
+
+Banker's rounding keeps a long series of roundings from drifting upward, which is why it is
+the default in most financial and statistical software. If you need halves to go away from
+zero instead, Terraform's own `ceil` and `floor` applied to a shifted value will do it.
+
 ## Common Patterns
 
 ### Currency Formatting
