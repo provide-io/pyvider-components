@@ -40,16 +40,26 @@ This function enables you to:
 
 ## Return Value
 
-Returns the count of elements as an integer:
-- **Lists**: Number of elements in the list
+Returns the count as an integer:
+- **Lists, sets and tuples**: Number of elements
 - **Maps/Objects**: Number of key-value pairs
-- **Strings**: Number of characters (including spaces)
+- **Strings**: Number of grapheme clusters — characters as a reader counts them, including spaces
 - Returns `null` if the input is `null`
 - Returns `0` for empty collections
+- **Raises an error** for anything else, such as a number or a bool
 
 ## Behavior with Different Types
 
-The function adapts its behavior based on the input type. For lists, it counts all elements including null values. For maps, it counts key-value pairs regardless of value types. For strings, it counts all characters including whitespace and Unicode characters.
+The function adapts its behavior based on the input type. For lists, it counts all elements including null values. For maps, it counts key-value pairs regardless of value types.
+
+For strings it counts **grapheme clusters**, matching Terraform's own `length`. A grapheme cluster is one character as a reader perceives it, which is not the same as one Unicode code point: a base letter plus its combining accent is one cluster, a flag built from two regional indicators is one cluster, and an emoji joined together with zero-width joiners is one cluster no matter how many code points it took to write.
+
+```terraform
+provider::pyvider::length("hello")     # 5
+provider::pyvider::length("héllo")     # 5, even when the é is "e" plus a combining accent
+provider::pyvider::length("🇺🇸")        # 1, not 2
+provider::pyvider::length("👨‍👩‍👧‍👦")        # 1, not 7
+```
 
 ## Common Patterns
 

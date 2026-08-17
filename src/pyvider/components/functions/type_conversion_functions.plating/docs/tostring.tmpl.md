@@ -41,19 +41,20 @@ This function enables you to:
 ## Return Value
 
 Returns the string representation of the value:
-- **Numbers**: Converted to decimal string representation (e.g., `42` → `"42"`)
+- **Numbers**: Converted to plain decimal string representation (e.g., `42` → `"42"`, `0.0000001` → `"0.0000001"`)
 - **Booleans**: Converted to lowercase strings (`true` → `"true"`, `false` → `"false"`)
 - **Strings**: Returned unchanged
-- **Other types**: Converted using standard string representation
+- **Collections**: Refused with an error — a list, set, tuple, map or object has no string representation
 - Returns `null` if the input is `null`
 
 ## Type-Specific Behavior
 
 The function handles different types appropriately:
-- Numbers are converted to their decimal string representation without scientific notation
+- Numbers are converted to their decimal string representation without scientific notation, so a very small or very large number reads the same way Terraform writes it
 - Booleans are converted to lowercase "true" or "false" for consistency
 - Strings pass through unchanged
 - Null values return null rather than the string "null"
+- A collection raises an error, matching Terraform's built-in `tostring`: `tostring([1, 2])` fails with "cannot convert tuple to string" rather than producing a rendering of the collection. Convert the elements individually, or use `join` for a list of strings.
 
 ## Common Patterns
 

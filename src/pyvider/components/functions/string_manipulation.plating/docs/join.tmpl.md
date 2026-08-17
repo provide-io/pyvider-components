@@ -41,10 +41,12 @@ This function enables you to:
 ## Return Value
 
 Returns a string with all list elements joined by the delimiter:
-- Each list element is converted to a string using `tostring()`
+- Each list element is converted to a string using `tostring()`, so numbers and booleans join as `42` and `true`
 - Empty lists return an empty string
 - Returns `null` if the input list is `null`
 - Uses empty string as delimiter if delimiter is `null`
+- An element that is itself a collection is refused with an error, matching Terraform's built-in `join`: "element 0: string required, but have tuple". Flatten the list first.
+- A `null` element is refused with an error: "element 1 is null; cannot concatenate null values"
 
 ## Common Patterns
 

@@ -6,7 +6,10 @@ locals {
 
   basic_num_str  = provider::pyvider::tostring(local.basic_number)  # "42"
   basic_bool_str = provider::pyvider::tostring(local.basic_boolean) # "true"
-  basic_list_str = provider::pyvider::tostring(local.basic_list)    # "[1, 2, 3]"
+
+  # A collection has no string representation, so `tostring` refuses one --
+  # join its elements instead.
+  basic_list_str = provider::pyvider::join(", ", local.basic_list) # "1, 2, 3"
 }
 
 output "basic_list_str" {
