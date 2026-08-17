@@ -89,7 +89,7 @@ indent-width = 4
 target-version = "py311"
 # ruff >=0.16 formats Python code blocks embedded in Markdown; docs prose is
 # not the formatter's to restyle, so Markdown files are excluded.
-exclude = [
+extend-exclude = [
     "**/*.md",
 ]
 
