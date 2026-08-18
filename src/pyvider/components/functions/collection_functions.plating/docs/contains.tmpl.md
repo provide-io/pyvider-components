@@ -50,6 +50,14 @@ Returns a boolean indicating whether the element was found:
 
 The function performs type-aware comparisons, meaning that values of different types will not match even if they appear similar. For example, the number `1` and the string `"1"` are treated as distinct values. This ensures precise matching in mixed-type lists.
 
+Booleans and numbers are distinct in the same way, including inside nested collections, matching Terraform's `contains`:
+
+```terraform
+provider::pyvider::contains([1, 2, 3], true)  # false
+provider::pyvider::contains([0], false)       # false
+provider::pyvider::contains([1], 1.0)         # true — 1 and 1.0 are one number
+```
+
 ## Common Patterns
 
 ### Environment Validation

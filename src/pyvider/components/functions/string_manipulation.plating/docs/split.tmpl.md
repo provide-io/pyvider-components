@@ -40,11 +40,12 @@ This function enables you to:
 
 ## Return Value
 
-Returns a list of strings created by splitting the input:
-- Empty string returns an empty list `[]`
+Returns a list of strings created by splitting the input, matching Terraform's
+built-in `split`:
+- Empty string returns a single-element list containing the empty string, `[""]` — splitting a string always yields at least one part
 - String without delimiter returns a single-element list
 - Returns `null` if the input string is `null`
-- Empty delimiter splits into individual characters
+- Empty delimiter splits into individual characters, and returns `[]` for an empty string
 
 ## Common Patterns
 
