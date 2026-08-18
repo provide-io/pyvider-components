@@ -8,7 +8,7 @@
 
 import operator
 from collections.abc import Callable
-from decimal import Decimal, localcontext
+from decimal import Decimal, DivisionByZero, InvalidOperation, localcontext
 from typing import Any
 
 from pyvider.exceptions import FunctionError
@@ -123,21 +123,37 @@ def multiply(a: int | float | Decimal | None, b: int | float | Decimal | None) -
     return _arithmetic(operator.mul, a, b, "multiplication")
 
 
+def _divide(a: Decimal, b: Decimal) -> Decimal:
+    """Decimal division the way go-cty's `DivideFunc` (`stdlib/number.go:136`) does it.
+
+    Division by zero is not an error: a non-zero numerator over a zero
+    denominator is a signed infinity, matching Terraform's own `/` operator
+    (measured 2026-08-17 with `terraform console` on OpenTofu: `1/0` -> `+Inf`,
+    `-1/0` -> `-Inf`) and pyvider-cty's own `divide`. Only `0/0` -- and
+    `Infinity/Infinity` -- is undefined, and that is the pair go-cty's one
+    message names.
+    """
+    try:
+        return a / b
+    except DivisionByZero:
+        return Decimal("-Infinity") if a.is_signed() != b.is_signed() else Decimal("Infinity")
+    except InvalidOperation as exc:
+        raise FunctionError("can't divide zero by zero or infinity by infinity") from exc
+
+
 @register_function(name="divide", summary="Divides two numbers.")
 def divide(a: int | float | Decimal | None, b: int | float | Decimal | None) -> int | Decimal | None:
     """Divide two numbers to Terraform's precision; see `_arithmetic`. 2026-08-17.
 
-    The refusal to divide by zero is unchanged and deliberate. It is *not*
-    go-cty's behaviour: measured 2026-08-17,
-    `soup-go cty call divide '{"type":"number","value":1}' '{"type":"number","value":0}'`
-    answers `ok:true` with `+Inf`. Changing that is a separate decision from
-    fixing the arithmetic, so it is left as it stands.
+    This used to raise "Division by zero." for `1/0`, `-1/0` and `0/0` alike.
+    Measured 2026-08-17 with `terraform console` (OpenTofu) -- `1/0` -> `+Inf`,
+    `-1/0` -> `-Inf`, `0/0` -> "can't divide zero by zero or infinity by
+    infinity" -- and pyvider-cty's own `divide` answers the same way, so this
+    one now agrees with both; see `_divide`.
     """
     if a is None or b is None:
         return None
-    if b == 0:
-        raise FunctionError("Division by zero.")
-    return _arithmetic(operator.truediv, a, b, "division")
+    return _arithmetic(_divide, a, b, "division")
 
 
 @register_function(name="min", summary="Finds the minimum value in a list of numbers.")

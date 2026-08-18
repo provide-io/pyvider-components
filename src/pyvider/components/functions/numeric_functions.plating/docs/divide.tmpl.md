@@ -44,7 +44,9 @@ Returns the quotient as a number. The return type is automatically optimized:
 - If the result is a whole number, returns an integer
 - If the result has decimal places, returns the exact decimal
 - Returns `null` if either input is `null`
-- **Raises an error** when the divisor is `0`
+- Dividing a non-zero number by `0` returns a signed infinity (`+Inf` or
+  `-Inf`), matching Terraform's own `/` operator
+- **Raises an error** when dividing `0` by `0`, which is undefined
 
 ## Precision
 

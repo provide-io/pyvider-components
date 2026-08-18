@@ -281,12 +281,35 @@ class TestArithmeticIsExact:
         assert divide(10, 4) == Decimal("2.5")
         assert isinstance(divide(10, 4), Decimal)
 
-    def test_division_by_zero_is_unchanged(self):
-        """Deliberately *not* go-cty's answer: `soup-go cty call divide
-        '{"type":"number","value":1}' '{"type":"number","value":0}'` answers
-        `ok:true` with `+Inf`. Changing that is a separate decision."""
-        with pytest.raises(FunctionError, match="Division by zero"):
-            divide(1, 0)
+    @pytest.mark.parametrize(
+        ("numerator", "denominator", "expected"),
+        [
+            (1, 0, Decimal("Infinity")),
+            (-1, 0, Decimal("-Infinity")),
+            (1.0, 0, Decimal("Infinity")),
+            (-1.0, 0, Decimal("-Infinity")),
+        ],
+    )
+    def test_division_by_zero_is_a_signed_infinity(self, numerator, denominator, expected):
+        """This pinned "Division by zero." as an error on all three of `1/0`,
+        `-1/0` and `0/0`, which was wrong: Terraform's own `/` and go-cty's
+        `divide` agree with each other and disagree with that. Measured
+        2026-08-17 with `terraform console` (OpenTofu): `1/0` -> `+Inf`, `-1/0`
+        -> `-Inf`. See `_divide`."""
+        assert divide(numerator, denominator) == expected
+
+    def test_zero_divided_by_zero_is_undefined(self):
+        """The one case a signed infinity cannot answer. Measured 2026-08-17
+        with `terraform console` (OpenTofu): `0/0` -> "Error: can't divide zero
+        by zero or infinity by infinity" -- the same wording go-cty's own
+        `divide` raises, and pyvider-cty's `divide` matches it exactly."""
+        with pytest.raises(FunctionError, match="can't divide zero by zero or infinity by infinity"):
+            divide(0, 0)
+
+    def test_negative_zero_divided_by_zero_is_also_undefined(self):
+        """`-0.0` is still zero for this purpose, matching go-cty and `Decimal`."""
+        with pytest.raises(FunctionError, match="can't divide zero by zero or infinity by infinity"):
+            divide(-0.0, 0)
 
     @pytest.mark.parametrize("operation", [add, subtract, multiply, divide])
     def test_a_null_operand_is_still_null(self, operation):
@@ -366,6 +389,18 @@ class TestThroughTheProtocolBoundary:
 
         quotient = await self._call("divide", (1, CtyNumber()), (3, CtyNumber()))
         assert len(str(quotient).split(".")[1]) == 155
+
+    async def test_divide_by_zero_is_still_infinity_over_the_wire(self):
+        """The function returns native `Decimal("Infinity")`; this confirms it
+        survives marshalling rather than becoming `null`, an error, or a
+        finite number by the time it reaches the wire."""
+        from pyvider.cty import CtyNumber
+
+        quotient = await self._call("divide", (1, CtyNumber()), (0, CtyNumber()))
+        assert quotient == Decimal("Infinity")
+
+        quotient = await self._call("divide", (-1, CtyNumber()), (0, CtyNumber()))
+        assert quotient == Decimal("-Infinity")
 
     async def test_a_large_sum_is_not_infinity_over_the_wire(self):
         """The operand is spelled as a `Decimal` because that is what the wire carries.
