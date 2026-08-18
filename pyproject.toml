@@ -35,7 +35,7 @@ dependencies = [
     "provide-foundation>=0.4.0",
     "pyvider-rpcplugin>=0.4.0",
     "httpx>=0.28.1",
-    "jq>=1.9.1,<1.11.0; sys_platform != 'win32' or platform_machine != 'ARM64'",
+    "jq>=1.9.1; sys_platform != 'win32' or platform_machine != 'ARM64'",
     "jinja2>=3.1.6",
     "pyvider-cty>=0.4.0",
     "pyvider>=0.4.0",
@@ -87,6 +87,11 @@ norecursedirs = [".git", "build", "dist", "*.egg-info", ".venv", "htmlcov", ".hy
 line-length = 111
 indent-width = 4
 target-version = "py311"
+# ruff >=0.16 formats Python code blocks embedded in Markdown; docs prose is
+# not the formatter's to restyle, so Markdown files are excluded.
+extend-exclude = [
+    "**/*.md",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "ANN", "B", "BLE", "C90", "PIE", "PLR", "S", "SIM", "PTH", "RUF"]
@@ -189,3 +194,16 @@ allowed_paths = [
     # Test files
     "tests/**",
 ]
+
+# Local development resolves sibling suite packages from source, so a change in
+# one repo is exercised by its consumers immediately rather than at release. uv
+# does not propagate a dependency's sources into published metadata, so this is
+# invisible to consumers of the built wheel. CI passes --no-sources to verify the
+# published story instead.
+[tool.uv.sources]
+plating = { path = "../plating", editable = true }
+provide-foundation = { path = "../provide-foundation", editable = true }
+provide-testkit = { path = "../provide-testkit", editable = true }
+pyvider = { path = "../pyvider", editable = true }
+pyvider-cty = { path = "../pyvider-cty", editable = true }
+pyvider-rpcplugin = { path = "../pyvider-rpcplugin", editable = true }

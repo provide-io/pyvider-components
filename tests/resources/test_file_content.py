@@ -59,6 +59,47 @@ class TestFileContent(FoundationTestCase):
         assert final_state == planned_state
 
     @pytest.mark.asyncio
+    async def test_read_preserves_dot_slash_prefixed_filename(
+        self,
+        resource: FileContentResource,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """A `./`-prefixed filename must survive create-then-read unchanged.
+
+        Sibling regression to the pyvider_local_directory perpetual-diff bug:
+        `${path.module}/name` produces a `./`-prefixed path whenever the
+        module is the working directory. If read() ever round-tripped
+        `filename` through `str(Path(...))`, pathlib would silently drop the
+        `./` prefix and Terraform would see a plan that never goes empty.
+        FileContentResource.read() already echoes the raw configured string
+        rather than re-stringifying a Path, so this guards against a
+        regression to that pattern.
+        """
+        monkeypatch.chdir(tmp_path)
+        configured_filename = "./dotslash_file.txt"
+
+        config = FileContentConfig(filename=configured_filename, content="hello world")
+        plan_ctx = ResourceContext(config=config, state=None)
+        base_plan = {"filename": config.filename, "content": config.content}
+        planned_state_dict, _ = await resource._create(plan_ctx, base_plan)
+        planned_state = resource.state_class(**planned_state_dict)
+        assert planned_state.filename == configured_filename
+
+        apply_ctx = ResourceContext(config=config, planned_state=planned_state)
+        final_state, _ = await resource._create_apply(apply_ctx)
+        assert final_state is not None
+        assert final_state.filename == configured_filename
+
+        read_ctx = ResourceContext(config=None, state=final_state)
+        read_state = await resource.read(read_ctx)
+        assert read_state is not None
+        assert read_state.filename == configured_filename, (
+            "read() must echo the configured filename exactly -- a plan that "
+            "keeps reporting drift on 'filename' here is the perpetual-diff bug"
+        )
+
+    @pytest.mark.asyncio
     async def test_delete(self, resource: FileContentResource, temp_file: Path):
         content = "to be deleted"
         temp_file.write_text(content)
