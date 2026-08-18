@@ -174,6 +174,25 @@ async def test_action_failure_still_completes_exactly_once() -> None:
     assert "rejected the request" in events[-1].completed.diagnostics[0].detail
 
 
+@pytest.mark.asyncio
+async def test_action_invoke_without_a_step_delay_still_writes_every_line(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The pause between steps is presentational, not part of the contract."""
+    from pyvider.components.actions import echo
+
+    monkeypatch.setattr(echo, "STEP_DELAY_SECONDS", 0)
+    target = tmp_path / "fast.txt"
+    request = pb.InvokeAction.Request(
+        action_type=ACTION, config=echo_config(message="fast", path=str(target), repeat=3)
+    )
+
+    events = [event async for event in ProviderHandler().InvokeAction(request, context=None)]
+
+    assert events[-1].WhichOneof("type") == "completed"
+    assert target.read_text(encoding="utf-8").count("fast") == 3
+
+
 # --- list resources --------------------------------------------------------
 
 
@@ -258,6 +277,23 @@ async def test_state_store_validate_requires_a_path() -> None:
     response = await ProviderHandler().ValidateStateStoreConfig(request, context=None)
 
     assert errors(response.diagnostics) == ["path is required"]
+
+
+@pytest.mark.asyncio
+async def test_state_store_validate_accepts_a_usable_path(
+    store_config: tuple[str, pb.DynamicValue],
+) -> None:
+    _, config = store_config
+    request = pb.ValidateStateStore.Request(type_name=STORE, config=config)
+
+    response = await ProviderHandler().ValidateStateStoreConfig(request, context=None)
+
+    assert list(response.diagnostics) == []
+
+
+@pytest.mark.asyncio
+async def test_state_store_validate_hook_requires_a_config_at_all() -> None:
+    assert await PyviderFileSystemStateStore().validate(None) == ["path is required"]
 
 
 @pytest.mark.asyncio
