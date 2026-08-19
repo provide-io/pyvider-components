@@ -36,8 +36,6 @@ Explore these examples to see the resource in action:
 - **[cicd.tf](examples/cicd.tf)** - CI/CD pipeline token patterns
 - **[comprehensive.tf](examples/comprehensive.tf)** - Advanced token management scenarios
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Computed Attributes

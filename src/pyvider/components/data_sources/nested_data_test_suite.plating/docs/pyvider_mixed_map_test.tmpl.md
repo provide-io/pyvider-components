@@ -13,6 +13,4 @@ Terraform data source for pyvider_mixed_map_test
 
 {{ example("example") }}
 
-## Argument Reference
-
 {{ schema() }}

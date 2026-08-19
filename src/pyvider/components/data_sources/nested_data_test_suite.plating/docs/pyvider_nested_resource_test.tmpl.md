@@ -13,8 +13,6 @@ Terraform resource for pyvider_nested_resource_test
 
 {{ example("example") }}
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Import

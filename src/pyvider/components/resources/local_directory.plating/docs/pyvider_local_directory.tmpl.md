@@ -37,8 +37,6 @@ Explore these examples to see the resource in action:
 - **[permissions.tf](examples/permissions.tf)** - Permission control and management
 - **[project_structure.tf](examples/project_structure.tf)** - Creating complex directory structures
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Computed Attributes
