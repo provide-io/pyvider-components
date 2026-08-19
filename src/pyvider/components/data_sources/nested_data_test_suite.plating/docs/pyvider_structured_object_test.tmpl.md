@@ -13,6 +13,4 @@ Terraform data source for pyvider_structured_object_test
 
 {{ example("example") }}
 
-## Argument Reference
-
 {{ schema() }}

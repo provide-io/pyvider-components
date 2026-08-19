@@ -34,8 +34,6 @@ Explore these examples to see the data source in action:
 - **[example.tf](examples/example.tf)** - Basic provider configuration reading
 - **[basic.tf](examples/basic.tf)** - Simple configuration access patterns
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Provider Configuration Attributes

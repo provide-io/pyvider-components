@@ -38,8 +38,6 @@ Explore these examples to see the data source in action:
 - **[multi_environment.tf](examples/multi_environment.tf)** - Multi-environment configuration patterns
 - **[comprehensive.tf](examples/comprehensive.tf)** - Complete feature demonstration
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Filtering Options

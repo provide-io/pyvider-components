@@ -36,8 +36,6 @@ Explore these examples to see the resource in action:
 - **[comprehensive.tf](examples/comprehensive.tf)** - Advanced verification patterns
 - **[provider_alias.tf](examples/provider_alias.tf)** - Multi-provider testing scenarios
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Computed Attributes
