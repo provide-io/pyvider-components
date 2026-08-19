@@ -16,7 +16,7 @@ from collections.abc import AsyncIterator
 
 from attrs import define
 
-from pyvider.components.resources.secret_note import _NOTES, SecretNoteState, digest_of
+from pyvider.components.resources.secret_note import SecretNoteState, known_notes
 from pyvider.list_resources import (
     BaseListResource,
     ListResourceContext,
@@ -57,7 +57,10 @@ class SecretNoteList(BaseListResource[SecretNoteListConfig]):
     async def list(self, ctx: ListResourceContext[SecretNoteListConfig]) -> AsyncIterator[ListResult]:
         prefix = ctx.config.name_prefix if ctx.config and ctx.config.name_prefix else ""
 
-        for name in sorted(_NOTES):
+        # known_notes() spans provider processes, so a note created by an
+        # earlier `terraform apply` is listable from a later `terraform query`.
+        notes = known_notes()
+        for name in sorted(notes):
             if not name.startswith(prefix):
                 continue
 
@@ -68,7 +71,7 @@ class SecretNoteList(BaseListResource[SecretNoteListConfig]):
                 resource_object = SecretNoteState(
                     name=name,
                     secret_value=None,
-                    digest=digest_of(_NOTES[name]),
+                    digest=notes[name],
                 )
 
             yield ListResult(

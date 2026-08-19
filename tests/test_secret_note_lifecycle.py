@@ -250,7 +250,13 @@ async def test_create_apply_records_the_note_and_computes_the_digest() -> None:
 
 
 @pytest.mark.asyncio
-async def test_create_marks_the_digest_unknown_at_plan_time() -> None:
+async def test_create_leaves_the_digest_unknown() -> None:
+    """A create may carry an ephemeral secret, which differs plan-to-apply.
+
+    Deriving the digest here would make it a plan-time value computed from a
+    write-only input, and Terraform rejects the mismatch that follows with
+    "Provider produced inconsistent final plan".
+    """
     from pyvider.resources.context import ResourceContext
 
     plan, private = await SecretNoteResource()._create(
@@ -258,22 +264,73 @@ async def test_create_marks_the_digest_unknown_at_plan_time() -> None:
     )
 
     assert plan is not None
-    # Unknown until apply: the digest cannot be known before the secret is.
     assert plan["digest"].is_unknown
     assert private is None
 
 
 @pytest.mark.asyncio
-async def test_update_marks_the_digest_unknown_too() -> None:
+async def test_update_keeps_the_digest_when_nothing_signals_a_change() -> None:
+    """This is what makes the configuration converge.
+
+    Marking the digest unknown on every update made each plan after an apply
+    report a change to a note nobody had touched.
+    """
     from pyvider.resources.context import ResourceContext
 
-    plan, private = await SecretNoteResource()._update(
-        ResourceContext(config=SecretNoteConfig(name="alpha", secret_value="s")), {"name": "alpha"}
+    from pyvider.components.resources.secret_note import SecretNoteState
+
+    prior = SecretNoteState(name="alpha", secret_value=None, secret_version="v1", digest="deadbeef")
+    plan, _ = await SecretNoteResource()._update(
+        ResourceContext(
+            config=SecretNoteConfig(name="alpha", secret_value="s", secret_version="v1"),
+            state=prior,
+        ),
+        {"name": "alpha"},
+    )
+
+    assert plan is not None
+    assert plan["digest"] == "deadbeef"
+
+
+@pytest.mark.asyncio
+async def test_update_marks_the_digest_unknown_when_the_version_changes() -> None:
+    """The trigger is the only way a changed write-only value can be noticed.
+
+    Prior state never holds the secret, so a rotation is invisible unless the
+    practitioner says it happened.
+    """
+    from pyvider.resources.context import ResourceContext
+
+    from pyvider.components.resources.secret_note import SecretNoteState
+
+    prior = SecretNoteState(name="alpha", secret_value=None, secret_version="v1", digest="deadbeef")
+    plan, _ = await SecretNoteResource()._update(
+        ResourceContext(
+            config=SecretNoteConfig(name="alpha", secret_value="rotated", secret_version="v2"),
+            state=prior,
+        ),
+        {"name": "alpha"},
     )
 
     assert plan is not None
     assert plan["digest"].is_unknown
-    assert private is None
+
+
+@pytest.mark.asyncio
+async def test_update_marks_the_digest_unknown_when_there_is_none_yet() -> None:
+    """A note whose digest was never computed must still get one."""
+    from pyvider.resources.context import ResourceContext
+
+    from pyvider.components.resources.secret_note import SecretNoteState
+
+    prior = SecretNoteState(name="alpha", secret_value=None, secret_version=None, digest=None)
+    plan, _ = await SecretNoteResource()._update(
+        ResourceContext(config=SecretNoteConfig(name="alpha", secret_value="s"), state=prior),
+        {"name": "alpha"},
+    )
+
+    assert plan is not None
+    assert plan["digest"].is_unknown
 
 
 @pytest.mark.asyncio

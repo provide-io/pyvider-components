@@ -33,7 +33,12 @@ from pyvider.protocols.tfprotov6.handlers.state_store_handlers import reset_stat
 
 from pyvider.components.actions.echo import WRITTEN, EchoAction, FailingAction
 from pyvider.components.list_resources.secret_notes import SecretNoteList
-from pyvider.components.resources.secret_note import _NOTES, SecretNoteResource, digest_of
+from pyvider.components.resources.secret_note import (
+    _NOTES,
+    NOTE_INDEX_ENV,
+    SecretNoteResource,
+    digest_of,
+)
 from pyvider.components.state_stores.filesystem_store import PyviderFileSystemStateStore
 
 ACTION = "pyvider_echo"
@@ -50,7 +55,11 @@ def errors(diagnostics: object) -> list[str]:
 
 
 @pytest.fixture(autouse=True)
-def _clean() -> Iterator[None]:
+def _clean(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
+    # The durable note index is shared by every provider process on the machine.
+    # Without redirecting it, tests would see each other's notes and would
+    # scribble into the developer's temp directory.
+    monkeypatch.setenv(NOTE_INDEX_ENV, str(tmp_path / "note-index.json"))
     _NOTES.clear()
     WRITTEN.clear()
     reset_state_stores()
