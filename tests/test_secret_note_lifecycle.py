@@ -78,21 +78,6 @@ async def create(name: str, secret: str) -> pb.ApplyResourceChange.Response:
     return applied
 
 
-COMPUTED_UNKNOWN_BUG = pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Apply treats a resource with an unknown computed attribute as a delete. "
-        "BaseResource.apply decides `is_delete = ctx.planned_state is None`, and "
-        "cty_to_attrs_instance returns None for any value that is not wholly known "
-        "(added in c49e82e for issue #5). A plan that marks a computed attribute "
-        "unknown therefore arrives at apply as planned_state=None. Pre-existing on "
-        "feature/tfprotov6-11-upgrade: it also breaks "
-        "test_e2e_encryption_lifecycle and the private-state/timed-token suites."
-    ),
-)
-
-
-@COMPUTED_UNKNOWN_BUG
 @pytest.mark.asyncio
 async def test_apply_computes_the_digest_from_the_secret() -> None:
     applied = await create("alpha", "correct horse")
@@ -101,7 +86,6 @@ async def test_apply_computes_the_digest_from_the_secret() -> None:
     assert state["digest"].value == digest_of("correct horse")
 
 
-@COMPUTED_UNKNOWN_BUG
 @pytest.mark.asyncio
 async def test_the_secret_is_absent_from_the_state_that_terraform_stores() -> None:
     applied = await create("alpha", "correct horse")
@@ -112,7 +96,6 @@ async def test_the_secret_is_absent_from_the_state_that_terraform_stores() -> No
     assert state["name"].value == "alpha"
 
 
-@COMPUTED_UNKNOWN_BUG
 @pytest.mark.asyncio
 async def test_the_secret_did_reach_the_provider_during_apply() -> None:
     await create("alpha", "correct horse")
@@ -122,7 +105,6 @@ async def test_the_secret_did_reach_the_provider_during_apply() -> None:
     assert _NOTES["alpha"] == "correct horse"
 
 
-@COMPUTED_UNKNOWN_BUG
 @pytest.mark.asyncio
 async def test_read_keeps_the_secret_null_and_the_digest_intact() -> None:
     applied = await create("alpha", "correct horse")
@@ -138,7 +120,6 @@ async def test_read_keeps_the_secret_null_and_the_digest_intact() -> None:
     assert state["digest"].value == digest_of("correct horse")
 
 
-@COMPUTED_UNKNOWN_BUG
 @pytest.mark.asyncio
 async def test_updating_the_secret_changes_the_digest() -> None:
     first = await create("alpha", "first secret")
@@ -244,8 +225,9 @@ async def test_deleting_a_note_that_was_never_created_is_harmless() -> None:
 
 # --- the create/update bodies, driven directly ----------------------------
 #
-# The handler route to these is blocked by COMPUTED_UNKNOWN_BUG, so they are
-# exercised at the object level until that is fixed.
+# The handler-driven tests above cover these end to end. These pin the bodies
+# down directly, so a failure says which method broke rather than only that
+# the lifecycle did.
 
 
 @pytest.mark.asyncio
