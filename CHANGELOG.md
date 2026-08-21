@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Division by zero answers infinity, not an error**, matching Terraform.
 - **Provider functions answer what Terraform's builtins answer** across the string and numeric surfaces the new parity suites cover.
 - **`pyvider_secret_note` converges** and publishes its notes durably, rather than producing a fresh plan on every apply.
+- **One unreadable entry no longer fails a whole directory listing.** `pyvider_directory_entries` guarded the size lookup but not the `is_file()` test above it; an entry that `iterdir()` saw and that then vanished raised OSError out of the stream, so every other file in the directory went unreported.
 - **The lease's base class carries its type arguments.** `BaseEphemeralResource` is generic in result, private state and config; subclassing it bare left mypy with nothing to check the three hooks against and hid a Liskov violation in `validate`.
 
 ### Changed
