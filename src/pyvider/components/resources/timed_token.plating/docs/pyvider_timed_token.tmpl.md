@@ -27,14 +27,19 @@ This resource enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the resource in action:
+### Simple token creation
 
-- **[example.tf](examples/example.tf)** - Basic timed token generation
-- **[basic.tf](examples/basic.tf)** - Simple token creation
-- **[cicd.tf](examples/cicd.tf)** - CI/CD pipeline token patterns
-- **[comprehensive.tf](examples/comprehensive.tf)** - Advanced token management scenarios
+{{ example("basic") }}
+
+### CI/CD pipeline token patterns
+
+{{ example("cicd") }}
+
+### Advanced token management scenarios
+
+{{ example("comprehensive") }}
 
 {{ schema() }}
 

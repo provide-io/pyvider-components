@@ -28,15 +28,23 @@ This resource enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the resource in action:
+### Simple configuration file management
 
-- **[example.tf](examples/example.tf)** - Basic file creation
-- **[basic.tf](examples/basic.tf)** - Simple configuration file management
-- **[advanced.tf](examples/advanced.tf)** - Complex content generation patterns
-- **[template.tf](examples/template.tf)** - Dynamic template rendering
-- **[lifecycle.tf](examples/lifecycle.tf)** - Lifecycle management and dependencies
+{{ example("basic") }}
+
+### Complex content generation patterns
+
+{{ example("advanced") }}
+
+### Dynamic template rendering
+
+{{ example("template") }}
+
+### Lifecycle management and dependencies
+
+{{ example("lifecycle") }}
 
 {{ schema() }}
 
