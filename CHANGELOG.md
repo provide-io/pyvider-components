@@ -37,6 +37,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Templates for two data sources that no longer exist (`pyvider_nested_data_processor`, `pyvider_nested_resource_test`).
 
+## [0.5.1] - 2026-08-21
+
+### Fixed
+
+- **`pyvider_warning_example` is no longer filed under "Test Mode".** It is registered `@register_resource("pyvider_warning_example")` with no `test_only`, and `tofu providers schema -json` confirms a published provider serves it -- but its template's frontmatter declared `subcategory: "Test Mode"` by hand, so the one usable resource in that group was documented as though it were unreachable. It was the only one of the fifteen templates declaring that subcategory where the component did not match.
+
 ## [0.5.0] - 2026-08-21 (documentation corrections)
 
 ### Fixed
