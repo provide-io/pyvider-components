@@ -1,8 +1,11 @@
-# Save as example.tfquery.hcl and run `terraform query`.
+# Save as example.tfquery.hcl and run `tofu query`.
 list "pyvider_secret_note" "example" {
   provider = pyvider
 
   config {
-    # Filter options here
+    # Only notes whose name starts with this are listed.
+    name_prefix = "deploy-"
+
+    include_archived = false
   }
 }

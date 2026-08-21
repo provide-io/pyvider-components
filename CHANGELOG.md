@@ -37,6 +37,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Templates for two data sources that no longer exist (`pyvider_nested_data_processor`, `pyvider_nested_resource_test`).
 
+## [0.5.2] - 2026-08-21
+
+### Changed
+
+- **`pyvider_fs` is renamed `pyvider_filesystem_store`.** It was the only abbreviated name among twenty-two components, and it disagreed with its own class (`PyviderFileSystemStateStore`), module (`filesystem_store.py`) and bundle directory (`filesystem_store.plating`). That mismatch was not only cosmetic: plating matches a bundle to its component, and no prefixing rule gets from `filesystem_store` to `pyvider_fs`, so the state store's examples were never compiled. Safe to rename because the component is `test_only` -- a published provider never served it under either name.
+
+### Fixed
+
+- **`pyvider_secret_note`'s example was a stub.** It carried `# Configuration options here` in place of the two required attributes, and an output referencing `.id`, which is not in the schema. Applying it failed with `Missing required argument`. It now exercises the write-only flow it exists to demonstrate: `secret_value` sent but never persisted, `secret_version` as the change signal, `digest` as the output.
+- **The private-state shared secret is documented.** `pyvider_timed_token` and `pyvider_private_state_verifier` both keep encrypted private state, and the provider refuses to without `PYVIDER_PRIVATE_STATE_SHARED_SECRET` (or `private_state_shared_secret` in `pyvider.toml`). The requirement appeared nowhere in the documentation or the examples, so a reader copying either example met `Private state shared secret not configured` with nothing to explain it. Both pages now carry a Prerequisites section ahead of the example.
+
+Both found by running the generated examples through `soup stir` against the packaged provider, which nothing had done before: 41 of 41 directories now apply.
+
 ## [0.5.1] - 2026-08-21
 
 ### Fixed

@@ -8,7 +8,7 @@
 The storage, atomic writes, and lease-aware cross-process locking all live in
 ``pyvider.state_stores.FileSystemStateStore``. This module only gives that
 backend a Terraform-facing type name and a configuration schema, so a
-``state_store "pyvider_fs"`` block resolves to it.
+``state_store "pyvider_filesystem_store"`` block resolves to it.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ class FileSystemStoreConfig:
     path: str | None = None
 
 
-@register_state_store("pyvider_fs", test_only=True)
+@register_state_store("pyvider_filesystem_store", test_only=True)
 class PyviderFileSystemStateStore(FileSystemStateStore):
     """``FileSystemStateStore`` with a Terraform configuration schema."""
 
