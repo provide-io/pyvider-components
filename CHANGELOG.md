@@ -37,6 +37,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Templates for two data sources that no longer exist (`pyvider_nested_data_processor`, `pyvider_nested_resource_test`).
 
+## [0.5.0] - 2026-08-21 (documentation corrections)
+
+### Fixed
+
+- **`pyvider_nested_resource_test` and `pyvider_nested_data_processor` are documented again.** Their templates lived in a `data_sources/*.plating` bundle, so plating rendered them into `docs/data-sources/` and they were removed as "data sources that no longer exist". They do exist -- `nested_data_test_suite.py` declares five components, three data sources plus one resource and one function -- and the templates now sit in bundles matching the types they document.
+- **Ten component pages linked to example files instead of showing them.** A `## Examples` section listed `[basic.tf](examples/basic.tf)` and friends, which resolve to `docs/<type>/examples/*.tf` -- files that were never written there, and links that cannot resolve at all on a registry page. They now render inline through `{{ example("basic") }}`, the same helper the other fifty pages already used. 35 broken links, and `mkdocs --strict` aborted the build over them.
+
 ## [0.4.0] - 2026-04-22
 
 Released without a changelog entry at the time; recorded here for the history.

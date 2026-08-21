@@ -28,14 +28,19 @@ This resource enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the resource in action:
+### Simple directory management
 
-- **[example.tf](examples/example.tf)** - Basic directory creation
-- **[basic.tf](examples/basic.tf)** - Simple directory management
-- **[permissions.tf](examples/permissions.tf)** - Permission control and management
-- **[project_structure.tf](examples/project_structure.tf)** - Creating complex directory structures
+{{ example("basic") }}
+
+### Permission control and management
+
+{{ example("permissions") }}
+
+### Creating complex directory structures
+
+{{ example("project_structure") }}
 
 {{ schema() }}
 

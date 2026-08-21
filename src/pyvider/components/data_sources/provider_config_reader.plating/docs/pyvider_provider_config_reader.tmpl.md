@@ -27,12 +27,11 @@ This data source enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the data source in action:
+### Simple configuration access patterns
 
-- **[example.tf](examples/example.tf)** - Basic provider configuration reading
-- **[basic.tf](examples/basic.tf)** - Simple configuration access patterns
+{{ example("basic") }}
 
 {{ schema() }}
 

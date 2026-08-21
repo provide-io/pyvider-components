@@ -27,16 +27,27 @@ This data source enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the data source in action:
+### Simple variable reading with specific keys
 
-- **[example.tf](examples/example.tf)** - Basic environment variable access
-- **[basic.tf](examples/basic.tf)** - Simple variable reading with specific keys
-- **[filtering.tf](examples/filtering.tf)** - Advanced filtering with prefix and regex patterns
-- **[advanced.tf](examples/advanced.tf)** - Complex transformations and case-sensitivity controls
-- **[multi_environment.tf](examples/multi_environment.tf)** - Multi-environment configuration patterns
-- **[comprehensive.tf](examples/comprehensive.tf)** - Complete feature demonstration
+{{ example("basic") }}
+
+### Advanced filtering with prefix and regex patterns
+
+{{ example("filtering") }}
+
+### Complex transformations and case-sensitivity controls
+
+{{ example("advanced") }}
+
+### Multi-environment configuration patterns
+
+{{ example("multi_environment") }}
+
+### Complete feature demonstration
+
+{{ example("comprehensive") }}
 
 {{ schema() }}
 

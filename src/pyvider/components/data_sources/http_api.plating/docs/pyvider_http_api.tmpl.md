@@ -29,13 +29,15 @@ This data source enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the data source in action:
+### Simple API integration patterns
 
-- **[example.tf](examples/example.tf)** - Basic HTTP GET request
-- **[basic.tf](examples/basic.tf)** - Simple API integration patterns
-- **[advanced.tf](examples/advanced.tf)** - Complex HTTP operations with custom headers and methods
+{{ example("basic") }}
+
+### Complex HTTP operations with custom headers and methods
+
+{{ example("advanced") }}
 
 {{ schema() }}
 

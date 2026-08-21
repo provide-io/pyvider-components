@@ -30,13 +30,15 @@ This data source enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the data source in action:
+### Simple data transformation patterns
 
-- **[example.tf](examples/example.tf)** - Basic JQ query usage
-- **[basic.tf](examples/basic.tf)** - Simple data transformation patterns
-- **[comprehensive.tf](examples/comprehensive.tf)** - Advanced JQ operations and complex transformations
+{{ example("basic") }}
+
+### Advanced JQ operations and complex transformations
+
+{{ example("comprehensive") }}
 
 {{ schema() }}
 
