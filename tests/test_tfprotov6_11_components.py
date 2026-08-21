@@ -43,7 +43,7 @@ from pyvider.components.state_stores.filesystem_store import PyviderFileSystemSt
 
 ACTION = "pyvider_echo"
 LIST = "pyvider_secret_note"
-STORE = "pyvider_fs"
+STORE = "pyvider_filesystem_store"
 
 pytestmark = pytest.mark.usefixtures(
     "discovered_components_session", "provider_in_hub", "provider_with_test_mode"

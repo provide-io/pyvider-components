@@ -39,6 +39,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [0.5.2] - 2026-08-21
 
+### Changed
+
+- **`pyvider_fs` is renamed `pyvider_filesystem_store`.** It was the only abbreviated name among twenty-two components, and it disagreed with its own class (`PyviderFileSystemStateStore`), module (`filesystem_store.py`) and bundle directory (`filesystem_store.plating`). That mismatch was not only cosmetic: plating matches a bundle to its component, and no prefixing rule gets from `filesystem_store` to `pyvider_fs`, so the state store's examples were never compiled. Safe to rename because the component is `test_only` -- a published provider never served it under either name.
+
 ### Fixed
 
 - **`pyvider_secret_note`'s example was a stub.** It carried `# Configuration options here` in place of the two required attributes, and an output referencing `.id`, which is not in the schema. Applying it failed with `Missing required argument`. It now exercises the write-only flow it exists to demonstrate: `secret_value` sent but never persisted, `secret_version` as the change signal, `digest` as the output.
