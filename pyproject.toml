@@ -37,9 +37,9 @@ dependencies = [
     "httpx>=0.28.1",
     "jq>=1.9.1; sys_platform != 'win32' or platform_machine != 'ARM64'",
     "jinja2>=3.1.6",
-    "pyvider-cty>=0.4.0",
-    "pyvider>=0.4.0",
-    "plating>=0.4.0",
+    "pyvider-cty>=0.5.0",
+    "pyvider>=0.5.2",
+    "plating>=0.5.0",
 ]
 
 [project.urls]
@@ -195,15 +195,13 @@ allowed_paths = [
     "tests/**",
 ]
 
-# Local development resolves sibling suite packages from source, so a change in
-# one repo is exercised by its consumers immediately rather than at release. uv
-# does not propagate a dependency's sources into published metadata, so this is
-# invisible to consumers of the built wheel. CI passes --no-sources to verify the
-# published story instead.
-[tool.uv.sources]
-plating = { path = "../plating", editable = true }
-provide-foundation = { path = "../provide-foundation", editable = true }
-provide-testkit = { path = "../provide-testkit", editable = true }
-pyvider = { path = "../pyvider", editable = true }
-pyvider-cty = { path = "../pyvider-cty", editable = true }
-pyvider-rpcplugin = { path = "../pyvider-rpcplugin", editable = true }
+# No `[tool.uv.sources]`. Local sibling checkouts are installed with
+# `uv pip install -e ../pyvider` rather than pinned as a path source here, so
+# this file describes only what a published install resolves -- the same thing
+# pyvider, pyvider-cty and tofusoup say, and for the same reason.
+#
+# It is not only a preference. The release workflow calls ci-tooling's
+# `python-release.yml`, which has no `no-sources` input to pass, so a path source
+# here fails the release outright: "Failed to generate package metadata for
+# `pyvider @ ../pyvider`". That is exactly how tofusoup's first v0.5.0 attempt
+# died.
