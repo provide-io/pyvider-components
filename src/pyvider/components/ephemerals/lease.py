@@ -66,7 +66,7 @@ class LeasePrivateState(PrivateState):
 
 
 @register_ephemeral_resource("pyvider_lease", test_only=True)
-class LeaseEphemeralResource(BaseEphemeralResource):
+class LeaseEphemeralResource(BaseEphemeralResource[LeaseResult, LeasePrivateState, LeaseConfig]):
     """Holds a lease on a file for as long as Terraform needs it."""
 
     config_class = LeaseConfig
@@ -88,7 +88,7 @@ class LeaseEphemeralResource(BaseEphemeralResource):
             }
         )
 
-    async def validate(self, config: LeaseConfig) -> list[str]:
+    async def validate(self, config: LeaseConfig | None) -> list[str]:
         errors: list[str] = []
         if config is None or not config.name:
             errors.append("name is required")
@@ -102,7 +102,8 @@ class LeaseEphemeralResource(BaseEphemeralResource):
         return Path(path).expanduser()
 
     async def open(
-        self, ctx: EphemeralResourceContext[LeaseConfig, None]
+        self,
+        ctx: EphemeralResourceContext[LeaseConfig, None],  # type: ignore[type-var]
     ) -> tuple[LeaseResult, LeasePrivateState, datetime]:
         assert ctx.config is not None
         ttl = int(ctx.config.ttl_seconds) if ctx.config.ttl_seconds else DEFAULT_TTL_SECONDS
