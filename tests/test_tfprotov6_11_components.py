@@ -25,10 +25,10 @@ from pyvider.protocols.tfprotov6.handlers.action_handlers import (
     PlanActionHandler,
     ValidateActionConfigHandler,
 )
-from pyvider.protocols.tfprotov6.handlers.get_metadata import GetMetadataHandler
-from pyvider.protocols.tfprotov6.handlers.missing_feature_handlers import (
+from pyvider.protocols.tfprotov6.handlers.config_handlers import (
     ValidateListResourceConfigHandler,
 )
+from pyvider.protocols.tfprotov6.handlers.get_metadata import GetMetadataHandler
 from pyvider.protocols.tfprotov6.handlers.state_store_handlers import reset_state_stores
 
 from pyvider.components.actions.echo import WRITTEN, EchoAction, FailingAction

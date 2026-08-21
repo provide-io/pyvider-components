@@ -25,7 +25,7 @@ from pyvider.protocols.tfprotov6.handlers.action_handlers import (
     PlanActionHandler,
     ValidateActionConfigHandler,
 )
-from pyvider.protocols.tfprotov6.handlers.missing_feature_handlers import (
+from pyvider.protocols.tfprotov6.handlers.config_handlers import (
     ValidateListResourceConfigHandler,
 )
 
