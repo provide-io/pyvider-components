@@ -37,8 +37,6 @@ Explore these examples to see the data source in action:
 - **[basic.tf](examples/basic.tf)** - Simple API integration patterns
 - **[advanced.tf](examples/advanced.tf)** - Complex HTTP operations with custom headers and methods
 
-## Argument Reference
-
 {{ schema() }}
 
 ## HTTP Methods

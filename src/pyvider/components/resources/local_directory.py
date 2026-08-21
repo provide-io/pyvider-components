@@ -147,7 +147,8 @@ class LocalDirectoryResource(
         if not ctx.state or not ctx.state.path:
             logger.debug("No state or path provided for read operation")
             return None
-        path = Path(ctx.state.path)
+        configured_path = ctx.state.path
+        path = Path(configured_path)
         if not path.is_dir():
             logger.debug("Path is not a directory or doesn't exist", path=str(path))
             return None
@@ -155,13 +156,18 @@ class LocalDirectoryResource(
         file_count = len([f for f in path.iterdir() if f.is_file()])
         logger.debug(
             "Read directory state",
-            path=str(path),
+            path=configured_path,
             permissions=current_permissions,
             file_count=file_count,
         )
         assert self.state_class is not None
         return self.state_class(
-            path=str(path),
+            # Echo the configured/prior path string verbatim. Round-tripping it
+            # through Path() would normalise away things like a "./" prefix
+            # (Path("./x") stringifies to "x"), which makes Terraform see
+            # perpetual drift on every subsequent plan since the value read
+            # back never matches what the practitioner wrote.
+            path=configured_path,
             permissions=current_permissions,
             id=str(path.resolve()),
             file_count=file_count,

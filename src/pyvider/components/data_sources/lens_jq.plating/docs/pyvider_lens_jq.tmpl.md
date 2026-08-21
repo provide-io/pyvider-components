@@ -38,8 +38,6 @@ Explore these examples to see the data source in action:
 - **[basic.tf](examples/basic.tf)** - Simple data transformation patterns
 - **[comprehensive.tf](examples/comprehensive.tf)** - Advanced JQ operations and complex transformations
 
-## Argument Reference
-
 {{ schema() }}
 
 ## JQ Query Language Reference

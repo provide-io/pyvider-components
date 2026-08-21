@@ -36,8 +36,6 @@ Explore these examples to see the data source in action:
 - **[basic.tf](examples/basic.tf)** - Simple file existence and property checks
 - **[advanced.tf](examples/advanced.tf)** - Complex validation and conditional logic patterns
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Output Attributes

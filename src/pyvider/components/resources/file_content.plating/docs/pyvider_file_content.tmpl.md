@@ -38,8 +38,6 @@ Explore these examples to see the resource in action:
 - **[template.tf](examples/template.tf)** - Dynamic template rendering
 - **[lifecycle.tf](examples/lifecycle.tf)** - Lifecycle management and dependencies
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Computed Attributes
