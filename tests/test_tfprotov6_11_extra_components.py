@@ -323,10 +323,12 @@ async def test_a_file_that_cannot_be_stat_ed_is_returned_with_a_warning(
     real_stat = Path.stat
 
     def selective_stat(self: Path, *args: object, **kwargs: object) -> object:
-        # is_file() also goes through Path.stat, but passes follow_symlinks;
-        # the size lookup calls it bare. Failing only the bare call simulates
-        # the real race -- the entry is listed, then vanishes before stat.
-        if self.name == "beta.tf" and not args and not kwargs:
+        # Every stat of this one entry fails, which is what the real race looks
+        # like: iterdir() saw it, then it vanished. Failing only the bare call
+        # would tie the test to a Python version -- 3.11's is_file() calls stat
+        # bare, 3.12+ passes follow_symlinks -- and pass for the wrong reason on
+        # whichever half of that the developer happens to run.
+        if self.name == "beta.tf":
             raise OSError("permission denied")
         return real_stat(self, *args, **kwargs)  # type: ignore[arg-type]
 

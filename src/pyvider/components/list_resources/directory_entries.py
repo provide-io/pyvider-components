@@ -103,8 +103,8 @@ class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
             return
 
         for entry in sorted(root.iterdir()):
-            if not entry.is_file():
-                continue
+            # Name-based filters first: they answer without touching the disk,
+            # so an entry that is filtered out is never stat-ed at all.
             if not include_hidden and entry.name.startswith("."):
                 continue
             if suffix and not entry.name.endswith(suffix):
@@ -113,10 +113,16 @@ class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
             warnings: tuple[str, ...] = ()
             size: int | None = None
             try:
+                if not entry.is_file():
+                    continue
                 size = entry.stat().st_size
             except OSError as exc:
-                # A file we can see but cannot stat is still worth returning;
-                # dropping it silently would misreport the directory.
+                # An entry `iterdir()` saw but that cannot be stat-ed is still
+                # worth returning: it may have been removed, or had its
+                # permissions changed, between the listing and the lookup, and
+                # dropping it silently would misreport the directory. Letting
+                # the error out is worse -- it fails the whole stream, so one
+                # unreadable file hides every other one in the directory.
                 warnings = (f"could not stat {entry.name}: {exc}",)
 
             resource_object = None
