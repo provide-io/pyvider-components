@@ -1,14 +1,20 @@
 action "pyvider_wait_for_file" "example" {
   config {
-    # Configuration options here
+    # Polled until it exists, or until the timeout elapses.
+    path = "${path.module}/ready.marker"
+
+    timeout_seconds = 60
   }
 }
 
-# Actions run as a side effect of an apply, triggered from a resource:
+# An action runs as a side effect of an apply. Trigger it from a resource:
 #
-#   lifecycle {
-#     action_trigger {
-#       events  = [after_create]
-#       actions = [action.pyvider_wait_for_file.example]
+#   resource "pyvider_file_content" "app" {
+#     # ...
+#     lifecycle {
+#       action_trigger {
+#         events  = [before_create]
+#         actions = [action.pyvider_wait_for_file.example]
+#       }
 #     }
 #   }
