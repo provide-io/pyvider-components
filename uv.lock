@@ -2262,7 +2262,8 @@ wheels = [
 
 [[package]]
 name = "plating"
-source = { editable = "../plating" }
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
     { name = "provide-foundation", extra = ["all"] },
@@ -2271,22 +2272,9 @@ dependencies = [
     { name = "pyvider-cty" },
     { name = "rich" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "jinja2", specifier = ">=3.1.6" },
-    { name = "provide-foundation", extras = ["all"], editable = "../provide-foundation" },
-    { name = "pymarkdownlnt", specifier = ">=0.9.32" },
-    { name = "pyvider", editable = "../pyvider" },
-    { name = "pyvider-cty", editable = "../pyvider-cty" },
-    { name = "rich", specifier = ">=14.0.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "provide-testkit", extras = ["standard", "build"], editable = "../provide-testkit" }]
-docs = [
-    { name = "mkdocs-material", specifier = ">=9.7.1" },
-    { name = "provide-testkit", extras = ["docs"], editable = "../provide-testkit" },
+sdist = { url = "https://files.pythonhosted.org/packages/50/87/551dcfa189e534af2e628cef69226634ff03df844249e28129f9dc46e046/plating-0.5.0.tar.gz", hash = "sha256:5d789fc46b8e178b5da3b303ce3bbddeda350b1d05cdf1a98b6d011466bade1c", size = 115200, upload-time = "2026-08-20T22:28:39.239Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/35/14/ea3dc74b09b44707501d85d3e4a2d4a4df017c5916650e702bb7bb395b44/plating-0.5.0-py3-none-any.whl", hash = "sha256:0572a95cd27ce8586ab4301c99afee9bea024216313acf9ae31186f25d0514a1", size = 109628, upload-time = "2026-08-20T22:28:37.772Z" },
 ]
 
 [[package]]
@@ -2331,11 +2319,16 @@ wheels = [
 
 [[package]]
 name = "provide-foundation"
-source = { editable = "../provide-foundation" }
+version = "0.4.2"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "structlog" },
     { name = "tomli-w" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2e/f1/43830b8faa786641592710ae43614c0e1afeadb03d55be63bddb9ca810b2/provide_foundation-0.4.2.tar.gz", hash = "sha256:e76aff7fe58620960967c9d80aaa8dc6db38481d29ee8e1f4f4f6500e773e1d0", size = 419800, upload-time = "2026-08-20T23:35:00.315Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ea/87/617dbf0fff9ee3cb82c677b5bd0e009bcb74fe3aefa22f0e7c9fed42d627/provide_foundation-0.4.2-py3-none-any.whl", hash = "sha256:a163c5dd12c76bc16e02632c11d1fc55626442bd1b157771a599d96cadfaa749", size = 617454, upload-time = "2026-08-20T23:34:58.397Z" },
 ]
 
 [package.optional-dependencies]
@@ -2353,39 +2346,10 @@ all = [
     { name = "zstandard" },
 ]
 
-[package.metadata]
-requires-dist = [
-    { name = "attrs", specifier = ">=25.4.0" },
-    { name = "click", marker = "extra == 'cli'", specifier = ">=8.3.1" },
-    { name = "cryptography", marker = "extra == 'crypto'", specifier = ">=45.0.7" },
-    { name = "httpx", marker = "extra == 'transport'", specifier = ">=0.28.1" },
-    { name = "opentelemetry-api", marker = "extra == 'opentelemetry'", specifier = ">=1.22.0" },
-    { name = "opentelemetry-exporter-otlp-proto-grpc", marker = "extra == 'opentelemetry'", specifier = ">=1.22.0" },
-    { name = "opentelemetry-exporter-otlp-proto-http", marker = "extra == 'opentelemetry'", specifier = ">=1.22.0" },
-    { name = "opentelemetry-sdk", marker = "extra == 'opentelemetry'", specifier = ">=1.22.0" },
-    { name = "provide-foundation", extras = ["cli", "compression", "crypto", "extended", "opentelemetry", "transport"], marker = "extra == 'all'", specifier = ">=0.4.0" },
-    { name = "provide-foundation", extras = ["platform", "process"], marker = "extra == 'extended'", specifier = ">=0.4.0" },
-    { name = "psutil", marker = "extra == 'platform'", specifier = ">=7.0.0" },
-    { name = "psutil", marker = "extra == 'process'", specifier = ">=7.0.0" },
-    { name = "py-cpuinfo", marker = "extra == 'platform'", specifier = ">=9.0.0" },
-    { name = "setproctitle", marker = "extra == 'process'", specifier = ">=1.3.7" },
-    { name = "structlog", specifier = ">=25.5.0" },
-    { name = "tomli-w", specifier = ">=1.2.0" },
-    { name = "zstandard", marker = "extra == 'compression'", specifier = ">=0.25.0" },
-]
-provides-extras = ["cli", "compression", "crypto", "transport", "opentelemetry", "platform", "process", "extended", "all"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "memray", specifier = ">=1.0" },
-    { name = "provide-testkit", extras = ["advanced-testing", "build", "standard", "typecheck", "utils"], editable = "../provide-testkit" },
-]
-docs = [{ name = "provide-testkit", extras = ["docs"], editable = "../provide-testkit" }]
-protobuf = [{ name = "protobuf", specifier = ">=6.32.0" }]
-
 [[package]]
 name = "provide-testkit"
-source = { editable = "../provide-testkit" }
+version = "0.4.3"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "click" },
@@ -2396,6 +2360,10 @@ dependencies = [
     { name = "pytest-cov" },
     { name = "pytest-mock" },
     { name = "pytest-xdist" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e6/7a/344e16edce3f872797376d5667633813765cf05cc2050da4be7253c09c40/provide_testkit-0.4.3.tar.gz", hash = "sha256:d6e98d6786c3bef1de00e84105d1f3187f3ea460b1e0279d43fc12afa71c827e", size = 134764, upload-time = "2026-08-21T06:22:17.319Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c4/07/8f960756945ca9ff86f7cd81bb8eba6a057f6014392c27c5c83665014282/provide_testkit-0.4.3-py3-none-any.whl", hash = "sha256:657fba04d8e27c96e81b25ebbfff4ae0046fbb7d603c56a2fcdfa0f48abae034", size = 183152, upload-time = "2026-08-21T06:22:15.609Z" },
 ]
 
 [package.optional-dependencies]
@@ -2414,7 +2382,7 @@ build = [
     { name = "uv" },
 ]
 profiling = [
-    { name = "memray" },
+    { name = "memray", marker = "sys_platform != 'win32'" },
     { name = "viztracer" },
 ]
 standard = [
@@ -2433,112 +2401,6 @@ standard = [
     { name = "setproctitle" },
     { name = "types-cryptography" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "attrs", specifier = ">=25.4.0" },
-    { name = "bandit", marker = "extra == 'quality'" },
-    { name = "bandit", marker = "extra == 'security'" },
-    { name = "behave", marker = "extra == 'advanced-testing'" },
-    { name = "click", specifier = ">=8.3.1" },
-    { name = "coverage", extras = ["toml"], marker = "extra == 'quality'" },
-    { name = "cryptography", marker = "extra == 'crypto'", specifier = ">=45.0.7" },
-    { name = "freezegun", marker = "extra == 'advanced-testing'" },
-    { name = "griffe", marker = "extra == 'docs'" },
-    { name = "grpc-stubs", marker = "extra == 'grpc'" },
-    { name = "grpcio", marker = "extra == 'grpc'", specifier = ">=1.76.0" },
-    { name = "grpcio-health-checking", marker = "extra == 'grpc'" },
-    { name = "grpcio-tools", marker = "extra == 'grpc'" },
-    { name = "h2", marker = "extra == 'transport'" },
-    { name = "hatch", marker = "extra == 'build'" },
-    { name = "httpx", marker = "extra == 'transport'", specifier = ">=0.28.1" },
-    { name = "hypothesis", marker = "extra == 'advanced-testing'" },
-    { name = "interrogate", marker = "extra == 'quality'" },
-    { name = "linkchecker", marker = "extra == 'docs'" },
-    { name = "markdown-callouts", marker = "extra == 'docs'" },
-    { name = "markdown-exec", marker = "extra == 'docs'" },
-    { name = "markdown-include", marker = "extra == 'docs'" },
-    { name = "memray", marker = "extra == 'profiling'" },
-    { name = "mike", marker = "extra == 'docs'" },
-    { name = "mkdocs", marker = "extra == 'docs'" },
-    { name = "mkdocs-autorefs", marker = "extra == 'docs'" },
-    { name = "mkdocs-coverage", marker = "extra == 'docs'" },
-    { name = "mkdocs-gen-files", marker = "extra == 'docs'" },
-    { name = "mkdocs-git-revision-date-localized-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-htmlproofer-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-include-markdown-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-literate-nav", marker = "extra == 'docs'" },
-    { name = "mkdocs-llmstxt", marker = "extra == 'docs'" },
-    { name = "mkdocs-macros-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-material", specifier = ">=9.7.1" },
-    { name = "mkdocs-material", marker = "extra == 'docs'" },
-    { name = "mkdocs-minify-plugin", marker = "extra == 'docs'" },
-    { name = "mkdocs-redirects", marker = "extra == 'docs'" },
-    { name = "mkdocs-section-index", marker = "extra == 'docs'" },
-    { name = "mkdocstrings", extras = ["python"], marker = "extra == 'docs'" },
-    { name = "mutmut", marker = "extra == 'quality'" },
-    { name = "mypy", marker = "extra == 'quality'" },
-    { name = "mypy", marker = "extra == 'typecheck'" },
-    { name = "pip-audit", marker = "extra == 'security'" },
-    { name = "pre-commit", marker = "extra == 'build'" },
-    { name = "provide-foundation", editable = "../provide-foundation" },
-    { name = "provide-testkit", extras = ["advanced-testing", "build", "crypto", "docs", "fuzzing", "grpc", "process", "profiling", "quality", "security", "transport", "typecheck", "utils"], marker = "extra == 'all'", specifier = ">=0.4.0" },
-    { name = "provide-testkit", extras = ["advanced-testing", "build", "grpc", "profiling", "security", "standard", "typecheck"], marker = "extra == 'pyvider-dev'", specifier = ">=0.4.0" },
-    { name = "provide-testkit", extras = ["advanced-testing", "quality"], marker = "extra == 'dev'", specifier = ">=0.4.0" },
-    { name = "provide-testkit", extras = ["crypto", "process", "quality", "transport"], marker = "extra == 'standard'", specifier = ">=0.4.0" },
-    { name = "provide-testkit", extras = ["docs"], marker = "extra == 'docs-standalone'", specifier = ">=0.4.0" },
-    { name = "provide-testkit", extras = ["grpc", "standard", "typecheck"], marker = "extra == 'grpc-dev'", specifier = ">=0.4.0" },
-    { name = "psutil", marker = "extra == 'process'", specifier = ">=7.0.0" },
-    { name = "pygments", marker = "extra == 'docs'" },
-    { name = "pymdown-extensions", marker = "extra == 'docs'" },
-    { name = "pynguin", marker = "extra == 'fuzzing'" },
-    { name = "pyre-check", marker = "extra == 'typecheck'" },
-    { name = "pyre-extensions", marker = "extra == 'typecheck'" },
-    { name = "pyrefly", marker = "extra == 'typecheck'" },
-    { name = "pyright", marker = "extra == 'typecheck'" },
-    { name = "pytest", specifier = ">=9.0.2" },
-    { name = "pytest-asyncio", specifier = ">=1.3.0" },
-    { name = "pytest-benchmark", marker = "extra == 'advanced-testing'" },
-    { name = "pytest-cov", specifier = ">=6.0.0" },
-    { name = "pytest-httpx", marker = "extra == 'transport'" },
-    { name = "pytest-json-report", marker = "extra == 'advanced-testing'" },
-    { name = "pytest-mock", specifier = ">=3.15.1" },
-    { name = "pytest-testmon", marker = "extra == 'advanced-testing'" },
-    { name = "pytest-xdist", specifier = ">=3.8.0" },
-    { name = "pyyaml", marker = "extra == 'docs'" },
-    { name = "pyyaml", marker = "extra == 'utils'" },
-    { name = "radon", marker = "extra == 'quality'" },
-    { name = "reuse", marker = "extra == 'utils'" },
-    { name = "ruff", marker = "extra == 'quality'" },
-    { name = "safety", marker = "extra == 'security'" },
-    { name = "sapp", marker = "extra == 'utils'" },
-    { name = "setproctitle", marker = "extra == 'process'", specifier = ">=1.3.7" },
-    { name = "tabulate", marker = "extra == 'utils'" },
-    { name = "twine", marker = "extra == 'build'" },
-    { name = "ty", marker = "extra == 'typecheck'" },
-    { name = "types-click", marker = "extra == 'typecheck'" },
-    { name = "types-cryptography", marker = "extra == 'crypto'" },
-    { name = "types-cryptography", marker = "extra == 'typecheck'" },
-    { name = "types-grpcio", marker = "extra == 'typecheck'" },
-    { name = "types-protobuf", marker = "extra == 'typecheck'" },
-    { name = "types-psutil", marker = "extra == 'typecheck'" },
-    { name = "types-pyyaml", marker = "extra == 'typecheck'" },
-    { name = "types-toml", marker = "extra == 'typecheck'" },
-    { name = "uv", marker = "extra == 'build'" },
-    { name = "viztracer", marker = "extra == 'profiling'" },
-    { name = "watchdog", marker = "extra == 'docs'" },
-]
-provides-extras = ["quality", "typecheck", "advanced-testing", "profiling", "transport", "crypto", "process", "grpc", "build", "docs", "utils", "fuzzing", "security", "standard", "grpc-dev", "pyvider-dev", "all", "dev", "docs-standalone"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "mkdocs-autorefs" },
-    { name = "mkdocs-macros-plugin" },
-    { name = "mkdocstrings" },
-    { name = "mkdocstrings-python" },
-    { name = "provide-testkit", extras = ["quality", "advanced-testing"], specifier = ">=0.4.0" },
-]
-docs = []
 
 [[package]]
 name = "psutil"
@@ -2949,7 +2811,8 @@ wheels = [
 
 [[package]]
 name = "pyvider"
-source = { editable = "../pyvider" }
+version = "0.5.2"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "click" },
@@ -2962,27 +2825,10 @@ dependencies = [
     { name = "pyvider-cty" },
     { name = "pyvider-rpcplugin" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "attrs", specifier = ">=25.4.0" },
-    { name = "click", specifier = ">=8.3.1" },
-    { name = "cryptography", specifier = ">=45.0.7" },
-    { name = "google", specifier = ">=3.0.0" },
-    { name = "grpcio", specifier = ">=1.83.0" },
-    { name = "msgpack", specifier = ">=1.1.1" },
-    { name = "protobuf", specifier = ">=7.35.1" },
-    { name = "provide-foundation", editable = "../provide-foundation" },
-    { name = "pyvider-cty", editable = "../pyvider-cty" },
-    { name = "pyvider-rpcplugin", editable = "../pyvider-rpcplugin" },
+sdist = { url = "https://files.pythonhosted.org/packages/d2/fa/194b30fdc1f71e07da7066b73133963e427e82abf5566c8c9c52873d2b9b/pyvider-0.5.2.tar.gz", hash = "sha256:f53d27753bc16d61b2203f8293dfb5dec0c206827d94a34233525fc6504cd1b9", size = 178535, upload-time = "2026-08-21T07:59:09.331Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/56/ef/c6c69e556562796f8c233633dd980e37b41dadcc4d28e184b0ca92b64b9b/pyvider-0.5.2-py3-none-any.whl", hash = "sha256:adfe653241093fc5e05bd8fb8c0ea3ce9d4c032e1008d9d516c85f5d1f4b4c89", size = 247023, upload-time = "2026-08-21T07:59:07.93Z" },
 ]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "grpcio-tools", specifier = ">=1.83.0" },
-    { name = "provide-testkit", extras = ["pyvider-dev"], editable = "../provide-testkit" },
-]
-docs = [{ name = "provide-testkit", extras = ["docs"], editable = "../provide-testkit" }]
 
 [[package]]
 name = "pyvider-components"
@@ -3009,46 +2855,37 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jq", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'", specifier = ">=1.9.1" },
-    { name = "plating", editable = "../plating" },
-    { name = "provide-foundation", editable = "../provide-foundation" },
-    { name = "pyvider", editable = "../pyvider" },
-    { name = "pyvider-cty", editable = "../pyvider-cty" },
-    { name = "pyvider-rpcplugin", editable = "../pyvider-rpcplugin" },
+    { name = "plating", specifier = ">=0.5.0" },
+    { name = "provide-foundation", specifier = ">=0.4.0" },
+    { name = "pyvider", specifier = ">=0.5.2" },
+    { name = "pyvider-cty", specifier = ">=0.5.0" },
+    { name = "pyvider-rpcplugin", specifier = ">=0.4.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "provide-testkit", extras = ["standard", "advanced-testing", "build", "profiling"], editable = "../provide-testkit" },
-    { name = "pyvider-rpcplugin", extras = ["test"], editable = "../pyvider-rpcplugin" },
+    { name = "provide-testkit", extras = ["standard", "advanced-testing", "build", "profiling"], specifier = ">=0.4.0" },
+    { name = "pyvider-rpcplugin", extras = ["test"], specifier = ">=0.4.0" },
 ]
 
 [[package]]
 name = "pyvider-cty"
-source = { editable = "../pyvider-cty" }
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "msgpack" },
     { name = "provide-foundation" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "attrs", specifier = ">=25.3.0" },
-    { name = "msgpack", specifier = ">=1.1.0" },
-    { name = "provide-foundation", editable = "../provide-foundation" },
+sdist = { url = "https://files.pythonhosted.org/packages/f4/5c/2ff8b9c07bdd839c06b2516aeffa25cc9ca9a4c3760e8535e3095d218587/pyvider_cty-0.5.0.tar.gz", hash = "sha256:a1d988d2195c98652406c5c88eabf1f641d2664767e64f4dadd6e659c8b3ed90", size = 232586, upload-time = "2026-08-20T19:02:45.301Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d9/4d/4fa4a4e3619013703aa42ce8566529e545b7f27fff02cd64c06f0b3630f5/pyvider_cty-0.5.0-py3-none-any.whl", hash = "sha256:f36f33b46359997fbdc41afcf74f2a3411a0791a04f7a7402b6afa3a8c8bb8c6", size = 271710, upload-time = "2026-08-20T19:02:43.579Z" },
 ]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "hypothesis", specifier = ">=6.148.8" },
-    { name = "memray", marker = "sys_platform != 'emscripten'", specifier = ">=1.0" },
-    { name = "provide-testkit", extras = ["standard"], editable = "../provide-testkit" },
-]
-docs = [{ name = "provide-testkit", extras = ["docs"], editable = "../provide-testkit" }]
 
 [[package]]
 name = "pyvider-rpcplugin"
-source = { editable = "../pyvider-rpcplugin" }
+version = "0.4.1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "cryptography" },
@@ -3058,6 +2895,10 @@ dependencies = [
     { name = "protobuf" },
     { name = "provide-foundation" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/bd/ca/32587d435d20df73a738d2f54f9af5458e9d1e10ccb2910419a4c343570d/pyvider_rpcplugin-0.4.1.tar.gz", hash = "sha256:89ff4581ce9e01cf5865bfe7d853c777ff7ecc8457a558c6c2015dccccd17176", size = 78395, upload-time = "2026-08-20T22:30:01.716Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/f9/925701f81f7e2f945ccd4445645e83a3fc73bd8c7ea4d66fd62f50fe2a20/pyvider_rpcplugin-0.4.1-py3-none-any.whl", hash = "sha256:2d134ddb068e80383cfbad962f88c0608c1757899fda462055aa9871f3d94e1b", size = 99790, upload-time = "2026-08-20T22:30:00.407Z" },
+]
 
 [package.optional-dependencies]
 test = [
@@ -3065,34 +2906,6 @@ test = [
     { name = "grpcio-tools" },
     { name = "types-grpcio" },
     { name = "types-protobuf" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "attrs", specifier = ">=25.4.0" },
-    { name = "cryptography", specifier = ">=45.0.7" },
-    { name = "google", specifier = ">=3.0.0" },
-    { name = "grpc-stubs", marker = "extra == 'test'", specifier = ">=1.53.0.6" },
-    { name = "grpcio", specifier = ">=1.78.0" },
-    { name = "grpcio-health-checking", specifier = ">=1.78.0" },
-    { name = "grpcio-tools", marker = "extra == 'test'", specifier = ">=1.73.0" },
-    { name = "protobuf", specifier = ">=5.29.3" },
-    { name = "provide-foundation", editable = "../provide-foundation" },
-    { name = "pyvider-rpcplugin", extras = ["test"], marker = "extra == 'all'" },
-    { name = "types-grpcio", marker = "extra == 'test'", specifier = ">=1.0.0.20250603" },
-    { name = "types-protobuf", marker = "extra == 'test'", specifier = ">=6.30.2.20250516" },
-]
-provides-extras = ["test", "all"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "mkdocs-autorefs", specifier = ">=1.4.3" },
-    { name = "provide-testkit", extras = ["standard", "typecheck", "advanced-testing", "build", "profiling", "utils"], editable = "../provide-testkit" },
-    { name = "pyvider-rpcplugin", extras = ["test"] },
-]
-docs = [
-    { name = "mkdocs-gen-files", specifier = ">=0.5.0" },
-    { name = "provide-testkit", extras = ["docs"], editable = "../provide-testkit" },
 ]
 
 [[package]]
