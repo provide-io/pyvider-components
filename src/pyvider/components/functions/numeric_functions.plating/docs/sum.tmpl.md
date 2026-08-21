@@ -42,9 +42,13 @@ This function enables you to:
 
 Returns the sum of all numbers in the list:
 - Returns an integer if the sum is a whole number
-- Returns a float if the sum has decimal places
-- Returns `0` for empty lists
+- Returns an exact decimal if the sum has decimal places
+- **Raises an error** for an empty list, matching Terraform's `sum`: there is no number the sum of nothing could be, and answering `0` would turn a mistake into a plan
 - Returns `null` if the input is `null`
+
+## Precision
+
+The total is accumulated in exact decimal arithmetic rather than binary floating point, so `sum([0.1, 0.2])` is `0.3` rather than `0.30000000000000004`, and a total large enough to overflow a 64-bit float stays a number instead of becoming infinity.
 
 ## Common Patterns
 

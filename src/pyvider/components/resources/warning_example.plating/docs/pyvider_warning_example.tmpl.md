@@ -33,8 +33,6 @@ Explore these examples to see the resource in action:
 
 - **[example.tf](examples/example.tf)** - Basic warning demonstration and configuration patterns
 
-## Argument Reference
-
 {{ schema() }}
 
 ## Warning Mechanisms

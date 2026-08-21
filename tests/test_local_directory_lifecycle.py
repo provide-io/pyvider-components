@@ -70,4 +70,46 @@ async def test_create_lifecycle_contract(resource: LocalDirectoryResource, temp_
     assert read_state.permissions == "0o775"
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="Unix file permissions not enforced on Windows")
+@pytest.mark.asyncio
+async def test_read_preserves_dot_slash_prefixed_path(
+    resource: LocalDirectoryResource,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A `./`-prefixed path must survive create-then-read unchanged.
+
+    This is what `${path.module}/name` produces whenever the module is the
+    working directory -- the single most common spelling of a relative path
+    in a real Terraform config. `read()` used to do `path=str(Path(...))`,
+    and pathlib normalises `Path("./x")` to `x` when stringified, so the
+    value read back after apply never matched what the practitioner wrote.
+    Terraform then reported a plan that was never empty: the same one
+    attribute drifting on every single `terraform plan`, forever.
+    """
+    monkeypatch.chdir(tmp_path)
+    configured_path = "./dotslash_dir"
+
+    config = LocalDirectoryConfig(path=configured_path, permissions="0o755")
+    create_context = ResourceContext(config=config, state=None)
+    base_plan = {"path": config.path, "permissions": config.permissions}
+
+    planned_state_dict, _ = await resource._create(create_context, base_plan)
+    planned_state = resource.state_class(**planned_state_dict)
+    assert planned_state.path == configured_path
+
+    apply_context = ResourceContext(config=config, planned_state=planned_state)
+    final_state, _ = await resource._create_apply(apply_context)
+    assert final_state is not None
+    assert final_state.path == configured_path
+
+    read_context = ResourceContext(config=None, state=final_state)
+    read_state = await resource.read(read_context)
+    assert read_state is not None
+    assert read_state.path == configured_path, (
+        "read() must echo the configured path exactly -- a plan that keeps "
+        "reporting drift on 'path' here is the perpetual-diff bug"
+    )
+
+
 # 🧩🔧🔚

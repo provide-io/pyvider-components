@@ -44,6 +44,7 @@ Returns a new string with all alphabetic characters converted to uppercase:
 - Non-alphabetic characters (numbers, symbols, spaces) remain unchanged
 - Returns `null` if the input is `null`
 - Returns an empty string if the input is an empty string
+- Case is mapped one Unicode code point at a time, exactly as Terraform's built-in `upper` does, so the result always has the same number of code points as the input. A character with no single-code-point uppercase form is left alone: `upper("straße")` returns `"STRAßE"`, not `"STRASSE"`.
 
 ## Common Patterns
 

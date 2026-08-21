@@ -42,12 +42,27 @@ This function enables you to:
 
 Returns the sum of the two numbers as a number. The return type is automatically optimized:
 - If the result is a whole number (e.g., `5.0`), returns an integer (`5`)
-- If the result has decimal places (e.g., `5.7`), returns a float (`5.7`)
+- If the result has decimal places, returns the exact decimal (e.g., `5.7`)
 - Returns `null` if either input is `null`
 
 ## Type Optimization
 
 The function automatically converts floating-point results to integers when they represent whole numbers. For example, adding `3.0` and `7.0` returns `10` (an integer), not `10.0` (a float). This ensures cleaner output and more predictable behavior in resource calculations.
+
+## Precision
+
+Arithmetic is exact decimal arithmetic, not binary floating point, and carries as many
+significant digits as Terraform's own numbers do. That is what a practitioner writing
+decimal literals expects:
+
+```terraform
+provider::pyvider::add(0.1, 0.2)       # 0.3, not 0.30000000000000004
+provider::pyvider::subtract(0.3, 0.1)  # 0.2, not 0.19999999999999998
+provider::pyvider::multiply(1.1, 1.1)  # 1.21, not 1.2100000000000002
+```
+
+A result too large for a 64-bit float stays a number rather than becoming infinity, and a
+division that does not terminate is carried to 155 significant digits rather than 16.
 
 ## Common Patterns
 
@@ -85,4 +100,3 @@ locals {
   total_cost = provider::pyvider::add(var.base_cost, var.addon_cost)  # 126.25
 }
 ```
-
