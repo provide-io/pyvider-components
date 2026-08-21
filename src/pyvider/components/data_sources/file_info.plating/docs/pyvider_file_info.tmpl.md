@@ -28,13 +28,15 @@ This data source enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the data source in action:
+### Simple file existence and property checks
 
-- **[example.tf](examples/example.tf)** - Basic file information retrieval
-- **[basic.tf](examples/basic.tf)** - Simple file existence and property checks
-- **[advanced.tf](examples/advanced.tf)** - Complex validation and conditional logic patterns
+{{ example("basic") }}
+
+### Complex validation and conditional logic patterns
+
+{{ example("advanced") }}
 
 {{ schema() }}
 
