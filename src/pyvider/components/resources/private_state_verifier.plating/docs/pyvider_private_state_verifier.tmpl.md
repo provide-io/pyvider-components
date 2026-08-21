@@ -23,6 +23,20 @@ This resource enables you to:
 - **Integration testing**: Verify private state works correctly with other Terraform resources
 - **Encryption lifecycle**: Demonstrate the complete create, store, retrieve, and decrypt workflow
 
+## Prerequisites
+
+This resource keeps encrypted private state, which the provider will not do
+without a shared secret. Supply one before applying, or the first apply fails
+with `Private state shared secret not configured`:
+
+```bash
+export PYVIDER_PRIVATE_STATE_SHARED_SECRET="a-long-random-value"
+```
+
+`private_state_shared_secret` in `pyvider.toml` does the same thing. Keep the
+value stable across runs -- private state written under one secret cannot be
+read back under another.
+
 ## Example Usage
 
 {{ example("example") }}
