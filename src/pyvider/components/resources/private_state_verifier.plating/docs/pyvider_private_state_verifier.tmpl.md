@@ -27,14 +27,19 @@ This resource enables you to:
 
 {{ example("example") }}
 
-## Examples
+## More Examples
 
-Explore these examples to see the resource in action:
+### Simple encryption testing
 
-- **[example.tf](examples/example.tf)** - Basic private state verification
-- **[basic.tf](examples/basic.tf)** - Simple encryption testing
-- **[comprehensive.tf](examples/comprehensive.tf)** - Advanced verification patterns
-- **[provider_alias.tf](examples/provider_alias.tf)** - Multi-provider testing scenarios
+{{ example("basic") }}
+
+### Advanced verification patterns
+
+{{ example("comprehensive") }}
+
+### Multi-provider testing scenarios
+
+{{ example("provider_alias") }}
 
 {{ schema() }}
 
