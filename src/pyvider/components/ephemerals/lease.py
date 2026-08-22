@@ -53,6 +53,11 @@ class LeaseConfig:
 class LeaseResult:
     name: str | None = None
     path: str | None = None
+    #: Echoed back from config. Every attribute the schema lets a practitioner set
+    #: has to come back unchanged, or Terraform rejects the whole resource with
+    #: "planned value does not match config value" -- a field missing here reads
+    #: as the provider returning null for something the configuration set.
+    ttl_seconds: int | None = None
     lease_id: str | None = None
     expires_at: str | None = None
 
@@ -124,6 +129,11 @@ class LeaseEphemeralResource(BaseEphemeralResource[LeaseResult, LeasePrivateStat
                 # provider's own business.
                 name=ctx.config.name,
                 path=ctx.config.path,
+                # Verbatim, not the defaulted `ttl` below it: when the config omits
+                # ttl_seconds the returned value has to stay null too, or the same
+                # consistency check fails in the other direction. DEFAULT_TTL_SECONDS
+                # governs the lease itself and lives in private state.
+                ttl_seconds=ctx.config.ttl_seconds,
                 lease_id=lease_id,
                 expires_at=expires_at.isoformat(timespec="seconds"),
             ),
