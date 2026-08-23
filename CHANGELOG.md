@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-08-23
+
+### Fixed
+
+- **`pyvider_lease` dropped the `ttl_seconds` it was given.** The schema lets a practitioner set `ttl_seconds`, but `LeaseResult` had no field for it, so the ephemeral resource opened with that attribute null and Terraform rejected the whole resource: a value the configuration set came back unset. `open()` now echoes `ctx.config.ttl_seconds` verbatim rather than the internally defaulted value, so a config that omits it still reads back as omitted.
+- **`pyvider_filesystem_store`'s example could not be applied.** It set `path = "${path.module}/tfstate"`, but Terraform decodes a `state_store` block with a nil `*hcl.EvalContext` -- the same treatment `backend` blocks get -- so no variable, function or `path.module` reference resolves inside one. The example now uses a literal relative path and says why.
+
+A structural test now asserts the general case behind the first bug: every attribute a component's schema lets a practitioner set must have a matching field on the result class, so the next component that forgets one fails in CI instead of at `terraform apply`.
+
 ## [0.5.0] - 2026-08-21
 
 ### Added
