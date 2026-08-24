@@ -1,0 +1,6 @@
+# Reaches the public internet, so it fails closed on an air-gapped runner and is
+# at the mercy of a third party's uptime -- a failure here is not necessarily a
+# defect in the provider.
+[requirements]
+network = ["httpbin.org"]
+reason = "the example calls the live httpbin.org service"
