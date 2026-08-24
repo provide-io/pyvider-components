@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- **Five components are no longer `test_only`.** `pyvider_lease`, `pyvider_filesystem_store`, `pyvider_wait_for_file`, `pyvider_echo` and `pyvider_directory_entry` are served by a published provider now. Each does real work against the real world -- a TTL lease with renewal, a durable filesystem state store, a bounded wait on a path, an echo action, and a list resource over actual filesystem entries -- so gating them behind `PYVIDER_TESTMODE` hid working functionality rather than protecting anyone from a fixture. The provider's published surface goes from 34 components to 39.
+
+  Still `test_only`, because they exist to exercise the protocol rather than to be used: the five `nested_data_test_suite` components, `pyvider_failing_action` (it fails on purpose), `pyvider_private_state_verifier`, and `pyvider_secret_note` with its paired list resource.
+
+  Note for anyone rendering these: `pyvider_filesystem_store`'s example needs `terraform init -enable-pluggable-state-storage-experiment`, and the tfprotov6.11 components cannot be parsed by OpenTofu at all. Those requirements are not yet machine-readable anywhere.
+
 ## [0.5.3] - 2026-08-23
 
 ### Fixed

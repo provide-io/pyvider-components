@@ -26,7 +26,7 @@ class FileSystemStoreConfig:
     path: str | None = None
 
 
-@register_state_store("pyvider_filesystem_store", test_only=True)
+@register_state_store("pyvider_filesystem_store")
 class PyviderFileSystemStateStore(FileSystemStateStore):
     """``FileSystemStateStore`` with a Terraform configuration schema."""
 

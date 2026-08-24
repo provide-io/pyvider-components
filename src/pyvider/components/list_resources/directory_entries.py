@@ -49,7 +49,7 @@ class DirectoryEntryState:
     size_bytes: int | None = None
 
 
-@register_list_resource("pyvider_directory_entry", test_only=True)
+@register_list_resource("pyvider_directory_entry")
 class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
     """Lists files in a directory."""
 

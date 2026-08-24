@@ -70,7 +70,7 @@ class LeasePrivateState(PrivateState):
     renewals: int = 0
 
 
-@register_ephemeral_resource("pyvider_lease", test_only=True)
+@register_ephemeral_resource("pyvider_lease")
 class LeaseEphemeralResource(BaseEphemeralResource[LeaseResult, LeasePrivateState, LeaseConfig]):
     """Holds a lease on a file for as long as Terraform needs it."""
 

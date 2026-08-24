@@ -46,7 +46,7 @@ class WaitForFileConfig:
     timeout_seconds: float | None = None
 
 
-@register_action("pyvider_wait_for_file", test_only=True)
+@register_action("pyvider_wait_for_file")
 class WaitForFileAction(BaseAction[WaitForFileConfig]):
     """Blocks until a path exists, reporting progress while it waits."""
 

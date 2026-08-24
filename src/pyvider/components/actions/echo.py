@@ -56,7 +56,7 @@ class EchoConfig:
     defer: bool | None = None
 
 
-@register_action("pyvider_echo", test_only=True)
+@register_action("pyvider_echo")
 class EchoAction(BaseAction[EchoConfig]):
     """Appends a timestamped message to a file, reporting progress per line."""
 
