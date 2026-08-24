@@ -1,6 +1,0 @@
-# Actions are a tfprotov6.11 feature. OpenTofu 1.12.5 rejects the block outright
-# with "Unsupported block type", so this is a Terraform-only example -- not a
-# version floor OpenTofu will eventually clear, a block type it does not have.
-[requirements]
-opentofu = false
-reason = "OpenTofu rejects `action` blocks: Unsupported block type"
