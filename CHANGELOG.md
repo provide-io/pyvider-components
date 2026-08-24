@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- **`pyvider_secret_note` declares the version floor write-only attributes need.** Its `secret_value` is write-only, so the provider returns it null -- which is what write-only means. OpenTofu 1.10.6 has no concept of one and enforces the ordinary rule that a planned value must equal its config value, so it fails with `planned an invalid value for ...secret_value: planned value cty.NullVal(cty.String) does not match config value`, blaming the provider for behaving correctly. Measured rather than assumed: 1.10.6 fails, 1.11.0 and 1.12.5 both plan cleanly, so the floor is 1.11.0 for both implementations. `soup stir` 0.6.1 reads it and skips instead of reporting a phantom provider bug.
+
 ## [0.6.0] - 2026-08-24
 
 ### Added
