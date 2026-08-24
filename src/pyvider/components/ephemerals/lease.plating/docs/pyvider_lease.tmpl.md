@@ -1,6 +1,6 @@
 ---
 page_title: "Ephemeral Resource: pyvider_lease"
-subcategory: "Test Mode"
+subcategory: "Coordination"
 description: |-
   Holds a lease on a file for as long as Terraform needs it.
 ---

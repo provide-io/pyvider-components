@@ -1,6 +1,6 @@
 ---
 page_title: "State Store: pyvider_filesystem_store"
-subcategory: "Test Mode"
+subcategory: "State Storage"
 description: |-
   ``FileSystemStateStore`` with a Terraform configuration schema.
 ---

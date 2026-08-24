@@ -1,6 +1,6 @@
 ---
 page_title: "List Resource: pyvider_directory_entry"
-subcategory: "Test Mode"
+subcategory: "File Operations"
 description: |-
   Lists files in a directory.
 ---

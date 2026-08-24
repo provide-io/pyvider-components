@@ -1,6 +1,6 @@
 ---
 page_title: "Action: pyvider_wait_for_file"
-subcategory: "Test Mode"
+subcategory: "File Operations"
 description: |-
   Blocks until a path exists, reporting progress while it waits.
 ---
