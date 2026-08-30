@@ -113,10 +113,11 @@ class LocalDirectoryResource(
         if not config:
             return None, None
         base_plan["permissions"] = config.permissions or "0o755"
-        # file_count is deliberately left to the framework here. An update
-        # inherits the prior count, apply re-derives it, and the contract
-        # check accepts that -- whereas planning an explicit unknown also
-        # forces `id` unknown and the apply is then rejected.
+        # Not planned unknown here, unlike _create. Doing so needs the
+        # refinement check that shipped in pyvider 0.6.0; on 0.5.2, which this
+        # package still supports, the apply is rejected. Leaving it alone the
+        # update inherits the prior count, apply re-derives it, and both
+        # versions accept that.
         return base_plan, None
 
     @resilient()
