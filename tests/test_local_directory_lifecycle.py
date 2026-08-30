@@ -50,14 +50,21 @@ async def test_create_lifecycle_contract(resource: LocalDirectoryResource, temp_
     assert planned_state.path == str(temp_dir)
     assert planned_state.permissions == "0o775"
     assert planned_state.id == str(temp_dir.resolve())
-    assert planned_state.file_count == 0
+    # file_count is planned unknown: the count depends on the filesystem at
+    # apply time, and promising a literal recorded a value that was never
+    # re-derived.
+    assert planned_state.file_count.is_unknown
 
     # 4. Apply the plan.
     apply_context = ResourceContext(config=config, planned_state=planned_state)
     final_state, _ = await resource._create_apply(apply_context)
 
-    # 5. The final state must be identical to the planned state.
-    assert final_state == planned_state
+    # 5. Apply refines the plan: everything it promised is unchanged, and the
+    #    count it could not know is now the directory's own.
+    assert final_state.path == planned_state.path
+    assert final_state.permissions == planned_state.permissions
+    assert final_state.id == planned_state.id
+    assert final_state.file_count == 0
 
     # 6. Verify the real world.
     assert temp_dir.exists()

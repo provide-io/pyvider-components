@@ -10,7 +10,7 @@
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, cast
 
-from attrs import define
+from attrs import define, evolve
 
 if TYPE_CHECKING:
     pyvider_local_directory = Literal["pyvider_local_directory"]
@@ -22,7 +22,7 @@ from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
-from pyvider.schema import PvsSchema, a_num, a_str, s_resource
+from pyvider.schema import PvsSchema, a_num, a_str, a_unknown, s_resource
 
 
 @define(frozen=True)
@@ -37,6 +37,11 @@ class LocalDirectoryState:
     permissions: str | None = None
     id: str | None = None
     file_count: int | None = None
+
+
+def _count_files(path: Path) -> int:
+    """Files directly in `path`. Subdirectories are not files and are not counted."""
+    return len([f for f in path.iterdir() if f.is_file()])
 
 
 @register_resource("pyvider_local_directory")
@@ -90,7 +95,12 @@ class LocalDirectoryResource(
 
         base_plan["permissions"] = config.permissions or "0o755"
         base_plan["id"] = str(Path(config.path).resolve())
-        base_plan["file_count"] = 0
+        # Unknown, not 0. `mkdir(exist_ok=True)` may adopt a directory that
+        # already holds files, and anything written into it between plan and
+        # apply counts too, so the provider cannot know this until apply.
+        # Promising a literal recorded a count that was never re-derived, and
+        # Terraform warned about the mismatch on every later refresh.
+        base_plan["file_count"] = a_unknown(a_num())
 
         return base_plan, None
 
@@ -103,6 +113,10 @@ class LocalDirectoryResource(
         if not config:
             return None, None
         base_plan["permissions"] = config.permissions or "0o755"
+        # file_count is deliberately left to the framework here. An update
+        # inherits the prior count, apply re-derives it, and the contract
+        # check accepts that -- whereas planning an explicit unknown also
+        # forces `id` unknown and the apply is then rejected.
         return base_plan, None
 
     @resilient()
@@ -133,7 +147,10 @@ class LocalDirectoryResource(
             raise ResourceError(
                 f"Invalid permissions format: {planned_state.permissions}. Must be an octal string like '0o755'."
             ) from e
-        return ctx.planned_state, None
+
+        # Counted here rather than echoed from the plan, which promised unknown.
+        # `read` counts the same way, so a refresh finds what apply recorded.
+        return evolve(planned_state, file_count=_count_files(path)), None
 
     async def _update_apply(
         self, ctx: ResourceContext[LocalDirectoryConfig, LocalDirectoryState, None]
@@ -153,7 +170,7 @@ class LocalDirectoryResource(
             logger.debug("Path is not a directory or doesn't exist", path=str(path))
             return None
         current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
-        file_count = len([f for f in path.iterdir() if f.is_file()])
+        file_count = _count_files(path)
         logger.debug(
             "Read directory state",
             path=configured_path,
