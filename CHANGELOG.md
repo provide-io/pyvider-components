@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- **Runtime floors now name the versions this package is actually tested against**: `pyvider>=0.6.2` (was `>=0.5.2`), `pyvider-cty>=0.5.3` (was `>=0.5.0`), `pyvider-rpcplugin>=0.4.2` (was `>=0.4.0`), `plating>=0.6.1` (was `>=0.5.0`) and `provide-foundation>=0.4.3` (was `>=0.4.0`). Every one of them sat below what the lock resolves, so the published metadata described a combination nothing here had ever run. Verified at the declared minimums with `uv lock --resolution lowest-direct`.
+
 ## [0.6.1] - 2026-08-25
 
 ### Added
