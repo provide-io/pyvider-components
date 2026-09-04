@@ -27,7 +27,7 @@ from provide.foundation.file import (
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
-from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
+from pyvider.schema import PvsSchema, a_bool, a_str, s_identity, s_resource
 
 
 @define(frozen=True)
@@ -59,6 +59,17 @@ class FileContentResource(BaseResource["pyvider_file_content", FileContentState,
                 "content_hash": a_str(computed=True),
             }
         )
+
+    @classmethod
+    def get_identity_schema(cls) -> PvsSchema:
+        """A file is identified by where it is.
+
+        Terraform resolves a list resource's results against the managed
+        resource of the same name and refuses to list one whose identity schema
+        is absent (terraform/internal/plugin6/grpc_provider.go:1341-1345). This
+        is what lets `pyvider_file_content` be listed as well as managed.
+        """
+        return s_identity(attributes={"filename": a_str(required=True)})
 
     async def _validate_config(self, config: FileContentConfig) -> list[str]:
         return []
