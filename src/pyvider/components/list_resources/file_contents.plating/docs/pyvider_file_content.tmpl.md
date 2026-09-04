@@ -1,11 +1,11 @@
 ---
-page_title: "List Resource: pyvider_directory_entry"
+page_title: "List Resource: pyvider_file_content"
 subcategory: "File Operations"
 description: |-
   Lists files in a directory.
 ---
 
-# pyvider_directory_entry (List Resource)
+# pyvider_file_content (List Resource)
 
 Lists files in a directory.
 

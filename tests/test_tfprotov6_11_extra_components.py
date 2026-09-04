@@ -6,7 +6,7 @@
 """The second pair of v6.11 demo components.
 
 ``pyvider_wait_for_file`` covers deferral driven by a real prerequisite and
-work that genuinely takes time. ``pyvider_directory_entry`` covers a list
+work that genuinely takes time. ``pyvider_file_content`` covers a list
 resource that declares its own identity schema and attaches per-result
 warnings — neither of which the in-memory note components exercise.
 """
@@ -34,13 +34,13 @@ from pyvider.components.actions.wait_for_file import (
     WaitForFileAction,
     WaitForFileConfig,
 )
-from pyvider.components.list_resources.directory_entries import (
+from pyvider.components.list_resources.file_contents import (
     DirectoryEntriesConfig,
-    DirectoryEntryList,
+    FileContentList,
 )
 
 WAIT_ACTION = "pyvider_wait_for_file"
-DIR_LIST = "pyvider_directory_entry"
+DIR_LIST = "pyvider_file_content"
 
 pytestmark = pytest.mark.usefixtures(
     "discovered_components_session", "provider_in_hub", "provider_with_test_mode"
@@ -60,7 +60,7 @@ def wait_config(**overrides: object) -> pb.DynamicValue:
 def dir_config(**overrides: object) -> pb.DynamicValue:
     values: dict[str, object] = {"path": ".", "suffix": None, "include_hidden": None}
     values.update(overrides)
-    return marshal(values, schema=DirectoryEntryList.get_schema().block)
+    return marshal(values, schema=FileContentList.get_schema().block)
 
 
 @pytest.fixture
@@ -253,7 +253,7 @@ async def test_wait_invoke_polls_quietly_between_progress_reports(tmp_path: Path
     assert sum(1 for e in events if "Waiting" in e.message) == 1
 
 
-# --- directory_entry: listing ----------------------------------------------
+# --- file_content: listing ----------------------------------------------
 
 
 async def collect(**kwargs: object) -> list[pb.ListResource.Event]:
@@ -284,11 +284,23 @@ async def test_directory_list_can_include_hidden_files(populated: Path) -> None:
 
 
 @pytest.mark.asyncio
-async def test_directory_list_uses_its_own_identity_schema(populated: Path) -> None:
+async def test_the_list_borrows_identity_from_the_managed_resource(populated: Path) -> None:
+    """Terraform decodes results against the managed resource, not this class.
+
+    It looks the managed type up by the list resource's own name and refuses
+    without an identity schema on it, then decodes each result's identity
+    against that schema (terraform/internal/plugin6/grpc_provider.go:1341-1345
+    and :1420-1426). A list resource that answers with a shape of its own
+    produces results Terraform cannot read.
+    """
+    from pyvider.components.resources.file_content import FileContentResource
+
+    assert FileContentList.get_identity_schema() == FileContentResource.get_identity_schema()
+
     events = await collect(config=dir_config(path=str(populated), suffix=".tf"))
 
-    decoded = unmarshal_identity(events[0].identity, DirectoryEntryList.get_identity_schema())
-    assert decoded == {"path": str(populated / "alpha.tf")}
+    decoded = unmarshal_identity(events[0].identity, FileContentList.get_identity_schema())
+    assert decoded == {"filename": str(populated / "alpha.tf")}
 
 
 @pytest.mark.asyncio
@@ -317,7 +329,7 @@ async def test_directory_list_of_a_missing_directory_is_empty(tmp_path: Path) ->
 
 
 @pytest.mark.asyncio
-async def test_a_file_that_cannot_be_stat_ed_is_returned_with_a_warning(
+async def test_a_file_that_cannot_be_read_is_returned_with_a_warning(
     populated: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     real_stat = Path.stat
@@ -340,10 +352,10 @@ async def test_a_file_that_cannot_be_stat_ed_is_returned_with_a_warning(
     # directory -- but it carries a warning explaining what is missing.
     beta = next(event for event in events if event.display_name == "beta.tf")
     assert [d.severity for d in beta.diagnostic] == [pb.Diagnostic.WARNING]
-    assert "could not stat beta.tf" in beta.diagnostic[0].summary
+    assert "could not read beta.tf" in beta.diagnostic[0].summary
 
 
-# --- directory_entry: validation -------------------------------------------
+# --- file_content: validation -------------------------------------------
 
 
 @pytest.mark.asyncio
@@ -389,8 +401,41 @@ async def test_directory_validate_accepts_a_directory_that_does_not_exist_yet(
 
 @pytest.mark.asyncio
 async def test_directory_validate_hook_handles_a_missing_config() -> None:
-    assert await DirectoryEntryList().validate(None) == ["path is required"]
-    assert await DirectoryEntryList().validate(DirectoryEntriesConfig(path=None)) == ["path is required"]
+    assert await FileContentList().validate(None) == ["path is required"]
+    assert await FileContentList().validate(DirectoryEntriesConfig(path=None)) == ["path is required"]
 
 
 # 🧩🔧🔚
+
+
+def test_every_list_resource_has_a_managed_resource_that_carries_identity() -> None:
+    """The pairing Terraform requires, checked for the whole component set.
+
+    A list resource is reachable only through a managed type of the same name:
+
+        resourceSchema, ok := schema.ResourceTypes[r.TypeName]
+        if !ok || resourceSchema.Identity == nil {
+            ... "Identity schema not found for resource type %s; this is a bug
+            in the provider - please report it there"
+
+    (terraform/internal/plugin6/grpc_provider.go:1341-1345). `pyvider_file_content`
+    shipped for a release as `pyvider_directory_entry`, with no managed resource
+    of that name and an identity schema of its own, so every attempt to list it
+    failed on that line. Nothing in-process noticed, because registration
+    succeeds either way and only a real host looks the managed type up.
+    """
+    from pyvider.protocols.tfprotov6.handlers.utils import get_all_components
+
+    listed = set(get_all_components("list_resource"))
+    assert listed, "no list resources were discovered, so this proves nothing"
+
+    for name in listed:
+        managed = get_all_components("resource").get(name)
+        assert managed is not None, (
+            f"list resource {name!r} has no managed resource of that name; Terraform "
+            f"fails its ListResource call before the provider is asked for anything"
+        )
+        assert managed.get_identity_schema() is not None, (
+            f"managed resource {name!r} declares no identity schema, which Terraform "
+            f"requires before it will list it"
+        )

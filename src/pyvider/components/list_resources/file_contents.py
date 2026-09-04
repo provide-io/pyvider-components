@@ -3,24 +3,30 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""A list resource over real filesystem entries.
+"""A list resource over real files on disk.
 
 ``pyvider_secret_note`` lists objects this provider process created, which
 makes it deterministic but a little artificial. This one lists something that
 genuinely exists outside the provider, which exercises the parts of the
 contract the in-memory version cannot:
 
-* it declares its **own** identity schema instead of borrowing one from a
-  managed resource, which is the path a list resource takes when it has no
-  managed counterpart;
-* it emits **per-result warnings** for entries it can see but cannot stat,
+* it emits **per-result warnings** for entries it can see but cannot read,
   proving diagnostics ride along with individual results rather than aborting
   the stream;
 * it yields lazily from a directory scan, so ``limit`` genuinely avoids work.
+
+It lists what ``pyvider_file_content`` manages, and takes that resource's name.
+Terraform resolves a list resource against the managed type of the same name
+and refuses to list one that has none
+(terraform/internal/plugin6/grpc_provider.go:1341-1345); it then decodes each
+result's identity and resource object against that managed resource's schemas
+(:1420-1436), so neither shape is this class's to describe. ``resource_type``
+borrows both.
 """
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import AsyncIterator
 from pathlib import Path
 
@@ -32,7 +38,7 @@ from pyvider.list_resources import (
     ListResult,
     register_list_resource,
 )
-from pyvider.schema import PvsSchema, a_bool, a_num, a_str, s_identity, s_resource
+from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
 
 
 @define(frozen=True)
@@ -42,16 +48,9 @@ class DirectoryEntriesConfig:
     include_hidden: bool | None = None
 
 
-@define(frozen=True)
-class DirectoryEntryState:
-    path: str | None = None
-    name: str | None = None
-    size_bytes: int | None = None
-
-
-@register_list_resource("pyvider_directory_entry")
-class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
-    """Lists files in a directory."""
+@register_list_resource("pyvider_file_content", resource_type="pyvider_file_content")
+class FileContentList(BaseListResource[DirectoryEntriesConfig]):
+    """Lists the files in a directory as `pyvider_file_content` resources."""
 
     config_class = DirectoryEntriesConfig
 
@@ -62,21 +61,6 @@ class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
                 "path": a_str(required=True, description="Directory to list. Only read."),
                 "suffix": a_str(description="Only return files ending with this."),
                 "include_hidden": a_bool(description="Include dotfiles. Defaults to false."),
-            }
-        )
-
-    @classmethod
-    def get_identity_schema(cls) -> PvsSchema:
-        """Declared here rather than borrowed: there is no managed counterpart."""
-        return s_identity(attributes={"path": a_str(required=True)})
-
-    @classmethod
-    def get_resource_object_schema(cls) -> PvsSchema:
-        return s_resource(
-            attributes={
-                "path": a_str(required=True),
-                "name": a_str(required=True),
-                "size_bytes": a_num(computed=True),
             }
         )
 
@@ -111,26 +95,45 @@ class DirectoryEntryList(BaseListResource[DirectoryEntriesConfig]):
                 continue
 
             warnings: tuple[str, ...] = ()
-            size: int | None = None
+            content: str | None = None
             try:
                 if not entry.is_file():
                     continue
-                size = entry.stat().st_size
+                # Reading is deferred to the point it is asked for: a listing
+                # that only wants identities never opens a file.
+                if ctx.include_resource_object:
+                    content = entry.read_text()
             except OSError as exc:
-                # An entry `iterdir()` saw but that cannot be stat-ed is still
+                # An entry `iterdir()` saw but that cannot be read is still
                 # worth returning: it may have been removed, or had its
                 # permissions changed, between the listing and the lookup, and
                 # dropping it silently would misreport the directory. Letting
                 # the error out is worse -- it fails the whole stream, so one
                 # unreadable file hides every other one in the directory.
-                warnings = (f"could not stat {entry.name}: {exc}",)
+                warnings = (f"could not read {entry.name}: {exc}",)
+            except UnicodeDecodeError as exc:
+                # `content` is a string attribute, so a binary file has no
+                # value to report. The file is still listed, and still
+                # importable by identity.
+                warnings = (f"{entry.name} is not text: {exc}",)
 
+            # Shaped by `pyvider_file_content`'s own schema, which is what
+            # Terraform decodes a listed resource object against -- "Use the
+            # ResourceTypes schema for the resource object"
+            # (terraform/internal/plugin6/grpc_provider.go:1428-1431). The
+            # framework supplies that schema through `resource_type`, so this
+            # only has to fill it.
             resource_object = None
-            if ctx.include_resource_object:
-                resource_object = DirectoryEntryState(path=str(entry), name=entry.name, size_bytes=size)
+            if ctx.include_resource_object and content is not None:
+                resource_object = {
+                    "filename": str(entry),
+                    "content": content,
+                    "exists": True,
+                    "content_hash": hashlib.sha256(content.encode()).hexdigest(),
+                }
 
             yield ListResult(
-                identity={"path": str(entry)},
+                identity={"filename": str(entry)},
                 display_name=entry.name,
                 resource_object=resource_object,
                 warnings=warnings,
