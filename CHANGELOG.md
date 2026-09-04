@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-04
+
+### Breaking
+
+- **The list resource `pyvider_directory_entry` is now `pyvider_file_content`.** A configuration naming the old type stops resolving and must be renamed.
+
+  It could never have worked under the old name. Terraform resolves a list resource's results against the managed resource type of the *same name*, and refuses to list at all when there is none: `resourceSchema, ok := schema.ResourceTypes[r.TypeName]; if !ok || resourceSchema.Identity == nil` (`internal/plugin6/grpc_provider.go:1341-1345`). No managed `pyvider_directory_entry` exists, so `terraform query` answered "Identity schema not found for resource type pyvider_directory_entry; this is a bug in the provider" and nothing else. Publishing an identity schema under the list resource's own name does not satisfy it either -- `ResourceTypes` is built from `resource_schemas` merged with the identity schemas by name.
+
+  A list resource is another way to find instances of a managed resource, not a type of its own, so it takes that resource's name. The listed values are the managed resource's own attributes now -- `filename`, `content`, `exists` and `content_hash` -- rather than a shape peculiar to listing.
+
+### Added
+
+- **`pyvider_file_content` declares an identity schema.** `filename` identifies a file, and Terraform requires the managed resource to carry one before it will list it. This is the other half of the rename: the name alone is not enough.
+
+### Fixed
+
+- **Three examples never stopped planning changes.** `pyvider_private_state_verifier` and `pyvider_provider_config_reader` each built a `pyvider_file_content` body containing `timestamp()`, which is re-evaluated on every plan, so the resource never matched the state it had just written -- `apply` succeeded and the next plan reported "0 to add, 1 to change, 0 to destroy", for ever. `pyvider_http_api` did the same and additionally stamped one into a data source header, re-reading the source every plan too. An example that is permanently about to change teaches the reader to write one, so the calls are gone.
+
+  Nothing had noticed because nothing re-planned: `soup stir` gained its convergence check after 0.6.1 and only released it in 0.7.0.
+
+- **Two examples say they cannot converge, because they cannot.** `pyvider_http_api` records how long each live call to httpbin.org took, and a measured duration differs on every read. `pyvider_env_variables` reports the environment the provider was launched with, and Terraform gives every launch its own -- `PLUGIN_CLIENT_CERT` is the automatic-mTLS certificate go-plugin mints per run, with `PLUGIN_MIN_PORT`, `PLUGIN_MAX_PORT` and `TF_PLUGIN_MAGIC_COOKIE` alongside it. Both declare `converges = false`, which is a true reading rather than a value invented during apply.
+
+- **The state-store examples say they need a build with experiments enabled.** They carry the `-enable-pluggable-state-storage-experiment` flag, and Terraform compiles experiments into alpha and dev builds only: a stable release refuses the flag rather than ignoring it, so the example failed at `init` with a report reading "No specific error messages found in log. The failure may have been a crash." `experiments = true` states the requirement and `soup stir` 0.7.0 skips with the reason.
+
+- **The list-resource examples name the command that reads them.** Both said to run `tofu query`. OpenTofu has no query command at any version, so the instruction could not be followed; `terraform query` is the one that reads `*.tfquery.hcl`, and it arrived in Terraform 1.14.
+
 ### Changed
 
 - **Runtime floors now name the versions this package is actually tested against**: `pyvider>=0.6.2` (was `>=0.5.2`), `pyvider-cty>=0.5.3` (was `>=0.5.0`), `pyvider-rpcplugin>=0.4.2` (was `>=0.4.0`), `plating>=0.6.1` (was `>=0.5.0`) and `provide-foundation>=0.4.3` (was `>=0.4.0`). Every one of them sat below what the lock resolves, so the published metadata described a combination nothing here had ever run. Verified at the declared minimums with `uv lock --resolution lowest-direct`.
