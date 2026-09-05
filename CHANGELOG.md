@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-09-05
+
+### Fixed
+
+- **`pyvider_local_directory` no longer reports a `permissions` value Windows cannot observe.** `read` derived it from `st_mode & 0o777`. Windows has no POSIX mode bits: CPython synthesises `st_mode` from the file attributes, and `attributes_to_mode` returns `_S_IFDIR | 0o111 | 0o666` for any writable directory, so that expression is 0o777 there whatever was chmod'ed.
+
+  Every refresh reported 0o777, Terraform planned a change back to the configured value, and the refresh after that reported 0o777 again:
+
+  ```
+  ~ permissions = "0o777" -> "0o755"     (x13)
+  ~ permissions = "0o777" -> "0o700"     (secure_dir)
+  Plan: 0 to add, 14 to change, 0 to destroy.
+  ```
+
+  Where the mode is not observable the prior value stands, because nothing on disk contradicts it. `path` already carried that rule for the same reason.
+
+  The conformance suite's `local_directory` example applied cleanly on windows_amd64 and then failed its post-apply convergence plan, on both engines, on every run the suite has made. The `file_info` data source reads the mode the same way and is left alone: it is re-read on every plan and round-trips through no state, so it has no drift to cause.
+
 ## [0.7.1] - 2026-09-05
 
 ### Changed
