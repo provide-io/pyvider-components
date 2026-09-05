@@ -7,6 +7,7 @@
 
 """Local directory resource for managing directory creation and cleanup."""
 
+import sys
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, cast
 
@@ -23,6 +24,14 @@ from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_num, a_str, a_unknown, s_resource
+
+#: Whether this platform stores POSIX mode bits a `stat` can read back.
+#:
+#: Windows does not. CPython synthesises `st_mode` from the file attributes --
+#: a writable directory is always `_S_IFDIR | 0o111 | 0o666` -- so
+#: `st_mode & 0o777` is 0o777 whatever was chmod'ed. Reading `permissions` off
+#: it there reports an observation the platform cannot make.
+MODE_BITS_OBSERVABLE = sys.platform != "win32"
 
 
 @define(frozen=True)
@@ -170,7 +179,14 @@ class LocalDirectoryResource(
         if not path.is_dir():
             logger.debug("Path is not a directory or doesn't exist", path=str(path))
             return None
-        current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
+        # Where the mode is not observable the prior value stands: nothing on
+        # disk contradicts it, and synthesising 0o777 instead makes Terraform
+        # plan a change back to the configured value on every refresh, which
+        # the next refresh undoes again.
+        if MODE_BITS_OBSERVABLE:
+            current_permissions = "0o" + oct(path.stat().st_mode & 0o777)[2:]
+        else:
+            current_permissions = ctx.state.permissions
         file_count = _count_files(path)
         logger.debug(
             "Read directory state",
