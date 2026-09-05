@@ -122,11 +122,17 @@ async def test_wait_validate_hook_handles_a_missing_config() -> None:
     assert await WaitForFileAction().validate(None) == ["path is required"]
 
 
-# --- wait_for_file: planning defers on a real prerequisite ------------------
+# --- wait_for_file: planning warns about an absent prerequisite -------------
 
 
 @pytest.mark.asyncio
-async def test_wait_plan_defers_when_the_file_is_absent(tmp_path: Path) -> None:
+async def test_wait_plan_warns_but_does_not_defer_when_the_file_is_absent(tmp_path: Path) -> None:
+    """Waiting is the action's job, so an absent file is not planned around.
+
+    Terraform accepts an action deferral only for an unknown provider
+    configuration (internal/plugin6/grpc_provider.go:1940-1957), so deferring
+    here would be refused -- and untrue. `invoke` polls for the file instead.
+    """
     request = pb.PlanAction.Request(
         action_type=WAIT_ACTION, config=wait_config(path=str(tmp_path / "not-there.txt"))
     )
@@ -134,8 +140,10 @@ async def test_wait_plan_defers_when_the_file_is_absent(tmp_path: Path) -> None:
 
     response = await PlanActionHandler(request, context=None)
 
-    assert response.HasField("deferred")
-    assert response.deferred.reason == pb.Deferred.ABSENT_PREREQ
+    assert not response.HasField("deferred")
+    assert not errors(response.diagnostics), errors(response.diagnostics)
+    assert [d.severity for d in response.diagnostics] == [pb.Diagnostic.WARNING]
+    assert "not-there.txt" in response.diagnostics[0].summary
 
 
 @pytest.mark.asyncio

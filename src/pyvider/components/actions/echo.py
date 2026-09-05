@@ -88,9 +88,11 @@ class EchoAction(BaseAction[EchoConfig]):
 
     async def plan(self, ctx: ActionContext[EchoConfig]) -> ActionPlan:
         if ctx.config is not None and ctx.config.defer:
-            # ABSENT_PREREQ is the honest reason: the caller is telling us a
-            # prerequisite is not ready yet.
-            return ActionPlan(defer=DeferralReason.ABSENT_PREREQ)
+            # The only reason Terraform accepts from PlanAction: "An action can
+            # only be deferred due to an unknown provider configuration"
+            # (internal/plugin6/grpc_provider.go:1951-1957). Every other reason
+            # is an error there, so this knob would exercise nothing.
+            return ActionPlan(defer=DeferralReason.PROVIDER_CONFIG_UNKNOWN)
 
         path = ctx.config.path if ctx.config else "?"
         return ActionPlan(warnings=(f"This will append to {path}.",))
