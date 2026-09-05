@@ -3,16 +3,17 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-"""An action that waits for a file, demonstrating deferral and long-running work.
+"""An action that waits for a file, demonstrating long-running work.
 
-Where ``pyvider_echo`` shows the ordinary path, this one covers the two shapes
-an action can take that are easy to get wrong:
+Where ``pyvider_echo`` shows the ordinary path, this one covers the shape that
+is easy to get wrong: **genuinely long work**. Progress events are emitted while
+polling, so the practitioner sees movement instead of a silent stall.
 
-* **Deferral.** If the file is not there yet, planning returns
-  ``ABSENT_PREREQ`` rather than failing. That is exactly what a deferral is
-  for: the operation is not wrong, it is not answerable yet.
-* **Genuinely long work.** Progress events are emitted while polling, so the
-  practitioner sees movement instead of a silent stall.
+A missing file is reported at plan time as a warning and waited for in
+``invoke``. It is deliberately not a deferral: Terraform accepts an action
+deferral only for an unknown provider configuration, so a prerequisite that has
+not appeared yet has no deferral to express. ``pyvider_echo`` carries the
+deferral demonstration instead.
 
 Safe to run locally: it only reads, and gives up after its own timeout.
 """
@@ -31,7 +32,6 @@ from pyvider.actions import (
     ActionPlan,
     ActionProgress,
     BaseAction,
-    DeferralReason,
     register_action,
 )
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
@@ -73,11 +73,14 @@ class WaitForFileAction(BaseAction[WaitForFileConfig]):
         assert ctx.config is not None
         target = Path(str(ctx.config.path)).expanduser()
 
+        # An absent file is not planned around. Terraform accepts exactly one
+        # reason for deferring an action -- "the provider must be able to accept
+        # unknown configuration" (internal/plugin6/grpc_provider.go:1940-1957) --
+        # and a missing file is not that, so saying so would be both refused and
+        # untrue. Waiting is what this action is for, and `invoke` does it:
+        # polling until the file appears or `timeout_seconds` elapses.
         if not target.exists():
-            # Not an error: the file may well be created by something else in
-            # this same run. Deferring says "ask me again", which is the honest
-            # answer and the reason the protocol has deferrals at all.
-            return ActionPlan(defer=DeferralReason.ABSENT_PREREQ)
+            return ActionPlan(warnings=(f"{target} does not exist yet; the action will wait for it.",))
 
         return ActionPlan()
 

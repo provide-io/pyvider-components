@@ -143,7 +143,10 @@ async def test_action_defers_only_when_the_client_allows_it(tmp_path: Path) -> N
     refused = await PlanActionHandler(pb.PlanAction.Request(action_type=ACTION, config=config), context=None)
 
     assert deferred.HasField("deferred")
-    assert deferred.deferred.reason == pb.Deferred.ABSENT_PREREQ
+    # The only reason Terraform accepts from PlanAction; every other one is an
+    # error at internal/plugin6/grpc_provider.go:1951-1957.
+    assert deferred.deferred.reason == pb.Deferred.PROVIDER_CONFIG_UNKNOWN
+    assert not errors(deferred.diagnostics), errors(deferred.diagnostics)
     assert not refused.HasField("deferred")
     assert "does not allow deferrals" in errors(refused.diagnostics)[0]
 
