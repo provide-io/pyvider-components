@@ -2335,7 +2335,7 @@ wheels = [
 
 [[package]]
 name = "provide-foundation"
-version = "0.4.3"
+version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -2343,9 +2343,9 @@ dependencies = [
     { name = "tomli-w" },
     { name = "tzdata", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/32/71/28beb60f9968d6c079c2d469ab6db5833fd5a3f00b70618d3f70a7bd7d72/provide_foundation-0.4.3.tar.gz", hash = "sha256:bb534fceaa2676f6d8ad1cb40a705c58c16e5ab6a5ce077144ddd992688697da", size = 421093, upload-time = "2026-08-27T07:22:14.027Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/5b/fc2e129f870d2778d149cbc4f30089f0da9edba679d2ec5fed23c41eb1b3/provide_foundation-0.4.4.tar.gz", hash = "sha256:f870ebd6485878d12db0361de7ac55c528b4d134098d6b2e230943a8bb0eba99", size = 421757, upload-time = "2026-09-05T17:46:07.645Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/be/bb/3634bef841f8cd8b43b9081fdb342b535a0b30e827f08b4061d083cd577c/provide_foundation-0.4.3-py3-none-any.whl", hash = "sha256:1ecf21251a1b219affb1feb2606f1302af571c684bc92d0c59db5f1017b45261", size = 618335, upload-time = "2026-08-27T07:22:11.902Z" },
+    { url = "https://files.pythonhosted.org/packages/7b/56/b409d346ab1ca51907dca54f05b86985fd0f8f4873433d61115f9cf01ba0/provide_foundation-0.4.4-py3-none-any.whl", hash = "sha256:fe6c48f9d8939676dd43b30c9c48ab409dcdc587c8bb2a0f8f0f1d5254f0a9b9", size = 618722, upload-time = "2026-09-05T17:46:05.93Z" },
 ]
 
 [package.optional-dependencies]
@@ -2881,16 +2881,16 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jq", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'", specifier = ">=1.9.1" },
     { name = "plating", specifier = ">=0.6.1" },
-    { name = "provide-foundation", specifier = ">=0.4.3" },
+    { name = "provide-foundation", specifier = ">=0.4.4" },
     { name = "pyvider", specifier = ">=0.7.0" },
-    { name = "pyvider-cty", specifier = ">=0.5.3" },
-    { name = "pyvider-rpcplugin", specifier = ">=0.4.2" },
+    { name = "pyvider-cty", specifier = ">=0.6.0" },
+    { name = "pyvider-rpcplugin", specifier = ">=0.5.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "provide-testkit", extras = ["standard", "advanced-testing", "build", "profiling"], specifier = ">=0.4.5" },
-    { name = "pyvider-rpcplugin", extras = ["test"], specifier = ">=0.4.2" },
+    { name = "pyvider-rpcplugin", extras = ["test"], specifier = ">=0.5.0" },
 ]
 
 [[package]]

@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- **`pyvider_wait_for_file` no longer defers.** An absent file is reported at plan time as a warning and waited for in `invoke`, which polls until the file appears or `timeout_seconds` elapses.
+
+  Terraform accepts exactly one reason for deferring an action -- "We only allow deferral from the provider as a whole. The provider must be able to accept unknown configuration" (`internal/plugin6/grpc_provider.go:1940-1957`) -- and a missing file is not that. The previous `ABSENT_PREREQ` was refused there, and the error branch does not return, so the run both recorded a deferral and failed on the diagnostic. Saying `PROVIDER_CONFIG_UNKNOWN` instead would have been accepted and untrue.
+
+- **`pyvider_echo`'s `defer` knob reports `PROVIDER_CONFIG_UNKNOWN`.** It exists to exercise the mechanism, so it uses the one reason the mechanism accepts. With any other, the knob demonstrated an error rather than a deferral.
+
+### Fixed
+
+- **A `pyvider_wait_for_file` plan with no configuration says what is missing.** `plan` asserted on the decoded config; an empty `PlanAction` request decodes to `None`, and the handler turns anything raised into an ERROR carrying the exception's message -- empty, for an assert. It now reports `path is required`, as `validate` already did.
+
+### Dependencies
+
+- Floors for `pyvider-cty` (0.6.0), `pyvider-rpcplugin` (0.5.0) and `provide-foundation` (0.4.4) now match what the lock resolves. They were left below it while the lock moved, which is the state 0.7.0 set out to end.
+
 ## [0.7.0] - 2026-09-04
 
 ### Breaking
