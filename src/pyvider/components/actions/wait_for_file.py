@@ -70,7 +70,12 @@ class WaitForFileAction(BaseAction[WaitForFileConfig]):
         return errors
 
     async def plan(self, ctx: ActionContext[WaitForFileConfig]) -> ActionPlan:
-        assert ctx.config is not None
+        # An empty config decodes to None, and the handler turns anything raised
+        # here into an ERROR carrying the exception's message -- empty, for an
+        # assert. Naming the missing attribute is what `validate` already does.
+        if ctx.config is None or not ctx.config.path:
+            raise ValueError("path is required")
+
         target = Path(str(ctx.config.path)).expanduser()
 
         # An absent file is not planned around. Terraform accepts exactly one

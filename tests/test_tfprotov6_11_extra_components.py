@@ -5,10 +5,14 @@
 
 """The second pair of v6.11 demo components.
 
-``pyvider_wait_for_file`` covers deferral driven by a real prerequisite and
-work that genuinely takes time. ``pyvider_file_content`` covers a list
-resource that declares its own identity schema and attaches per-result
-warnings — neither of which the in-memory note components exercise.
+``pyvider_wait_for_file`` covers work that genuinely takes time, and a plan
+that reports an absent prerequisite without deferring over it -- Terraform
+accepts an action deferral only for an unknown provider configuration, so
+``pyvider_echo`` carries the deferral coverage instead.
+
+``pyvider_file_content`` covers a list resource that declares its own identity
+schema and attaches per-result warnings — neither of which the in-memory note
+components exercise.
 """
 
 from __future__ import annotations
@@ -120,6 +124,21 @@ async def test_wait_validate_reports_every_problem_at_once() -> None:
 @pytest.mark.asyncio
 async def test_wait_validate_hook_handles_a_missing_config() -> None:
     assert await WaitForFileAction().validate(None) == ["path is required"]
+
+
+@pytest.mark.asyncio
+async def test_wait_plan_reports_a_missing_config_instead_of_asserting() -> None:
+    """A config-less PlanAction must say what is wrong.
+
+    `decode_config` returns None for an empty config, and the handler catches
+    every exception, so an `assert` here surfaces as an ERROR whose detail is
+    the assertion's empty message -- a diagnostic that names no cause. The
+    sibling `pyvider_echo` plans the same request cleanly.
+    """
+    response = await PlanActionHandler(pb.PlanAction.Request(action_type=WAIT_ACTION), context=None)
+
+    details = [d.detail for d in response.diagnostics if d.severity == pb.Diagnostic.ERROR]
+    assert details == ["path is required"]
 
 
 # --- wait_for_file: planning warns about an absent prerequisite -------------
