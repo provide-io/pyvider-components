@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-09-05
+
 ### Changed
 
 - **`pyvider_wait_for_file` no longer defers.** An absent file is reported at plan time as a warning and waited for in `invoke`, which polls until the file appears or `timeout_seconds` elapses.
