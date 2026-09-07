@@ -31,6 +31,7 @@ from typing import Any
 import pytest
 
 from pyvider.components.resources.local_directory import (
+    MODE_BITS_OBSERVABLE,
     LocalDirectoryResource,
     LocalDirectoryState,
 )
@@ -64,9 +65,18 @@ async def test_read_keeps_prior_permissions_where_mode_bits_are_not_observable(
     assert result.permissions == "0o700"
 
 
+@pytest.mark.skipif(
+    not MODE_BITS_OBSERVABLE,
+    reason="chmod sets no observable mode bits here, so there is no drift to report",
+)
 @pytest.mark.asyncio
 async def test_read_reports_the_real_mode_where_it_is_observable(tmp_path: Path) -> None:
-    """On POSIX a chmod behind Terraform's back is real drift and must be reported."""
+    """On POSIX a chmod behind Terraform's back is real drift and must be reported.
+
+    Guarded by the flag the resource itself reads: where mode bits are not
+    observable the `chmod` above changes nothing, so this asserts an
+    observation the platform cannot make.
+    """
     directory = tmp_path / "secure"
     directory.mkdir()
     directory.chmod(0o700)
