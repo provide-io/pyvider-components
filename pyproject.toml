@@ -32,7 +32,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "provide-foundation>=0.4.4",
+    "provide-foundation>=0.4.10",
     "pyvider-rpcplugin>=0.5.0",
     "httpx>=0.28.1",
     "jq>=1.9.1; sys_platform != 'win32' or platform_machine != 'ARM64'",
@@ -144,7 +144,7 @@ provides_content = true
 
 [dependency-groups]
 dev = [
-    "provide-testkit[standard,advanced-testing,build,profiling]>=0.4.5",
+    "provide-testkit[standard,advanced-testing,build,profiling]>=0.5.1",
     "pyvider-rpcplugin[test]>=0.5.0",
 ]
 

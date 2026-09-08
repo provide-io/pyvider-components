@@ -2335,7 +2335,7 @@ wheels = [
 
 [[package]]
 name = "provide-foundation"
-version = "0.4.4"
+version = "0.4.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -2343,9 +2343,9 @@ dependencies = [
     { name = "tomli-w" },
     { name = "tzdata", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/5b/fc2e129f870d2778d149cbc4f30089f0da9edba679d2ec5fed23c41eb1b3/provide_foundation-0.4.4.tar.gz", hash = "sha256:f870ebd6485878d12db0361de7ac55c528b4d134098d6b2e230943a8bb0eba99", size = 421757, upload-time = "2026-09-05T17:46:07.645Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/67/e3/6968621dc33735f8884d9717fc135e4300aa44ba9c06ad9661ff2d9c0971/provide_foundation-0.4.10.tar.gz", hash = "sha256:41641ce5218b6114c9e9f26323ffb30e2e261100ae304222dfdab51a175d977b", size = 425426, upload-time = "2026-09-08T04:18:29.108Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7b/56/b409d346ab1ca51907dca54f05b86985fd0f8f4873433d61115f9cf01ba0/provide_foundation-0.4.4-py3-none-any.whl", hash = "sha256:fe6c48f9d8939676dd43b30c9c48ab409dcdc587c8bb2a0f8f0f1d5254f0a9b9", size = 618722, upload-time = "2026-09-05T17:46:05.93Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/af/2fb25b64b9d63b99204dd0654dadbc9cbd859af3163d0bcb54b962f9b223/provide_foundation-0.4.10-py3-none-any.whl", hash = "sha256:166114924e7c1b6aa0c0ede3692a1b91fa0e03366c47bd82ac543986effaa6af", size = 622327, upload-time = "2026-09-08T04:18:27.104Z" },
 ]
 
 [package.optional-dependencies]
@@ -2365,7 +2365,7 @@ all = [
 
 [[package]]
 name = "provide-testkit"
-version = "0.4.5"
+version = "0.5.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -2378,9 +2378,9 @@ dependencies = [
     { name = "pytest-mock" },
     { name = "pytest-xdist" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7e/04/e985af2eb6d764b99ff5710c4ceb7a24faab38f3837fff8a00c931193590/provide_testkit-0.4.5.tar.gz", hash = "sha256:f111df569068feb5d67c336118e2355d1343f8a1d2bc707fe779dcb3f3f82643", size = 136646, upload-time = "2026-08-31T06:22:02.637Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ab/4d/fa5cabfec8a078b326bc99bf1fd7d679ca37d9d521dc7357a6be1a730263/provide_testkit-0.5.1.tar.gz", hash = "sha256:d7f2d21234876e871da0c5502c3dc034c6071759b0f589ffc269ae21d7e380b0", size = 139162, upload-time = "2026-09-07T23:34:30.124Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/29/8b/c694725261062f727b233aade82cfd73923f8479415737bf517e7f9c8c0b/provide_testkit-0.4.5-py3-none-any.whl", hash = "sha256:7b2ebeb5544639e6f697f7af76ce3b5244f766a7a941b6502af4d2998e765959", size = 183673, upload-time = "2026-08-31T06:22:01.229Z" },
+    { url = "https://files.pythonhosted.org/packages/87/03/0ff9fb550b177d593b04c1a06851f38327fe255fbc35ead751d7772e0acf/provide_testkit-0.5.1-py3-none-any.whl", hash = "sha256:efe4b0c95e031d5801f97959b90809108d827fcc382f207ec77f1bf7332e4a10", size = 185248, upload-time = "2026-09-07T23:34:28.48Z" },
 ]
 
 [package.optional-dependencies]
@@ -2881,7 +2881,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "jq", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'", specifier = ">=1.9.1" },
     { name = "plating", specifier = ">=0.6.1" },
-    { name = "provide-foundation", specifier = ">=0.4.4" },
+    { name = "provide-foundation", specifier = ">=0.4.10" },
     { name = "pyvider", specifier = ">=0.7.0" },
     { name = "pyvider-cty", specifier = ">=0.6.0" },
     { name = "pyvider-rpcplugin", specifier = ">=0.5.0" },
@@ -2889,7 +2889,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "provide-testkit", extras = ["standard", "advanced-testing", "build", "profiling"], specifier = ">=0.4.5" },
+    { name = "provide-testkit", extras = ["standard", "advanced-testing", "build", "profiling"], specifier = ">=0.5.1" },
     { name = "pyvider-rpcplugin", extras = ["test"], specifier = ">=0.5.0" },
 ]
 
