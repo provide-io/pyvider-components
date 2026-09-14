@@ -32,6 +32,8 @@ from pathlib import Path
 
 from attrs import define
 
+from pyvider.components.lint_rules import ALL, INCLUDE_HIDDEN_FILES, SECURITY
+from pyvider.lint import LintContext, LintFinding
 from pyvider.list_resources import (
     BaseListResource,
     ListResourceContext,
@@ -62,6 +64,26 @@ class FileContentList(BaseListResource[DirectoryEntriesConfig]):
                 "suffix": a_str(description="Only return files ending with this."),
                 "include_hidden": a_bool(description="Include dotfiles. Defaults to false."),
             }
+        )
+
+    async def lint(self, ctx: LintContext[DirectoryEntriesConfig]) -> tuple[LintFinding, ...]:
+        """Warn when a listing explicitly includes hidden files."""
+        if not ctx.enabled(INCLUDE_HIDDEN_FILES, ALL, SECURITY):
+            return ()
+        if getattr(ctx.config, "include_hidden", None) is not True:
+            return ()
+        return (
+            LintFinding(
+                rule=INCLUDE_HIDDEN_FILES,
+                groups=(ALL, SECURITY),  # type: ignore[arg-type]  # attrs converter typing
+                summary="File listing includes hidden files",
+                detail=(
+                    "Including hidden files may be intentional for configuration discovery, "
+                    "but it can expose secrets or metadata. Set include_hidden to false for "
+                    "safer listings. Suppress with !provide-io/pyvider:include-hidden-files."
+                ),
+                attribute_path="include_hidden",
+            ),
         )
 
     async def validate(self, config: DirectoryEntriesConfig | None) -> list[str]:
