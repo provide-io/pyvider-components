@@ -13,12 +13,14 @@ from collections.abc import Sequence
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MKDOCS = ROOT / "mkdocs.yml"
 
 
 def generate_component_docs(output_dir: Path) -> None:
     """Generate default and provider docs while preserving authored navigation."""
-    original_mkdocs = MKDOCS.read_bytes()
+    output_dir = output_dir.resolve()
+    navigation_target = output_dir.parent / "mkdocs.yml"
+    navigation_existed = navigation_target.exists()
+    original_navigation = navigation_target.read_bytes() if navigation_existed else None
     output_dir.mkdir(parents=True, exist_ok=True)
 
     try:
@@ -36,7 +38,11 @@ def generate_component_docs(output_dir: Path) -> None:
             check=True,
         )
     finally:
-        MKDOCS.write_bytes(original_mkdocs)
+        if navigation_existed:
+            assert original_navigation is not None
+            navigation_target.write_bytes(original_navigation)
+        else:
+            navigation_target.unlink(missing_ok=True)
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:

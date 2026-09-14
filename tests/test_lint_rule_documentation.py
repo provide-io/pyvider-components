@@ -197,6 +197,7 @@ def test_component_doc_generation_workflow_is_documented() -> None:
         "python scripts/generate-component-docs.py --output-dir docs",
         "python scripts/generate-component-docs.py",
         "first runs default Plating generation and then runs provider-only generation",
+        "The navigation target is the resolved output directory's sibling `mkdocs.yml`.",
         "When `--output-dir PATH` is omitted, the output is generated in and removed with a temporary directory.",
         "restores `mkdocs.yml` byte-for-byte even if Plating fails",
         "Generated component directories are ignored by Git",

@@ -52,7 +52,7 @@ Use the supported wrapper to regenerate the published component pages in place:
 python scripts/generate-component-docs.py --output-dir docs
 ```
 
-The wrapper first runs default Plating generation and then runs provider-only generation, which is required because the default selection does not render the provider page. It snapshots the authored documentation configuration and restores `mkdocs.yml` byte-for-byte even if Plating fails. Generated component directories are ignored by Git, so an in-place run does not add generated pages to repository provenance.
+The wrapper first runs default Plating generation and then runs provider-only generation, which is required because the default selection does not render the provider page. The navigation target is the resolved output directory's sibling `mkdocs.yml`. The wrapper snapshots the authored documentation configuration and restores `mkdocs.yml` byte-for-byte even if Plating fails; when the target did not exist before generation, it removes the generated file instead. Generated component directories are ignored by Git, so an in-place run does not add generated pages to repository provenance.
 
 For verification without retaining rendered pages, omit the option:
 

@@ -51,6 +51,8 @@ def test_generator_writes_all_rule_docs_without_changing_authored_navigation(tmp
     """The retained-output workflow covers default and provider-only Plating modes."""
     output_dir = tmp_path / "component-docs"
     original_mkdocs = MKDOCS.read_bytes()
+    navigation_target = output_dir.parent / "mkdocs.yml"
+    navigation_target.write_bytes(original_mkdocs)
 
     result = subprocess.run(
         [sys.executable, str(GENERATOR), "--output-dir", str(output_dir)],
@@ -73,8 +75,9 @@ def test_generator_writes_all_rule_docs_without_changing_authored_navigation(tmp
         )
     assert not missing, "Missing generated lint documentation:\n" + "\n".join(missing)
 
-    parsed_mkdocs = yaml.safe_load(MKDOCS.read_text(encoding="utf-8"))
+    parsed_mkdocs = yaml.safe_load(navigation_target.read_text(encoding="utf-8"))
     assert _contains_provider_linting_guide(parsed_mkdocs["nav"])
+    assert navigation_target.read_bytes() == original_mkdocs
     assert MKDOCS.read_bytes() == original_mkdocs
 
 
@@ -97,6 +100,23 @@ def test_generator_uses_disposable_output_when_directory_is_omitted(tmp_path: Pa
     assert MKDOCS.read_bytes() == original_mkdocs
 
 
+def test_generator_removes_generated_navigation_when_sibling_was_absent(tmp_path: Path) -> None:
+    """Retained docs do not imply retaining a Plating-created navigation file."""
+    output_dir = tmp_path / "component-docs"
+    navigation_target = output_dir.parent / "mkdocs.yml"
+
+    result = subprocess.run(
+        [sys.executable, str(GENERATOR), "--output-dir", str(output_dir)],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert not navigation_target.exists()
+
+
 def test_generator_help_defines_the_output_directory_interface() -> None:
     """The CLI advertises the retained-output option and disposable default."""
     result = subprocess.run(
@@ -113,20 +133,27 @@ def test_generator_help_defines_the_output_directory_interface() -> None:
     assert "omit to generate in a disposable temporary directory" in help_text
 
 
-def test_generator_restores_authored_navigation_when_plating_fails(tmp_path: Path, monkeypatch) -> None:
-    """A failed Plating subprocess cannot leave generated navigation behind."""
+@pytest.mark.parametrize("navigation_existed", [True, False], ids=["present", "absent"])
+def test_generator_restores_navigation_state_when_plating_fails(
+    tmp_path: Path, monkeypatch, navigation_existed: bool
+) -> None:
+    """A failed Plating subprocess cannot alter the sibling navigation state."""
     generator = _load_generator_module()
-    original_mkdocs = MKDOCS.read_bytes()
+    output_dir = tmp_path / "component-docs"
+    navigation_target = output_dir.parent / "mkdocs.yml"
+    original_navigation = b"nav:\n  - Guides:\n      - Provider Linting: guides/provider-linting.md\n"
+    if navigation_existed:
+        navigation_target.write_bytes(original_navigation)
 
     def fail_after_rewriting_navigation(command, **kwargs):
-        MKDOCS.write_text("nav:\n  - generated.md\n", encoding="utf-8")
+        navigation_target.write_text("nav:\n  - generated.md\n", encoding="utf-8")
         raise subprocess.CalledProcessError(returncode=1, cmd=command)
 
     monkeypatch.setattr(generator.subprocess, "run", fail_after_rewriting_navigation)
 
-    try:
-        with pytest.raises(subprocess.CalledProcessError):
-            generator.generate_component_docs(tmp_path / "docs")
-        assert MKDOCS.read_bytes() == original_mkdocs
-    finally:
-        MKDOCS.write_bytes(original_mkdocs)
+    with pytest.raises(subprocess.CalledProcessError):
+        generator.generate_component_docs(output_dir)
+    if navigation_existed:
+        assert navigation_target.read_bytes() == original_navigation
+    else:
+        assert not navigation_target.exists()
