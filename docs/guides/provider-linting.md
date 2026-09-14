@@ -60,6 +60,12 @@ For verification without retaining rendered pages, omit the option:
 python scripts/generate-component-docs.py
 ```
 
+Build the complete documentation site from the locked, isolated documentation dependency group:
+
+```shell
+uv run --frozen --isolated --only-group docs mkdocs build --strict
+```
+
 When `--output-dir PATH` is omitted, the output is generated in and removed with a temporary directory.
 
 ## Rule catalog

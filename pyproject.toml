@@ -147,6 +147,9 @@ dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]>=0.5.1",
     "pyvider-rpcplugin[test]>=0.5.0",
 ]
+docs = [
+    "provide-testkit[docs]>=0.5.1",
+]
 
 [tool.coverage.run]
 source = ["pyvider.components"]

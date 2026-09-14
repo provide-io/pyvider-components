@@ -11,7 +11,7 @@ dev_addr: 127.0.0.1:11008
 docs_dir: docs
 theme:
   logo: assets/logo.svg
-  favicon: assets/favicon.ico
+  favicon: assets/logo.svg
   palette:
   - media: '(prefers-color-scheme: light)'
     scheme: default
