@@ -148,6 +148,7 @@ dev = [
     "pyvider-rpcplugin[test]>=0.5.0",
 ]
 docs = [
+    "provide-foundry>=0.0.1",
     "provide-testkit[docs]>=0.5.1",
 ]
 
