@@ -167,7 +167,7 @@ locals {
 `provide-io/pyvider:insecure-http` belongs to `provide-io/pyvider:all` and
 `provide-io/pyvider:security`.
 
-- **Trigger:** lowercase `url` starts with `http://`.
+- **Trigger:** `url`, compared case-insensitively, starts with `http://`.
 - **Remediation:** Use an `https://` URL.
 - **Suppress this rule:**
 

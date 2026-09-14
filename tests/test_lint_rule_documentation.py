@@ -1,5 +1,6 @@
 """Contract tests for first-party lint rule documentation."""
 
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -9,6 +10,14 @@ from pyvider.components import lint_rules
 
 ROOT = Path(__file__).resolve().parents[1]
 GUIDE = ROOT / "docs/guides/provider-linting.md"
+
+GENERATED_DOC_DIRECTORIES = (
+    "actions",
+    "ephemeral-resources",
+    "list-resources",
+    "providers",
+    "state-stores",
+)
 
 
 @dataclass(frozen=True)
@@ -36,7 +45,7 @@ RULE_DOCUMENTATION = {
     ),
     lint_rules.INSECURE_HTTP: RuleDocumentation(
         template=("src/pyvider/components/data_sources/http_api.plating/docs/pyvider_http_api.tmpl.md"),
-        trigger="lowercase `url` starts with `http://`",
+        trigger="`url`, compared case-insensitively, starts with `http://`",
         groups=(lint_rules.ALL, lint_rules.SECURITY),
         remediation="Use an `https://` URL.",
     ),
@@ -143,7 +152,7 @@ def test_guide_distinguishes_opentofu_and_tofusoup_reachability() -> None:
     guide = GUIDE.read_text(encoding="utf-8")
     expected = (
         "OpenTofu validation reaches the provider, resource, data source, and ephemeral resource paths.",
-        "OpenTofu does not currently expose validation calls for list resources, actions, or state stores.",
+        "OpenTofu core does not currently invoke the validation RPCs for list resources, actions, or state stores.",
         "TofuSoup calls all seven validation RPCs directly against the same packaged provider.",
     )
 
@@ -179,3 +188,30 @@ def test_lint_guide_is_discoverable() -> None:
         missing.append("README link")
 
     assert not missing, f"Provider linting guide missing from: {missing}"
+
+
+def test_component_doc_generation_workflow_is_documented() -> None:
+    """The supported retained and disposable generation interfaces stay explicit."""
+    guide = GUIDE.read_text(encoding="utf-8")
+    expected = (
+        "python scripts/generate-component-docs.py --output-dir docs",
+        "python scripts/generate-component-docs.py",
+        "first runs default Plating generation and then runs provider-only generation",
+        "When `--output-dir PATH` is omitted, the output is generated in and removed with a temporary directory.",
+        "restores `mkdocs.yml` byte-for-byte even if Plating fails",
+        "Generated component directories are ignored by Git",
+    )
+
+    missing = [text for text in expected if text not in guide]
+
+    assert not missing, "Missing generation documentation:\n" + "\n".join(missing)
+
+
+@pytest.mark.parametrize("directory", GENERATED_DOC_DIRECTORIES)
+def test_generated_component_doc_directory_is_ignored(directory: str) -> None:
+    """In-place Plating outputs do not dirty repository provenance."""
+    candidate = f"docs/{directory}/generated.md"
+
+    result = subprocess.run(["git", "check-ignore", "--quiet", candidate], cwd=ROOT, check=False)
+
+    assert result.returncode == 0, f"Generated documentation is not ignored: {candidate}"
