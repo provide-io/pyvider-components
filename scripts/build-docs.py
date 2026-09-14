@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> int:
     """Prepare ignored shared files, then build the authored MkDocs site."""
     try:
-        from provide.foundry.config import extract_base_mkdocs  # type: ignore[import-untyped]
+        from provide.foundry.config import extract_base_mkdocs
     except ModuleNotFoundError:
         print(
             "provide-foundry is unavailable; install the locked docs dependency group",

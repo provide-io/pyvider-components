@@ -3437,7 +3437,7 @@ dev = [
     { name = "pyvider-rpcplugin", extras = ["test"], specifier = ">=0.5.0" },
 ]
 docs = [
-    { name = "provide-foundry", specifier = ">=0.0.1" },
+    { name = "provide-foundry", specifier = ">=0.4.1" },
     { name = "provide-testkit", extras = ["docs"], specifier = ">=0.5.1" },
 ]
 

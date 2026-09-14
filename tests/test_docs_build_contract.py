@@ -12,7 +12,7 @@ from typing import Any
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS_REQUIREMENTS = ["provide-foundry>=0.0.1", "provide-testkit[docs]>=0.5.1"]
+DOCS_REQUIREMENTS = ["provide-foundry>=0.4.1", "provide-testkit[docs]>=0.5.1"]
 STRICT_BUILD_COMMAND = "uv run --frozen --isolated --only-group docs python scripts/build-docs.py"
 
 
@@ -59,7 +59,7 @@ def test_docs_dependencies_are_declared_and_locked() -> None:
         {"name": "provide-testkit", "extra": ["docs"]},
     ]
     assert project_lock["metadata"]["requires-dev"]["docs"] == [
-        {"name": "provide-foundry", "specifier": ">=0.0.1"},
+        {"name": "provide-foundry", "specifier": ">=0.4.1"},
         {"name": "provide-testkit", "extras": ["docs"], "specifier": ">=0.5.1"},
     ]
 
@@ -77,6 +77,13 @@ def test_every_configured_local_theme_asset_exists() -> None:
                 missing.append(f"theme.{key}: {configured}")
 
     assert not missing, "Missing configured theme assets:\n" + "\n".join(missing)
+
+
+def test_logo_records_its_foundry_source_asset() -> None:
+    """The optimized logo identifies the matching official Foundry source."""
+    logo = (ROOT / "docs/assets/logo.svg").read_text(encoding="utf-8")
+
+    assert "provide-foundry's officium-light.svg" in logo
 
 
 def test_strict_docs_build_command_is_documented() -> None:
