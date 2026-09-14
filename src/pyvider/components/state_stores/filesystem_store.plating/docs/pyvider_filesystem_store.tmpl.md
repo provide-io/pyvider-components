@@ -18,3 +18,16 @@ is configured, its own `provider` block is declared inline.
 {{ example("example") }}
 
 {{ schema() }}
+
+## Provider linting
+
+`provide-io/pyvider:relative-state-store-path` belongs to
+`provide-io/pyvider:all` and `provide-io/pyvider:reliability`.
+
+- **Trigger:** `path` is relative after `~` expansion.
+- **Remediation:** Use an absolute `path`.
+- **Suppress this rule:**
+
+    ```shell
+    PYVIDER_LINT='provide-io/pyvider:all,!provide-io/pyvider:relative-state-store-path' tofu validate
+    ```

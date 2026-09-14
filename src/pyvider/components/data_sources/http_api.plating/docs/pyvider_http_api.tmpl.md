@@ -161,3 +161,16 @@ locals {
   service_healthy = data.pyvider_http_api.health_check.status_code == 200
 }
 ```
+
+## Provider linting
+
+`provide-io/pyvider:insecure-http` belongs to `provide-io/pyvider:all` and
+`provide-io/pyvider:security`.
+
+- **Trigger:** lowercase `url` starts with `http://`.
+- **Remediation:** Use an `https://` URL.
+- **Suppress this rule:**
+
+    ```shell
+    PYVIDER_LINT='provide-io/pyvider:all,!provide-io/pyvider:insecure-http' tofu validate
+    ```

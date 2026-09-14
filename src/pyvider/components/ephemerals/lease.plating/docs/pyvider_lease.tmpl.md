@@ -18,3 +18,16 @@ write-only attributes, provider configuration, or other ephemeral values.
 {{ example("example") }}
 
 {{ schema() }}
+
+## Provider linting
+
+`provide-io/pyvider:long-lived-lease` belongs to `provide-io/pyvider:all` and
+`provide-io/pyvider:reliability`.
+
+- **Trigger:** `ttl_seconds` is greater than `3600`.
+- **Remediation:** Set `ttl_seconds` to `3600` or less.
+- **Suppress this rule:**
+
+    ```shell
+    PYVIDER_LINT='provide-io/pyvider:all,!provide-io/pyvider:long-lived-lease' tofu validate
+    ```
