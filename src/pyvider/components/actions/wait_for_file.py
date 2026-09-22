@@ -26,7 +26,6 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 
 from attrs import define
-
 from pyvider.actions import (
     ActionContext,
     ActionPlan,
@@ -34,9 +33,10 @@ from pyvider.actions import (
     BaseAction,
     register_action,
 )
-from pyvider.components.lint_rules import ALL, LONG_ACTION_TIMEOUT, RELIABILITY
 from pyvider.lint import LintContext, LintFinding
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
+
+from pyvider.components.lint_rules import ALL, LONG_ACTION_TIMEOUT, RELIABILITY
 
 DEFAULT_TIMEOUT_SECONDS = 10.0
 POLL_INTERVAL_SECONDS = 0.1
@@ -68,7 +68,7 @@ class WaitForFileAction(BaseAction[WaitForFileConfig]):
         return (
             LintFinding(
                 rule=LONG_ACTION_TIMEOUT,
-                groups=(ALL, RELIABILITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, RELIABILITY),
                 summary="Action timeout exceeds five minutes",
                 detail=(
                     "A timeout longer than five minutes may be intentional for slow "

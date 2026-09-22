@@ -15,8 +15,6 @@ from __future__ import annotations
 from collections.abc import AsyncIterator
 
 from attrs import define
-
-from pyvider.components.resources.secret_note import SecretNoteState, known_notes
 from pyvider.list_resources import (
     BaseListResource,
     ListResourceContext,
@@ -24,6 +22,8 @@ from pyvider.list_resources import (
     register_list_resource,
 )
 from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
+
+from pyvider.components.resources.secret_note import SecretNoteState, known_notes
 
 
 @define(frozen=True)

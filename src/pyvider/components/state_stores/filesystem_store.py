@@ -17,11 +17,11 @@ from pathlib import Path
 from typing import Any
 
 from attrs import define
-
-from pyvider.components.lint_rules import ALL, RELATIVE_STATE_STORE_PATH, RELIABILITY
 from pyvider.lint import LintContext, LintFinding
 from pyvider.schema import PvsSchema, a_str, s_resource
 from pyvider.state_stores import FileSystemStateStore, register_state_store
+
+from pyvider.components.lint_rules import ALL, RELATIVE_STATE_STORE_PATH, RELIABILITY
 
 
 @define(frozen=True)
@@ -51,7 +51,7 @@ class PyviderFileSystemStateStore(FileSystemStateStore):
         return (
             LintFinding(
                 rule=RELATIVE_STATE_STORE_PATH,
-                groups=(ALL, RELIABILITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, RELIABILITY),
                 summary="State store path is relative",
                 detail=(
                     "A relative state store path may be intentional for a self-contained "

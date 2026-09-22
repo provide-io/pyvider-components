@@ -9,7 +9,6 @@
 from typing import Any
 
 from attrs import define
-
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext

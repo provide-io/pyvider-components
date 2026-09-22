@@ -31,8 +31,6 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 
 from attrs import define
-
-from pyvider.components.lint_rules import ALL, INCLUDE_HIDDEN_FILES, SECURITY
 from pyvider.lint import LintContext, LintFinding
 from pyvider.list_resources import (
     BaseListResource,
@@ -41,6 +39,8 @@ from pyvider.list_resources import (
     register_list_resource,
 )
 from pyvider.schema import PvsSchema, a_bool, a_str, s_resource
+
+from pyvider.components.lint_rules import ALL, INCLUDE_HIDDEN_FILES, SECURITY
 
 
 @define(frozen=True)
@@ -75,7 +75,7 @@ class FileContentList(BaseListResource[DirectoryEntriesConfig]):
         return (
             LintFinding(
                 rule=INCLUDE_HIDDEN_FILES,
-                groups=(ALL, SECURITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, SECURITY),
                 summary="File listing includes hidden files",
                 detail=(
                     "Including hidden files may be intentional for configuration discovery, "

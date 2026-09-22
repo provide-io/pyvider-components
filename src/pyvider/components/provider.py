@@ -11,9 +11,10 @@ HTTP data sources, and utility functions."""
 
 from typing import Any
 
-from pyvider.components.lint_rules import ALL, INSECURE_TLS, SECURITY
 from pyvider.lint import LintContext, LintFinding
 from pyvider.providers import BaseProvider, ProviderMetadata, register_provider
+
+from pyvider.components.lint_rules import ALL, INSECURE_TLS, SECURITY
 
 
 @register_provider("pyvider")
@@ -37,7 +38,7 @@ class PyviderProvider(BaseProvider):
         return (
             LintFinding(
                 rule=INSECURE_TLS,
-                groups=(ALL, SECURITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, SECURITY),
                 summary="TLS certificate verification is disabled",
                 detail=(
                     "Skipping TLS certificate verification may be intentional for local "

@@ -28,8 +28,6 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from attrs import define
-
-from pyvider.components.lint_rules import ALL, LONG_LIVED_LEASE, RELIABILITY
 from pyvider.ephemerals import (
     BaseEphemeralResource,
     EphemeralResourceContext,
@@ -38,6 +36,8 @@ from pyvider.ephemerals import (
 from pyvider.lint import LintContext, LintFinding
 from pyvider.resources.private_state import PrivateState
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
+
+from pyvider.components.lint_rules import ALL, LONG_LIVED_LEASE, RELIABILITY
 
 #: Default lease duration. Short enough that a run of any length renews at
 #: least once, which is the half of the contract that otherwise goes untested.
@@ -94,7 +94,7 @@ class LeaseEphemeralResource(BaseEphemeralResource[LeaseResult, LeasePrivateStat
         return (
             LintFinding(
                 rule=LONG_LIVED_LEASE,
-                groups=(ALL, RELIABILITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, RELIABILITY),
                 summary="Lease lifetime exceeds one hour",
                 detail=(
                     "A lease longer than one hour may be intentional for lengthy operations, "

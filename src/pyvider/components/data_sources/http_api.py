@@ -21,14 +21,14 @@ from provide.foundation.transport.errors import (
     TransportConnectionError,
     TransportTimeoutError,
 )
-
-from pyvider.components.lint_rules import ALL, INSECURE_HTTP, SECURITY
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
 from pyvider.lint import LintContext, LintFinding
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_map, a_num, a_str, s_data_source
+
+from pyvider.components.lint_rules import ALL, INSECURE_HTTP, SECURITY
 
 
 @define(frozen=True)
@@ -85,7 +85,7 @@ class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPI
         return (
             LintFinding(
                 rule=INSECURE_HTTP,
-                groups=(ALL, SECURITY),  # type: ignore[arg-type]  # attrs converter typing
+                groups=(ALL, SECURITY),
                 summary="HTTP API uses an unencrypted connection",
                 detail=(
                     "Plain HTTP may be intentional for a local endpoint, but request data can "

@@ -44,6 +44,31 @@ OpenTofu validation reaches the provider, resource, data source, and ephemeral r
 | OpenTofu               | yes      | yes      | yes         | yes       | no   | no     | no          |
 | TofuSoup direct client | yes      | yes      | yes         | yes       | yes  | yes    | yes         |
 
+The rule code is the same in both lanes. What differs is which validation path the client can reach and how the result is carried back:
+
+```mermaid
+flowchart LR
+    select["[lint].rules or PYVIDER_LINT"] --> context["LintContext + selector"]
+    context --> provider["Provider"]
+    context --> resource["Resource"]
+    context --> data["Data source"]
+    context --> ephemeral["Ephemeral resource"]
+    context --> list["List resource"]
+    context --> action["Action"]
+    context --> store["State store"]
+
+    provider --> findings["LintFinding results"]
+    resource --> findings
+    data --> findings
+    ephemeral --> findings
+    list --> findings
+    action --> findings
+    store --> findings
+
+    findings --> soup["TofuSoup direct results"]
+    findings --> diagnostics["Pyvider warning diagnostics"]
+```
+
 ## Regenerate component reference pages
 
 Use the supported wrapper to regenerate the published component pages in place:

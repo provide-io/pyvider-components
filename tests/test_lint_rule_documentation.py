@@ -178,12 +178,15 @@ def test_guide_states_api_and_transport_status() -> None:
 
 
 def test_lint_guide_is_discoverable() -> None:
-    """The guide is linked from both the documentation navigation and README."""
+    """The guide is linked from navigation, the docs landing page, and README."""
     mkdocs = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
+    docs_index = (ROOT / "docs/index.md").read_text(encoding="utf-8")
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     missing = []
     if "- Provider Linting: guides/provider-linting.md" not in mkdocs:
         missing.append("mkdocs navigation")
+    if "[Provider Linting](guides/provider-linting.md)" not in docs_index:
+        missing.append("documentation index")
     if "[Provider linting](docs/guides/provider-linting.md)" not in readme:
         missing.append("README link")
 

@@ -10,7 +10,6 @@
 from typing import Any
 
 from attrs import define, evolve
-
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource

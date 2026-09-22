@@ -22,3 +22,4 @@ Component reference pages are generated from provider schemas and published on t
 
 - [Orientation](guides/orientation.md)
 - [Build Your Own Provider](guides/build-your-own.md)
+- [Provider Linting](guides/provider-linting.md)

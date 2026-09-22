@@ -10,7 +10,6 @@ from decimal import Decimal, InvalidOperation
 from typing import Any
 
 from provide.foundation import logger
-
 from pyvider.cty import CtyNumber, CtyString, convert
 from pyvider.cty.exceptions import CtyError
 from pyvider.exceptions import FunctionError

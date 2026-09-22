@@ -33,12 +33,12 @@ classifiers = [
 ]
 dependencies = [
     "provide-foundation>=0.4.10",
-    "pyvider-rpcplugin>=0.5.0",
+    "pyvider-rpcplugin>=0.5.5",
     "httpx>=0.28.1",
     "jq>=1.9.1; sys_platform != 'win32' or platform_machine != 'ARM64'",
     "jinja2>=3.1.6",
-    "pyvider-cty>=0.6.0",
-    "pyvider>=0.7.0",
+    "pyvider-cty>=0.6.2",
+    "pyvider>=0.8.0",
     "plating>=0.6.1",
 ]
 
@@ -114,6 +114,12 @@ ignore = [
     "PLR2004",  # magic-value-comparison (too noisy)
 ]
 
+[tool.ruff.lint.isort]
+# This distribution contributes ``pyvider.components`` to Pyvider's namespace
+# but deliberately does not own ``pyvider/__init__.py``. Tell Ruff exactly
+# which namespace segment is local so the framework remains a dependency.
+known-first-party = ["pyvider.components"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
@@ -125,6 +131,7 @@ indent-style = "space"
 python_version = "3.11"
 mypy_path = "src"
 strict = true
+explicit_package_bases = true
 pretty = true
 show_error_codes = true
 warn_unused_ignores = true
@@ -145,7 +152,7 @@ provides_content = true
 [dependency-groups]
 dev = [
     "provide-testkit[standard,advanced-testing,build,profiling]>=0.5.1",
-    "pyvider-rpcplugin[test]>=0.5.0",
+    "pyvider-rpcplugin[test]>=0.5.5",
 ]
 docs = [
     "provide-foundry>=0.4.1",
