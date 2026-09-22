@@ -22,7 +22,7 @@ def test_lint_release_requires_the_corrected_public_stack() -> None:
     """Published metadata must not resolve an older or shared-root dependency."""
     project = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
 
-    assert '"pyvider>=0.8.0"' in project
+    assert '"pyvider>=0.8.1"' in project
     assert '"pyvider-cty>=0.6.2"' in project
     assert '"pyvider-rpcplugin>=0.5.5"' in project
 
@@ -65,12 +65,12 @@ def test_lint_rules_are_prepared_as_0_8_0() -> None:
         "disabled by default",
         "PYVIDER_LINT",
         "unknown",
-        "pyvider>=0.8.0",
+        "pyvider>=0.8.1",
         "pyvider-cty>=0.6.2",
         "pyvider-rpcplugin>=0.5.5",
         "all seven",
         "OpenTofu",
-        "uv pip install --force-reinstall 'pyvider>=0.8.0' 'pyvider-components>=0.8.0'",
+        "uv pip install --force-reinstall 'pyvider>=0.8.1' 'pyvider-components>=0.8.0'",
     ):
         assert statement in section
 
