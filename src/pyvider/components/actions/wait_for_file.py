@@ -26,7 +26,6 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 
 from attrs import define
-
 from pyvider.actions import (
     ActionContext,
     ActionPlan,
@@ -34,7 +33,10 @@ from pyvider.actions import (
     BaseAction,
     register_action,
 )
+from pyvider.lint import LintContext, LintFinding
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
+
+from pyvider.components.lint_rules import ALL, LONG_ACTION_TIMEOUT, RELIABILITY
 
 DEFAULT_TIMEOUT_SECONDS = 10.0
 POLL_INTERVAL_SECONDS = 0.1
@@ -51,6 +53,32 @@ class WaitForFileAction(BaseAction[WaitForFileConfig]):
     """Blocks until a path exists, reporting progress while it waits."""
 
     config_class = WaitForFileConfig
+
+    async def lint(self, ctx: LintContext[WaitForFileConfig]) -> tuple[LintFinding, ...]:
+        """Warn when an action may wait for more than five minutes."""
+        if not ctx.enabled(LONG_ACTION_TIMEOUT, ALL, RELIABILITY):
+            return ()
+        timeout_seconds = getattr(ctx.config, "timeout_seconds", None)
+        try:
+            long_timeout = timeout_seconds is not None and timeout_seconds > 300
+        except Exception:
+            return ()
+        if not long_timeout:
+            return ()
+        return (
+            LintFinding(
+                rule=LONG_ACTION_TIMEOUT,
+                groups=(ALL, RELIABILITY),
+                summary="Action timeout exceeds five minutes",
+                detail=(
+                    "A timeout longer than five minutes may be intentional for slow "
+                    "prerequisites, but it can leave Terraform waiting for an unresponsive "
+                    "action. Set timeout_seconds to 300 or less for a safer timeout. Suppress "
+                    "with !provide-io/pyvider:long-action-timeout."
+                ),
+                attribute_path="timeout_seconds",
+            ),
+        )
 
     @classmethod
     def get_schema(cls) -> PvsSchema:

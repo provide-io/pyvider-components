@@ -120,10 +120,15 @@ examples/*/*.log
 docs/generated/
 
 # Documentation (auto-generated)
+docs/actions/
 docs/data-sources/
 docs/data_sources/
+docs/ephemeral-resources/
 docs/functions/
+docs/list-resources/
+docs/providers/
 docs/resources/
+docs/state-stores/
 docs/generated*/
 generated/
 

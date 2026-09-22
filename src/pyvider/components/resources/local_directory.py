@@ -18,12 +18,14 @@ if TYPE_CHECKING:
 
 from provide.foundation import logger
 from provide.foundation.errors import resilient
-
 from pyvider.exceptions import ResourceError
 from pyvider.hub import register_resource
+from pyvider.lint import LintContext, LintFinding
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_num, a_str, a_unknown, s_resource
+
+from pyvider.components.lint_rules import ALL, SECURITY, WORLD_WRITABLE_DIRECTORY
 
 #: Whether this platform stores POSIX mode bits a `stat` can read back.
 #:
@@ -73,6 +75,34 @@ class LocalDirectoryResource(
                 "id": a_str(computed=True, description="The absolute path of the directory."),
                 "file_count": a_num(computed=True, description="The number of files in the directory."),
             }
+        )
+
+    async def lint(self, ctx: LintContext[LocalDirectoryConfig]) -> tuple[LintFinding, ...]:
+        """Warn when the configured POSIX mode permits writes by other users."""
+        if not ctx.enabled(WORLD_WRITABLE_DIRECTORY, ALL, SECURITY):
+            return ()
+        permissions = getattr(ctx.config, "permissions", None)
+        if permissions is None:
+            return ()
+        try:
+            world_writable = bool(int(permissions, 8) & 0o002)
+        except (TypeError, ValueError):
+            return ()
+        if not world_writable:
+            return ()
+        return (
+            LintFinding(
+                rule=WORLD_WRITABLE_DIRECTORY,
+                groups=(ALL, SECURITY),
+                summary="Directory permissions are world-writable",
+                detail=(
+                    "World-writable permissions may be intentional for a shared scratch "
+                    "directory, but any local user can modify its contents. Remove the POSIX "
+                    "other-write bit (for example, set permissions to 0o755) for a safer "
+                    "directory. Suppress with !provide-io/pyvider:world-writable-directory."
+                ),
+                attribute_path="permissions",
+            ),
         )
 
     @resilient()

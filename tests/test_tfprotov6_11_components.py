@@ -21,6 +21,7 @@ import pytest
 import pyvider.protocols.tfprotov6.protobuf as pb
 from pyvider.conversion import marshal, unmarshal_identity
 from pyvider.handler import ProviderHandler
+from pyvider.lint import LintContext, LintSelector
 from pyvider.protocols.tfprotov6.handlers.action_handlers import (
     PlanActionHandler,
     ValidateActionConfigHandler,
@@ -31,7 +32,7 @@ from pyvider.protocols.tfprotov6.handlers.config_handlers import (
 from pyvider.protocols.tfprotov6.handlers.get_metadata import GetMetadataHandler
 from pyvider.protocols.tfprotov6.handlers.state_store_handlers import reset_state_stores
 
-from pyvider.components.actions.echo import WRITTEN, EchoAction, FailingAction
+from pyvider.components.actions.echo import WRITTEN, EchoAction, EchoConfig, FailingAction
 from pyvider.components.list_resources.secret_notes import SecretNoteList
 from pyvider.components.resources.secret_note import (
     _NOTES,
@@ -184,6 +185,17 @@ async def test_action_failure_still_completes_exactly_once() -> None:
 
     assert [event.WhichOneof("type") for event in events] == ["progress", "completed"]
     assert "rejected the request" in events[-1].completed.diagnostics[0].detail
+
+
+@pytest.mark.asyncio
+async def test_failing_action_exposes_packaged_lint_failure_fixture() -> None:
+    context = LintContext(
+        config=EchoConfig(message="x"),
+        selector=LintSelector.parse(("provide-io/pyvider:test-lint-failure",)),
+    )
+
+    with pytest.raises(RuntimeError, match="packaged-lint-hook-sentinel"):
+        await FailingAction().lint(context)
 
 
 @pytest.mark.asyncio

@@ -28,14 +28,16 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from attrs import define
-
 from pyvider.ephemerals import (
     BaseEphemeralResource,
     EphemeralResourceContext,
     register_ephemeral_resource,
 )
+from pyvider.lint import LintContext, LintFinding
 from pyvider.resources.private_state import PrivateState
 from pyvider.schema import PvsSchema, a_num, a_str, s_resource
+
+from pyvider.components.lint_rules import ALL, LONG_LIVED_LEASE, RELIABILITY
 
 #: Default lease duration. Short enough that a run of any length renews at
 #: least once, which is the half of the contract that otherwise goes untested.
@@ -77,6 +79,32 @@ class LeaseEphemeralResource(BaseEphemeralResource[LeaseResult, LeasePrivateStat
     config_class = LeaseConfig
     result_class = LeaseResult
     private_state_class = LeasePrivateState
+
+    async def lint(self, ctx: LintContext[LeaseConfig]) -> tuple[LintFinding, ...]:
+        """Warn when a lease remains valid for more than one hour."""
+        if not ctx.enabled(LONG_LIVED_LEASE, ALL, RELIABILITY):
+            return ()
+        ttl_seconds = getattr(ctx.config, "ttl_seconds", None)
+        try:
+            long_lived = ttl_seconds is not None and ttl_seconds > 3600
+        except Exception:
+            return ()
+        if not long_lived:
+            return ()
+        return (
+            LintFinding(
+                rule=LONG_LIVED_LEASE,
+                groups=(ALL, RELIABILITY),
+                summary="Lease lifetime exceeds one hour",
+                detail=(
+                    "A lease longer than one hour may be intentional for lengthy operations, "
+                    "but long-lived ephemeral values remain usable for longer if exposed. Set "
+                    "ttl_seconds to 3600 or less for a safer lease. Suppress with "
+                    "!provide-io/pyvider:long-lived-lease."
+                ),
+                attribute_path="ttl_seconds",
+            ),
+        )
 
     @classmethod
     def get_schema(cls) -> PvsSchema:

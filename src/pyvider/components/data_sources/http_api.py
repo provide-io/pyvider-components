@@ -21,12 +21,14 @@ from provide.foundation.transport.errors import (
     TransportConnectionError,
     TransportTimeoutError,
 )
-
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError
+from pyvider.lint import LintContext, LintFinding
 from pyvider.resources.context import ResourceContext
 from pyvider.schema import PvsSchema, a_map, a_num, a_str, s_data_source
+
+from pyvider.components.lint_rules import ALL, INSECURE_HTTP, SECURITY
 
 
 @define(frozen=True)
@@ -71,6 +73,27 @@ class HTTPAPIDataSource(BaseDataSource["pyvider_http_api", HTTPAPIState, HTTPAPI
                 "content_type": a_str(computed=True, optional=True),
                 "error_message": a_str(computed=True, optional=True),
             }
+        )
+
+    async def lint(self, ctx: LintContext[HTTPAPIConfig]) -> tuple[LintFinding, ...]:
+        """Warn when an API request would use plain HTTP."""
+        if not ctx.enabled(INSECURE_HTTP, ALL, SECURITY):
+            return ()
+        url = getattr(ctx.config, "url", None)
+        if not isinstance(url, str) or not url.lower().startswith("http://"):
+            return ()
+        return (
+            LintFinding(
+                rule=INSECURE_HTTP,
+                groups=(ALL, SECURITY),
+                summary="HTTP API uses an unencrypted connection",
+                detail=(
+                    "Plain HTTP may be intentional for a local endpoint, but request data can "
+                    "be intercepted or changed. Set url to an https:// address for a safer "
+                    "connection. Suppress with !provide-io/pyvider:insecure-http."
+                ),
+                attribute_path="url",
+            ),
         )
 
     async def _validate_config(self, config: HTTPAPIConfig) -> list[str]:

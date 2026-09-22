@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-22
+
+### Added
+
+- **Seven first-party provider lint rules now cover every Pyvider component surface.** They are advisory, disabled by default, and selected with `[lint].rules` or `PYVIDER_LINT`. Every hook is side-effect free and treats omitted, null, malformed, or unknown values as not actionable rather than guessing about a configuration it cannot safely inspect.
+
+  | Surface            | Rule                                           | Attribute                  | Guidance                                       |
+  | ------------------ | ---------------------------------------------- | -------------------------- | ---------------------------------------------- |
+  | Provider           | `provide-io/pyvider:insecure-tls`              | `api_insecure_skip_verify` | Keep TLS certificate verification enabled.     |
+  | Resource           | `provide-io/pyvider:world-writable-directory`  | `permissions`              | Remove the POSIX other-write bit.              |
+  | Data source        | `provide-io/pyvider:insecure-http`             | `url`                      | Use an HTTPS endpoint.                         |
+  | Ephemeral resource | `provide-io/pyvider:long-lived-lease`          | `ttl_seconds`              | Keep a lease at or below one hour.             |
+  | List resource      | `provide-io/pyvider:include-hidden-files`      | `include_hidden`           | Exclude hidden files unless they are intended. |
+  | Action             | `provide-io/pyvider:long-action-timeout`       | `timeout_seconds`          | Keep the wait at or below five minutes.        |
+  | State store        | `provide-io/pyvider:relative-state-store-path` | `path`                     | Use an absolute state path.                    |
+
+  `provide-io/pyvider:all` selects all seven; `provide-io/pyvider:security` and `provide-io/pyvider:reliability` select their categories. An exact exclusion such as `PYVIDER_LINT='provide-io/pyvider:all,!provide-io/pyvider:insecure-http'` suppresses one rule without hiding the others.
+
+- **The generated component reference and provider-linting guide document the complete policy set.** The guide separates direct validation coverage from OpenTofu reachability: TofuSoup can exercise all seven provider RPC paths directly, while OpenTofu reaches the provider, resource, data-source, and ephemeral-resource paths today. That is coverage evidence, not a claim that OpenTofu's in-progress native linting feature already transports these provider findings.
+
+### Dependencies
+
+- The runtime floor is now `pyvider>=0.8.1`, whose public lint author API supplies `LintContext`, `LintFinding`, and `LintSelector`. Pyvider 0.8.0 was stopped by its publication guard before any registry upload; 0.8.1 is the first published release of this API. The namespace-safe dependency floors are `pyvider-cty>=0.6.2` and `pyvider-rpcplugin>=0.5.5`; only Pyvider owns the root `pyvider` package files at those versions.
+
+- **`pyvider-components` no longer installs `pyvider/__init__.py`.** The package now contributes only `pyvider.components`, leaving the root package to Pyvider. Because older releases shared ownership of that file, an in-place upgrade can let the old package's uninstall step remove the copy that belongs to Pyvider. Repair that one-time transition by reinstalling both owners together:
+
+  ```shell
+  uv pip install --force-reinstall 'pyvider>=0.8.1' 'pyvider-components>=0.8.0'
+  ```
+
 ## [0.7.2] - 2026-09-05
 
 ### Fixed

@@ -45,6 +45,7 @@ provider "pyvider" {
 
 ## Documentation
 - [Documentation index](https://github.com/provide-io/pyvider-components/blob/main/docs/index.md)
+- [Provider linting](docs/guides/provider-linting.md)
 - [Examples](https://github.com/provide-io/pyvider-components/tree/main/examples)
 
 ## Development

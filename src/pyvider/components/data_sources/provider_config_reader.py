@@ -9,7 +9,6 @@
 from typing import Any, cast
 
 from attrs import define
-
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError

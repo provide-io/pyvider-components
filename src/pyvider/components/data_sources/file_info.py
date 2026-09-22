@@ -19,7 +19,6 @@ if TYPE_CHECKING:
 from provide.foundation import logger
 from provide.foundation.errors import ErrorCategory, capture_error_context, resilient
 from provide.foundation.file import get_mtime, get_size
-
 from pyvider.data_sources.base import BaseDataSource
 from pyvider.data_sources.decorators import register_data_source
 from pyvider.exceptions import DataSourceError

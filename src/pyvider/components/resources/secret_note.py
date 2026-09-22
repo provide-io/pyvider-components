@@ -26,7 +26,6 @@ from pathlib import Path
 from typing import Any
 
 from attrs import define, evolve
-
 from pyvider.hub import register_resource
 from pyvider.resources.base import BaseResource
 from pyvider.resources.context import ResourceContext

@@ -82,8 +82,27 @@ jobs:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: .ci-tooling/scripts/release/resolve-tag-version.sh >> "$GITHUB_OUTPUT"
       - name: ✅ Install from TestPyPI and verify
+        env:
+          LINT_SMOKE: >-
+            import asyncio; from types import SimpleNamespace;
+            import pyvider.components;
+            from pyvider.lint import LintContext, LintSelector;
+            from pyvider.components.provider import PyviderProvider;
+            from pyvider.components.lint_rules import
+            ALL, INSECURE_TLS, WORLD_WRITABLE_DIRECTORY, INSECURE_HTTP,
+            LONG_LIVED_LEASE, INCLUDE_HIDDEN_FILES, LONG_ACTION_TIMEOUT,
+            RELATIVE_STATE_STORE_PATH;
+            rules = {INSECURE_TLS, WORLD_WRITABLE_DIRECTORY, INSECURE_HTTP,
+            LONG_LIVED_LEASE, INCLUDE_HIDDEN_FILES, LONG_ACTION_TIMEOUT,
+            RELATIVE_STATE_STORE_PATH};
+            assert len(rules) == 7;
+            findings = asyncio.run(PyviderProvider().lint(LintContext(
+            config=SimpleNamespace(api_insecure_skip_verify=True),
+            selector=LintSelector.parse((ALL,)))));
+            assert len(findings) == 1 and findings[0].rule == INSECURE_TLS;
+            v = pyvider.components.__version__
         run: |
-          .ci-tooling/scripts/release/verify-testpypi.sh pyvider-components "${{ steps.ver.outputs.version }}" "import pyvider.components; v = pyvider.components.__version__"
+          .ci-tooling/scripts/release/verify-testpypi.sh pyvider-components "${{ steps.ver.outputs.version }}" "$LINT_SMOKE"
 
   # PyPI publish via trusted publisher bound to this repo's release.yml + env `pypi`.
   publish-pypi:

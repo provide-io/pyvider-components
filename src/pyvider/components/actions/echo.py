@@ -26,7 +26,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from attrs import define
-
 from pyvider.actions import (
     ActionContext,
     ActionPlan,
@@ -35,6 +34,7 @@ from pyvider.actions import (
     DeferralReason,
     register_action,
 )
+from pyvider.lint import LintContext, LintFinding
 from pyvider.schema import PvsSchema, a_bool, a_num, a_str, s_resource
 
 #: Every line this process wrote, in order. Lets a test assert the action ran
@@ -43,6 +43,8 @@ WRITTEN: list[str] = []
 
 #: Pause between steps so progress events are visible rather than instantaneous.
 STEP_DELAY_SECONDS = 0.25
+
+PACKAGED_LINT_FAILURE_RULE = "provide-io/pyvider:test-lint-failure"
 
 
 @define(frozen=True)
@@ -134,6 +136,11 @@ class FailingAction(BaseAction[EchoConfig]):
     @classmethod
     def get_schema(cls) -> PvsSchema:
         return s_resource(attributes={"message": a_str(required=True)})
+
+    async def lint(self, ctx: LintContext[EchoConfig]) -> tuple[LintFinding, ...]:
+        if ctx.enabled(PACKAGED_LINT_FAILURE_RULE):
+            raise RuntimeError("packaged-lint-hook-sentinel")
+        return ()
 
     async def invoke(self, ctx: ActionContext[EchoConfig]) -> AsyncIterator[ActionProgress]:
         yield ActionProgress(message="Starting work that will not finish")
