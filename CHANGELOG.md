@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- **The `pyvider_http_api` advanced example survives a failed request.** A request that times out or cannot connect reports `error_message` and leaves `status_code` and `response_time_ms` null; the example's comparisons and its min, max and average response times raised on that null instead of reporting the failure. They now fall back to `false` or `null`.
+
 ## [0.8.0] - 2026-09-22
 
 ### Added
