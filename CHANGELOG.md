@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 - **The `pyvider_http_api` advanced example survives a failed request.** A request that times out or cannot connect reports `error_message` and leaves `status_code` and `response_time_ms` null; the example's comparisons and its min, max and average response times raised on that null instead of reporting the failure. They now fall back to `false` or `null`.
+- **The plating bundles carry the version floors measured against real binaries.** `pyvider_secret_note`'s list-resource bundle held a copy of the resource's write-only sidecar, which describes nothing its query example does; it now declares that `terraform query` first exists in Terraform 1.14. The action bundles gain Terraform's 1.13.0 floor for `action` blocks, `pyvider_lease` gains its `ephemeral`-block floors (Terraform 1.10.0, OpenTofu 1.11.0), `pyvider_file_content`'s list resource gains the same 1.14 query floor, and the state-store sidecar no longer names one OpenTofu release as the one that rejects it. Regenerating a provider's examples from these bundles no longer rolls those floors back.
 
 ## [0.8.0] - 2026-09-22
 
