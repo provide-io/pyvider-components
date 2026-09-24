@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-09-23
+
 ### Fixed
 
 - **The `pyvider_http_api` examples can be pointed at any server.** Their URLs come from `var.api_base_url` and `var.json_api_base_url`, declared in the first example and defaulting to the public httpbin.org and JSONPlaceholder services, so a reader's copy still works as written while a test run sets `TF_VAR_api_base_url` / `TF_VAR_json_api_base_url` to a local server and no longer depends on either service's uptime. The requirements sidecar now names both hosts; it named only httpbin.org although the advanced example also calls JSONPlaceholder. The repository's own `examples/` copy of these files is brought back in line with the bundle, which it had drifted from.
