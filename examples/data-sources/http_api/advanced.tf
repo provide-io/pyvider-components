@@ -2,7 +2,7 @@
 
 # Example 1: POST request with JSON content type
 data "pyvider_http_api" "post_json" {
-  url    = "https://httpbin.org/post"
+  url    = "${var.api_base_url}/post"
   method = "POST"
   headers = {
     "Content-Type" = "application/json"
@@ -13,18 +13,18 @@ data "pyvider_http_api" "post_json" {
 
 # Example 2: PUT request for updates
 data "pyvider_http_api" "put_request" {
-  url    = "https://httpbin.org/put"
+  url    = "${var.api_base_url}/put"
   method = "PUT"
   headers = {
     "Content-Type"  = "application/json"
     "Authorization" = "Bearer fake-token-for-example"
-    "X-Request-ID"  = "req-${formatdate("YYYYMMDDhhmmss", timestamp())}"
+    "X-Request-ID"  = "req-example-put"
   }
 }
 
 # Example 3: DELETE request
 data "pyvider_http_api" "delete_request" {
-  url    = "https://httpbin.org/delete"
+  url    = "${var.api_base_url}/delete"
   method = "DELETE"
   headers = {
     "Authorization" = "Bearer fake-token-for-example"
@@ -34,7 +34,7 @@ data "pyvider_http_api" "delete_request" {
 
 # Example 4: PATCH request for partial updates
 data "pyvider_http_api" "patch_request" {
-  url    = "https://httpbin.org/patch"
+  url    = "${var.api_base_url}/patch"
   method = "PATCH"
   headers = {
     "Content-Type" = "application/json-patch+json"
@@ -44,13 +44,13 @@ data "pyvider_http_api" "patch_request" {
 
 # Example 5: OPTIONS request to check allowed methods
 data "pyvider_http_api" "options_request" {
-  url    = "https://httpbin.org/get"
+  url    = "${var.api_base_url}/get"
   method = "OPTIONS"
 }
 
 # Example 6: Request with custom timeout for slow APIs
 data "pyvider_http_api" "slow_api" {
-  url     = "https://httpbin.org/delay/3"
+  url     = "${var.api_base_url}/delay/3"
   timeout = 10
   headers = {
     "Accept-Encoding" = "gzip, deflate"
@@ -60,7 +60,7 @@ data "pyvider_http_api" "slow_api" {
 
 # Example 7: Complex headers for API authentication
 data "pyvider_http_api" "authenticated_api" {
-  url = "https://httpbin.org/bearer"
+  url = "${var.api_base_url}/bearer"
   headers = {
     "Authorization"     = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.example"
     "X-API-Version"     = "2023-01-01"
@@ -73,7 +73,7 @@ data "pyvider_http_api" "authenticated_api" {
 
 # Example 8: Multiple related API calls
 data "pyvider_http_api" "user_profile" {
-  url = "https://jsonplaceholder.typicode.com/users/1"
+  url = "${var.json_api_base_url}/users/1"
 }
 
 # Get posts for the user (using data from first call)
@@ -104,20 +104,20 @@ locals {
 }
 
 data "pyvider_http_api" "user_posts" {
-  url = "https://jsonplaceholder.typicode.com/posts?userId=${local.advanced_user_data.id}"
+  url = "${var.json_api_base_url}/posts?userId=${local.advanced_user_data.id}"
 }
 
 # Example 9: Error status code handling
 data "pyvider_http_api" "not_found" {
-  url = "https://httpbin.org/status/404"
+  url = "${var.api_base_url}/status/404"
 }
 
 data "pyvider_http_api" "server_error" {
-  url = "https://httpbin.org/status/500"
+  url = "${var.api_base_url}/status/500"
 }
 
 data "pyvider_http_api" "unauthorized" {
-  url = "https://httpbin.org/status/401"
+  url = "${var.api_base_url}/status/401"
 }
 
 # Process responses and handle different scenarios
@@ -134,25 +134,25 @@ locals {
       response_time = data.pyvider_http_api.post_json.response_time_ms
       content_type  = data.pyvider_http_api.post_json.content_type
       headers_count = data.pyvider_http_api.post_json.header_count
-      success       = data.pyvider_http_api.post_json.status_code >= 200 && data.pyvider_http_api.post_json.status_code < 300
+      success       = try(data.pyvider_http_api.post_json.status_code >= 200 && data.pyvider_http_api.post_json.status_code < 300, false)
     }
 
     put_request = {
       status_code   = data.pyvider_http_api.put_request.status_code
       response_time = data.pyvider_http_api.put_request.response_time_ms
-      success       = data.pyvider_http_api.put_request.status_code >= 200 && data.pyvider_http_api.put_request.status_code < 300
+      success       = try(data.pyvider_http_api.put_request.status_code >= 200 && data.pyvider_http_api.put_request.status_code < 300, false)
     }
 
     delete_request = {
       status_code   = data.pyvider_http_api.delete_request.status_code
       response_time = data.pyvider_http_api.delete_request.response_time_ms
-      success       = data.pyvider_http_api.delete_request.status_code >= 200 && data.pyvider_http_api.delete_request.status_code < 300
+      success       = try(data.pyvider_http_api.delete_request.status_code >= 200 && data.pyvider_http_api.delete_request.status_code < 300, false)
     }
 
     patch_request = {
       status_code   = data.pyvider_http_api.patch_request.status_code
       response_time = data.pyvider_http_api.patch_request.response_time_ms
-      success       = data.pyvider_http_api.patch_request.status_code >= 200 && data.pyvider_http_api.patch_request.status_code < 300
+      success       = try(data.pyvider_http_api.patch_request.status_code >= 200 && data.pyvider_http_api.patch_request.status_code < 300, false)
     }
 
     options_request = {
@@ -164,7 +164,7 @@ locals {
     slow_api = {
       status_code   = data.pyvider_http_api.slow_api.status_code
       response_time = data.pyvider_http_api.slow_api.response_time_ms
-      timeout_ok    = data.pyvider_http_api.slow_api.response_time_ms <= 10000
+      timeout_ok    = try(data.pyvider_http_api.slow_api.response_time_ms <= 10000, false)
       success       = data.pyvider_http_api.slow_api.status_code == 200
     }
   }
@@ -179,7 +179,7 @@ locals {
 
     server_error = {
       status_code = data.pyvider_http_api.server_error.status_code
-      is_5xx      = data.pyvider_http_api.server_error.status_code >= 500
+      is_5xx      = try(data.pyvider_http_api.server_error.status_code >= 500, false)
       has_error   = data.pyvider_http_api.server_error.error_message != null
     }
 
@@ -192,23 +192,23 @@ locals {
 
   # Performance metrics
   performance_metrics = {
-    fastest_response = min([
+    fastest_response = try(min([
       for analysis in values(local.response_analysis) :
       analysis.response_time if analysis.response_time != null
-    ]...)
+    ]...), null)
 
-    slowest_response = max([
+    slowest_response = try(max([
       for analysis in values(local.response_analysis) :
       analysis.response_time if analysis.response_time != null
-    ]...)
+    ]...), null)
 
-    average_response_time = sum([
+    average_response_time = try(sum([
       for analysis in values(local.response_analysis) :
       analysis.response_time if analysis.response_time != null
       ]) / length([
       for analysis in values(local.response_analysis) :
       analysis.response_time if analysis.response_time != null
-    ])
+    ]), null)
 
     success_rate = (length([
       for analysis in values(local.response_analysis) :
@@ -221,8 +221,6 @@ locals {
 resource "pyvider_file_content" "advanced_api_analysis" {
   filename = "/tmp/http_api_advanced_analysis.json"
   content = jsonencode({
-    timestamp = timestamp()
-
     http_methods_tested = [
       "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
     ]
@@ -247,7 +245,7 @@ resource "pyvider_file_content" "advanced_api_analysis" {
 
     recommendations = [
       local.performance_metrics.success_rate < 100 ? "Some requests failed - check error handling" : null,
-      local.performance_metrics.slowest_response > 5000 ? "Consider optimizing slow requests" : null,
+      try(local.performance_metrics.slowest_response > 5000, false) ? "Consider optimizing slow requests" : null,
       "Always implement proper error handling for production use",
       "Use environment variables for sensitive authentication tokens",
       "Consider implementing retry logic for critical API calls"
@@ -292,8 +290,6 @@ resource "pyvider_file_content" "advanced_api_report" {
     "=== Content Types Observed ===",
     "POST Response: ${local.response_analysis.post_request.content_type}",
     "Headers Count (POST): ${local.response_analysis.post_request.headers_count}",
-    "",
-    "Report generated at: ${timestamp()}"
   ])
 }
 

@@ -31,6 +31,8 @@ This data source enables you to:
 
 ## More Examples
 
+These use the `api_base_url` and `json_api_base_url` variables declared above, which default to the public httpbin.org and JSONPlaceholder services.
+
 ### Simple API integration patterns
 
 {{ example("basic") }}
