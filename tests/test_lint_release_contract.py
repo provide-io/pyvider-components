@@ -44,10 +44,8 @@ def test_release_wheel_smoke_exercises_all_public_lint_exports() -> None:
     assert "pyvider.lint._runner" not in workflow
 
 
-def test_lint_rules_are_prepared_as_0_8_0() -> None:
-    """Release metadata must name every rule and the framework contract."""
-    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == "0.8.0"
-
+def test_the_0_8_0_changelog_names_every_rule_and_the_framework_contract() -> None:
+    """The release that introduced the rules must name each one and the framework contract."""
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     section = changelog.partition("## [0.8.0] - 2026-09-22")[2].partition("\n## [")[0]
     assert section
@@ -122,7 +120,8 @@ def test_built_wheel_contains_lint_rules_without_owning_pyvider_root(tmp_path: P
         capture_output=True,
         text=True,
     )
-    wheel = next(output.glob("pyvider_components-0.8.0-*.whl"))
+    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    wheel = next(output.glob(f"pyvider_components-{version}-*.whl"))
 
     with zipfile.ZipFile(wheel) as archive:
         members = set(archive.namelist())
